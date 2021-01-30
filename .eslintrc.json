@@ -1,0 +1,11 @@
+{
+	"root": true,
+	"extends": "@sveltejs",
+	"parserOptions": {
+		"sourceType": "module"
+	},
+	"settings": {
+		"import/ignore": "/template/"
+
+	}
+}

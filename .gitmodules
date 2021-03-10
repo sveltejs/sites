@@ -1,0 +1,3 @@
+[submodule "content/kit"]
+	path = content/kit
+	url = git@github.com:sveltejs/kit

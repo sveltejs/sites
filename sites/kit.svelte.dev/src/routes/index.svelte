@@ -7,12 +7,12 @@
 </style>
 
 <svelte:head>
-	<title>SvelteKit • The next small thing in web development</title>
+	<title>SvelteKit • The fastest way to build Svelte apps</title>
 </svelte:head>
 
 <Hero
 	title="SvelteKit"
-	tagline="The next small thing in web development"
+	tagline="The fastest way to build Svelte apps"
 	outline="sapper-logo-outline.svg"
 	logotype="sapper-logotype.svg"
 />

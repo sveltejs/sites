@@ -5,5 +5,8 @@ export default {
 		alias: {
 			$components: resolve('src/components')
 		}
+	},
+	ssr: {
+		noExternal: ['@sveltejs/site-kit']
 	}
 };

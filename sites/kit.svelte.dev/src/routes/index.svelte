@@ -1,5 +1,5 @@
 <script>
-	import { Hero, Blurb } from '$components/site-kit';
+	import { Hero, Blurb } from '@sveltejs/site-kit';
 </script>
 
 <style>

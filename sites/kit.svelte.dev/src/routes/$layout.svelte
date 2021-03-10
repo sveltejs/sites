@@ -1,6 +1,7 @@
 <script>
+	import '@sveltejs/site-kit/base.css';
 	import { page } from '$app/stores';
-	import { Icons, Icon, Nav, NavItem } from '$components/site-kit';
+	import { Icons, Icon, Nav, NavItem } from '@sveltejs/site-kit';
 
 	// TODO
 	export let segment;

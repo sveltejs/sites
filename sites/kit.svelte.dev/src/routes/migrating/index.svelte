@@ -8,7 +8,7 @@
 </script>
 
 <script>
-	import { Docs } from '$components/site-kit'
+	import { Docs } from '@sveltejs/site-kit'
 
 	export let sections;
 </script>

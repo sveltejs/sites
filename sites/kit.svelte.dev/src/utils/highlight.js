@@ -1,4 +1,4 @@
-import { langs } from '$components/site-kit/utils/markdown.js';
+import { langs } from '@sveltejs/site-kit/utils/markdown.js';
 import PrismJS from 'prismjs';
 import 'prismjs/components/prism-bash';
 

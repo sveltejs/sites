@@ -1,6 +1,6 @@
 [submodule "packages/site-kit"]
 	path = packages/site-kit
-	url = https://github.com/sveltejs/site-kit
+	url = https://github.com/sveltejs/site-kit.git
 [submodule "sites/kit.svelte.dev/content"]
 	path = sites/kit.svelte.dev/content
-	url = https://github.com/sveltejs/kit
+	url = https://github.com/sveltejs/kit.git

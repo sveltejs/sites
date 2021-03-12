@@ -2,6 +2,9 @@
 
 Monorepo for the sites in the Svelte ecosystem
 
-## Fetching content
+## Running
 
-Run `node sites/kit.svelte.dev/content`
+```
+git submodule update --init --recursive
+node get_content
+```

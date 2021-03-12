@@ -8,19 +8,11 @@ function run(cmd) {
 }
 
 // Ensure content directory exists
-mkdir('-p', 'content');
-cd('content')
+cd('sites/kit.svelte.dev')
 
 // Ensure kit repo is cloned and up-to-date
-
-if (!test('-d', 'kit')) {
-	run('git clone --depth 1 git@github.com:sveltejs/kit.git');
+if (!test('-d', 'content')) {
+	run('git clone --depth 1 git@github.com:sveltejs/kit.git content');
 };
-cd('kit');
+cd('content');
 run('git pull');
-
-// Link content directory
-cd('../..')
-if (!test('-d', 'sites/kit.svelte.dev/content')) {
-	ln('-s', '../../content/kit/documentation', 'sites/kit.svelte.dev/content');
-}

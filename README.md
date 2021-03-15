@@ -6,5 +6,4 @@ Monorepo for the sites in the Svelte ecosystem
 
 ```
 git submodule update --init --recursive
-node get_content
 ```

@@ -28,13 +28,14 @@ export default function generate_docs(dir) {
 
 	return fs
 		.readdirSync(`content/${dir}`)
-		.filter(file => file[0] !== '.' && path.extname(file) === '.md')
+		.filter(file => /^\d{2}-.+\.md$/.test(file))
 		.map(file => {
 			const markdown = fs.readFileSync(`content/${dir}/${file}`, 'utf-8');
 
 			const { content, metadata } = extract_frontmatter(markdown);
 
 			const section_slug = make_slug(metadata.title);
+			let subsection_slug = null;
 
 			const subsections = [];
 
@@ -95,9 +96,15 @@ export default function generate_docs(dir) {
 			};
 
 			renderer.heading = (text, level, rawtext) => {
-				const slug = level <= 4 && make_slug(rawtext);
-
 				if (level === 3 || level === 4) {
+					if (level === 3) {
+						subsection_slug = rawtext;
+					}
+
+					const slug = make_slug(level === 3
+						? [section_slug, subsection_slug].join('-')
+						: [section_slug, subsection_slug, rawtext].filter(Boolean).join('-'));
+
 					const title = text
 						.replace(/<\/?code>/g, '')
 						.replace(/\.(\w+)(\((.+)?\))?/, (m, $1, $2, $3) => {
@@ -107,14 +114,16 @@ export default function generate_docs(dir) {
 						});
 
 					subsections.push({ slug, title, level });
-				}
 
-				return `
-					<h${level}>
-						<span id="${slug}" class="offset-anchor" ${level > 4 ? 'data-scrollignore' : ''}></span>
-						<a href="${dir}#${slug}" class="anchor" aria-hidden="true"></a>
-						${text}
-					</h${level}>`;
+					return `
+						<h${level}>
+							<span id="${slug}" class="offset-anchor" ${level > 4 ? 'data-scrollignore' : ''}></span>
+							<a href="${dir}#${slug}" class="anchor" aria-hidden="true"></a>
+							${text}
+						</h${level}>`;
+				} else {
+					throw new Error(`headings must be level 3 or 4`);
+				}
 			};
 
 			block_types.forEach(type => {

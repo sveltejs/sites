@@ -20,6 +20,10 @@ const block_types = [
 	'tablecell'
 ];
 
+const basedir = process.env.LOCAL
+	? 'content/documentation'
+	: 'src/content/documentation';
+
 export default function generate_docs(dir) {
 	const make_slug = make_session_slug_processor({
 		separator: SLUG_SEPARATOR,
@@ -27,10 +31,10 @@ export default function generate_docs(dir) {
 	});
 
 	return fs
-		.readdirSync(`content/documentation/${dir}`)
+		.readdirSync(`${basedir}/${dir}`)
 		.filter(file => /^\d{2}-.+\.md$/.test(file))
 		.map(file => {
-			const markdown = fs.readFileSync(`content/documentation/${dir}/${file}`, 'utf-8');
+			const markdown = fs.readFileSync(`${basedir}/${dir}/${file}`, 'utf-8');
 
 			const { content, metadata } = extract_frontmatter(markdown);
 

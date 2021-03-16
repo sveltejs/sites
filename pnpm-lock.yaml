@@ -11,30 +11,30 @@ importers:
       '@sindresorhus/slugify': ^0.9.1
       esm: ^3.2.25
       golden-fleece: ^1.0.9
-      mocha: ^6.2.0
-      svelte: ^3.9.2
+      mocha: ^6.2.3
+      svelte: ^3.35.0
   sites/kit.svelte.dev:
     dependencies:
       highlight.js: 10.6.0
-      marked: 1.2.8
+      marked: 1.2.9
       prismjs: 1.23.0
     devDependencies:
       '@sveltejs/adapter-netlify': 1.0.0-next.0
       '@sveltejs/adapter-node': 1.0.0-next.7
-      '@sveltejs/kit': 1.0.0-next.40_svelte@3.35.0+vite@2.0.5
+      '@sveltejs/kit': 1.0.0-next.49_svelte@3.35.0+vite@2.1.0
       '@sveltejs/site-kit': link:../../packages/site-kit
       svelte: 3.35.0
-      vite: 2.0.5
+      vite: 2.1.0
     specifiers:
       '@sveltejs/adapter-netlify': ^1.0.0-next.0
       '@sveltejs/adapter-node': next
-      '@sveltejs/kit': ^1.0.0-next.40
+      '@sveltejs/kit': ^1.0.0-next.49
       '@sveltejs/site-kit': workspace:*
       highlight.js: ^10.6.0
-      marked: ^1.2.8
+      marked: ^1.2.9
       prismjs: ^1.23.0
       svelte: ^3.35.0
-      vite: ^2.0.5
+      vite: ^2.1.0
 lockfileVersion: 5.2
 packages:
   /@rollup/pluginutils/4.1.0:
@@ -67,39 +67,21 @@ packages:
     dev: true
     resolution:
       integrity: sha512-5lwBlZZcmrD0g2Ta3hbv9YxOLsngEC2c5Ce8zgpTFcHjuBdKXIBV3djJbrfFkSIUKuOG4057WzlLGlk0wWS14w==
-  /@sveltejs/kit/1.0.0-next.40_svelte@3.35.0+vite@2.0.5:
+  /@sveltejs/kit/1.0.0-next.49_svelte@3.35.0+vite@2.1.0:
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 1.0.0-next.2_svelte@3.35.0+vite@2.0.5
-      '@svitejs/vite-plugin-svelte': 0.10.0_svelte@3.35.0+vite@2.0.5
+      '@svitejs/vite-plugin-svelte': 0.11.1_svelte@3.35.0+vite@2.1.0
       cheap-watch: 1.0.3
       sade: 1.7.4
       svelte: 3.35.0
-      vite: 2.0.5
+      vite: 2.1.0
     dev: true
     hasBin: true
     peerDependencies:
       svelte: ^3.32.1
-      vite: ^2.0.4
+      vite: ^2.1.0
     resolution:
-      integrity: sha512-tZNqT3o1/EgmAoVPRPTySO8iEIMpenRYgcaUu6aYt//wgtTQWfcMC+VNVtNZeFA5rLiu48hginCM+AOmKa65LA==
-  /@sveltejs/vite-plugin-svelte/1.0.0-next.2_svelte@3.35.0+vite@2.0.5:
-    dependencies:
-      '@rollup/pluginutils': 4.1.0
-      chalk: 4.1.0
-      hash-sum: 2.0.0
-      require-relative: 0.8.7
-      slash: 3.0.0
-      source-map: 0.7.3
-      svelte: 3.35.0
-      svelte-hmr: 0.12.9_svelte@3.35.0
-      vite: 2.0.5
-    dev: true
-    peerDependencies:
-      svelte: ^3.34.0
-      vite: ^2
-    resolution:
-      integrity: sha512-2MFgwQybGhhCqgByloC2qTTwwnomnsfGQhapETyfB4w4s5Ylz0bUqgfMvq9deRMTD9zwtL/DWfrK7d+0DNYILg==
-  /@svitejs/vite-plugin-svelte/0.10.0_svelte@3.35.0+vite@2.0.5:
+      integrity: sha512-1/yqqtCuZWuE7e3yAxW7HhzHXb01GqiDLLXrryZKROkUrWuG5u75nVqgvDBoWEshpFx4+f+IvF1T7OWFnxrNww==
+  /@svitejs/vite-plugin-svelte/0.11.1_svelte@3.35.0+vite@2.1.0:
     dependencies:
       '@rollup/pluginutils': 4.1.0
       chalk: 4.1.0
@@ -109,16 +91,16 @@ packages:
       slash: 3.0.0
       source-map: 0.7.3
       svelte: 3.35.0
-      svelte-hmr: 0.13.0-2_svelte@3.35.0
-      vite: 2.0.5
+      svelte-hmr: 0.13.0_svelte@3.35.0
+      vite: 2.1.0
     dev: true
     engines:
       node: '>=12.0.0'
     peerDependencies:
       svelte: ^3.35.0
-      vite: ^2.0.5
+      vite: ^2.1.0
     resolution:
-      integrity: sha512-gttcMIZvLwanYbkfkl77o8mkPKxnYGoqz0xOfz4ZPrzJdan+DzH9b2PEQbpWb53klFKANB7FPBDr7bCaixIT5Q==
+      integrity: sha512-G4UCAyRvbqr/3RuRrWib7iPZPMBmDgk7kvgCn0js76TGS2NaVce5AoWjWgPR0M5z71P9SBH77e3N/pO70ziBNw==
   /ansi-colors/3.2.3:
     dev: true
     engines:
@@ -261,7 +243,7 @@ packages:
       integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
   /debug/3.2.6:
     dependencies:
-      ms: 2.1.2
+      ms: 2.1.1
     deprecated: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
     dev: true
     resolution:
@@ -341,12 +323,12 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-QCOllgZJtaUo9miYBcLChTUaHNjJF3PYs1VidD7AwiEj1kYxKeQTctLAezAOH5ZKRH0g2IgPn6KwB4IT8iRpvA==
-  /esbuild/0.8.57:
+  /esbuild/0.9.2:
     dev: true
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-j02SFrUwFTRUqiY0Kjplwjm1psuzO1d6AjaXKuOR9hrY0HuPsT6sV42B6myW34h1q4CRy+Y3g4RU/cGJeI/nNA==
+      integrity: sha512-xE3oOILjnmN8PSjkG3lT9NBbd1DbxNqolJ5qNyrLhDWsFef3yTp/KTQz1C/x7BYFKbtrr9foYtKA6KA1zuNAUQ==
   /escape-string-regexp/1.0.5:
     engines:
       node: '>=0.8.0'
@@ -611,13 +593,13 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-VeIAFslyIerEJLXHziedo2basKbMKtTw3vfn5IzG0XTjhAVEJyNHnL2p7vc+wBDSdQuUpNw3M2u6xb9QsAY5Eg==
-  /marked/1.2.8:
+  /marked/1.2.9:
     dev: false
     engines:
       node: '>= 8.16.2'
     hasBin: true
     resolution:
-      integrity: sha512-lzmFjGnzWHkmbk85q/ILZjFoHHJIQGF+SxGEfIdGk/XhiTPhqGs37gbru6Kkd48diJnEyYwnG67nru0Z2gQtuQ==
+      integrity: sha512-H8lIX2SvyitGX+TRdtS06m1jHMijKN/XjfH6Ooii9fvxMlh8QdqBfBDkGUpMWH2kQNrtixjzYUa3SH8ROTgRRw==
   /minimatch/3.0.4:
     dependencies:
       brace-expansion: 1.1.11
@@ -681,13 +663,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
-  /nanoid/3.1.20:
+  /nanoid/3.1.22:
     dev: true
     engines:
       node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1
     hasBin: true
     resolution:
-      integrity: sha512-a1cQNyczgKbLX9jwbS/+d7W8fX/RfgYR7lVWwWOGIPNgK2m0MWvrGF6/m4kk6U3QcFMnZf3RIhL0v2Jgh/0Uxw==
+      integrity: sha512-/2ZUaJX2ANuLtTvqTlgqBQNJoQO398KyJgZloL0PZkC0dpysjncRUPsFe3DUPzz/y3h+u7C46np8RMuvF3jsSQ==
   /node-environment-flags/1.0.5:
     dependencies:
       object.getownpropertydescriptors: 2.1.2
@@ -790,7 +772,7 @@ packages:
   /postcss/8.2.8:
     dependencies:
       colorette: 1.2.2
-      nanoid: 3.1.20
+      nanoid: 3.1.22
       source-map: 0.6.1
     dev: true
     engines:
@@ -824,7 +806,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-wENBPt4ySzg4ybFQW2TT1zMQucPK95HSh/nq2CFTZVOGut2+pQvSsgtda4d26YrYcr067wjbmzOG8byDPBX63A==
-  /rollup/2.41.0:
+  /rollup/2.41.2:
     dev: true
     engines:
       node: '>=10.0.0'
@@ -832,7 +814,7 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     resolution:
-      integrity: sha512-Gk76XHTggulWPH95q8V62bw6uqDH6UGvbD6LOa3QUyhuMF3eOuaeDHR7SLm1T9faitkpNrqzUAVYx47klcMnlA==
+      integrity: sha512-6u8fJJXJx6fmvKrAC9DHYZgONvSkz8S9b/VFBjoQ6dkKdHyPpPbpqiNl2Bao9XBzDHpq672X6sGZ9G1ZBqAHMg==
   /sade/1.7.4:
     dependencies:
       mri: 1.1.6
@@ -956,22 +938,14 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==
-  /svelte-hmr/0.12.9_svelte@3.35.0:
+  /svelte-hmr/0.13.0_svelte@3.35.0:
     dependencies:
       svelte: 3.35.0
     dev: true
     peerDependencies:
       svelte: '>=3.19.0'
     resolution:
-      integrity: sha512-SGE7Odznj4dqZtUVIWcoPCvZ9gHImxVIIjrz+O3DDSi0j4OaSLim6MRF4UdhlBKeW3glSRc+tXNSKYvM5x+Dyw==
-  /svelte-hmr/0.13.0-2_svelte@3.35.0:
-    dependencies:
-      svelte: 3.35.0
-    dev: true
-    peerDependencies:
-      svelte: '>=3.19.0'
-    resolution:
-      integrity: sha512-3Sqxbs5hG212oweKhHzh2S7jVScylzbVXuEkydgdS9NpvcdnyCSufpaJSUNxUGc02wgjWugtqaJXs1DybAjRpw==
+      integrity: sha512-P7oHUgV9k87ZegcomUwMzkQ/JkeUTOMJ4tXPkyEdgHozEQEraYHkpJuPtVlN8fNY+gVAlRUaohsD3Ipiql5lDw==
   /svelte/3.35.0:
     dev: true
     engines:
@@ -996,12 +970,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-P/51NX+JXyxK/aigg1/ZgyccdAxm5K1+n8+tvqSntjOivPt19gvm1VC49RWYetsiub8WViUchdxl/KWHHB0kzA==
-  /vite/2.0.5:
+  /vite/2.1.0:
     dependencies:
-      esbuild: 0.8.57
+      esbuild: 0.9.2
       postcss: 8.2.8
       resolve: 1.20.0
-      rollup: 2.41.0
+      rollup: 2.41.2
     dev: true
     engines:
       node: '>=12.0.0'
@@ -1009,7 +983,7 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     resolution:
-      integrity: sha512-QTgEDbq1WsTtr6j+++ewjhBFEk6c8v0xz4fb/OWJQKNYU8ZZtphOshwOqAlnarSstPBtWCBR0tsugXx6ajfoUg==
+      integrity: sha512-qWYmX8slkv91C3hWA2iu0o0ZvFbO2dSfWIN4dbMfSeMdNn+XeirkGWU3dy5/W1Nv13cQZvVoMTl8zyC13VFRZQ==
   /which-boxed-primitive/1.0.2:
     dependencies:
       is-bigint: 1.0.1

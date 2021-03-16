@@ -23,7 +23,7 @@
 
 <Icons/>
 
-<Nav {segment} {page} logo="sapper-logo-horizontal.svg">
+<Nav {segment} {page} logo="images/svelte-kit-horizontal.svg">
 	<NavItem segment="docs">Docs</NavItem>
 	<NavItem segment="migrating">Migrating</NavItem>
 

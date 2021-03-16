@@ -8,9 +8,9 @@
 </script>
 
 <style>
-	:global(html) {
-		--prime: rgb(21, 151, 148) !important; /* TODO remove .theme-default from shared, so we don't need !important */
-	}
+	/* :global(html) {
+		--prime: rgb(21, 151, 148) !important;
+	} */
 
 	main {
 		position: relative;

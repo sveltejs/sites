@@ -1,7 +1,10 @@
+import fs from 'fs';
 import { dev } from '$app/env';
 import generate_docs from '../../utils/generate_docs.js';
 
 let body;
+
+console.log('>>> here', process.cwd(), fs.readdirSync(process.cwd()));
 
 export function get() {
 	if (!body || dev) {

@@ -18,8 +18,8 @@
   "homepage": "https://github.com/sveltejs/site-kit#readme",
   "devDependencies": {
     "esm": "^3.2.25",
-    "mocha": "^6.2.0",
-    "svelte": "^3.9.2"
+    "mocha": "^6.2.3",
+    "svelte": "^3.35.0"
   },
   "dependencies": {
     "@sindresorhus/slugify": "^0.9.1",

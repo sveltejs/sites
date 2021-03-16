@@ -4,7 +4,7 @@
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build",
-		"prebuild": "test \"$CI\" = true && git submodule update --init --recursive && npx pnpm install --store=node_modules/.pnpm-store || echo skipping pnpm install",
+		"prebuild": "test \"$CI\" = true && rm -rf content && git clone git@github.com:sveltejs/kit content && npx pnpm install --store=node_modules/.pnpm-store || echo skipping pnpm install",
 		"start": "svelte-kit start"
 	},
 	"devDependencies": {

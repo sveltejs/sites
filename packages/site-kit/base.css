@@ -31,13 +31,13 @@
 
 /*	theme vars */
 .theme-default {
-	--back:       	#ffffff;
-	--back-light: 	#f6fafd;
-	--back-api: 		#eff8ff;
+	--back:         #ffffff;
+	--back-light:   #f6fafd;
+	--back-api:     #e5eef5;
 	--prime:      	#ff3e00;
 	--second:     	#676778;
 	--flash:      	#40b3ff;
-	--heading:	var(--second);
+	--heading:    	#222;
 	--text:      		#444;
 	--sidebar-text: rgba(255, 255, 255, .75);
 	--border-w:  		.3rem; /* border-width  */
@@ -53,12 +53,13 @@
 	--h3:      2.6rem;
 	--h2:        3rem;
 	--h1:      3.2rem;
-	--linemax:   42em; /* max line-length */
+	--linemax:   72rem; /* max line-length */
 	--lh:  		 	  1.5; /* base line-height */
 }
 
 body {
 	--font: 'Overpass', sans-serif;
+	--font-body: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
 	--font-mono: 'Fira Mono', monospace;
 }
 
@@ -126,7 +127,7 @@ a {
 	color: inherit;
 }
 
-a:hover, a:active { color: var(--flash) }
+/* a:hover, a:active { color: var(--flash) } */
 
 /*
 -----------------------------------------------
@@ -136,9 +137,7 @@ a:hover, a:active { color: var(--flash) }
 
 /*	typography ----------------------------- */
 body {
-
-
-	font: 300 var(--h4)/var(--lh) var(--font);
+	font: 300 var(--h4)/var(--lh) var(--font-body);
 	background-color: var(--back);
 	color: var(--text);
 
@@ -160,9 +159,10 @@ h3 { font-size: var(--h3) }
 h2 { font-size: var(--h2) }
 h1 { font-size: var(--h1) }
 
-h1, h2 {
+h1, h2, h3, h4, h5, h6 {
 	font-family: var(--font);
 	line-height: 1.25;
+	color: #222;
 }
 
 h3 { font-weight: 300 }
@@ -211,8 +211,8 @@ blockquote {
 	position: relative;
 	margin: 1.6rem 0 2.4rem;
 	padding: 2rem 2.4rem 1.8rem 2.4rem;
-	border-radius: var(--border-r);
-	font-family: var(--font);
+	/* border-radius: var(--border-r); */
+	/* font-family: var(--font); */
 	max-width: var(--linemax);
 }
 
@@ -298,19 +298,19 @@ button > svg,
 a {
 	position: relative;
 	padding: 0 0 1px 0;
-	border-bottom: 1px solid currentColor;
+	/* border-bottom: 1px solid currentColor; */
 	user-select: none;
 	color: var(--prime);
-	transition: color .2s, border .2s, padding .2s;
+	/* transition: color .2s, border .2s, padding .2s; */
 }
 
-a:hover  {
+/* a:hover  {
 	color: var(--flash);
-}
+} */
 
 a:hover {
 	padding: 0;
-	border-bottom: 2px solid currentColor;
+	/* border-bottom: 2px solid currentColor; */
 }
 
 a.no-underline {
@@ -334,7 +334,7 @@ a.no-underline {
 .listify ul > li {
 	max-width: calc(var(--linemax) - var(--list-padding));
 	line-height: 1.5;
-	margin: 0 0 0.4rem 0;
+	margin: 0 0 0.5em 0;
 }
 
 .listify ul > li:before {

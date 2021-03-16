@@ -26,14 +26,12 @@
 			if (top > max) {
 				ul.parentNode.scrollBy({
 					top: top - max,
-					left: 0,
-					behavior: 'smooth'
+					left: 0
 				});
 			} else if (bottom < min) {
 				ul.parentNode.scrollBy({
 					top: bottom - min,
-					left: 0,
-					behavior: 'smooth'
+					left: 0
 				});
 			}
 		}

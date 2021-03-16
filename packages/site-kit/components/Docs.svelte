@@ -196,8 +196,8 @@
 	.content h2 {
 		margin-top: 8rem;
 		padding: 2rem 1.6rem 4rem 0.2rem;
-		border-top: var(--border-w) solid #6767785b; /* based on --second */
-		color: var(--text);
+		border-top: 2px solid #ddd;
+		/* color: var(--text); */
 		line-height: 1;
 		font-size: var(--h3);
 		letter-spacing: .05em;
@@ -255,15 +255,15 @@
 
 	.content :global(h3),
 	.content :global(h3 > code) {
-		margin: 6.4rem 0 0 0;
-		padding: 2rem 1.6rem 5.6rem .2rem;
+		margin: 6.4rem 0 1rem 0;
+		padding: 0 0 1rem 0;
 		color: var(--text);
-		border-top: var(--border-w) solid #6767781f; /* based on --second */
+		border-bottom: 1px solid #ddd;
 		background: transparent;
 		line-height: 1;
 	}
 
-	.content :global(h3):first-of-type {
+	.content :global(h3):first-child {
 		border: none;
 		margin: 0;
 	}
@@ -304,7 +304,7 @@
 	}
 
 	.content :global(code) {
-		padding: .3rem .8rem .3rem;
+		padding: 0.4rem;
 		margin: 0 0.2rem;
 		top: -.1rem;
 		background: var(--back-api);
@@ -315,12 +315,17 @@
 		margin: 0;
 		top: 0;
 		background: transparent;
+		color: white;
 	}
 
 	.content :global(pre) {
-		margin: 0 0 2em 0;
+		margin: 0 0 2rem 0;
 		width: 100%;
-		max-width: 100%;
+		max-width: var(--linemax);
+		padding: 1rem 1rem;
+		background: #333;
+		border-radius: 0.5rem;
+		font-size: 14px;
 	}
 
 	.content :global(.icon) {
@@ -372,13 +377,37 @@
 	small a:before { all: unset }
 
 	section :global(blockquote) {
-		color: hsl(204, 100%, 50%);
-		border: 2px solid var(--flash);
+		/* color: #ff3e00; */
+		color: rgba(0,0,0,0.7);
+		background-color: rgba(255, 62, 0, 0.1);
+		/* background-color: #f6f6f6; */
+		/* border-left: 4px solid var(--flash); */
+		border-left: 4px solid #ff3e00;
+		padding: 1rem;
+	}
+
+	section :global(blockquote) :global(:first-child) {
+		margin-top: 0;
+	}
+
+	section :global(blockquote) :global(:last-child) {
+		margin-bottom: 0;
 	}
 
 	section :global(blockquote) :global(code) {
-		background: hsl(204, 100%, 95%) !important;
-		color: hsl(204, 100%, 50%);
+		/* background: hsl(204, 100%, 95%) !important; */
+		background: #d5e2ea;
+		/* color: hsl(204, 100%, 50%); */
+	}
+
+	section :global(a):hover {
+		text-decoration: underline;
+	}
+
+	section :global(a) :global(code) {
+		color: inherit;
+		/* background: none !important; */
+		background: rgba(255,62,0,0.1) !important;
 	}
 </style>
 

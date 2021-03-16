@@ -19,7 +19,7 @@ const block_types = [
 	'tablecell'
 ];
 
-const basedir = process.env.LOCAL
+const basedir = process.env.NODE_ENV === 'development'
 	? 'content/documentation'
 	: 'src/content/documentation';
 

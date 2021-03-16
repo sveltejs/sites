@@ -19,14 +19,14 @@ importers:
       marked: 1.2.9
       prismjs: 1.23.0
     devDependencies:
-      '@sveltejs/adapter-netlify': 1.0.0-next.0
+      '@sveltejs/adapter-netlify': 1.0.0-next.3
       '@sveltejs/adapter-node': 1.0.0-next.7
       '@sveltejs/kit': 1.0.0-next.49_svelte@3.35.0+vite@2.1.0
       '@sveltejs/site-kit': link:../../packages/site-kit
       svelte: 3.35.0
       vite: 2.1.0
     specifiers:
-      '@sveltejs/adapter-netlify': ^1.0.0-next.0
+      '@sveltejs/adapter-netlify': ^1.0.0-next.3
       '@sveltejs/adapter-node': next
       '@sveltejs/kit': ^1.0.0-next.49
       '@sveltejs/site-kit': workspace:*
@@ -57,12 +57,12 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-b6heYM9dzZD13t2GOiEQTDE0qX+I1GyOotMwKh9VQqzuNiVdPVT8dM43fe9HNb/3ul+Qwd5oKSEDrDIfhq3bnQ==
-  /@sveltejs/adapter-netlify/1.0.0-next.0:
+  /@sveltejs/adapter-netlify/1.0.0-next.3:
     dependencies:
       toml: 3.0.0
     dev: true
     resolution:
-      integrity: sha512-CxjWlGkNyQzEB9LsXN+MvF1Z+SHRb16cNZL8sy5bUcytDcf7ETjlgKdaxks7ygWBhI/wtx4Mcxr+uIt50p8vag==
+      integrity: sha512-wlQmSlujoh1BM1Shh/xsSOUPTudypyKfg4ssCV05o+2An4SBHO8PIiFqgWxMBnvFyTJu2VGHu1Ruxzf1yoaQqA==
   /@sveltejs/adapter-node/1.0.0-next.7:
     dev: true
     resolution:

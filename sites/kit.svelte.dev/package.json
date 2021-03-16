@@ -8,7 +8,7 @@
 		"start": "svelte-kit start"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-netlify": "^1.0.0-next.0",
+		"@sveltejs/adapter-netlify": "^1.0.0-next.3",
 		"@sveltejs/adapter-node": "next",
 		"@sveltejs/kit": "^1.0.0-next.49",
 		"@sveltejs/site-kit": "workspace:*",

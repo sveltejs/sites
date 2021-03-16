@@ -163,7 +163,7 @@
 	.home {
 		position: relative;
 		top: -.1rem;
-		width: 18rem;
+		width: 20rem;
 		height: 4.2rem;
 		-webkit-tap-highlight-color: transparent;
 		-webkit-touch-callout: none;

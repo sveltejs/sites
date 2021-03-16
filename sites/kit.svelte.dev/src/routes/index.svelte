@@ -13,8 +13,8 @@
 <Hero
 	title="SvelteKit"
 	tagline="The fastest way to build Svelte apps"
-	outline="sapper-logo-outline.svg"
-	logotype="sapper-logotype.svg"
+	outline="images/svelte-logo-outline.svg"
+	logotype="images/svelte-kit-logotype.svg"
 />
 
 <Blurb>

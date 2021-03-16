@@ -65,16 +65,12 @@ export const unicodeSafeProcessor = (string, opts) => {
 
 /* session processor */
 
-export const make_session_slug_processor = ({
-	// preserve_unicode = SLUG_PRESERVE_UNICODE,
-	// separator = SLUG_SEPARATOR
-}) => {
-	// const processor = preserve_unicode ? unicodeSafeProcessor : urlsafeSlugProcessor;
+export const make_session_slug_processor = () => {
 	const seen = new Set();
 
 	return string => {
 		// const slug = processor(string, { separator });
-		const slug = string.replace(/[^a-z0-9-]/gi, ' ').replace(/\s+/g, '').trim().toLowerCase();
+		const slug = string.replace(/[^a-z0-9-]/gi, '-').replace(/-{2,}/g, '-').replace(/^-/, '').replace(/-$/, '').toLowerCase();
 
 		if (seen.has(slug)) throw new Error(`Duplicate slug ${slug}`);
 		seen.add(slug);

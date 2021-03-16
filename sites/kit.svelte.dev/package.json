@@ -5,6 +5,7 @@
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build",
 		"prebuild": "test \"$CI\" = true && rm -rf content && git clone https://github.com/sveltejs/kit content && npx pnpm install --store=node_modules/.pnpm-store || echo skipping pnpm install",
+		"postbuild": "test \"$CI\" = true && cp -r content .netlify/functions/content",
 		"start": "svelte-kit start"
 	},
 	"devDependencies": {

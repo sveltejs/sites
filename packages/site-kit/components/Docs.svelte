@@ -258,6 +258,7 @@
 		margin: 6.4rem 0 1rem 0;
 		padding: 0 0 1rem 0;
 		color: var(--text);
+		max-width: var(--linemax);
 		border-bottom: 1px solid #ddd;
 		background: transparent;
 		line-height: 1;

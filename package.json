@@ -1,0 +1,8 @@
+{
+	"devDependencies": {
+		"@changesets/cli": "^2.14.1"
+	},
+	"scripts": {
+		"release": "pnpm publish --tag=next"
+	}
+}

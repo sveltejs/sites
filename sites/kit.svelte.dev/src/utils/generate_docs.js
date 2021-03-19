@@ -28,7 +28,6 @@ export default function generate_docs(dir) {
 	const seen = new Set();
 
 	const make_slug = string => {
-		console.log('>>> string', string);
 		const slug = string
 			.replace(/[^a-z0-9-]/gi, '-')
 			.replace(/-{2,}/g, '-')
@@ -46,7 +45,6 @@ export default function generate_docs(dir) {
 		.readdirSync(`${basedir}/${dir}`)
 		.filter(file => /^\d{2}-.+\.md$/.test(file))
 		.map(file => {
-			console.log('>>> file', file);
 			const markdown = fs.readFileSync(`${basedir}/${dir}/${file}`, 'utf-8');
 
 			const { content, metadata } = extract_frontmatter(markdown);

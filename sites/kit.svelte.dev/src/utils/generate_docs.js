@@ -19,9 +19,7 @@ const block_types = [
 	'tablecell'
 ];
 
-const basedir = process.env.NODE_ENV === 'development'
-	? 'content/documentation'
-	: 'src/content/documentation';
+const basedir = 'src/content/documentation';
 
 export default function generate_docs(dir) {
 	const make_slug = make_session_slug_processor({

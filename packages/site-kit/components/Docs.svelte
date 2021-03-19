@@ -3,6 +3,7 @@
 	import GuideContents from './GuideContents.svelte'; // TODO rename
 	import Icon from './Icon.svelte';
 	import { getFragment } from '../utils/navigation';
+	import '../code.css';
 
 	export let owner = 'sveltejs';
 	export let project = 'svelte';

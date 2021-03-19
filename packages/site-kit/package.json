@@ -22,12 +22,12 @@
     "svelte": "^3.35.0"
   },
   "dependencies": {
-    "@sindresorhus/slugify": "^0.9.1",
     "golden-fleece": "^1.0.9"
   },
   "files": [
     "index.mjs",
     "base.css",
+    "code.css",
     "components",
     "utils"
   ]

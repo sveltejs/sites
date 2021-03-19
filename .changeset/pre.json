@@ -1,0 +1,11 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "@sveltejs/site-kit": "1.2.5",
+    "kit.svelte.dev": "0.0.1"
+  },
+  "changesets": [
+    "brown-bikes-trade"
+  ]
+}

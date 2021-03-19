@@ -1,5 +1,5 @@
 import { dev } from '$app/env';
-import generate_docs from '../../utils/generate_docs.js';
+import generate_docs from '$lib/generate_docs.js';
 
 let body;
 

@@ -17,8 +17,8 @@
 	<title>Docs • SvelteKit</title>
 
 	<meta name="twitter:title" content="SvelteKit docs" />
-	<meta name="twitter:description" content="The next small thing in web development" />
-	<meta name="Description" content="The next small thing in web development" />
+	<meta name="twitter:description" content="The fastest way to build Svelte apps" />
+	<meta name="Description" content="The fastest way to build Svelte apps" />
 </svelte:head>
 
 <Docs {sections} project="kit" path="/documentation" />

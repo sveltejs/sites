@@ -130,7 +130,7 @@ a {
 
 /*	typography ----------------------------- */
 body {
-	font: 300 var(--h4) / var(--lh) var(--font-body);
+	font: 400 var(--h4) / var(--lh) var(--font-body);
 	background-color: var(--back);
 	color: var(--text);
 
@@ -249,7 +249,6 @@ blockquote {
 
 blockquote p {
 	font-size: var(--h5);
-	font-weight: 350;
 }
 
 blockquote :last-child {

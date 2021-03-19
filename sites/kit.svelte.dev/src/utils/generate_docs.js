@@ -46,6 +46,7 @@ export default function generate_docs(dir) {
 		.readdirSync(`${basedir}/${dir}`)
 		.filter(file => /^\d{2}-.+\.md$/.test(file))
 		.map(file => {
+			console.log('>>> file', file);
 			const markdown = fs.readFileSync(`${basedir}/${dir}/${file}`, 'utf-8');
 
 			const { content, metadata } = extract_frontmatter(markdown);

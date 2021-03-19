@@ -19,8 +19,8 @@
 
 <Blurb>
 	<a href="https://svelte.dev" slot="one">
-		<h2>Powered by Svelte</h2>
-		<p>SvelteKit is an application framework powered by Svelte — build bigger apps with a smaller footprint</p>
+		<h2>Big ideas, small size</h2>
+		<p>SvelteKit is an application framework powered by Svelte — build ambitious apps with a smaller footprint</p>
 
 		<span class="learn-more">learn more</span>
 	</a>
@@ -34,7 +34,7 @@
 
 	<a href="docs" slot="three">
 		<h2>Build fast</h2>
-		<p>Hit the ground running with advanced routing, server-side rendering, code-splitting, offline support and more</p>
+		<p>World-class developer experience powered by Vite — see your changes instantly</p>
 
 		<span class="learn-more">learn more</span>
 	</a>

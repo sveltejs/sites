@@ -5,6 +5,6 @@
 		"@changesets/cli": "^2.14.1"
 	},
 	"scripts": {
-		"release": "pnpm publish --tag=next"
+		"release": "pnpm publish --tag=next --filter=\"@sveltejs/*\""
 	}
 }

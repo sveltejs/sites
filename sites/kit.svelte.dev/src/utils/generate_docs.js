@@ -1,8 +1,11 @@
 // TODO put this in site-kit? svelte.dev uses Prism instead of hljs
 import fs from 'fs';
-import { SLUG_SEPARATOR, SLUG_PRESERVE_UNICODE } from '../../config';
-import { extract_frontmatter, extract_metadata, langs, link_renderer } from '@sveltejs/site-kit/utils/markdown.js';
-import { make_session_slug_processor } from '@sveltejs/site-kit/utils/slug';
+import {
+	extract_frontmatter,
+	extract_metadata,
+	langs,
+	link_renderer
+} from '@sveltejs/site-kit/utils/markdown.js';
 import marked from 'marked';
 import hljs from 'highlight.js';
 
@@ -22,10 +25,22 @@ const block_types = [
 const basedir = 'src/content/documentation';
 
 export default function generate_docs(dir) {
-	const make_slug = make_session_slug_processor({
-		separator: SLUG_SEPARATOR,
-		preserve_unicode: SLUG_PRESERVE_UNICODE
-	});
+	const seen = new Set();
+
+	const make_slug = string => {
+		console.log('>>> string', string);
+		const slug = string
+			.replace(/[^a-z0-9-]/gi, '-')
+			.replace(/-{2,}/g, '-')
+			.replace(/^-/, '')
+			.replace(/-$/, '')
+			.toLowerCase();
+
+		if (seen.has(slug)) throw new Error(`Duplicate slug ${slug}`);
+		seen.add(slug);
+
+		return slug;
+	};
 
 	return fs
 		.readdirSync(`${basedir}/${dir}`)
@@ -53,9 +68,7 @@ export default function generate_docs(dir) {
 			};
 
 			renderer.code = (source, lang) => {
-				source = source.replace(/^ +/gm, match =>
-					match.split('    ').join('\t')
-				);
+				source = source.replace(/^ +/gm, match => match.split('    ').join('\t'));
 
 				const lines = source.split('\n');
 
@@ -102,9 +115,11 @@ export default function generate_docs(dir) {
 						subsection_slug = rawtext;
 					}
 
-					const slug = make_slug(level === 3
-						? [section_slug, subsection_slug].join('-')
-						: [section_slug, subsection_slug, rawtext].filter(Boolean).join('-'));
+					const slug = make_slug(
+						level === 3
+							? [section_slug, subsection_slug].join('-')
+							: [section_slug, subsection_slug, rawtext].filter(Boolean).join('-')
+					);
 
 					const title = text
 						.replace(/<\/?code>/g, '')

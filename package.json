@@ -1,4 +1,5 @@
 {
+	"name": "@sveltejs/sites",
 	"devDependencies": {
 		"@changesets/cli": "^2.14.1"
 	},

@@ -1,11 +1,17 @@
+const netlify = require('@sveltejs/adapter-netlify');
+const pkg = require('./package.json');
+
 module.exports = {
 	kit: {
-		// By default, `npm run build` will create a standard Node app.
-		// You can create optimized builds for different platforms by
-		// specifying a different adapter
-		adapter: '@sveltejs/adapter-netlify',
-
-		// hydrate the <div id="svelte"> element in src/app.html
-		target: '#svelte'
+		adapter: netlify(),
+		target: '#svelte',
+		vite: {
+			ssr: {
+				noExternal:
+					process.env.NODE_ENV === 'development'
+						? ['@sveltejs/site-kit']
+						: ['@sveltejs/site-kit', ...Object.keys(pkg.dependencies || {})]
+			}
+		}
 	}
 };

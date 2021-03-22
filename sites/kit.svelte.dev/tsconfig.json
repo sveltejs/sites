@@ -21,6 +21,6 @@
 			"$components/*": ["./src/components/*"]
 		}
 	},
-	"include": ["src/**/*"],
+	"include": ["src/**/*", "scripts/**/*"],
 	"exclude": ["node_modules/*", ".svelte"]
 }

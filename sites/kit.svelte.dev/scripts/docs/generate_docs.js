@@ -22,7 +22,7 @@ const block_types = [
 	'tablecell'
 ];
 
-const basedir = 'src/content/documentation';
+const basedir = 'content/documentation';
 
 export default function generate_docs(dir) {
 	const seen = new Set();

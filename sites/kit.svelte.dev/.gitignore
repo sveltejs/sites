@@ -4,3 +4,5 @@ node_modules
 /.svelte
 /build
 /functions
+/static/docs.json
+/static/migrating.json

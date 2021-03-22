@@ -9,12 +9,12 @@
 		"start": "svelte-kit start"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-netlify": "^1.0.0-next.3",
+		"@sveltejs/adapter-netlify": "^1.0.0-next.4",
 		"@sveltejs/adapter-node": "next",
-		"@sveltejs/kit": "^1.0.0-next.51",
+		"@sveltejs/kit": "^1.0.0-next.55",
 		"@sveltejs/site-kit": "workspace:*",
 		"svelte": "^3.35.0",
-		"vite": "^2.1.0"
+		"vite": "^2.1.2"
 	},
 	"dependencies": {
 		"highlight.js": "^10.6.0",

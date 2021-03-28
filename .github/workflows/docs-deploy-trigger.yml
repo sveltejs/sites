@@ -1,0 +1,24 @@
+name: 'Deploy docs'
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: 'the target repo for the docs'
+        required: true
+      branch:
+        description: 'the branch for the docs we want to publish'
+        required: true
+
+jobs:
+  publish_docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: publish
+        id: projects
+        uses: sveltejs/action-deploy-docs@main
+        with:
+          repo: ${{github.event.inputs.repo}}
+          branch: ${{github.event.inputs.branch}}
+          # cf_token: ${{ secrets.WORKFLOW_TOKEN }}

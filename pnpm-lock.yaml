@@ -23,15 +23,15 @@ importers:
       prismjs: 1.23.0
     devDependencies:
       '@sveltejs/adapter-netlify': 1.0.0-next.4
-      '@sveltejs/adapter-node': 1.0.0-next.9
-      '@sveltejs/kit': 1.0.0-next.55_svelte@3.35.0+vite@2.1.2
+      '@sveltejs/adapter-node': 1.0.0-next.12
+      '@sveltejs/kit': 1.0.0-next.66_svelte@3.35.0+vite@2.1.2
       '@sveltejs/site-kit': link:../../packages/site-kit
       svelte: 3.35.0
       vite: 2.1.2
     specifiers:
       '@sveltejs/adapter-netlify': ^1.0.0-next.4
       '@sveltejs/adapter-node': next
-      '@sveltejs/kit': ^1.0.0-next.55
+      '@sveltejs/kit': ^1.0.0-next.66
       '@sveltejs/site-kit': workspace:*
       highlight.js: ^10.6.0
       marked: ^1.2.9
@@ -294,11 +294,11 @@ packages:
     dev: true
     resolution:
       integrity: sha512-kY3tRvnVR0MDOu+8UIgCRrJRkVj4/eQyqdcSm0K06NW8/1QIuVDYE+YZU1IZo4SDYRLeq+/md1UeaaqXBpx8NA==
-  /@sveltejs/adapter-node/1.0.0-next.9:
+  /@sveltejs/adapter-node/1.0.0-next.12:
     dev: true
     resolution:
-      integrity: sha512-7MZta0Jpukh4h+4JlBrFAx9nvlsWIdAwICRFYm8drDX//VuNG4kcyajLXjahxCGjuCMjC+y6rIev949zIsElBg==
-  /@sveltejs/kit/1.0.0-next.55_svelte@3.35.0+vite@2.1.2:
+      integrity: sha512-DGP3dT5ijsTV0zmLDmZP8wI4RjZlifGGzA0y4HLoWNEKhZJLDjFDJnNcA+O5S9QBxQOVaYUlAY2z19r+skBVjA==
+  /@sveltejs/kit/1.0.0-next.66_svelte@3.35.0+vite@2.1.2:
     dependencies:
       '@sveltejs/vite-plugin-svelte': 1.0.0-next.5_svelte@3.35.0+vite@2.1.2
       cheap-watch: 1.0.3
@@ -311,7 +311,7 @@ packages:
       svelte: ^3.32.1
       vite: ^2.1.0
     resolution:
-      integrity: sha512-NB7zJgYCLpTxq2pXDqMx0uJZuMGI0cnXy3Q8+Mia1QVS6mZRwbKD3ZJ4R9bOT4M8u3TXgdL3LHfBPPzid/9ITg==
+      integrity: sha512-IVC4Ssey7aA9ddtkyHGXucxG4TQFsYiJIXVzXXLDI4JNyjZQ0aXraFZQ/S+yOecPprHd1xulk5iZPpM9YnKzIQ==
   /@sveltejs/vite-plugin-svelte/1.0.0-next.5_svelte@3.35.0+vite@2.1.2:
     dependencies:
       '@rollup/pluginutils': 4.1.0

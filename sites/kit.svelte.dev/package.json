@@ -11,7 +11,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-netlify": "^1.0.0-next.4",
 		"@sveltejs/adapter-node": "next",
-		"@sveltejs/kit": "^1.0.0-next.55",
+		"@sveltejs/kit": "^1.0.0-next.66",
 		"@sveltejs/site-kit": "workspace:*",
 		"svelte": "^3.35.0",
 		"vite": "^2.1.2"

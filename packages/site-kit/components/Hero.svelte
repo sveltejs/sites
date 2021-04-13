@@ -17,7 +17,7 @@
 
 <style>
 	.hero-banner {
-		height: 80vh;
+		height: 70vh;
 		max-width: 100vw;
 		background: rgb(211, 214, 217);
 		position: relative;

@@ -35,7 +35,7 @@
 		left: 0;
 		background-repeat: no-repeat;
 		background-size: cover;
-		background-position: right;
+		background-position: top;
 		opacity: 0.3;
 		transition: opacity 0.3s linear;
 	}
@@ -69,6 +69,7 @@
 
 	.logotype {
 		position: relative;
+		max-width: 90vw;
 	}
 
 	@media (min-width: 800px) {
@@ -80,6 +81,7 @@
 	@media (min-width: 1200px) {
 		.hero-overlay {
 			opacity: 1;
+			background-position: right;
 		}
 
 		.hero-container {

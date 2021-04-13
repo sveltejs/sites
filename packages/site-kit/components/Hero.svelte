@@ -9,7 +9,7 @@
 	<div class="hero-overlay" style="background-image: url(./{outline});" />
 	<div class="hero-container">
 		<div class="hero-content">
-			<img alt="{title} logotype" class="logotype" src={logotype} />
+			<img alt="{title} logotype" width="240" class="logotype" src={logotype} />
 			<h3 class="hero-tagline">{@html tagline}</h3>
 		</div>
 	</div>

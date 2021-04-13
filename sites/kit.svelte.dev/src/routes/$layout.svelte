@@ -15,15 +15,15 @@
 	</div>
 	<div class="nav-right" slot="nav-right">
 		<NavItem external="https://svelte.dev/repl" title="Repl Page">
-			<img class="nav-icon" src="./icons/repl.svg" alt="Open Svelte Repl page" />
+			<img class="nav-icon" width="20px" src="./icons/repl.svg" alt="Open Svelte Repl page" />
 		</NavItem>
 
 		<NavItem external="https://svelte.dev/chat" title="Discord Chat">
-			<img class="nav-icon" src="./icons/discord.svg" alt="Open Discord chat" />
+			<img class="nav-icon" width="20px" src="./icons/discord.svg" alt="Open Discord chat" />
 		</NavItem>
 
 		<NavItem external="https://github.com/sveltejs/kit" title="GitHub Repo">
-			<img class="nav-icon" src="./icons/github.svg" alt="Open Svelte GitHub page" />
+			<img class="nav-icon" width="20px" src="./icons/github.svg" alt="Open Svelte GitHub page" />
 		</NavItem>
 	</div>
 </Nav>

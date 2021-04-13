@@ -9,7 +9,7 @@
 	<div class="hero-overlay" style="background-image: url(./{outline});" />
 	<div class="hero-container">
 		<div class="hero-content">
-			<img alt="{title} logotype" width="330" class="logotype" src={logotype} />
+			<img alt="{title} logotype" width="440" class="logotype" src={logotype} />
 			<h3>{@html tagline}</h3>
 		</div>
 	</div>
@@ -42,7 +42,7 @@
 
 	.hero-container {
 		width: 100%;
-		max-width: 90vw;
+		max-width: 110vw;
 		margin: -10rem auto 0 auto;
 		display: flex;
 		justify-content: center;
@@ -68,18 +68,12 @@
 	}
 
 	.logotype {
-		height: 8rem;
 		position: relative;
 	}
 
 	@media (min-width: 800px) {
 		.hero-banner {
 			padding: 15rem auto;
-		}
-
-		.hero-banner h3,
-		.logotype {
-			left: 3rem;
 		}
 	}
 
@@ -89,7 +83,7 @@
 		}
 
 		.hero-container {
-			max-width: 90rem;
+			max-width: 110rem;
 			justify-content: flex-start;
 			margin: -10rem auto 0 auto;
 		}

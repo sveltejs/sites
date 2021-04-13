@@ -234,11 +234,6 @@
 		border: none !important; /* TODO get rid of linkify */
 	}
 
-	.content :global(h2 > .anchor),
-	.content :global(h3 > .anchor) {
-		top: 0.75em;
-	}
-
 	@media (min-width: 768px) {
 		.content :global(h2):hover :global(.anchor),
 		.content :global(h3):hover :global(.anchor),

@@ -9,8 +9,8 @@
 	<div class="hero-overlay" style="background-image: url(./{outline});" />
 	<div class="hero-container">
 		<div class="hero-content">
-			<img alt="{title} logotype" width="240" class="logotype" src={logotype} />
-			<h3 class="hero-tagline">{@html tagline}</h3>
+			<img alt="{title} logotype" width="330" class="logotype" src={logotype} />
+			<h3>{@html tagline}</h3>
 		</div>
 	</div>
 </section>
@@ -19,6 +19,7 @@
 	.hero-banner {
 		height: 70vh;
 		max-width: 100vw;
+		background: rgb(211, 214, 217);
 		position: relative;
 		padding: 10rem auto;
 		display: flex;
@@ -55,7 +56,7 @@
 	}
 
 	.hero-banner h3 {
-		margin-top: 2rem;
+		margin-top: 0;
 		position: relative;
 		font-size: var(--h4);
 		font-weight: 200;
@@ -67,7 +68,7 @@
 	}
 
 	.logotype {
-		height: 4.5rem;
+		height: 8rem;
 		position: relative;
 	}
 

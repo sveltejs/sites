@@ -8,50 +8,46 @@
 
 <Hero
 	title="SvelteKit"
-	tagline="Cybernetically enhanced<br/>web apps"
 	logotype="images/svelte-kit-logotype.svg"
+	tagline="The fastest way to<br/>build svelte apps"
 	outline="images/hero-banner.png"
 />
 
 <Blurb>
 	<div class="hero-card" slot="one">
-		<h2>Write less code</h2>
+		<h2>Powered by Svelte</h2>
 		<p>
-			Build boilerplate-free components using languages you already know — HTML, CSS and JavaScript
+			SvelteKit is an application framework powered by Svelte — build bigger apps with a smaller footprint
 		</p>
 
-		<a href="https://svelte.dev" class="learn-more arrow-link">On writing</a>
+		<a href="https://svelte.dev" class="learn-more arrow-link">learn more</a>
 	</div>
 
 	<div class="hero-card" slot="two">
-		<h2>No virtual DOM</h2>
+		<h2>Best of both worlds</h2>
 		<p>
-			Svelte compiles your code to tiny, framework-less vanilla JS — your app starts fast and stays
-			fast
+			All the SEO and progressive enhancement of a server-rendered app, with the slick navigation of an SPA
 		</p>
 
-		<a href="docs" class="learn-more arrow-link">On overhead</a>
+		<a href="docs" class="learn-more arrow-link">learn more</a>
 	</div>
 
 	<div class="hero-card" slot="three">
-		<h2>Truly reactive</h2>
+		<h2>Build fast</h2>
 		<p>
-			No more complex state management libraries — Svelte brings reactivity to JavaScript itself
+			Hit the ground running with advanced routing, server-side rendering, code-splitting, offline support and more
 		</p>
 
-		<a href="docs" class="learn-more arrow-link">On reactivity</a>
+		<a href="docs" class="learn-more arrow-link">learn more</a>
 	</div>
 
 	<div class="description" slot="what">
-		<h2>A radical new approach<br />to building user interfaces</h2>
 		<p>
-			Whereas traditional frameworks like React and Vue do the bulk of their work in the browser,
-			Svelte shifts that work into a compile step that happens when you build your app.
+			SvelteKit is a framework for building web applications of all sizes, with a beautiful development experience and flexible filesystem-based routing.
 		</p>
 
 		<p>
-			Instead of using techniques like virtual DOM diffing, Svelte writes code that surgically
-			updates the DOM when the state of your app changes.
+            Unlike single-page apps, SvelteKit doesn't compromise on SEO, progressive enhancement or the initial load experience — but unlike traditional server-rendered apps, navigation is instantaneous for that app-like feel.
 		</p>
 
 		<p>
@@ -125,11 +121,5 @@ npm run dev & open http://localhost:3000
 
 	.arrow-link:hover:after {
 		background-size: 100% 100%;
-	}
-
-	@media (min-width: 1200px) {
-		.code-box {
-			margin-top: 9rem;
-		}
 	}
 </style>

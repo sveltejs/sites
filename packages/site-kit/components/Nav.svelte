@@ -1,7 +1,6 @@
 <script>
-	import { onMount, setContext } from 'svelte';
+	import { setContext } from 'svelte';
 	import { writable } from 'svelte/store';
-	import Icon from './Icon.svelte';
 
 	export let segment;
 	export let page;
@@ -38,7 +37,7 @@
 	function handle_scroll() {
 		const scroll = window.pageYOffset;
 		if (!hash_changed) {
-			visible = (scroll < 50 || scroll < last_scroll);
+			visible = scroll < 50 || scroll < last_scroll;
 		}
 
 		last_scroll = scroll;
@@ -47,6 +46,43 @@
 
 	$: $current = segment;
 </script>
+
+<svelte:window on:hashchange={handle_hashchange} on:scroll={handle_scroll} />
+
+<header class:visible={visible || open}>
+	<nav>
+		{#if open}
+			<div class="modal-background hide-if-desktop" on:click={() => (open = false)} />
+		{/if}
+
+		<a
+			rel="prefetch"
+			href="."
+			class="nav-spot home"
+			title={home_title}
+			style="background-image: url({logo})"
+		>
+			{home}
+		</a>
+		<ul
+			class:open
+			on:touchstart|capture={intercept_touchstart}
+			on:mouseenter={() => (open = true)}
+			on:mouseleave={() => (open = false)}
+		>
+			<li class="hide-if-desktop" class:active={!segment}><a rel="prefetch" href=".">{home}</a></li>
+			<slot name="nav-center" />
+			{#if open}
+				<div class="hide-if-desktop">
+					<slot name="nav-right" />
+				</div>
+			{/if}
+		</ul>
+		<div class="nav-spot show-if-desktop">
+			<slot name="nav-right" />
+		</div>
+	</nav>
+</header>
 
 <style>
 	header {
@@ -59,11 +95,11 @@
 		padding: 0 var(--side-nav);
 		margin: 0 auto;
 		background-color: white;
-		box-shadow: 0 -0.4rem 0.9rem 0.2rem rgba(0,0,0,.5);
+		box-shadow: 0 -0.4rem 0.9rem 0.2rem rgba(0, 0, 0, 0.5);
 		font-family: var(--font);
 		z-index: 100;
 		user-select: none;
-		transform: translate(0,calc(-100% - 1rem));
+		transform: translate(0, calc(-100% - 1rem));
 		transition: transform 0.2s;
 	}
 
@@ -87,11 +123,9 @@
 		box-shadow: none;
 	}
 
-	.primary {
-		list-style: none;
-		font-family: var(--font);
-		margin: 0;
-		line-height: 1;
+	.nav-spot {
+		width: 40rem;
+		height: 4.2rem;
 	}
 
 	ul :global(li) {
@@ -106,6 +140,7 @@
 	ul {
 		position: relative;
 		padding: 0 3rem 0 0;
+		margin: 0;
 		background: url(/icons/chevron.svg) calc(100% - 1em) 0.05em no-repeat;
 		background-size: 1em 1em;
 	}
@@ -121,6 +156,7 @@
 	}
 
 	ul.open {
+		width: 100%;
 		padding: 0 0 1em 0;
 		background: white;
 		border-left: 1px solid #eee;
@@ -132,7 +168,7 @@
 
 	ul.open :global(li) {
 		display: block;
-		text-align: right
+		text-align: right;
 	}
 
 	ul.open::after {
@@ -141,7 +177,7 @@
 
 	ul :global(li) :global(a) {
 		font-size: var(--h5);
-		padding: 0 .8rem;
+		padding: 0 0.8rem;
 		border: none;
 		color: inherit;
 	}
@@ -151,30 +187,27 @@
 		display: block;
 	}
 
-	ul.open :global(li):first-child :global(a) {
-		padding-top: 2.3rem;
+	ul.open :global(.nav-right) :global(a) {
+		padding: 1.5rem;
+		display: block;
 	}
 
-	.primary :global(svg) {
-		width: 2rem;
-		height: 2rem;
+	ul.open :global(li):first-child :global(a) {
+		padding-top: 1.5rem;
 	}
 
 	.home {
 		position: relative;
-		top: -.1rem;
-		width: 20rem;
-		height: 4.2rem;
+		top: -0.1rem;
 		-webkit-tap-highlight-color: transparent;
 		-webkit-touch-callout: none;
 		background: 0 50% no-repeat;
 		background-size: auto 100%;
 		text-indent: -9999px;
-		/* z-index: 11; */
 	}
 
 	ul :global(li).active :global(a) {
-		color: var(--prime)
+		color: var(--prime);
 	}
 
 	.modal-background {
@@ -196,10 +229,16 @@
 		color: var(--flash);
 	}
 
-	@media (min-width: 840px) {
+	.show-if-desktop {
+		display: none;
+	}
+
+	@media (min-width: 768px) {
 		ul {
+			width: 100%;
+			display: flex;
+			flex-direction: row;
 			padding: 0;
-			background: none;
 		}
 
 		ul.open {
@@ -216,7 +255,7 @@
 
 		ul.open :global(li) :global(a) {
 			font-size: var(--h5);
-			padding: 0 .8rem;
+			padding: 0 0.8rem;
 			display: inline;
 		}
 
@@ -228,37 +267,12 @@
 			display: inline !important;
 		}
 
+		.show-if-desktop {
+			display: inline;
+		}
+
 		.hide-if-desktop {
 			display: none !important;
 		}
 	}
 </style>
-
-<svelte:window on:hashchange={handle_hashchange} on:scroll={handle_scroll} />
-
-<header class:visible="{visible || open}">
-	<nav>
-		<a
-			rel="prefetch"
-			href="."
-			class="home"
-			title="{home_title}"
-			style="background-image: url({logo})"
-		>{home}</a>
-
-		{#if open}
-			<div class="modal-background hide-if-desktop" on:click="{() => open = false}"></div>
-		{/if}
-
-		<ul
-			class="primary"
-			class:open
-			on:touchstart|capture={intercept_touchstart}
-			on:mouseenter="{() => open = true}"
-			on:mouseleave="{() => open = false}"
-		>
-			<li class="hide-if-desktop" class:active="{!segment}"><a rel="prefetch" href=".">{home}</a></li>
-			<slot></slot>
-		</ul>
-	</nav>
-</header>

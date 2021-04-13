@@ -113,6 +113,7 @@
 	.how :global(.cta) :global(a) {
 		display: inline-block;
 		background-color: var(--prime);
+		border-radius: 4px;
 		padding: 0.5em 1em;
 		color: var(--back);
 		transition: all 0.2s linear;

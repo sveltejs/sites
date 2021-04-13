@@ -2,16 +2,40 @@
 	import Section from './Section.svelte';
 </script>
 
+<Section>
+	<div class="blurb">
+		<div class="box one">
+			<slot name="one" />
+		</div>
+
+		<div class="box two">
+			<slot name="two" />
+		</div>
+
+		<div class="box three">
+			<slot name="three" />
+		</div>
+
+		<div class="what">
+			<slot name="what" />
+		</div>
+
+		<div class="how">
+			<slot name="how" />
+		</div>
+	</div>
+</Section>
+
 <style>
 	.blurb {
 		display: grid;
 		grid-row-gap: 1em;
 		grid-template-areas:
-			"one"
-			"two"
-			"three"
-			"what"
-			"how";
+			'one'
+			'two'
+			'three'
+			'what'
+			'how';
 	}
 
 	.box {
@@ -31,8 +55,9 @@
 		padding: 0;
 		margin: 0 0 0.5em 0;
 		font-size: var(--h2);
+		font-weight: 300;
 		color: white;
-		text-align: left;
+		text-align: center;
 	}
 
 	.blurb :global(p) {
@@ -40,45 +65,61 @@
 	}
 
 	.box :global(.learn-more) {
-		display: block;
-		position: relative;
-		text-align: right;
-		margin-top: auto;
-		padding: 0 1.2em 0 0;
+		padding: 0.8rem 1.6rem;
+		border-radius: 4px;
+		background: var(--back);
+		color: var(--second);
+		font-size: var(--h6);
+		transition: all 0.2s linear;
 	}
 
-	.box:hover :global(.learn-more) {
-		color: white;
-		text-decoration: underline;
+	.box :global(.learn-more):hover {
+		padding: 0.8rem 2.75rem 0.8rem 1.6rem;
+		filter: brightness(0.95);
 	}
 
-	.box :global(.learn-more)::after, .box :global(.cta) :global(a)::after {
-		content: '';
-		position: absolute;
-		display: block;
-		right: 0;
-		top: 0.3em;
-		width: 1em;
-		height: 1em;
-		background: url(/icons/arrow-right.svg);
-		background-size: 100% 100%;
+	.box :global(.learn-more)::after {
+		top: 1.25rem;
+		right: 0.75rem;
+		background-image: url(/icons/arrow-right-black.svg);
+	}
+
+	.one {
+		background: var(--prime);
+		grid-area: one;
+	}
+
+	.two {
+		background: var(--flash);
+		grid-area: two;
+	}
+
+	.three {
+		background: var(--second);
+		grid-area: three;
 	}
 
 	.how {
 		/* needed to prevent the <pre> from
 		   breaking the grid layout */
 		min-width: 0;
+		grid-area: how;
+	}
+
+	.how :global(.cta) {
+		margin: 0;
 	}
 
 	.how :global(.cta) :global(a) {
 		display: inline-block;
-		text-align: right;
 		background-color: var(--prime);
+		padding: 0.5em 1em;
+		color: var(--back);
+		transition: all 0.2s linear;
+	}
+
+	.how :global(.cta) :global(a):hover {
 		padding: 0.5em 1.8em 0.5em 1em;
-		border-radius: var(--border-r);
-		border: none;
-		color: white;
-		position: relative;
 	}
 
 	.how :global(.cta) :global(a)::after {
@@ -88,10 +129,7 @@
 
 	.what {
 		margin: 2em 0 0 0;
-	}
-
-	.how :global(.cta) {
-		margin: 0;
+		grid-area: what;
 	}
 
 	@media (min-width: 900px) {
@@ -100,17 +138,14 @@
 			grid-row-gap: 1em;
 			grid-template-columns: repeat(2, 1fr);
 			grid-template-areas:
-				"one two"
-				"three how"
-				"what what";
+				'one two'
+				'three three'
+				'what what'
+				'how how';
 		}
 
 		.box {
 			padding: 2em;
-		}
-
-		.box :global(.cta) {
-			text-align: right;
 		}
 	}
 
@@ -120,8 +155,8 @@
 			grid-row-gap: 5em;
 			grid-template-columns: repeat(6, 1fr);
 			grid-template-areas:
-				"one one two two three three"
-				"what what what how how how";
+				'one one two two three three'
+				'what what what how how how';
 		}
 
 		.what {
@@ -133,27 +168,3 @@
 		}
 	}
 </style>
-
-<Section>
-	<div class="blurb">
-		<div class="box" style="background: var(--prime); grid-area: one;">
-			<slot name="one"></slot>
-		</div>
-
-		<div class="box" style="background: var(--flash); grid-area: two;">
-			<slot name="two"></slot>
-		</div>
-
-		<div class="box" style="background: var(--second); grid-area: three;">
-			<slot name="three"></slot>
-		</div>
-
-		<div class="what" style="grid-area: what;">
-			<slot name="what"></slot>
-		</div>
-
-		<div class="how" style="grid-area: how;">
-			<slot name="how"></slot>
-		</div>
-	</div>
-</Section>

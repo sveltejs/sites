@@ -1,63 +1,96 @@
 <script>
-	import ParallaxLogo from './ParallaxLogo.svelte';
-
 	export let title;
 	export let tagline;
 	export let logotype;
 	export let outline;
 </script>
 
+<section class="hero-banner">
+	<div class="hero-overlay" style="background-image: url(./{outline});" />
+	<div class="hero-container">
+		<div class="hero-content">
+			<img alt="{title} logotype" class="logotype" src={logotype} />
+			<h3 class="hero-tagline">{@html tagline}</h3>
+		</div>
+	</div>
+</section>
+
 <style>
-	.hero {
+	.hero-banner {
+		height: 70vh;
+		max-width: 100vw;
 		position: relative;
-		margin: 10rem auto;
-		padding: 0 var(--side-nav);
-		max-width: 120rem;
+		padding: 10rem auto;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
 	}
 
-	h3 { color: var(--text) }
-
-	.hero {
-		margin: 10rem auto;
+	.hero-overlay {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: right;
+		opacity: 0.3;
+		transition: opacity 0.3s linear;
 	}
 
-	.hero h3, .logotype {
+	.hero-container {
+		width: 100%;
+		max-width: 90vw;
+		margin: -10rem auto 0 auto;
+		display: flex;
+		justify-content: center;
+	}
+
+	.hero-content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.hero-banner h3 {
+		margin-top: 2rem;
 		position: relative;
-		left: 1.6rem;
-	}
-
-	.hero h3 {
-		font-size: 2rem;
+		font-size: var(--h4);
+		font-weight: 200;
+		line-height: 2.5rem;
+		letter-spacing: 0.1em;
+		text-align: center;
+		text-transform: uppercase;
+		color: var(--text);
 	}
 
 	.logotype {
-		height: 4rem;
-	}
-
-	@media (min-width: 640px) {
-		.logotype {
-			height: 6rem;
-		}
-
-		.hero h3 {
-			font-size: var(--h3);
-		}
+		height: 4.5rem;
+		position: relative;
 	}
 
 	@media (min-width: 800px) {
-		.hero {
-			margin: 15rem auto;
+		.hero-banner {
+			padding: 15rem auto;
 		}
 
-		.hero h3, .logotype {
+		.hero-banner h3,
+		.logotype {
 			left: 3rem;
 		}
 	}
+
+	@media (min-width: 1200px) {
+		.hero-overlay {
+			opacity: 1;
+		}
+
+		.hero-container {
+			max-width: 90rem;
+			justify-content: flex-start;
+			margin: -10rem auto 0 auto;
+		}
+	}
 </style>
-
-<ParallaxLogo alt="{title} logo" src={outline}/>
-
-<section class="hero">
-	<img alt="{title} logotype" class="logotype" src={logotype}>
-	<h3>{tagline}</h3>
-</section>

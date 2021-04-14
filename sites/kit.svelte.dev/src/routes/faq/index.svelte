@@ -33,7 +33,6 @@
 		to Svelte directly.
 	</p>
 </div>
-" /> -->
 
 <style>
 	.faqs {

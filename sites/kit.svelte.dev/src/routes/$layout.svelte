@@ -25,6 +25,7 @@
 
 <Nav {segment} {page} logo="images/svelte-kit-horizontal.svg">
 	<NavItem segment="docs">Docs</NavItem>
+	<NavItem segment="faq">FAQ</NavItem>
 	<NavItem segment="migrating">Migrating</NavItem>
 
 	<NavItem external="https://svelte.dev">Svelte</NavItem>

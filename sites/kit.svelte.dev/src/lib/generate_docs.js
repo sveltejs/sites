@@ -49,7 +49,7 @@ export default function generate_docs(dir) {
 
 			const { content, metadata } = extract_frontmatter(markdown);
 
-			const section_slug = make_slug(metadata.title);
+			const section_slug = make_slug(metadata?.title || metadata?.question);
 			let subsection_slug = null;
 
 			const subsections = [];
@@ -91,7 +91,7 @@ export default function generate_docs(dir) {
 				}
 
 				const plang = langs[lang];
-				const { value: highlighted } = hljs.highlight(lang, source);
+				const { value: highlighted } = hljs.highlight(lang || 'plaintext', source);
 				// const highlighted = PrismJS.highlight(
 				// 	source,
 				// 	PrismJS.languages[plang],

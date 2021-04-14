@@ -10,9 +10,10 @@
 <Nav {segment} {page} logo="images/svelte-kit-horizontal.svg">
 	<div slot="nav-center" class="nav-center">
 		<NavItem segment="docs">Docs</NavItem>
+		<NavItem segment="faq">FAQ</NavItem>
 		<NavItem segment="migrating">Migrating</NavItem>
-		<NavItem external="https://svelte.dev">Svelte</NavItem>
 	</div>
+
 	<div class="nav-right" slot="nav-right">
 		<!-- <NavItem external="https://svelte.dev/repl" title="Repl Page">
 			<img class="nav-icon" width="20px" src="./icons/repl.svg" alt="Open Svelte Repl page" />

@@ -49,12 +49,10 @@
 
 	<div style="grid-area: start; display: flex; flex-direction: column; min-width: 0" slot="how">
 		<pre class="language-bash" style="margin: 0 0 1em 0; min-width: 0; min-height: 0">
-mkdir my-app
+npm init svelte@next my-app
 cd my-app
-npm init svelte@next
-
 npm install
-npm run dev & open http://localhost:3000
+npm run dev -- --open
 		</pre>
 
 		<p class="cta"><a rel="prefetch" href="docs">Learn SvelteKit</a></p>

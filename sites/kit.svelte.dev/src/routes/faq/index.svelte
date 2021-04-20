@@ -1,6 +1,6 @@
 <script context="module">
 	export async function load({ fetch }) {
-		const faqs = await fetch('faq.json').then(r => r.json());
+		const faqs = await fetch('https://api.svelte.dev/docs/kit/faq?content').then(r => r.json());
 		return { props: { faqs } };
 	}
 </script>
@@ -23,9 +23,9 @@
 			<h2>
 				<a id={faq.slug} class="offset-anchor" />
 				<a class="anchor" sapper:prefetch href="faq#{faq.slug}" title={faq.title}>&nbsp;</a>
-				{faq.metadata.question}
+				{faq.title}
 			</h2>
-			{@html faq.html}
+			{@html faq.content}
 		</article>
 	{/each}
 	<p>

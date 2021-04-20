@@ -108,7 +108,7 @@
 	{#each sections as section}
 		<li>
 			<a class="section" class:active="{section.slug === active_section}" href="{dir}#{section.slug}">
-				{@html section.metadata.title}
+				{@html section.title}
 
 				{#if section.slug === active_section}
 					<div class="icon-container">
@@ -117,7 +117,7 @@
 				{/if}
 			</a>
 
-			{#each section.subsections as subsection}
+			{#each section.sections as subsection}
 				<!-- see <script> below: on:click='scrollTo(event, subsection.slug)' -->
 				<a
 					class="subsection"

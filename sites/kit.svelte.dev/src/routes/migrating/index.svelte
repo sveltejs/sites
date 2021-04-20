@@ -1,6 +1,6 @@
 <script context="module">
 	export async function load({ fetch }) {
-		const sections = await fetch(`migrating.json`).then((r) => r.json());
+		const sections = await fetch(`https://api.svelte.dev/docs/kit/migrating?content`).then((r) => r.json());
 		return {
 			props: { sections }
 		};

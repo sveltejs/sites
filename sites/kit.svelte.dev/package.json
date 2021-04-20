@@ -16,10 +16,5 @@
 		"svelte": "^3.35.0",
 		"vite": "^2.1.2"
 	},
-	"dependencies": {
-		"highlight.js": "^10.6.0",
-		"marked": "^1.2.9",
-		"prismjs": "^1.23.0"
-	},
 	"type": "module"
 }

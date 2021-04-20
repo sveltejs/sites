@@ -417,7 +417,7 @@
 				<!-- svelte-ignore a11y-missing-content -->
 				<a href="{dir}#{section.slug}" class="anchor" aria-hidden></a>
 
-				{@html section.metadata.title}
+				{@html section.title}
 				<small>
 					<a href="https://github.com/{owner}/{project}/edit/master{path}/{dir}/{section.file}" title="{edit_title}">
 						<Icon name='edit' />
@@ -425,7 +425,7 @@
 				</small>
 			</h2>
 
-			{@html section.html}
+			{@html section.content}
 		</section>
 	{/each}
 </div>

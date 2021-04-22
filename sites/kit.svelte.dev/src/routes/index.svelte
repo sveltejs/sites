@@ -2,10 +2,6 @@
 	import { Hero, Blurb } from '@sveltejs/site-kit';
 </script>
 
-<style>
-
-</style>
-
 <svelte:head>
 	<title>SvelteKit • The fastest way to build Svelte apps</title>
 </svelte:head>

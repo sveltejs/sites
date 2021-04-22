@@ -17,7 +17,8 @@
 	<div class="hero-card" slot="one">
 		<h2>Powered by Svelte</h2>
 		<p>
-			SvelteKit is an application framework powered by Svelte — build bigger apps with a smaller footprint
+			SvelteKit is an application framework powered by Svelte — build bigger apps with a smaller
+			footprint
 		</p>
 
 		<a href="https://svelte.dev" class="learn-more arrow-link">learn more</a>
@@ -26,7 +27,8 @@
 	<div class="hero-card" slot="two">
 		<h2>Best of both worlds</h2>
 		<p>
-			All the SEO and progressive enhancement of a server-rendered app, with the slick navigation of an SPA
+			All the SEO and progressive enhancement of a server-rendered app, with the slick navigation of
+			an SPA
 		</p>
 
 		<a href="docs" class="learn-more arrow-link">learn more</a>
@@ -35,7 +37,8 @@
 	<div class="hero-card" slot="three">
 		<h2>Build fast</h2>
 		<p>
-			Hit the ground running with advanced routing, server-side rendering, code-splitting, offline support and more
+			Hit the ground running with advanced routing, server-side rendering, code-splitting, offline
+			support and more
 		</p>
 
 		<a href="docs" class="learn-more arrow-link">learn more</a>
@@ -43,11 +46,14 @@
 
 	<div class="description" slot="what">
 		<p>
-			SvelteKit is a framework for building web applications of all sizes, with a beautiful development experience and flexible filesystem-based routing.
+			SvelteKit is a framework for building web applications of all sizes, with a beautiful
+			development experience and flexible filesystem-based routing.
 		</p>
 
 		<p>
-            Unlike single-page apps, SvelteKit doesn't compromise on SEO, progressive enhancement or the initial load experience — but unlike traditional server-rendered apps, navigation is instantaneous for that app-like feel.
+			Unlike single-page apps, SvelteKit doesn't compromise on SEO, progressive enhancement or the
+			initial load experience — but unlike traditional server-rendered apps, navigation is
+			instantaneous for that app-like feel.
 		</p>
 
 		<p>
@@ -59,12 +65,10 @@
 	<div slot="how">
 		<div class="code-box">
 			<pre>
-mkdir my-app
+npm init <span class="orange-highlight">svelte@next</span> my-app
 cd my-app
-npm init <span class="orange-highlight">svelte@next</span>
-
 npm install
-npm run dev & open http://localhost:3000
+npm run dev -- --open
             </pre>
 		</div>
 		<p class="cta"><a rel="prefetch" href="docs" class="arrow-link">Learn SvelteKit</a></p>

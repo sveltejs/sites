@@ -109,7 +109,7 @@
 		}
 
 		.hero-image img {
-			width: 600px;
+			width: 480px;
 			transform: translate(0,10%) scale(1.8);
 		}
 

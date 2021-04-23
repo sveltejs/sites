@@ -1,3 +1,11 @@
+<script context="module">
+	export function load({ status, error }) {
+		return {
+			props: { status, error }
+		};
+	}
+</script>
+
 <script>
 	import { dev } from '$app/env';
 

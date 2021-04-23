@@ -1,12 +1,10 @@
 <script>
 	import { afterUpdate } from 'svelte';
-	import Icon from './Icon.svelte';
 
 	export let sections = [];
 	export let active_section = null;
 	export let show_contents;
 	export let prevent_sidebar_scroll = false;
-	export let dir;
 
 	let ul;
 
@@ -37,6 +35,41 @@
 		}
 	});
 </script>
+
+<ul
+	bind:this={ul}
+	class="reference-toc"
+	on:mouseenter="{() => prevent_sidebar_scroll = true}"
+	on:mouseleave="{() => prevent_sidebar_scroll = false}"
+>
+	{#each sections as section}
+		<li>
+			<a class="section" class:active="{section.slug === active_section}" href="#{section.slug}">
+				{@html section.title}
+			</a>
+
+			{#each section.sections as subsection}
+				<a
+					class="subsection"
+					class:active="{subsection.slug === active_section}"
+					href="#{subsection.slug}"
+				>
+					{@html subsection.title}
+				</a>
+
+				{#each subsection.sections as subsection}
+					<a
+						class="nested subsection"
+						class:active="{subsection.slug === active_section}"
+						href="#{subsection.slug}"
+					>
+						{@html subsection.title}
+					</a>
+				{/each}
+			{/each}
+		</li>
+	{/each}
+</ul>
 
 <style>
 	.reference-toc li {
@@ -75,14 +108,19 @@
 		color: var(--flash);
 	}
 
-	.subsection[data-level="4"] {
-		padding-left: 1.2rem;
+	.active::after {
+		content: '';
+		position: absolute;
+		right: 0;
+		top: 2px;
+		width: 0;
+		height: 0;
+		border: 6px solid transparent;
+		border-right-color: white;
 	}
 
-	.icon-container {
-		position: absolute;
-		top: -.2rem;
-		right: 2.4rem;
+	.nested {
+		padding-left: 1.2rem;
 	}
 
 	@media (min-width: 832px) {
@@ -98,42 +136,3 @@
 		}
 	}
 </style>
-
-<ul
-	bind:this={ul}
-	class="reference-toc"
-	on:mouseenter="{() => prevent_sidebar_scroll = true}"
-	on:mouseleave="{() => prevent_sidebar_scroll = false}"
->
-	{#each sections as section}
-		<li>
-			<a class="section" class:active="{section.slug === active_section}" href="{dir}#{section.slug}">
-				{@html section.metadata.title}
-
-				{#if section.slug === active_section}
-					<div class="icon-container">
-						<Icon name="arrow-right" />
-					</div>
-				{/if}
-			</a>
-
-			{#each section.subsections as subsection}
-				<!-- see <script> below: on:click='scrollTo(event, subsection.slug)' -->
-				<a
-					class="subsection"
-					class:active="{subsection.slug === active_section}"
-					href="{dir}#{subsection.slug}"
-					data-level="{subsection.level}"
-				>
-					{@html subsection.title}
-
-					{#if subsection.slug === active_section}
-						<div class="icon-container">
-							<Icon name="arrow-right" />
-						</div>
-					{/if}
-				</a>
-			{/each}
-		</li>
-	{/each}
-</ul>

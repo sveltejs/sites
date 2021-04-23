@@ -340,18 +340,18 @@
 	}
 
 	section > :global(.code-block) > :global(pre) {
-		display: inline-block;
+		/* display: inline-block; */
 		/* background: var(--back-api); */
 		color: white;
-		padding: .3rem .8rem;
-		margin: 0;
+		/* padding: .3rem .8rem; */
+		/* margin: 0; */
 		max-width: 100%;
 	}
 
-	section > :global(.code-block)> :global(pre.language-markup) {
+	/* section > :global(.code-block)> :global(pre.language-markup) {
 		padding: .3rem .8rem .2rem;
 		background: var(--back-api);
-	}
+	} */
 
 	section > :global(p) {
 		max-width: var(--linemax)
@@ -417,7 +417,7 @@
 				<!-- svelte-ignore a11y-missing-content -->
 				<a href="{dir}#{section.slug}" class="anchor" aria-hidden></a>
 
-				{@html section.metadata.title}
+				{@html section.title}
 				<small>
 					<a href="https://github.com/{owner}/{project}/edit/master{path}/{dir}/{section.file}" title="{edit_title}">
 						<Icon name='edit' />
@@ -425,7 +425,7 @@
 				</small>
 			</h2>
 
-			{@html section.html}
+			{@html section.content}
 		</section>
 	{/each}
 </div>

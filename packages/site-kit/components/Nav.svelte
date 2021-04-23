@@ -239,7 +239,7 @@
 <header class:visible="{visible || open}">
 	<nav>
 		<a
-			rel="prefetch"
+			sveltekit:prefetch
 			href="."
 			class="home"
 			title="{home_title}"
@@ -257,7 +257,7 @@
 			on:mouseenter="{() => open = true}"
 			on:mouseleave="{() => open = false}"
 		>
-			<li class="hide-if-desktop" class:active="{!segment}"><a rel="prefetch" href=".">{home}</a></li>
+			<li class="hide-if-desktop" class:active="{!segment}"><a sveltekit:prefetch href=".">{home}</a></li>
 			<slot></slot>
 		</ul>
 	</nav>

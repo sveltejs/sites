@@ -1,5 +1,7 @@
 <script>
 	export let alt;
+	export let width;
+	export let height;
 	export let title;
 	export let tagline;
 	export let logotype;
@@ -16,7 +18,7 @@
 		<div class="hero-image">
 		<picture>
 			<source srcset="{background}.webp">
-			<img {alt} src="{background}.png">
+			<img {alt} {width} {height} src="{background}.png">
 		</picture>
 	</div>
 	</div>

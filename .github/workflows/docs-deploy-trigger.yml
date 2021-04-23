@@ -9,6 +9,14 @@ on:
       branch:
         description: 'the branch for the docs we want to publish'
         required: true
+      docs_path:
+        description: 'the path to your root documentation (without a leading slash)'
+        required: false
+        default: 'documentation'
+      pkg_path:
+        description: 'the path to your packages in a monorepo (without a leading slash)'
+        required: false
+        default: 'packages'
 
 jobs:
   publish_docs:
@@ -21,4 +29,6 @@ jobs:
         with:
           repo: ${{github.event.inputs.repo}}
           branch: ${{github.event.inputs.branch}}
-          # cf_token: ${{ secrets.WORKFLOW_TOKEN }}
+          docs_path: ${{github.event.inputs.docs_path}}
+          pkg_path: ${{github.event.inputs.pkg_path}}
+          cf_token: ${{ secrets.CLOUDFLARE_TOKEN_API_KV }}

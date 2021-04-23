@@ -12,6 +12,10 @@
 
 <svelte:head>
 	<title>SvelteKit • The fastest way to build Svelte apps</title>
+
+	<meta name="twitter:title" content="SvelteKit">
+	<meta name="twitter:description" content="The fastest way to build Svelte apps">
+	<meta name="description" content="SvelteKit is the official Svelte application framework">
 </svelte:head>
 
 <Hero

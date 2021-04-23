@@ -43,12 +43,66 @@
 		display: flex;
 		flex-direction: column;
 		border-bottom: none;
+		color: var(--back);
+		border-radius: var(--border-r);
 	}
 
-	.box :global(a) {
-		color: white;
-		padding: 0;
-		border: none;
+	.how {
+		padding: 1em;
+		border-radius: var(--border-r);
+	}
+
+	.how :global(pre) {
+		margin: 0 0 1em 0;
+	}
+
+	.how :global(code) {
+		font-size: 16px;
+		line-height: 1.5;
+	}
+
+	.box > :global(div),
+	.how > :global(div) {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
+
+	.box :global(p) {
+		flex: 1;
+	}
+
+	.box :global(a),
+	.how :global(a) {
+		position: relative;
+		max-width: 15em;
+		padding: 0.8rem 1.6rem;
+		border-radius: 4px;
+		background: var(--back);
+		color: var(--second);
+		font-size: var(--h6);
+	}
+
+	.how :global(a) {
+		background: var(--prime);
+		color: var(--back);
+	}
+
+	.box :global(a)::after,
+	.how :global(a)::after {
+		content: '';
+		position: absolute;
+		display: block;
+		right: 0.5em;
+		top: 0em;
+		width: 1em;
+		height: 100%;
+		background: url(/icons/arrow-right-black.svg);
+		background-size: 100% 100%;
+	}
+
+	.how :global(a)::after {
+		background-image: url(/icons/arrow-right.svg);
 	}
 
 	.box :global(h2) {
@@ -57,31 +111,10 @@
 		font-size: var(--h2);
 		font-weight: 300;
 		color: white;
-		text-align: center;
 	}
 
 	.blurb :global(p) {
 		font-size: var(--h5);
-	}
-
-	.box :global(.learn-more) {
-		padding: 0.8rem 1.6rem;
-		border-radius: 4px;
-		background: var(--back);
-		color: var(--second);
-		font-size: var(--h6);
-		transition: all 0.2s linear;
-	}
-
-	.box :global(.learn-more):hover {
-		padding: 0.8rem 2.75rem 0.8rem 1.6rem;
-		filter: brightness(0.95);
-	}
-
-	.box :global(.learn-more)::after {
-		top: 1.25rem;
-		right: 0.75rem;
-		background-image: url(/icons/arrow-right-black.svg);
 	}
 
 	.one {
@@ -104,28 +137,8 @@
 		   breaking the grid layout */
 		min-width: 0;
 		grid-area: how;
-	}
-
-	.how :global(.cta) {
-		margin: 0;
-	}
-
-	.how :global(.cta) :global(a) {
-		display: inline-block;
-		background-color: var(--prime);
-		border-radius: 4px;
-		padding: 0.5em 1em;
-		color: var(--back);
-		transition: all 0.2s linear;
-	}
-
-	.how :global(.cta) :global(a):hover {
-		padding: 0.5em 1.8em 0.5em 1em;
-	}
-
-	.how :global(.cta) :global(a)::after {
-		right: 0.5em;
-		top: 0.75em;
+		background: var(--back-light);
+		box-shadow: inset 1px 1px 3px rgba(81, 81, 81, 0.2);
 	}
 
 	.what {
@@ -144,7 +157,7 @@
 				'what what';
 		}
 
-		.box {
+		.box, .how {
 			padding: 2em;
 		}
 	}
@@ -161,10 +174,6 @@
 
 		.what {
 			margin: 0;
-		}
-
-		.box :global(.cta) {
-			text-align: left;
 		}
 	}
 </style>

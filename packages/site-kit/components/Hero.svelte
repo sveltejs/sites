@@ -1,63 +1,132 @@
 <script>
-	import ParallaxLogo from './ParallaxLogo.svelte';
-
+	export let alt;
 	export let title;
 	export let tagline;
 	export let logotype;
-	export let outline;
+	export let background;
 </script>
 
+<section class="hero-banner">
+	<div class="hero-container">
+		<div class="hero-text">
+			<img alt="{title} logotype" width="440" class="logotype" src={logotype} />
+			<h3>{tagline}</h3>
+		</div>
+
+		<div class="hero-image">
+		<picture>
+			<source srcset="{background}.webp">
+			<img {alt} src="{background}.png">
+		</picture>
+	</div>
+	</div>
+</section>
+
 <style>
-	.hero {
+	.hero-banner {
+		max-width: 100vw;
+		background: rgb(211, 214, 217);
+		background: radial-gradient(rgb(211, 214, 217), rgb(191, 203, 218) 50%, rgb(179, 182, 189));
 		position: relative;
-		margin: 10rem auto;
-		padding: 0 var(--side-nav);
-		max-width: 120rem;
+		padding: 8rem var(--side-nav) 0;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		overflow: hidden;
 	}
 
-	h3 { color: var(--text) }
-
-	.hero {
-		margin: 10rem auto;
+	.hero-container {
+		width: 100%;
+		max-width: 90rem;
+		margin: 0 auto;
+		/* display: flex; */
+		justify-content: center;
 	}
 
-	.hero h3, .logotype {
+	.hero-text {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		mix-blend-mode: multiply;
+	}
+
+	.hero-banner h3 {
+		margin-top: 0;
 		position: relative;
-		left: 1.6rem;
-	}
-
-	.hero h3 {
 		font-size: 2rem;
+		font-weight: 200;
+		line-height: 1.2;
+		letter-spacing: 0.1em;
+		text-align: center;
+		text-transform: uppercase;
+		color: var(--text);
+		max-width: 12em;
 	}
 
 	.logotype {
-		height: 4rem;
+		position: relative;
+		width: 100%;
+		max-width: 400px;
+		margin: 0 0 2rem 0;
 	}
 
-	@media (min-width: 640px) {
-		.logotype {
-			height: 6rem;
+	.hero-image {
+		display: flex;
+		flex: 1;
+		justify-content: center;
+		align-items: center;
+	}
+
+	picture img {
+		width: 600px;
+		object-fit: contain;
+		transform: translate(-2%,0);
+	}
+
+	@media (min-width: 480px) {
+		.hero-banner h3 {
+			max-width: auto;
 		}
 
-		.hero h3 {
-			font-size: var(--h3);
+		picture img {
+			width: 800px;
+			object-fit: contain;
+			transform: translate(-2%,0);
 		}
 	}
 
-	@media (min-width: 800px) {
-		.hero {
-			margin: 15rem auto;
+	@media (min-width: 1024px) {
+		.hero-banner {
+			padding: 0 var(--side-nav);
 		}
 
-		.hero h3, .logotype {
-			left: 3rem;
+		.hero-text {
+			margin-top: -10rem;
+			align-items: flex-end;
+			flex: 1;
+		}
+
+		.hero-image {
+			flex: 1.2;
+		}
+
+		.hero-image img {
+			width: 480px;
+			transform: translate(0,10%) scale(1.8);
+		}
+
+		.hero-banner h3 {
+			text-align: right;
+			max-width: 12em;
+		}
+
+		.hero-container {
+			height: 70vh;
+			display: flex;
+			justify-content: flex-start;
+			margin: 0 auto;
+			padding: 0;
 		}
 	}
 </style>
-
-<ParallaxLogo alt="{title} logo" src={outline}/>
-
-<section class="hero">
-	<img alt="{title} logotype" class="logotype" src={logotype}>
-	<h3>{tagline}</h3>
-</section>

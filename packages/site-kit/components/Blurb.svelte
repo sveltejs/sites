@@ -140,9 +140,8 @@
 			grid-template-columns: repeat(2, 1fr);
 			grid-template-areas:
 				'one two'
-				'three three'
-				'what what'
-				'how how';
+				'three how'
+				'what what';
 		}
 
 		.box {

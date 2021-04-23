@@ -14,11 +14,11 @@
 {/if}
 
 <Nav {segment} {page} logo="images/svelte-kit-horizontal.svg">
-	<svelte:fragment slot="nav-center">
+	<div slot="nav-center" class="nav-center">
 		<NavItem segment="docs">Docs</NavItem>
 		<NavItem segment="faq">FAQ</NavItem>
 		<NavItem segment="migrating">Migrating</NavItem>
-	</svelte:fragment>
+	</div>
 
 	<div class="nav-right" slot="nav-right">
 		<NavItem external="https://svelte.dev/chat" title="Discord Chat">

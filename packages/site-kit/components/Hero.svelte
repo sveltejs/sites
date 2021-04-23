@@ -26,11 +26,13 @@
 	.hero-banner {
 		max-width: 100vw;
 		background: rgb(211, 214, 217);
+		background: radial-gradient(rgb(211, 214, 217), rgb(191, 203, 218) 50%, rgb(179, 182, 189));
 		position: relative;
 		padding: 8rem var(--side-nav) 0;
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
+		overflow: hidden;
 	}
 
 	.hero-container {
@@ -46,14 +48,15 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		mix-blend-mode: multiply;
 	}
 
 	.hero-banner h3 {
 		margin-top: 0;
 		position: relative;
-		font-size: var(--h4);
+		font-size: 2rem;
 		font-weight: 200;
-		line-height: 2.5rem;
+		line-height: 1.2;
 		letter-spacing: 0.1em;
 		text-align: center;
 		text-transform: uppercase;

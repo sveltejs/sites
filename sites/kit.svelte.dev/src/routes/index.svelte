@@ -12,6 +12,10 @@
 
 <svelte:head>
 	<title>SvelteKit • The fastest way to build Svelte apps</title>
+
+	<meta name="twitter:title" content="SvelteKit">
+	<meta name="twitter:description" content="The fastest way to build Svelte apps">
+	<meta name="description" content="SvelteKit is the official Svelte application framework">
 </svelte:head>
 
 <Hero
@@ -20,6 +24,8 @@
 	tagline="The fastest way to build svelte apps"
 	background="/images/svelte-kit-machine"
 	alt="SvelteKit illustration"
+	width={960}
+	height={601}
 />
 
 <Blurb>
@@ -30,7 +36,7 @@
 			footprint
 		</p>
 
-		<a href="https://svelte.dev">learn more</a>
+		<a href="https://svelte.dev">learn Svelte</a>
 	</div>
 
 	<div slot="two">
@@ -40,7 +46,7 @@
 			an SPA
 		</p>
 
-		<a sveltekit:prefetch href="/docs">learn more</a>
+		<a sveltekit:prefetch href="/docs">read the docs</a>
 	</div>
 
 	<div slot="three">
@@ -50,7 +56,7 @@
 			support and more
 		</p>
 
-		<a sveltekit:prefetch href="/docs">learn more</a>
+		<a sveltekit:prefetch href="/docs">read the docs</a>
 	</div>
 
 	<div class="description" slot="what">
@@ -78,7 +84,7 @@ cd my-app
 npm install
 npm run dev -- --open
 </code></pre>
-		<a sveltekit:prefetch href="/docs">learn SvelteKit</a>
+		<a sveltekit:prefetch href="/docs">get started</a>
 	</div>
 </Blurb>
 

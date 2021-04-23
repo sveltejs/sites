@@ -14,9 +14,10 @@
 
 <svelte:head>
 	<title>FAQ • SvelteKit</title>
-	<meta name="twitter:title" content="SvelteKit FAQ" />
-	<meta name="twitter:description" content="The fastest way to build Svelte apps" />
-	<meta name="Description" content="The fastest way to build Svelte apps" />
+
+	<meta name="twitter:title" content="SvelteKit FAQ">
+	<meta name="twitter:description" content="Frequently asked questions about SvelteKit">
+	<meta name="description" content="Frequently asked questions about SvelteKit">
 </svelte:head>
 
 <div class="faqs stretch">

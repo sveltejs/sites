@@ -66,16 +66,16 @@
 		</a>
 		<ul
 			class:open
-			on:touchstart|capture={intercept_touchstart}
+			on:touchstart|passive|capture={intercept_touchstart}
 			on:mouseenter={() => (open = true)}
 			on:mouseleave={() => (open = false)}
 		>
 			<li class="hide-if-desktop" class:active={!segment}><a sveltekit:prefetch href=".">{home}</a></li>
 			<slot name="nav-center" />
 			{#if open}
-				<div class="hide-if-desktop">
+				<li class="hide-if-desktop">
 					<slot name="nav-right" />
-				</div>
+				</li>
 			{/if}
 		</ul>
 		<div class="nav-spot show-if-desktop">
@@ -141,8 +141,6 @@
 		position: relative;
 		padding: 0 3rem 0 0;
 		margin: 0;
-		background: url(/icons/chevron.svg) calc(100% - 1em) 0.05em no-repeat;
-		background-size: 1em 1em;
 	}
 
 	ul::after {

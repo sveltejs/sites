@@ -215,6 +215,10 @@ code {
 	white-space: nowrap;
 	color: #444;
 	-webkit-font-smoothing: initial;
+	padding: 0.4rem;
+	margin: 0 0.2rem;
+	top: -0.1rem;
+	background: var(--back-api);
 }
 
 pre {
@@ -225,6 +229,10 @@ pre code {
 	top: 0;
 	white-space: inherit;
 	background-color: transparent;
+	padding: 0;
+	margin: 0;
+	top: 0;
+	background: transparent;
 }
 
 /* sync CodeMirror with prism  */

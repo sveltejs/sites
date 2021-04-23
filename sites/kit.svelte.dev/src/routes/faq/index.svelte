@@ -1,7 +1,10 @@
 <script context="module">
 	export async function load({ fetch }) {
 		const faqs = await fetch('https://api.svelte.dev/docs/kit/faq?content').then(r => r.json());
-		return { props: { faqs } };
+		return {
+			props: { faqs },
+			maxage: 60
+		};
 	}
 </script>
 

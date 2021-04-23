@@ -1,3 +1,11 @@
+<script context="module">
+	export function load() {
+		return {
+			maxage: 60
+		};
+	}
+</script>
+
 <script>
 	import { Hero, Blurb } from '@sveltejs/site-kit';
 </script>

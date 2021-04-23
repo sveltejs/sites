@@ -1,7 +1,11 @@
+<section>
+	<slot />
+</section>
+
 <style>
 	section {
 		position: relative;
-		margin: 10rem auto;
+		margin: -12rem auto 10rem auto;
 		padding: 0 var(--side-nav);
 		max-width: 120rem;
 	}
@@ -10,7 +14,3 @@
 		color: var(--text);
 	}
 </style>
-
-<section>
-	<slot></slot>
-</section>

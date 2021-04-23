@@ -55,6 +55,6 @@ npm install
 npm run dev -- --open
 		</pre>
 
-		<p class="cta"><a rel="prefetch" href="docs">Learn SvelteKit</a></p>
+		<p class="cta"><a sveltekit:prefetch href="docs">Learn SvelteKit</a></p>
 	</div>
 </Blurb>

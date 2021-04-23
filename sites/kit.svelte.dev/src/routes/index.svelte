@@ -17,8 +17,9 @@
 <Hero
 	title="SvelteKit"
 	logotype="images/svelte-kit-logotype.svg"
-	tagline="The fastest way to<br/>build svelte apps"
-	outline="images/hero-banner.png"
+	tagline="The fastest way to build svelte apps"
+	background="/images/svelte-kit-machine"
+	alt="SvelteKit illustration"
 />
 
 <Blurb>

@@ -1,54 +1,47 @@
 <script>
+	export let alt;
 	export let title;
 	export let tagline;
 	export let logotype;
-	export let outline;
+	export let background;
 </script>
 
 <section class="hero-banner">
-	<div class="hero-overlay" style="background-image: url(./{outline});" />
 	<div class="hero-container">
-		<div class="hero-content">
+		<div class="hero-text">
 			<img alt="{title} logotype" width="440" class="logotype" src={logotype} />
-			<h3>{@html tagline}</h3>
+			<h3>{tagline}</h3>
 		</div>
+
+		<div class="hero-image">
+		<picture>
+			<source srcset="{background}.webp">
+			<img {alt} src="{background}.png">
+		</picture>
+	</div>
 	</div>
 </section>
 
 <style>
 	.hero-banner {
-		height: 70vh;
 		max-width: 100vw;
 		background: rgb(211, 214, 217);
 		position: relative;
-		padding: 10rem auto;
+		padding: 8rem var(--side-nav) 0;
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
 	}
 
-	.hero-overlay {
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		left: 0;
-		background-repeat: no-repeat;
-		background-size: cover;
-		background-position: top;
-		opacity: 0.3;
-		transition: opacity 0.3s linear;
-	}
-
 	.hero-container {
 		width: 100%;
-		max-width: 110vw;
-		margin: -10rem auto 0 auto;
-		display: flex;
+		max-width: 90rem;
+		margin: 0 auto;
+		/* display: flex; */
 		justify-content: center;
 	}
 
-	.hero-content {
+	.hero-text {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -65,29 +58,72 @@
 		text-align: center;
 		text-transform: uppercase;
 		color: var(--text);
+		max-width: 12em;
 	}
 
 	.logotype {
 		position: relative;
-		max-width: 90vw;
+		width: 100%;
+		max-width: 400px;
+		margin: 0 0 2rem 0;
 	}
 
-	@media (min-width: 800px) {
-		.hero-banner {
-			padding: 15rem auto;
+	.hero-image {
+		display: flex;
+		flex: 1;
+		justify-content: center;
+		align-items: center;
+	}
+
+	picture img {
+		width: 600px;
+		object-fit: contain;
+		transform: translate(-2%,0);
+	}
+
+	@media (min-width: 480px) {
+		.hero-banner h3 {
+			max-width: auto;
+		}
+
+		picture img {
+			width: 800px;
+			object-fit: contain;
+			transform: translate(-2%,0);
 		}
 	}
 
-	@media (min-width: 1200px) {
-		.hero-overlay {
-			opacity: 1;
-			background-position: right;
+	@media (min-width: 1024px) {
+		.hero-banner {
+			padding: 0 var(--side-nav);
+		}
+
+		.hero-text {
+			margin-top: -10rem;
+			align-items: flex-end;
+			flex: 1;
+		}
+
+		.hero-image {
+			flex: 1.2;
+		}
+
+		.hero-image img {
+			width: 600px;
+			transform: translate(0,10%) scale(1.8);
+		}
+
+		.hero-banner h3 {
+			text-align: right;
+			max-width: 12em;
 		}
 
 		.hero-container {
-			max-width: 110rem;
+			height: 70vh;
+			display: flex;
 			justify-content: flex-start;
-			margin: -10rem auto 0 auto;
+			margin: 0 auto;
+			padding: 0;
 		}
 	}
 </style>

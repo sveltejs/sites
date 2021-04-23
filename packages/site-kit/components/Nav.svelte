@@ -56,7 +56,7 @@
 		{/if}
 
 		<a
-			rel="prefetch"
+			sveltekit:prefetch
 			href="."
 			class="nav-spot home"
 			title={home_title}
@@ -70,7 +70,9 @@
 			on:mouseenter={() => (open = true)}
 			on:mouseleave={() => (open = false)}
 		>
-			<li class="hide-if-desktop" class:active={!segment}><a rel="prefetch" href=".">{home}</a></li>
+			<li class="hide-if-desktop" class:active={!segment}>
+				<a sveltekit:prefetch href=".">{home}</a>
+			</li>
 			<slot name="nav-center" />
 			{#if open}
 				<div class="hide-if-desktop">

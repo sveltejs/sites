@@ -1,3 +1,11 @@
+<script context="module">
+	export function load() {
+		return {
+			maxage: 60
+		};
+	}
+</script>
+
 <script>
 	import { Hero, Blurb } from '@sveltejs/site-kit';
 </script>
@@ -71,7 +79,7 @@ npm install
 npm run dev -- --open
             </pre>
 		</div>
-		<p class="cta"><a rel="prefetch" href="docs" class="arrow-link">Learn SvelteKit</a></p>
+		<p class="cta"><a sveltekit:prefetch href="docs" class="arrow-link">Learn SvelteKit</a></p>
 	</div>
 </Blurb>
 

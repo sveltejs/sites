@@ -1,34 +1,35 @@
 {
-  "name": "@sveltejs/site-kit",
-  "version": "2.0.0-next.0",
-  "description": "Styles and components for use in *.svelte.dev websites",
-  "type": "module",
-  "scripts": {
-    "testunit": "mocha -r esm test/unit/**"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sveltejs/site-kit.git"
-  },
-  "author": "Rich Harris",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/sveltejs/site-kit/issues"
-  },
-  "homepage": "https://github.com/sveltejs/site-kit#readme",
-  "devDependencies": {
-    "esm": "^3.2.25",
-    "mocha": "^6.2.3",
-    "svelte": "^3.35.0"
-  },
-  "dependencies": {
-    "golden-fleece": "^1.0.9"
-  },
-  "files": [
-    "index.mjs",
-    "base.css",
-    "code.css",
-    "components",
-    "utils"
-  ]
+	"name": "@sveltejs/site-kit",
+	"version": "2.0.0-next.0",
+	"description": "Styles and components for use in *.svelte.dev websites",
+	"type": "module",
+	"svelte": "index.js",
+	"scripts": {
+		"testunit": "mocha -r esm test/unit/**"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/sveltejs/site-kit.git"
+	},
+	"author": "Rich Harris",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/sveltejs/site-kit/issues"
+	},
+	"homepage": "https://github.com/sveltejs/site-kit#readme",
+	"devDependencies": {
+		"esm": "^3.2.25",
+		"mocha": "^6.2.3",
+		"svelte": "^3.35.0"
+	},
+	"dependencies": {
+		"golden-fleece": "^1.0.9"
+	},
+	"files": [
+		"index.mjs",
+		"base.css",
+		"code.css",
+		"components",
+		"utils"
+	]
 }

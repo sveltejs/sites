@@ -1,12 +1,19 @@
+<script context="module">
+	export function load({ status, error }) {
+		return {
+			props: { status, error }
+		};
+	}
+</script>
+
 <script>
 	import { dev } from '$app/env';
 
 	export let status;
 	export let error;
 
-	// we don't want to use <svelte:window bind:online> here,
-	// because we only care about the online state when
-	// the page first loads
+	// we don't want to use <svelte:window bind:online> here, because we only care about the online
+	// state when the page first loads
 	let online = typeof navigator !== 'undefined'
 		? navigator.onLine
 		: true;

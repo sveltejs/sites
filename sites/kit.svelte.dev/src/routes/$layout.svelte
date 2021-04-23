@@ -1,11 +1,15 @@
 <script>
 	import '@sveltejs/site-kit/base.css';
-	import { page } from '$app/stores';
-	import { Nav, NavItem } from '@sveltejs/site-kit';
+	import { page, navigating } from '$app/stores';
+	import { Nav, NavItem, PreloadingIndicator } from '@sveltejs/site-kit';
 
 	// TODO
 	export let segment;
 </script>
+
+{#if $navigating}
+	<PreloadingIndicator />
+{/if}
 
 <Nav {segment} {page} logo="images/svelte-kit-horizontal.svg">
 	<div slot="nav-center" class="nav-center">

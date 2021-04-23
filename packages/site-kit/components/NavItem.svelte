@@ -11,5 +11,5 @@
 {#if external}
 	<li><a href={external} {title}><slot></slot></a></li>
 {:else}
-	<li class:active="{$current === segment}"><a rel="prefetch" href={segment} {title}><slot></slot></a></li>
+	<li class:active="{$current === segment}"><a sveltekit:prefetch href={segment} {title}><slot></slot></a></li>
 {/if}

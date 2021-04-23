@@ -11,7 +11,7 @@
 <section class="hero-banner">
 	<div class="hero-container">
 		<div class="hero-text">
-			<img alt="{title} logotype" width="440" class="logotype" src={logotype} />
+			<img alt="{title} logotype" width="400" height="50" class="logotype" src={logotype} />
 			<h3>{tagline}</h3>
 		</div>
 

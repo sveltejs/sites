@@ -45,7 +45,7 @@
 	{#each sections as section}
 		<li>
 			<a class="section" class:active="{section.slug === active_section}" href="#{section.slug}">
-				{@html section.title}
+				{section.title}
 			</a>
 
 			{#each section.sections as subsection}
@@ -54,7 +54,7 @@
 					class:active="{subsection.slug === active_section}"
 					href="#{subsection.slug}"
 				>
-					{@html subsection.title}
+					{subsection.title}
 				</a>
 
 				{#each subsection.sections as subsection}
@@ -63,7 +63,7 @@
 						class:active="{subsection.slug === active_section}"
 						href="#{subsection.slug}"
 					>
-						{@html subsection.title}
+						{subsection.title}
 					</a>
 				{/each}
 			{/each}

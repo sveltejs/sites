@@ -23,14 +23,14 @@ importers:
 
   sites/kit.svelte.dev:
     specifiers:
-      '@sveltejs/adapter-netlify': ^1.0.0-next.4
+      '@sveltejs/adapter-netlify': ^1.0.0-next.9
       '@sveltejs/adapter-node': next
       '@sveltejs/kit': ^1.0.0-next.87
       '@sveltejs/site-kit': workspace:*
       svelte: ^3.35.0
       vite: ^2.1.2
     devDependencies:
-      '@sveltejs/adapter-netlify': 1.0.0-next.4
+      '@sveltejs/adapter-netlify': 1.0.0-next.9_svelte@3.35.0+vite@2.1.2
       '@sveltejs/adapter-node': 1.0.0-next.16
       '@sveltejs/kit': 1.0.0-next.87_svelte@3.35.0+vite@2.1.2
       '@sveltejs/site-kit': link:../../packages/site-kit
@@ -283,14 +283,39 @@ packages:
       picomatch: 2.2.3
     dev: true
 
-  /@sveltejs/adapter-netlify/1.0.0-next.4:
-    resolution: {integrity: sha512-kY3tRvnVR0MDOu+8UIgCRrJRkVj4/eQyqdcSm0K06NW8/1QIuVDYE+YZU1IZo4SDYRLeq+/md1UeaaqXBpx8NA==}
+  /@sveltejs/adapter-netlify/1.0.0-next.9_svelte@3.35.0+vite@2.1.2:
+    resolution: {integrity: sha512-lXUKIBwPVrAqh2WEZK+g9F4OMvDWDDLbKLy/ogw4Htspey515SW4hTozv8Yt4QloTKlSOpMubwbjsR/0cZ4ycw==}
     dependencies:
+      '@sveltejs/kit': 1.0.0-next.82_svelte@3.35.0+vite@2.1.2
+      esbuild: 0.11.13
       toml: 3.0.0
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
+      - svelte
+      - vite
     dev: true
 
   /@sveltejs/adapter-node/1.0.0-next.16:
     resolution: {integrity: sha512-XXZtiyX8dT1shmiKF2DwB2mCrMrUzFVRItYAV0B3BFF+U5775hpNS5krgtZnJdbA1AoW0Ay2OT+u6MKeQ5/KUQ==}
+    dev: true
+
+  /@sveltejs/kit/1.0.0-next.82_svelte@3.35.0+vite@2.1.2:
+    resolution: {integrity: sha512-yhENwkAZVFMnsVPqaHMREMgH6BVy6WRliDqGGSrQCc42Qk0af0S2CUDLdnT+pX6y0ez6ViQ+nFrGaYeM1TM+tg==}
+    engines: {node: '>= 12.17.0'}
+    hasBin: true
+    peerDependencies:
+      svelte: ^3.32.1
+      vite: ^2.1.0
+    dependencies:
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.7_svelte@3.35.0+vite@2.1.2
+      cheap-watch: 1.0.3
+      sade: 1.7.4
+      svelte: 3.35.0
+      vite: 2.1.2
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
     dev: true
 
   /@sveltejs/kit/1.0.0-next.87_svelte@3.35.0+vite@2.1.2:
@@ -719,6 +744,12 @@ packages:
       is-callable: 1.2.3
       is-date-object: 1.0.2
       is-symbol: 1.0.3
+    dev: true
+
+  /esbuild/0.11.13:
+    resolution: {integrity: sha512-d5coY4dd4rVWle0WzrR8+32ukKtZroVJ/wJzOwbBEmoSFB/H3QME0l+3IAN5Sf3LtuoUSivdv1/b5rD7OykXeg==}
+    hasBin: true
+    requiresBuild: true
     dev: true
 
   /esbuild/0.9.6:

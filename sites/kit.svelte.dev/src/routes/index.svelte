@@ -16,49 +16,81 @@
 
 <Hero
 	title="SvelteKit"
-	tagline="The fastest way to build Svelte apps"
-	outline="images/svelte-logo-outline.svg"
 	logotype="images/svelte-kit-logotype.svg"
+	tagline="The fastest way to build svelte apps"
+	background="/images/svelte-kit-machine"
+	alt="SvelteKit illustration"
 />
 
 <Blurb>
-	<a href="https://svelte.dev" slot="one">
-		<h2>Big ideas, small size</h2>
-		<p>SvelteKit is an application framework powered by Svelte — build ambitious apps with a smaller footprint</p>
+	<div slot="one">
+		<h2>Powered by Svelte</h2>
+		<p>
+			SvelteKit is an application framework powered by Svelte — build bigger apps with a smaller
+			footprint
+		</p>
 
-		<span class="learn-more">learn more</span>
-	</a>
-
-	<a href="docs" slot="two">
-		<h2>Best of both worlds</h2>
-		<p>All the SEO and progressive enhancement of a server-rendered app, with the slick navigation of an SPA</p>
-
-		<span class="learn-more">learn more</span>
-	</a>
-
-	<a href="docs" slot="three">
-		<h2>Build fast</h2>
-		<p>World-class developer experience powered by Vite — see your changes instantly</p>
-
-		<span class="learn-more">learn more</span>
-	</a>
-
-	<div class="description" slot="what">
-		<p>SvelteKit is a framework for building web applications of all sizes, with a beautiful development experience and flexible filesystem-based routing.</p>
-
-		<p>Unlike single-page apps, SvelteKit doesn't compromise on SEO, progressive enhancement or the initial load experience — but unlike traditional server-rendered apps, navigation is instantaneous for that app-like feel.</p>
-
-		<p><a href="https://svelte.dev/blog/whats-the-deal-with-sveltekit">Read the introductory blog post</a> to learn more.</p>
+		<a href="https://svelte.dev">learn more</a>
 	</div>
 
-	<div style="grid-area: start; display: flex; flex-direction: column; min-width: 0" slot="how">
-		<pre class="language-bash" style="margin: 0 0 1em 0; min-width: 0; min-height: 0">
-npm init svelte@next my-app
+	<div slot="two">
+		<h2>Best of both worlds</h2>
+		<p>
+			All the SEO and progressive enhancement of a server-rendered app, with the slick navigation of
+			an SPA
+		</p>
+
+		<a sveltekit:prefetch href="/docs">learn more</a>
+	</div>
+
+	<div slot="three">
+		<h2>Build fast</h2>
+		<p>
+			Hit the ground running with advanced routing, server-side rendering, code-splitting, offline
+			support and more
+		</p>
+
+		<a sveltekit:prefetch href="/docs">learn more</a>
+	</div>
+
+	<div class="description" slot="what">
+		<p>
+			SvelteKit is a framework for building web applications of all sizes, with a beautiful
+			development experience and flexible filesystem-based routing.
+		</p>
+
+		<p>
+			Unlike single-page apps, SvelteKit doesn't compromise on SEO, progressive enhancement or the
+			initial load experience — but unlike traditional server-rendered apps, navigation is
+			instantaneous for that app-like feel.
+		</p>
+
+		<p>
+			Read the <a href="https://svelte.dev/blog/whats-the-deal-with-sveltekit">introductory blog</a>
+			post to learn more.
+		</p>
+	</div>
+
+	<div slot="how">
+		<pre><code>
+npm init <span class="orange-highlight">svelte@next</span> my-app
 cd my-app
 npm install
 npm run dev -- --open
-		</pre>
-
-		<p class="cta"><a sveltekit:prefetch href="docs">Learn SvelteKit</a></p>
+</code></pre>
+		<a sveltekit:prefetch href="/docs">learn SvelteKit</a>
 	</div>
 </Blurb>
+
+<style>
+	pre {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		color: var(--second-text);
+	}
+
+	.orange-highlight {
+		color: var(--prime);
+	}
+</style>

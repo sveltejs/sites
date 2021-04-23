@@ -39,6 +39,7 @@
 	--flash: #40b3ff;
 	--heading: #222;
 	--text: #444;
+	--second-text: #7b7766;
 	--sidebar-text: rgba(255, 255, 255, 0.75);
 	--border-w: 0.3rem; /* border-width  */
 	--border-r: 0.4rem; /* border-radius */
@@ -118,6 +119,10 @@ a {
 	text-decoration: none;
 	cursor: pointer;
 	color: inherit;
+}
+
+a:hover {
+	text-decoration: underline;
 }
 
 /* a:hover, a:active { color: var(--flash) } */
@@ -210,6 +215,10 @@ code {
 	white-space: nowrap;
 	color: #444;
 	-webkit-font-smoothing: initial;
+	padding: 0.4rem;
+	margin: 0 0.2rem;
+	top: -0.1rem;
+	background: var(--back-api);
 }
 
 pre {
@@ -219,7 +228,11 @@ pre {
 pre code {
 	top: 0;
 	white-space: inherit;
-	background-color: none;
+	background-color: transparent;
+	padding: 0;
+	margin: 0;
+	top: 0;
+	background: transparent;
 }
 
 /* sync CodeMirror with prism  */
@@ -466,11 +479,6 @@ figcaption,
 	display: inline-block;
 	padding: 1.6rem 0 0 1rem;
 	font: var(--h6) var(--font-mono);
-}
-
-.box {
-	padding: 2.4rem 3.2rem;
-	border-radius: var(--border-r);
 }
 
 /*	theme colors --------------------------- */

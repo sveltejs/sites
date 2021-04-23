@@ -9,6 +9,8 @@
 </script>
 
 <script>
+	import { Permalink } from "@sveltejs/site-kit";
+
 	export let faqs;
 </script>
 
@@ -26,8 +28,8 @@
 		<article class="faq">
 			<h2>
 				<a id={faq.slug} class="offset-anchor" />
-				<a class="anchor" sapper:prefetch href="faq#{faq.slug}" title={faq.title}>&nbsp;</a>
 				{faq.title}
+				<Permalink href="faq#{faq.slug}" />
 			</h2>
 			{@html faq.content}
 		</article>
@@ -77,7 +79,6 @@
 		left: -1.3em;
 		opacity: 0;
 		transition: opacity 0.2s;
-		border: none !important; /* TODO get rid of linkify */
 	}
 
 	.faqs :global(h2 > .anchor),
@@ -86,6 +87,7 @@
 	}
 
 	@media (min-width: 768px) {
+		.content :global(.anchor:focus),
 		.faqs :global(h2):hover :global(.anchor),
 		.faqs :global(h3):hover :global(.anchor),
 		.faqs :global(h4):hover :global(.anchor),

@@ -72,6 +72,38 @@
 	});
 </script>
 
+<div bind:this={container} class="content listify">
+	{#each sections as section}
+		<section data-id={section.slug}>
+			<h2>
+				<span class="offset-anchor" id={section.slug}></span>
+
+				<!-- svelte-ignore a11y-missing-content -->
+				<a href="{dir}#{section.slug}" class="anchor" aria-hidden></a>
+
+				{@html section.title}
+				<small>
+					<a href="https://github.com/{owner}/{project}/edit/master{path}/{dir}/{section.file}" title="{edit_title}">
+						<Icon name='edit' />
+					</a>
+				</small>
+			</h2>
+
+			{@html section.content}
+		</section>
+	{/each}
+</div>
+
+<aside bind:this={aside} class="sidebar-container" class:open={show_contents}>
+	<div class="sidebar" on:click="{() => show_contents = false}"> <!-- scroll container -->
+		<GuideContents {sections} {active_section} {show_contents} {dir} />
+	</div>
+
+	<button on:click="{() => show_contents = !show_contents}">
+		<Icon name="{show_contents? 'close' : 'menu'}"/>
+	</button>
+</aside>
+
 <style>
 	aside {
 		position: fixed;
@@ -340,18 +372,8 @@
 	}
 
 	section > :global(.code-block) > :global(pre) {
-		/* display: inline-block; */
-		/* background: var(--back-api); */
 		color: white;
-		/* padding: .3rem .8rem; */
-		/* margin: 0; */
-		max-width: 100%;
 	}
-
-	/* section > :global(.code-block)> :global(pre.language-markup) {
-		padding: .3rem .8rem .2rem;
-		background: var(--back-api);
-	} */
 
 	section > :global(p) {
 		max-width: var(--linemax)
@@ -407,35 +429,3 @@
 		background: rgba(255,62,0,0.1) !important;
 	}
 </style>
-
-<div bind:this={container} class="content listify">
-	{#each sections as section}
-		<section data-id={section.slug}>
-			<h2>
-				<span class="offset-anchor" id={section.slug}></span>
-
-				<!-- svelte-ignore a11y-missing-content -->
-				<a href="{dir}#{section.slug}" class="anchor" aria-hidden></a>
-
-				{@html section.title}
-				<small>
-					<a href="https://github.com/{owner}/{project}/edit/master{path}/{dir}/{section.file}" title="{edit_title}">
-						<Icon name='edit' />
-					</a>
-				</small>
-			</h2>
-
-			{@html section.content}
-		</section>
-	{/each}
-</div>
-
-<aside bind:this={aside} class="sidebar-container" class:open={show_contents}>
-	<div class="sidebar" on:click="{() => show_contents = false}"> <!-- scroll container -->
-		<GuideContents {sections} {active_section} {show_contents} {dir} />
-	</div>
-
-	<button on:click="{() => show_contents = !show_contents}">
-		<Icon name="{show_contents? 'close' : 'menu'}"/>
-	</button>
-</aside>

@@ -28,7 +28,9 @@
 	.hero-banner {
 		max-width: 100vw;
 		background: rgb(211, 214, 217);
-		background: radial-gradient(rgb(211, 214, 217), rgb(191, 203, 218) 50%, rgb(179, 182, 189));
+		background: radial-gradient(34.14% 72.25% at 47.58% 31.75%, rgba(232, 244, 255, 0.52) 0%, rgba(255, 255, 255, 0) 100%),
+linear-gradient(92.4deg, #D1D4D7 14.67%, rgba(238, 247, 255, 0.48) 54.37%, rgba(206, 216, 224, 0.62) 92.49%),
+linear-gradient(0deg, #DBE7EF, #DBE7EF);
 		position: relative;
 		padding: 8rem var(--side-nav) 0;
 		display: flex;

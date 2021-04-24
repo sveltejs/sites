@@ -1,6 +1,7 @@
 <script>
 	import { setContext } from 'svelte';
 	import { writable } from 'svelte/store';
+	import Icon from './Icon.svelte';
 
 	export let segment;
 	export let page;
@@ -66,11 +67,16 @@
 		</a>
 		<ul
 			class:open
-			on:touchstart|passive|capture={intercept_touchstart}
+			on:touchstart|capture={intercept_touchstart}
 			on:mouseenter={() => (open = true)}
 			on:mouseleave={() => (open = false)}
 		>
-			<li class="hide-if-desktop" class:active={!segment}><a sveltekit:prefetch href=".">{home}</a></li>
+			<div class="open-menu-button hide-if-desktop" class:open>
+				<Icon name="chevron" size="1em" />
+			</div>
+			<li class="hide-if-desktop" class:active={$current === ''}>
+				<a sveltekit:prefetch href="/">{home}</a>
+			</li>
 			<slot name="nav-center" />
 			{#if open}
 				<li class="hide-if-desktop">
@@ -124,7 +130,7 @@
 	}
 
 	.nav-spot {
-		width: 40rem;
+		width: 50rem;
 		height: 4.2rem;
 	}
 
@@ -139,8 +145,8 @@
 
 	ul {
 		position: relative;
-		padding: 0 3rem 0 0;
 		margin: 0;
+		padding: 0 1.5rem 0 0;
 	}
 
 	ul::after {
@@ -185,6 +191,10 @@
 		display: block;
 	}
 
+	ul.open :global(.nav-right) {
+		padding-right: 2rem;
+	}
+
 	ul.open :global(.nav-right) :global(a) {
 		padding: 1.5rem;
 		display: block;
@@ -192,6 +202,16 @@
 
 	ul.open :global(li):first-child :global(a) {
 		padding-top: 1.5rem;
+	}
+
+	.open-menu-button {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+
+	.open-menu-button.open {
+		display: none;
 	}
 
 	.home {

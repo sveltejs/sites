@@ -105,12 +105,11 @@
 		font-family: var(--font);
 		z-index: 100;
 		user-select: none;
-		transform: translate(0, calc(-100% - 1rem));
 		transition: transform 0.2s;
 	}
 
-	header.visible {
-		transform: none;
+	header:not(.visible):not(:focus-within) {
+		transform: translate(0, calc(-100% - 1rem));
 	}
 
 	nav {

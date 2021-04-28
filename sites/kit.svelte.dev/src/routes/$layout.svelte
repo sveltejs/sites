@@ -1,10 +1,10 @@
 <script>
 	import '@sveltejs/site-kit/base.css';
 	import { page, navigating } from '$app/stores';
-	import { Icons, Icon, Nav, NavItem, PreloadingIndicator } from '@sveltejs/site-kit';
+	import { Icons, Nav, NavItem, PreloadingIndicator } from '@sveltejs/site-kit';
 
-	// TODO
 	export let segment;
+	$: segment = $page.path.split('/').pop();
 </script>
 
 <Icons />
@@ -49,14 +49,14 @@
 		flex: 1;
 		flex-direction: column;
 		justify-content: center;
-		align-items: center;
+		align-items: flex-end;
 	}
 
 	.nav-right {
 		height: 100%;
 		margin: 0;
 		display: flex;
-		justify-content: center;
+		justify-content: flex-end;
 		align-items: center;
 		font-family: var(--font);
 		line-height: 1;
@@ -79,10 +79,7 @@
 	@media (min-width: 768px) {
 		.nav-center {
 			flex-direction: row;
-		}
-
-		.nav-right {
-			justify-content: flex-end;
+			align-items: center;
 		}
 
 		.nav-right img {

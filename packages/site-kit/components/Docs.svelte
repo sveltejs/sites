@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import GuideContents from './GuideContents.svelte'; // TODO rename
 	import Icon from './Icon.svelte';
+	import Permalink from './Permalink.svelte';
 	import { getFragment } from '../utils/navigation';
 	import '../code.css';
 
@@ -77,11 +78,8 @@
 		<section data-id={section.slug}>
 			<h2>
 				<span class="offset-anchor" id={section.slug}></span>
-
-				<!-- svelte-ignore a11y-missing-content -->
-				<a href="{dir}#{section.slug}" class="anchor" aria-hidden></a>
-
 				{@html section.title}
+				<Permalink href="{dir}#{section.slug}" />
 				<small>
 					<a href="https://github.com/{owner}/{project}/edit/master{path}/{dir}/{section.file}" title="{edit_title}">
 						<Icon name='edit' />
@@ -260,13 +258,14 @@
 		background-size: 1em 1em;
 		width: 1.4em;
 		height: 1em;
+		top: 0;
 		left: -1.3em;
 		opacity: 0;
 		transition: opacity 0.2s;
-		border: none !important; /* TODO get rid of linkify */
 	}
 
 	@media (min-width: 768px) {
+		.content :global(.anchor:focus),
 		.content :global(h2):hover :global(.anchor),
 		.content :global(h3):hover :global(.anchor),
 		.content :global(h4):hover :global(.anchor),
@@ -275,9 +274,8 @@
 			opacity: 1;
 		}
 
-		.content :global(h5) :global(.anchor),
-		.content :global(h6) :global(.anchor) {
-			top: 0.25em;
+		.content :global(h2) :global(.anchor) {
+			top: 0.75em;
 		}
 	}
 
@@ -390,10 +388,6 @@
 		color: var(--prime);
 		cursor: pointer;
 	}
-
-	/* no linkify on these */
-	small a        { all: unset }
-	small a:before { all: unset }
 
 	section :global(blockquote) {
 		/* color: #ff3e00; */

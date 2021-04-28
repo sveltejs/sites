@@ -27,7 +27,7 @@
 	{#each faqs as faq}
 		<article class="faq">
 			<h2>
-				<a id={faq.slug} class="offset-anchor" />
+				<span id={faq.slug} class="offset-anchor" />
 				{faq.title}
 				<Permalink href="faq#{faq.slug}" />
 			</h2>
@@ -69,6 +69,14 @@
 		font-size: 0.8rem;
 	}
 
+	.faqs :global(.offset-anchor) {
+		position: relative;
+		display: block;
+		top: calc(-1 * (var(--nav-h) + var(--top-offset) - 1rem));
+		width: 0;
+		height: 0;
+	}
+
 	.faqs :global(.anchor) {
 		position: absolute;
 		display: block;
@@ -87,7 +95,7 @@
 	}
 
 	@media (min-width: 768px) {
-		.content :global(.anchor:focus),
+		.faqs :global(.anchor:focus),
 		.faqs :global(h2):hover :global(.anchor),
 		.faqs :global(h3):hover :global(.anchor),
 		.faqs :global(h4):hover :global(.anchor),

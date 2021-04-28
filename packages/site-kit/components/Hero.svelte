@@ -82,10 +82,11 @@ linear-gradient(0deg, #DBE7EF, #DBE7EF);
 		align-items: center;
 	}
 
-	picture img {
+	.hero-image img {
 		width: 600px;
-		object-fit: contain;
-		transform: translate(-2%,0);
+		height: 450px;
+		object-fit: cover;
+		transform: translate(-2%,-10%);
 	}
 
 	@media (min-width: 480px) {
@@ -93,10 +94,9 @@ linear-gradient(0deg, #DBE7EF, #DBE7EF);
 			max-width: auto;
 		}
 
-		picture img {
+		.hero-image img {
 			width: 800px;
-			object-fit: contain;
-			transform: translate(-2%,0);
+			height: 600px;
 		}
 	}
 
@@ -117,7 +117,8 @@ linear-gradient(0deg, #DBE7EF, #DBE7EF);
 
 		.hero-image img {
 			width: 480px;
-			transform: translate(0,10%) scale(1.8);
+			object-fit: contain;
+			transform: scale(1.8);
 		}
 
 		.hero-banner h3 {

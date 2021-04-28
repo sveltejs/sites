@@ -25,7 +25,7 @@
 	background="/images/svelte-kit-machine"
 	alt="SvelteKit illustration"
 	width={960}
-	height={601}
+	height={960}
 />
 
 <Blurb>

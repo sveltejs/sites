@@ -72,7 +72,7 @@
 	.faqs :global(.offset-anchor) {
 		position: relative;
 		display: block;
-		top: calc(-1 * (var(--nav-h) + var(--top-offset) - 1rem));
+		top: calc(-1 * var(--top-offset));
 		width: 0;
 		height: 0;
 	}

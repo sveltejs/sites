@@ -29,7 +29,6 @@
 	function intercept_touchstart(event) {
 		if (!open && is_mobile()) {
 			event.preventDefault();
-			event.stopPropagation();
 			open = true;
 		}
 	}

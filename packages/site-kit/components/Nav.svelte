@@ -20,8 +20,14 @@
 		open = false;
 	});
 
+	let window_inner_width;
+	function is_mobile() {
+		if (window_inner_width < 768) return true;
+		return false;
+	}
+
 	function intercept_touchstart(event) {
-		if (!open) {
+		if (!open && is_mobile()) {
 			event.preventDefault();
 			event.stopPropagation();
 			open = true;
@@ -48,7 +54,11 @@
 	$: $current = segment;
 </script>
 
-<svelte:window on:hashchange={handle_hashchange} on:scroll={handle_scroll} />
+<svelte:window
+	on:hashchange={handle_hashchange}
+	on:scroll={handle_scroll}
+	bind:innerWidth={window_inner_width}
+/>
 
 <header class:visible={visible || open}>
 	<nav>

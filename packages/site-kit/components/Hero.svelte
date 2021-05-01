@@ -17,7 +17,7 @@
 
 		<div class="hero-image">
 		<picture>
-			<source srcset="{background}.webp">
+			<source srcset="{background}.webp" type="image/webp">
 			<img {alt} {width} {height} src="{background}.png">
 		</picture>
 	</div>

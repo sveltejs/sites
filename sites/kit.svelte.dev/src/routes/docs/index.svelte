@@ -22,5 +22,6 @@
 	<meta name="Description" content="Complete documentation for SvelteKit">
 </svelte:head>
 
-<h1 class="visually-hidden">Docs</h1>
-<Docs {sections} project="kit" path="/documentation" />
+<Docs {sections} project="kit" path="/documentation">
+	<h1 slot="header">Documentation</h1>
+</Docs>

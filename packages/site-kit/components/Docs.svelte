@@ -74,6 +74,7 @@
 </script>
 
 <div bind:this={container} class="content listify">
+	<slot name="header"></slot>
 	{#each sections as section}
 		<section data-id={section.slug}>
 			<h2>

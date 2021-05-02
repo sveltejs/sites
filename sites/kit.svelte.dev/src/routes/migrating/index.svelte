@@ -22,5 +22,6 @@
 	<meta name="description" content="How to migrate your app from Sapper to SvelteKit">
 </svelte:head>
 
-<h1 class="visually-hidden">Migration</h1>
-<Docs {sections} project="kit" path="/documentation" dir="migrating" />
+<Docs {sections} project="kit" path="/documentation" dir="migrating">
+	<h1 slot="header">Migration</h1>
+</Docs>

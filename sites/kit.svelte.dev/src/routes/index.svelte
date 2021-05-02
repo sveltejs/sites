@@ -18,6 +18,7 @@
 	<meta name="description" content="SvelteKit is the official Svelte application framework">
 </svelte:head>
 
+<h1 class="visually-hidden">SvelteKit</h1>
 <Hero
 	title="SvelteKit"
 	logotype="images/svelte-kit-logotype.svg"

@@ -11,8 +11,8 @@
 <section class="hero-banner">
 	<div class="hero-container">
 		<div class="hero-text">
-			<img alt="{title} logotype" width="400" height="50" class="logotype" src={logotype} />
-			<h3>{tagline}</h3>
+			<img alt="{title}" width="400" height="50" class="logotype" src={logotype} />
+			<div class="tagline">{tagline}</div>
 		</div>
 
 		<div class="hero-image">
@@ -56,7 +56,7 @@ linear-gradient(0deg, #DBE7EF, #DBE7EF);
 		mix-blend-mode: multiply;
 	}
 
-	.hero-banner h3 {
+	.hero-banner .tagline {
 		margin-top: 0;
 		position: relative;
 		font-size: 2rem;
@@ -67,6 +67,7 @@ linear-gradient(0deg, #DBE7EF, #DBE7EF);
 		text-transform: uppercase;
 		color: var(--text);
 		max-width: 12em;
+		font-family: var(--font);
 	}
 
 	.logotype {
@@ -91,7 +92,7 @@ linear-gradient(0deg, #DBE7EF, #DBE7EF);
 	}
 
 	@media (min-width: 480px) {
-		.hero-banner h3 {
+		.hero-banner .tagline {
 			max-width: auto;
 		}
 
@@ -122,7 +123,7 @@ linear-gradient(0deg, #DBE7EF, #DBE7EF);
 			transform: scale(1.8);
 		}
 
-		.hero-banner h3 {
+		.hero-banner .tagline {
 			text-align: right;
 			max-width: 12em;
 		}

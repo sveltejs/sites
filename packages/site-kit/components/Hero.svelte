@@ -16,11 +16,12 @@
 		</div>
 
 		<div class="hero-image">
-		<picture>
-			<source srcset="{background}.webp">
-			<img {alt} {width} {height} src="{background}.png">
-		</picture>
-	</div>
+			<picture>
+				<source type="image/webp" srcset="{background}.webp" />
+				<source type="image/png" srcset="{background}.png" />
+				<img {alt} {width} {height} src="{background}.png" />
+			</picture>
+		</div>
 	</div>
 </section>
 

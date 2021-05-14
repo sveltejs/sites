@@ -84,6 +84,7 @@
 		border-bottom: none;
 		padding: 0;
 		color: var(--second);
+		user-select: none;
 	}
 
 	.section {

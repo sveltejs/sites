@@ -343,7 +343,6 @@ a {
 	position: relative;
 	padding: 0 0 1px 0;
 	/* border-bottom: 1px solid currentColor; */
-	user-select: none;
 	color: var(--prime);
 	/* transition: color .2s, border .2s, padding .2s; */
 }
@@ -560,7 +559,7 @@ input[type='checkbox']::after {
 	border-radius: 1em;
 	background: white;
 	box-shadow: 0 0px 1px rgba(0, 0, 0, 0.4), 0 4px 2px rgba(0, 0, 0, 0.1);
-	-webkit-transition: background 0.2s ease-out, left 0.2s ease-out;
+	transition: background 0.2s ease-out, left 0.2s ease-out;
 }
 
 input[type='checkbox']:checked::after {

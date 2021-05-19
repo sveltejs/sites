@@ -23,15 +23,15 @@ importers:
 
   sites/kit.svelte.dev:
     specifiers:
-      '@sveltejs/adapter-netlify': ^1.0.0-next.12
+      '@sveltejs/adapter-netlify': next
       '@sveltejs/adapter-node': next
-      '@sveltejs/kit': ^1.0.0-next.107
+      '@sveltejs/kit': next
       '@sveltejs/site-kit': workspace:*
       svelte: ^3.38.2
     devDependencies:
-      '@sveltejs/adapter-netlify': 1.0.0-next.12_svelte@3.38.2
-      '@sveltejs/adapter-node': 1.0.0-next.20
-      '@sveltejs/kit': 1.0.0-next.107_svelte@3.38.2
+      '@sveltejs/adapter-netlify': 1.0.0-next.13_svelte@3.38.2
+      '@sveltejs/adapter-node': 1.0.0-next.21
+      '@sveltejs/kit': 1.0.0-next.108_svelte@3.38.2
       '@sveltejs/site-kit': link:../../packages/site-kit
       svelte: 3.38.2
 
@@ -281,10 +281,10 @@ packages:
       picomatch: 2.2.3
     dev: true
 
-  /@sveltejs/adapter-netlify/1.0.0-next.12_svelte@3.38.2:
-    resolution: {integrity: sha512-34+Xk2YmTDgDJWVliaZtAiDbtEsZurENwALxdD1dDQErxI0HPGZgmmwktLJjf2mU2/DcGJAXZxgq2RsGiDxAZA==}
+  /@sveltejs/adapter-netlify/1.0.0-next.13_svelte@3.38.2:
+    resolution: {integrity: sha512-ZMOSWYxbCAMUY9sb4p7NuXYyWxuzwjIr8tCyxD/03/snSGeUzaBExVYRdjmQ7gm8X0ld7w1ZbvKuQgAlx4XSrA==}
     dependencies:
-      '@sveltejs/kit': 1.0.0-next.103_svelte@3.38.2
+      '@sveltejs/kit': 1.0.0-next.108_svelte@3.38.2
       esbuild: 0.11.22
       toml: 3.0.0
     transitivePeerDependencies:
@@ -293,29 +293,12 @@ packages:
       - svelte
     dev: true
 
-  /@sveltejs/adapter-node/1.0.0-next.20:
-    resolution: {integrity: sha512-ornNW289XN4TyY3tRXVGH38FxrqLsw1MHn4oq92T7U6EqnSbw/22waMZnPBQUxcj5GxZsXuuFjeBjn1BWt0x2A==}
+  /@sveltejs/adapter-node/1.0.0-next.21:
+    resolution: {integrity: sha512-xAuLpct6VEbfPweIynhLFiuZmD8jIU8NTP5n6UWeDubGtFFJ0kOUKU5trJLxFOZXRTYbyDGVp9LfoSIs5LkWWQ==}
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.103_svelte@3.38.2:
-    resolution: {integrity: sha512-g3Q3AnYloJVpXu83yfQLddYcsTYJ5M/NaoRTyv0qCTMNea1L9HTGrI8grdi5kF8wbPCUcX9fLA9RYRDfEkjF/Q==}
-    engines: {node: '>= 12.17.0'}
-    hasBin: true
-    peerDependencies:
-      svelte: ^3.38.2
-    dependencies:
-      '@sveltejs/vite-plugin-svelte': 1.0.0-next.10_svelte@3.38.2+vite@2.3.2
-      cheap-watch: 1.0.3
-      sade: 1.7.4
-      svelte: 3.38.2
-      vite: 2.3.2
-    transitivePeerDependencies:
-      - rollup
-      - supports-color
-    dev: true
-
-  /@sveltejs/kit/1.0.0-next.107_svelte@3.38.2:
-    resolution: {integrity: sha512-HxomGMWbuWTU8lahk98hqIL/xjW6HzNTAvTZVMnnmlMHN1N8x7+abkz4Y09Zhu8lZkZpFuqBj2UlsgPW4uJXtw==}
+  /@sveltejs/kit/1.0.0-next.108_svelte@3.38.2:
+    resolution: {integrity: sha512-4XPuN1WsL6hksYZionnO1f+aBLifWIM/gFgDgx4u1Fzhln5usgOCe0RqrN3unmhyprawRYY5/1DUPfqfVHxSVQ==}
     engines: {node: '>= 12.17.0'}
     hasBin: true
     peerDependencies:

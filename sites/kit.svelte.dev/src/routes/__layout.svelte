@@ -21,8 +21,10 @@
 	</div>
 
 	<div class="nav-right" slot="nav-right">
-		<NavItem external="https://svelte.dev/">Svelte</NavItem>
-		
+		<NavItem external="https://svelte.dev/" title="Svelte">
+			<img class="nav-icon" width="20px" src="./icons/svelte.svg" alt="Open Svelte page" />
+		</NavItem>
+
 		<NavItem external="https://svelte.dev/chat" title="Discord Chat">
 			<img class="nav-icon" width="20px" src="/icons/discord.svg" alt="Open Discord chat" />
 		</NavItem>

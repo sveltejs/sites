@@ -1,6 +1,8 @@
 <script context="module">
+	import { API_BASE } from '../../_env';
+
 	export async function load({ fetch }) {
-		const faqs = await fetch('https://api.svelte.dev/docs/kit/faq?content').then(r => r.json());
+		const faqs = await fetch(`${API_BASE}/docs/kit/faq?content`).then(r => r.json());
 		return {
 			props: { faqs },
 			maxage: 60

@@ -15,7 +15,7 @@
 		"@sveltejs/kit": "next",
 		"@sveltejs/site-kit": "workspace:*",
 		"@types/node": "^16.6.1",
-		"svelte": "^3.38.2"
+		"svelte": "^3.42.1"
 	},
 	"type": "module"
 }

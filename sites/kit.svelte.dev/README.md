@@ -1,6 +1,6 @@
 # kit.svelte.dev
 
-This is the Svelte-Kit website. The docs are served via an API and do not live here, they live [alongside the code](https://github.com/sveltejs/kit/tree/master/documentation). Any documentation _content_ improvements should be made as a Pull Request against that repository.
+This is the SvelteKit website. The docs are served via an API and do not live here, they live [alongside the code](https://github.com/sveltejs/kit/tree/master/documentation). Any documentation _content_ improvements should be made as a Pull Request against that repository.
 
 ## Developing
 

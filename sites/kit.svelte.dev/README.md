@@ -1,39 +1,33 @@
-# create-svelte
+# kit.svelte.dev
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm init svelte@next
-
-# create a new project in my-app
-npm init svelte@next my-app
-```
-
-> Note: the `@next` is temporary
+This is the Svelte-Kit website. The docs are served via an API and do not live here, they live [alongside the code](https://github.com/sveltejs/kit/tree/master/documentation). Any documentation _content_ improvements should be made as a Pull Request against that repository.
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+This repoository uses [`pnpm`](https://pnpm.io/) to manage its dependencies. You may need to install it first.
+
+Then, from the root of this repository:
 
 ```bash
+pnpm i
+cd sites/kit.svelte.dev
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+## Previewing local docs changes
 
-Svelte apps are built with _adapters_, which optimise your project for deployment to different environments, like [Begin](https://begin.com), [Netlify](https://www.netlify.com), [Vercel](https://vercel.com) and so on. (You can also create your own adapter — instructions TODO.)
+In order to preview local documentation changes, you will need to clone both this repository and the [`kit`](https://github.com/sveltejs/kit) repository, installing the necessary dependencies (by running `pnpm i` in the root of both).
 
-By default, `npm run build` will generate a Node app that you can run with `node build`. To use a different adapter, install it and update your `svelte.config.js` accordingly. The following official adapters are available:
+Then, from the root of the `kit` repository run the following command to start a server on `localhost:3456` that will serve the _local_ documentation:
 
-- [@sveltejs/adapter-node](https://github.com/sveltejs/kit/tree/master/packages/adapter-node)
-- [@sveltejs/adapter-static](https://github.com/sveltejs/kit/tree/master/packages/adapter-static)
-- [@sveltejs/adapter-netlify](https://github.com/sveltejs/kit/tree/master/packages/adapter-netlify)
-- ...more soon
+```bash
+pnpm preview:docs
+```
+
+Then inside this repository and package (`sites/sites/kit.svelte.dev`) run the following command:
+
+```bash
+pnpm dev:docs
+```
+
+This will start the dev server just as `pnpm dev` does, except it will point at your local version of the documentation. You will then be able to make changes to the documentation in the `kit` repository and see those changes reflected in the locally running site. This _will_ require a hard reload as automatical reloading is not yet supported.

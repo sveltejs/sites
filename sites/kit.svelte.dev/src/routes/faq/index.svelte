@@ -11,7 +11,7 @@
 </script>
 
 <script>
-	import { Permalink } from '@sveltejs/site-kit';
+	import { Permalink } from "@sveltejs/site-kit";
 
 	export let faqs;
 </script>
@@ -19,9 +19,9 @@
 <svelte:head>
 	<title>FAQ • SvelteKit</title>
 
-	<meta name="twitter:title" content="SvelteKit FAQ" />
-	<meta name="twitter:description" content="Frequently asked questions about SvelteKit" />
-	<meta name="description" content="Frequently asked questions about SvelteKit" />
+	<meta name="twitter:title" content="SvelteKit FAQ">
+	<meta name="twitter:description" content="Frequently asked questions about SvelteKit">
+	<meta name="description" content="Frequently asked questions about SvelteKit">
 </svelte:head>
 
 <div class="faqs stretch">

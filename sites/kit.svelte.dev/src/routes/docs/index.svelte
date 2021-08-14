@@ -19,9 +19,9 @@
 <svelte:head>
 	<title>Docs • SvelteKit</title>
 
-	<meta name="twitter:title" content="SvelteKit docs" />
-	<meta name="twitter:description" content="Complete documentation for SvelteKit" />
-	<meta name="Description" content="Complete documentation for SvelteKit" />
+	<meta name="twitter:title" content="SvelteKit docs">
+	<meta name="twitter:description" content="Complete documentation for SvelteKit">
+	<meta name="Description" content="Complete documentation for SvelteKit">
 </svelte:head>
 
 <Docs {sections} project="kit" path="/documentation">

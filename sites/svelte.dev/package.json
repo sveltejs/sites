@@ -1,0 +1,21 @@
+{
+	"name": "kit.svelte.dev",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "svelte-kit dev",
+		"dev:docs": "DOCS_PREVIEW=true pnpm dev",
+		"build": "svelte-kit build",
+		"prebuild": "test \"$CI\" = true && rm -rf src/content && git clone https://github.com/sveltejs/kit src/content && npx pnpm install --store=node_modules/.pnpm-store || echo skipping pnpm install",
+		"postbuild": "test \"$CI\" = true && rm -rf .netlify/functions/render/content && mkdir -p .netlify/functions/render/content && cp -r src/content/documentation .netlify/functions/render/content",
+		"start": "svelte-kit start"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-netlify": "next",
+		"@sveltejs/adapter-node": "next",
+		"@sveltejs/kit": "next",
+		"@sveltejs/site-kit": "workspace:*",
+		"@types/node": "^16.6.1",
+		"svelte": "^3.42.1"
+	},
+	"type": "module"
+}

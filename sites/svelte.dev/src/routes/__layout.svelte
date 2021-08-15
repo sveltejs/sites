@@ -1,7 +1,7 @@
 <script>
 	import '@sveltejs/site-kit/base.css';
 	import { page, navigating } from '$app/stores';
-	import { Icons, Nav, NavItem, PreloadingIndicator } from '@sveltejs/site-kit';
+	import { Icons, Nav, NavItem, PreloadingIndicator, ReplIcon } from '@sveltejs/site-kit';
 
 	export let segment;
 	$: segment = $page.path.split('/').pop();
@@ -15,17 +15,22 @@
 
 <Nav {segment} {page} logo="images/svelte-kit-horizontal.svg">
 	<div slot="nav-center" class="nav-center">
+		<NavItem segment="tutorials">Tutorials</NavItem>
 		<NavItem segment="docs">Docs</NavItem>
+		<NavItem segment="examples">Examples</NavItem>
+		<NavItem segment="blog">Blog</NavItem>
 		<NavItem segment="faq">FAQ</NavItem>
-		<NavItem segment="migrating">Migrating</NavItem>
 	</div>
 
 	<div class="nav-right" slot="nav-right">
+		<NavItem segment="repl" title="Svelte REPL">
+			<ReplIcon />
+		</NavItem>
 		<NavItem external="https://svelte.dev/chat" title="Discord Chat">
 			<img class="nav-icon" width="20px" src="./icons/discord.svg" alt="Open Discord chat" />
 		</NavItem>
 
-		<NavItem external="https://github.com/sveltejs/kit" title="GitHub Repo">
+		<NavItem external="https://github.com/sveltejs/svelte" title="GitHub Repo">
 			<img class="nav-icon" width="20px" src="./icons/github.svg" alt="Open Svelte GitHub page" />
 		</NavItem>
 	</div>

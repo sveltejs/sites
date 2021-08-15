@@ -13,67 +13,65 @@
 <svelte:head>
 	<title>SvelteKit • The fastest way to build Svelte apps</title>
 
-	<meta name="twitter:title" content="SvelteKit">
-	<meta name="twitter:description" content="The fastest way to build Svelte apps">
-	<meta name="description" content="SvelteKit is the official Svelte application framework">
+	<meta name="twitter:title" content="Svelte" />
+	<meta name="twitter:description" content="The fastest way to build Svelte apps" />
+	<meta name="description" content="SvelteKit is the official Svelte application framework" />
 </svelte:head>
 
-<h1 class="visually-hidden">SvelteKit</h1>
+<h1 class="visually-hidden">Svelte</h1>
 <Hero
-	title="SvelteKit"
-	logotype="images/svelte-kit-logotype.svg"
-	tagline="The fastest way to build svelte apps"
+	title="Svelte"
+	logotype="images/svelte-logotype.svg"
+	tagline="Cybernetically enhanced web apps"
 	background="/images/svelte-kit-machine"
-	alt="SvelteKit illustration"
+	alt="Svelte illustration"
 	width={960}
 	height={960}
 />
 
 <Blurb>
 	<div slot="one">
-		<h2>Powered by Svelte</h2>
+		<h2>Write less code</h2>
 		<p>
-			SvelteKit is an application framework powered by Svelte — build bigger apps with a smaller
-			footprint
+			Build boilerplate-free components using languages you already know — HTML, CSS and JavaScript
 		</p>
 
-		<a href="https://svelte.dev">learn Svelte</a>
+		<a href="blog/write-less-code">On writing</a>
 	</div>
 
 	<div slot="two">
-		<h2>Best of both worlds</h2>
+		<h2>No virtual DOM</h2>
 		<p>
-			All the SEO and progressive enhancement of a server-rendered app, with the slick navigation of
-			an SPA
+			Svelte compiles your code to tiny, framework-less vanilla JS — your app starts fast and stays
+			fast
 		</p>
 
-		<a sveltekit:prefetch href="/docs">read the docs</a>
+		<a sveltekit:prefetch href="blog/virtual-dom-is-pure-overhead">On overhead</a>
 	</div>
 
 	<div slot="three">
-		<h2>Build fast</h2>
+		<h2>Truly reactive</h2>
 		<p>
-			Hit the ground running with advanced routing, server-side rendering, code-splitting, offline
-			support and more
+			No more complex state management libraries — Svelte brings reactivity to JavaScript itself
 		</p>
 
-		<a sveltekit:prefetch href="/docs">read the docs</a>
+		<a sveltekit:prefetch href="/blog/svelte-3-rethinking-reactivity">On reactivity</a>
 	</div>
 
 	<div class="description" slot="what">
 		<p>
-			SvelteKit is a framework for building web applications of all sizes, with a beautiful
-			development experience and flexible filesystem-based routing.
+			Svelte is a radical new approach to building user interfaces. Whereas traditional frameworks
+			like React and Vue do the bulk of their work in the browser, Svelte shifts that work into a
+			compile step that happens when you build your app.
 		</p>
 
 		<p>
-			Unlike single-page apps, SvelteKit doesn't compromise on SEO, progressive enhancement or the
-			initial load experience — but unlike traditional server-rendered apps, navigation is
-			instantaneous for that app-like feel.
+			Instead of using techniques like virtual DOM diffing, Svelte writes code that surgically
+			updates the DOM when the state of your app changes.
 		</p>
 
 		<p>
-			Read the <a href="https://svelte.dev/blog/whats-the-deal-with-sveltekit">introductory blog</a>
+			Read the <a href="blog/svelte-3-rethinking-reactivity">introductory blog</a>
 			post to learn more.
 		</p>
 	</div>

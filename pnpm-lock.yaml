@@ -32,7 +32,23 @@ importers:
     devDependencies:
       '@sveltejs/adapter-netlify': 1.0.0-next.27
       '@sveltejs/adapter-node': 1.0.0-next.42
-      '@sveltejs/kit': 1.0.0-next.148_svelte@3.42.1
+      '@sveltejs/kit': 1.0.0-next.150_svelte@3.42.1
+      '@sveltejs/site-kit': link:../../packages/site-kit
+      '@types/node': 16.6.1
+      svelte: 3.42.1
+
+  sites/svelte.dev:
+    specifiers:
+      '@sveltejs/adapter-netlify': next
+      '@sveltejs/adapter-node': next
+      '@sveltejs/kit': next
+      '@sveltejs/site-kit': workspace:*
+      '@types/node': ^16.6.1
+      svelte: ^3.42.1
+    devDependencies:
+      '@sveltejs/adapter-netlify': 1.0.0-next.27
+      '@sveltejs/adapter-node': 1.0.0-next.42
+      '@sveltejs/kit': 1.0.0-next.150_svelte@3.42.1
       '@sveltejs/site-kit': link:../../packages/site-kit
       '@types/node': 16.6.1
       svelte: 3.42.1
@@ -299,8 +315,8 @@ packages:
       tiny-glob: 0.2.9
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.148_svelte@3.42.1:
-    resolution: {integrity: sha512-mP7qk7RSMF0FzgrZRPczYV2bRpTHI0TGbVLcjY1mGfCviNNlwTdxPpTjw/D4KXiCm5rBWA9irFD26b0J6qfjuQ==}
+  /@sveltejs/kit/1.0.0-next.150_svelte@3.42.1:
+    resolution: {integrity: sha512-crIpEgy8dyKvaMrEYmNm38lTwcwEY0wv8+L672WhgvHVx4cmiKsGAocq73I2h3f4lnlxa1mBwi7jrNTZO1lUDg==}
     engines: {node: ^12.20 || >=14.13}
     hasBin: true
     peerDependencies:

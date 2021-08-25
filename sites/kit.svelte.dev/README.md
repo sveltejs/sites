@@ -1,17 +1,17 @@
 # kit.svelte.dev
 
-This is the SvelteKit website. The docs are served via an API and do not live here, they live [alongside the code](https://github.com/sveltejs/kit/tree/master/documentation). Any documentation _content_ improvements should be made as a Pull Request against that repository.
+This is the SvelteKit website. The docs are served via an API and do not live here; they live [alongside the code](https://github.com/sveltejs/kit/tree/master/documentation). Any documentation _content_ improvements should be made as a Pull Request against that repository.
 
 ## Developing
 
-This repoository uses [`pnpm`](https://pnpm.io/) to manage its dependencies. You may need to install it first.
+This repository uses [`pnpm`](https://pnpm.io/) to manage its dependencies. You will need to have it installed first.
 
 Then, from the root of this repository:
 
 ```bash
 pnpm i
 cd sites/kit.svelte.dev
-npm run dev
+pnpm dev
 ```
 
 ## Previewing local docs changes
@@ -30,4 +30,4 @@ Then inside this repository and package (`sites/sites/kit.svelte.dev`) run the f
 pnpm dev:docs
 ```
 
-This will start the dev server just as `pnpm dev` does, except it will point at your local version of the documentation. You will then be able to make changes to the documentation in the `kit` repository and see those changes reflected in the locally running site. This _will_ require a hard reload as automatical reloading is not yet supported.
+This will start the dev server just as `pnpm dev` does, except it will point at your local version of the documentation. You will then be able to make changes to the documentation in the `kit` repository and see those changes reflected in the locally running site. This _will_ require a hard reload as automatically reloading is not yet supported.

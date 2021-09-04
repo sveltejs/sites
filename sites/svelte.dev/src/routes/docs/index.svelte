@@ -13,7 +13,6 @@
 
 	export async function load({ fetch }) {
 		const sections = await fetch(`${API_BASE}/docs/svelte/docs?content`).then(r => r.json());
-		console.log(sections)
 		sections[1].sections[0].sections.forEach((section) => {
 			if (section.slug in title_replacements) {
 				section.title = title_replacements[section.slug];

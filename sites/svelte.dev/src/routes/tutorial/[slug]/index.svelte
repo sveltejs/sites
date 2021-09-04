@@ -48,7 +48,6 @@
 
 	sections.forEach(section => {
 		section.tutorials.forEach(chapter => {
-			console.log(chapter)
 			const obj = {
 				slug: chapter.slug,
 				section,
@@ -65,7 +64,6 @@
 		});
 	});
 
-	// $: console.log(tutorial)
 
 	// TODO is there a non-hacky way to trigger scroll when chapter changes?
 	$: if (scrollable) tutorial, scrollable.scrollTo(0, 0);
@@ -75,9 +73,7 @@
 	const tutorial_repo_link = 'https://github.com/sveltejs/svelte/tree/master/documentation/tutorial';
 
 	$: selected = lookup.get(slug);
-	// $: console.log(selected, slug)
 	$: improve_link = ''
-	$: console.log(tutorial)
 	
 	//`${tutorial_repo_link}/${selected.chapter.section_dir}/${selected.chapter.chapter_dir}`;
 
@@ -88,7 +84,6 @@
 	});
 
 	$: if (repl) {
-		console.log(tutorial.initial,tutorial.initial.map(clone))
 		completed = false;
 		repl.set({
 			components: tutorial.initial.map(clone)
@@ -114,7 +109,6 @@
 	function handle_change(event) {
 		completed = event.detail.components.every((file, i) => {
 			const expected = tutorial.complete[i] && clone(tutorial.complete[i]);
-			console.log(expected)
 			return expected && (
 				file.name === expected.name &&
 				file.type === expected.type &&

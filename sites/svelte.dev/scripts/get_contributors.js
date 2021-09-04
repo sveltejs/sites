@@ -1,9 +1,11 @@
-require('dotenv/config');
-const fs = require('fs');
-const fetch = require('node-fetch');
-const Jimp = require('jimp');
+import 'dotenv/config';
+import fs from 'fs';
+import fetch from 'node-fetch';
+import Jimp from 'jimp';
+import { get_dirname } from './util.js';
 
 const force = process.env.FORCE_UPDATE === 'true';
+const __dirname = get_dirname(import.meta.url);
 
 process.chdir(__dirname);
 
@@ -23,7 +25,9 @@ async function main() {
 	let page = 1;
 
 	while (true) {
-		const res = await fetch(`${base}?client_id=${GITHUB_CLIENT_ID}&client_secret=${GITHUB_CLIENT_SECRET}&per_page=100&page=${page++}`);
+		const res = await fetch(
+			`${base}?client_id=${GITHUB_CLIENT_ID}&client_secret=${GITHUB_CLIENT_SECRET}&per_page=100&page=${page++}`
+		);
 		const list = await res.json();
 
 		if (list.length === 0) break;
@@ -52,7 +56,9 @@ async function main() {
 
 	await sprite.quality(80).write(`../static/contributors.jpg`);
 	// TODO: Optimizing the static/contributors.jpg image should probably get automated as well
-	console.log('remember to additionally optimize the resulting /static/contributors.jpg image file via e.g. https://squoosh.app ');
+	console.log(
+		'remember to additionally optimize the resulting /static/contributors.jpg image file via e.g. https://squoosh.app '
+	);
 
 	const str = `[\n\t${authors.map(a => `'${a.login}'`).join(',\n\t')}\n]`;
 

@@ -1,7 +1,10 @@
 import sh from 'shelljs';
 import fs from 'fs';
 import path from 'path';
+import { get_dirname } from './util.js';
+
 const force = process.env.FORCE_UPDATE === 'true';
+const __dirname = get_dirname(import.meta.url);
 
 sh.cd(path.join(__dirname, '..'));
 

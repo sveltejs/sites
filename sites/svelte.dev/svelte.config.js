@@ -9,6 +9,10 @@ export default {
 		vite: () => ({
 			define: {
 				'process.env.API_BASE': JSON.stringify(API_BASE)
+			},
+			optimizeDeps: {
+				// https://github.com/markedjs/marked/issues/2021
+				include: ['marked', 'codemirror']
 			}
 		})
 	}

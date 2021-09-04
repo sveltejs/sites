@@ -2,7 +2,7 @@
 	import { API_BASE } from '../../_env';
 
 	export async function load({ fetch }) {
-		const faqs = await fetch(`${API_BASE}/docs/kit/faq?content`).then(r => r.json());
+		const faqs = await fetch(`${API_BASE}/docs/svelte/faq?content`).then(r => r.json());
 		return {
 			props: { faqs },
 			maxage: 60
@@ -19,9 +19,9 @@
 <svelte:head>
 	<title>FAQ • SvelteKit</title>
 
-	<meta name="twitter:title" content="SvelteKit FAQ">
-	<meta name="twitter:description" content="Frequently asked questions about SvelteKit">
-	<meta name="description" content="Frequently asked questions about SvelteKit">
+	<meta name="twitter:title" content="SvelteKit FAQ" />
+	<meta name="twitter:description" content="Frequently asked questions about SvelteKit" />
+	<meta name="description" content="Frequently asked questions about SvelteKit" />
 </svelte:head>
 
 <div class="faqs stretch">

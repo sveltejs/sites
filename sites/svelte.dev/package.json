@@ -17,5 +17,9 @@
 		"@types/node": "^16.6.1",
 		"svelte": "^3.42.1"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@sveltejs/svelte-repl": "^0.2.2",
+		"codemirror": "^5.62.3"
+	}
 }

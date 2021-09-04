@@ -2,12 +2,13 @@
 	"name": "kit.svelte.dev",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "svelte-kit dev",
+		"dev": "pnpm copy-workers && svelte-kit dev",
 		"dev:docs": "DOCS_PREVIEW=true pnpm dev",
-		"build": "svelte-kit build",
+		"build": "pnpm copy-workers && svelte-kit build",
 		"prebuild": "test \"$CI\" = true && rm -rf src/content && git clone https://github.com/sveltejs/kit src/content && npx pnpm install --store=node_modules/.pnpm-store || echo skipping pnpm install",
 		"postbuild": "test \"$CI\" = true && rm -rf .netlify/functions/render/content && mkdir -p .netlify/functions/render/content && cp -r src/content/documentation .netlify/functions/render/content",
-		"start": "svelte-kit start"
+		"start": "svelte-kit start",
+		"copy-workers": "node scripts/copy-workers.js"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-netlify": "next",
@@ -20,6 +21,10 @@
 	"type": "module",
 	"dependencies": {
 		"@sveltejs/svelte-repl": "^0.2.2",
-		"codemirror": "^5.62.3"
+		"codemirror": "^5.62.3",
+		"dotenv": "^10.0.0",
+		"jimp": "^0.16.1",
+		"node-fetch": "^3.0.0",
+		"shelljs": "^0.8.4"
 	}
 }

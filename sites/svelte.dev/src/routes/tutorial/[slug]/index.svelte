@@ -1,26 +1,25 @@
 <script context="module">
-	import {API_BASE} from '../../../_env';
+	import { API_BASE } from '../../../_env';
+
 	export async function load({ page }) {
-		const tutorial = await fetch(`${API_BASE}/docs/svelte/tutorial/${page.params.slug}`).then(r => r.json());
-	
+		const tutorial = await fetch(`${API_BASE}/docs/svelte/tutorial/${page.params.slug}`);
 
-		// if (!res.ok) {
-		// 	return this.redirect(301, `tutorial/introduction-basics`);
-		// }
-
-		// return {
-		// 	slug: params.slug,
-		// 	chapter: await res.json()
-		// };
+		if (!tutorial.ok) {
+			return {
+				status: 301,
+				redirect: '/tutorial/introduction-basics'
+			}
+		}
 
 		return {
-			props: { tutorial, slug: page.params.slug },
+			props: { tutorial: await tutorial.json(), slug: page.params.slug },
 			maxage: 60
 		};
 	}
 </script>
 
 <script>
+	// import '@sveltejs/site-kit/code.css';
 	import { browser } from '$app/env'
 	import Repl from '@sveltejs/svelte-repl';
 	import { getContext } from 'svelte';
@@ -44,7 +43,7 @@
 	let scrollable;
 	const lookup = new Map();
 
-	let width = process.browser ? window.innerWidth : 1000;
+	let width = browser ? window.innerWidth : 1000;
 	let offset = 0;
 
 	sections.forEach(section => {
@@ -59,7 +58,7 @@
 
 			lookup.set(chapter.slug, obj);
 
-			if (process.browser) { // pending https://github.com/sveltejs/svelte/issues/2135
+			if (browser) { // pending https://github.com/sveltejs/svelte/issues/2135
 				if (prev) prev.next = obj;
 				prev = obj;
 			}
@@ -83,12 +82,13 @@
 	//`${tutorial_repo_link}/${selected.chapter.section_dir}/${selected.chapter.chapter_dir}`;
 
 	const clone = file => ({
-		name: file.name.replace(/\.w+$/, ''),
+		name: file.name.replace(/.\w+$/, ''),
 		type: file.type,
 		source: file.content
 	});
 
 	$: if (repl) {
+		console.log(tutorial.initial,tutorial.initial.map(clone))
 		completed = false;
 		repl.set({
 			components: tutorial.initial.map(clone)
@@ -113,7 +113,8 @@
 
 	function handle_change(event) {
 		completed = event.detail.components.every((file, i) => {
-			const expected = chapter.app_b[i];
+			const expected = tutorial.complete[i] && clone(tutorial.complete[i]);
+			console.log(expected)
 			return expected && (
 				file.name === expected.name &&
 				file.type === expected.type &&
@@ -144,7 +145,7 @@
 				{@html tutorial.content}
 
 				<div class="controls">
-					{#if tutorial.complete}
+					{#if tutorial.complete.length}
 						<!-- TODO disable this button when the contents of the REPL
 							matches the expected end result -->
 						<button class="show" on:click={() => (completed ? reset() : complete())}>
@@ -153,7 +154,7 @@
 					{/if}
 
 					{#if selected.next}
-						<a class="next" href="tutorial/{selected.next.slug}">Next</a>
+						<a class="next" href="/tutorial/{selected.next.slug}">Next</a>
 					{/if}
 				</div>
 
@@ -167,7 +168,7 @@
 			{#if browser}
 				<Repl
 					bind:this={repl}
-					workersUrl="workers"
+					workersUrl="/workers"
 					{svelteUrl}
 					{rollupUrl}
 					orientation={mobile ? 'columns' : 'rows'}

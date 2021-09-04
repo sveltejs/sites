@@ -1,7 +1,6 @@
-const sh = require('shelljs');
-const fs = require('fs');
-const path = require('path');
-
+import sh from 'shelljs';
+import fs from 'fs';
+import path from 'path';
 const force = process.env.FORCE_UPDATE === 'true';
 
 sh.cd(path.join(__dirname, '..'));
@@ -13,7 +12,7 @@ if (!force && fs.existsSync(outputFile)) {
 }
 
 // fetch svelte app
-sh.rm('-rf','scripts/svelte-app');
+sh.rm('-rf', 'scripts/svelte-app');
 sh.exec('npx degit sveltejs/template scripts/svelte-app');
 
 // remove src (will be recreated client-side) and node_modules
@@ -24,7 +23,7 @@ sh.rm('-rf', 'scripts/svelte-app/node_modules');
 const appPath = 'scripts/svelte-app';
 const files = [];
 
-for (const path of sh.find(appPath).filter(p => fs.lstatSync(p).isFile()) ) {
+for (const path of sh.find(appPath).filter(p => fs.lstatSync(p).isFile())) {
 	const bytes = fs.readFileSync(path);
 	const string = bytes.toString();
 	const data = bytes.compare(Buffer.from(string)) === 0 ? string : [...bytes];

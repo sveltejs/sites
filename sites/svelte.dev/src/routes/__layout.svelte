@@ -1,5 +1,6 @@
 <script>
 	import '@sveltejs/site-kit/base.css';
+	import '../prism.css';
 	import { page, navigating } from '$app/stores';
 	import { Icons, Nav, NavItem, PreloadingIndicator, ReplIcon } from '@sveltejs/site-kit';
 

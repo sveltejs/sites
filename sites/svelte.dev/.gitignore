@@ -5,13 +5,13 @@ node_modules
 /build
 /functions
 
-/site/cypress/screenshots/
-/site/__sapper__/
-/site/.env
-/site/.sessions
-/site/static/svelte-app.json
-/site/static/contributors.jpg
-/site/static/workers
-/site/scripts/svelte-app
-/site/scripts/community
-/site/src/routes/_contributors.js
+cypress/screenshots/
+__sapper__/
+.env
+.sessions
+static/svelte-app.json
+static/contributors.jpg
+static/workers
+scripts/svelte-app
+scripts/community
+src/routes/_contributors.js

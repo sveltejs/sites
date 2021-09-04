@@ -4,3 +4,14 @@ node_modules
 /.svelte-kit
 /build
 /functions
+
+/site/cypress/screenshots/
+/site/__sapper__/
+/site/.env
+/site/.sessions
+/site/static/svelte-app.json
+/site/static/contributors.jpg
+/site/static/workers
+/site/scripts/svelte-app
+/site/scripts/community
+/site/src/routes/_contributors.js

@@ -10,9 +10,11 @@
 </script>
 
 <script>
+	import { API_BASE } from '../../../_env';
 	import Repl from '@sveltejs/svelte-repl';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { browser } from '$app/env';
 	import { session } from '$app/stores';
 	import InputOutputToggle from '$lib/components/Repl/InputOutputToggle.svelte';
 	import AppControls from '$lib/components/Repl/AppControls/index.svelte';
@@ -25,7 +27,7 @@
 	let name = 'Loading...';
 	let zen_mode = false;
 	let is_relaxed_gist = false;
-	let width = process.browser ? window.innerWidth : 1000;
+	let width = browser ? window.innerWidth : 1000;
 	let checked = false;
 
 	function update_query_string(version) {
@@ -42,16 +44,29 @@
 
 	$: if (typeof history !== 'undefined') update_query_string(version);
 
-	function fetch_gist(id) {
+	async function fetch_gist(id) {
 		if (gist && gist.uid === id) {
 			// if the id changed because we just forked, don't refetch
 			return;
 		}
 
+		let r;
 		// TODO handle `relaxed` logic
-		fetch(`repl/${id}.json`).then(r => {
+		const example = await fetch(`https://api.svelte.dev/docs/svelte/examples/${id}`);
+	if (example.ok) {
+		r = example;
+	} else {
+		const gist = await fetch(`${API_BASE}/gists/${id}`);
+		r = gist;
+	}
+
+	// console.log(response)
+
+
+		// response.then(r => {
 			if (r.ok) {
 				r.json().then(data => {
+					console.log()
 					gist = data;
 					name = data.name;
 
@@ -63,7 +78,7 @@
 						let type = file.name.slice(dot + 1);
 
 						if (type === 'html') type = 'svelte'; // TODO do this on the server
-						return { name, type, source: file.source };
+						return { name, type, source: file.source ? file.source : file.content };
 					});
 
 					components.sort((a, b) => {
@@ -74,16 +89,16 @@
 
 						return a.name < b.name ? -1 : 1;
 					});
-
+					console.log(components)
 					repl.set({ components });
 				});
 			} else {
 				console.warn('TODO: 404 Gist');
 			}
-		});
+		// });
 	}
 
-	$: if (process.browser) fetch_gist(id);
+	$: if (browser) fetch_gist(id);
 
 	onMount(() => {
 		if (version !== 'local') {
@@ -101,14 +116,14 @@
 		goto(`/repl/${gist.uid}?version=${version}`);
 	}
 
-	$: svelteUrl = process.browser && version === 'local' ?
+	$: svelteUrl = browser && version === 'local' ?
 		`${location.origin}/repl/local` :
 		`https://unpkg.com/svelte@${version}`;
 
 	const rollupUrl = `https://unpkg.com/rollup@1/dist/rollup.browser.js`;
 
 	// needed for context API example
-	const mapbox_setup = `window.MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN;`;
+	const mapbox_setup = '';//`window.MAPBOX_ACCESS_TOKEN = process.env.MAPBOX_ACCESS_TOKEN;`;
 
 	$: mobile = width < 540;
 
@@ -128,11 +143,11 @@
 <div class="repl-outer {zen_mode ? 'zen-mode' : ''}" class:mobile>
 	<AppControls {gist} {repl} bind:name bind:zen_mode on:forked={handle_fork} />
 
-	{#if process.browser}
+	{#if browser}
 		<div class="viewport" class:offset={checked}>
 			<Repl
 				bind:this={repl}
-				workersUrl="workers"
+				workersUrl="/workers"
 				{svelteUrl}
 				{rollupUrl}
 				{relaxed}

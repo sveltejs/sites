@@ -1,26 +1,28 @@
 <script>
+	import {API_BASE} from '../_env'
 	import {setContext} from 'svelte';
 	import { page, navigating, session } from '$app/stores';
 	import { Icons, Nav, NavItem, PreloadingIndicator, ReplIcon } from '@sveltejs/site-kit';
 	import '@sveltejs/site-kit/base.css';
 	import '../prism.css';
-	
+
 	export let segment;
 	$: segment = $page.path.split('/').pop();
 
 	setContext('app', {
 		login: () => {
-			const login_window = window.open(`${window.location.origin}/auth/login`, 'login', 'width=600,height=400');
+			const login_window = window.open(`${API_BASE}/auth/login`, 'login', 'width=600,height=400');
 
 			window.addEventListener('message', function handler(event) {
 				login_window.close();
 				window.removeEventListener('message', handler);
+				console.log(event.data)
 				$session.user = event.data.user;
 			});
 		},
 
 		logout: async () => {
-			const r = await fetch(`/auth/logout`, {
+			const r = await fetch(`${API_BASE}/auth/logout`, {
 				credentials: 'include'
 			});
 

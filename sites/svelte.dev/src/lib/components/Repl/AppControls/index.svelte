@@ -1,4 +1,5 @@
 <script>
+	import { API_BASE } from '../../../../_env';
 	import { createEventDispatcher, getContext } from 'svelte';
 	import { session } from '$app/stores';
 	import UserMenu from './UserMenu.svelte';
@@ -40,7 +41,8 @@
 		const { components } = repl.toJSON();
 
 		try {
-			const r = await fetch(`repl/create.json`, {
+			console.log('CREATEGIST')
+			const r = await fetch(`${API_BASE}/gists`, {
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify({
@@ -51,6 +53,8 @@
 					}))
 				})
 			});
+
+			console.log(r)
 
 			if (r.status < 200 || r.status >= 300) {
 				const { error } = await r.json();
@@ -95,7 +99,7 @@
 			// ~> Any missing files are considered deleted!
 			const { components } = repl.toJSON();
 
-			const r = await fetch(`repl/${gist.uid}.json`, {
+			const r = await fetch(`${API_BASE}/gists/${gist.uid}`, {
 				method: 'PATCH',
 				credentials: 'include',
 				body: JSON.stringify({

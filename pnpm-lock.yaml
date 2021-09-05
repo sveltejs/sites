@@ -46,6 +46,7 @@ importers:
       '@sveltejs/svelte-repl': ^0.2.2
       '@types/node': ^16.6.1
       codemirror: ^5.62.3
+      do-not-zip: ^1.0.0
       dotenv: ^10.0.0
       jimp: ^0.16.1
       node-fetch: ^3.0.0
@@ -55,6 +56,7 @@ importers:
     dependencies:
       '@sveltejs/svelte-repl': 0.2.2
       codemirror: 5.62.3
+      do-not-zip: 1.0.0
       dotenv: 10.0.0
       jimp: 0.16.1
       node-fetch: 3.0.0
@@ -1235,6 +1237,10 @@ packages:
     dependencies:
       path-type: 4.0.0
     dev: true
+
+  /do-not-zip/1.0.0:
+    resolution: {integrity: sha512-Pgd81ET43bhAGaN2Hq1zluSX1FmD7kl7KcV9ER/lawiLsRUB9pRA5y8r6us29Xk6BrINZETO8TjhYwtwafWUww==}
+    dev: false
 
   /dom-walk/0.1.2:
     resolution: {integrity: sha512-6QvTW9mrGeIegrFXdtQi9pk7O/nSK6lSdXW2eqUspN5LWD7UTji2Fqw5V2YLjBpHEoU9Xl/eUWNpDeZvoyOv2w==}

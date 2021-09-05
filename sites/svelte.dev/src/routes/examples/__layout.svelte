@@ -3,7 +3,7 @@
 
 	export async function load() {
 		const examples = await fetch(`${API_BASE}/docs/svelte/examples`).then(r => r.json());
-		console.log(examples)
+
 		return { 
 			props: {
 				examples

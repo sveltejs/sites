@@ -1,11 +1,32 @@
 <script>
+	import {setContext} from 'svelte';
+	import { page, navigating, session } from '$app/stores';
+	import { Icons, Nav, NavItem, PreloadingIndicator, ReplIcon } from '@sveltejs/site-kit';
 	import '@sveltejs/site-kit/base.css';
 	import '../prism.css';
-	import { page, navigating } from '$app/stores';
-	import { Icons, Nav, NavItem, PreloadingIndicator, ReplIcon } from '@sveltejs/site-kit';
-
+	
 	export let segment;
 	$: segment = $page.path.split('/').pop();
+
+	setContext('app', {
+		login: () => {
+			const login_window = window.open(`${window.location.origin}/auth/login`, 'login', 'width=600,height=400');
+
+			window.addEventListener('message', function handler(event) {
+				login_window.close();
+				window.removeEventListener('message', handler);
+				$session.user = event.data.user;
+			});
+		},
+
+		logout: async () => {
+			const r = await fetch(`/auth/logout`, {
+				credentials: 'include'
+			});
+
+			if (r.ok) $session.user = null;
+		}
+	});
 </script>
 
 <Icons />
@@ -24,7 +45,7 @@
 	</div>
 
 	<div class="nav-right" slot="nav-right">
-		<NavItem segment="repl" title="Svelte REPL">
+		<NavItem segment="/repl" title="Svelte REPL">
 			<ReplIcon />
 		</NavItem>
 		<NavItem external="https://svelte.dev/chat" title="Discord Chat">

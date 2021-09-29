@@ -20,7 +20,7 @@
 	"devDependencies": {
 		"esm": "^3.2.25",
 		"mocha": "^6.2.3",
-		"svelte": "^3.35.0"
+		"svelte": "^3.43.0"
 	},
 	"dependencies": {
 		"golden-fleece": "^1.0.9"

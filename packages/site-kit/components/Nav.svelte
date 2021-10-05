@@ -58,7 +58,7 @@
 
 		<a
 			sveltekit:prefetch
-			href="."
+			href="/"
 			class="nav-spot home"
 			title={home_title}
 			style="background-image: url({logo})"

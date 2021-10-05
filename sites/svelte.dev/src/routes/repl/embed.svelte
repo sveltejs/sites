@@ -12,7 +12,7 @@
 
 <script>
 	import { browser } from '$app/env';
-	import ReplWidget from '../../components/Repl/ReplWidget.svelte';
+	import ReplWidget from '$lib/components/Repl/ReplWidget.svelte';
 
 	export let version = '3';
 	export let gist;

@@ -15,9 +15,9 @@
 
 <Nav {segment} {page} logo="images/svelte-kit-horizontal.svg">
 	<div slot="nav-center" class="nav-center">
-		<NavItem segment="docs">Docs</NavItem>
-		<NavItem segment="faq">FAQ</NavItem>
-		<NavItem segment="migrating">Migrating</NavItem>
+		<NavItem segment="/docs">Docs</NavItem>
+		<NavItem segment="/faq">FAQ</NavItem>
+		<NavItem segment="/migrating">Migrating</NavItem>
 	</div>
 
 	<div class="nav-right" slot="nav-right">

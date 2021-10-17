@@ -13,7 +13,7 @@
 	<PreloadingIndicator />
 {/if}
 
-<Nav {segment} {page} logo="images/svelte-kit-horizontal.svg">
+<Nav {segment} {page} logo="/images/svelte-kit-horizontal.svg">
 	<div slot="nav-center" class="nav-center">
 		<NavItem segment="/docs">Docs</NavItem>
 		<NavItem segment="/faq">FAQ</NavItem>
@@ -22,11 +22,11 @@
 
 	<div class="nav-right" slot="nav-right">
 		<NavItem external="https://svelte.dev/chat" title="Discord Chat">
-			<img class="nav-icon" width="20px" src="./icons/discord.svg" alt="Open Discord chat" />
+			<img class="nav-icon" width="20px" src="/icons/discord.svg" alt="Open Discord chat" />
 		</NavItem>
 
 		<NavItem external="https://github.com/sveltejs/kit" title="GitHub Repo">
-			<img class="nav-icon" width="20px" src="./icons/github.svg" alt="Open Svelte GitHub page" />
+			<img class="nav-icon" width="20px" src="/icons/github.svg" alt="Open Svelte GitHub page" />
 		</NavItem>
 	</div>
 </Nav>

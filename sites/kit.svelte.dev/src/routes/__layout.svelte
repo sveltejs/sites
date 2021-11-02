@@ -28,6 +28,10 @@
 		<NavItem external="https://github.com/sveltejs/kit" title="GitHub Repo">
 			<img class="nav-icon" width="20px" src="/icons/github.svg" alt="Open Svelte GitHub page" />
 		</NavItem>
+
+		<NavItem external="https://svelte.dev/" title="Svelte Homepage">
+			<img class="nav-icon" width="20px" src="./icons/svelte.svg" alt="Open Svelte page" />
+		</NavItem>
 	</div>
 </Nav>
 

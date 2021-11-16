@@ -1,11 +1,23 @@
 <script>
 	export let alt;
 	export let width;
-	export let height;
 	export let title;
 	export let tagline;
 	export let logotype;
 	export let background;
+
+	const groupBy = (items, key) => items.reduce(
+		(result, item) => ({
+			...result,
+			[item[key]]: [
+				...(result[item[key]] || []),
+				item,
+			],
+		}), 
+		{},
+	);
+
+	const imageGroups = Object.values(groupBy(background, 'format'));
 </script>
 
 <section class="hero-banner">
@@ -17,10 +29,10 @@
 
 		<div class="hero-image">
 			<picture>
-				{#each background as image}
-					<source  type={'image/' + image.format} srcset={image.src}/> 
-					{#if image.format === 'png'}
-						<img src={image.src} {alt} />
+				{#each imageGroups as imageGroup}
+					<source type={'image/' + imageGroup[0].format} srcset={imageGroup.map(image => `${image.src} ${image.width === width ? '1x' : '2x'}`).join(', ')}/> 
+					{#if imageGroup[0].format === 'png'}
+						<img src={imageGroup[0].src} {alt} />
 					{/if}
 				{/each}
 			</picture>

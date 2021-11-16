@@ -7,7 +7,7 @@
 </script>
 
 <script>
-	import Machine from '$img/svelte-kit-machine.png?w=800&h=600&format=avif;webp;png&meta'
+	import Machine from '$img/svelte-kit-machine.webp?w=1440;800&format=avif;webp;png&meta'
 	import { Hero, Blurb } from '@sveltejs/site-kit';
 </script>
 
@@ -27,7 +27,6 @@
 	background={Machine}
 	alt="SvelteKit illustration"
 	width={800}
-	height={600}
 />
 
 <Blurb>

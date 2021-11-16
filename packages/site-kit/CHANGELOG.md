@@ -1,5 +1,9 @@
 # @sveltejs/site-kit changelog
 
+## 2.0.0-next.1
+
+- Various
+
 ## 2.0.0-next.0
 
 ### Major Changes

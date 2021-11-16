@@ -17,9 +17,12 @@
 
 		<div class="hero-image">
 			<picture>
-				<source type="image/webp" srcset="{background}.webp" />
-				<source type="image/png" srcset="{background}.png" />
-				<img {alt} {width} {height} src="{background}.png" />
+				{#each background as image}
+					<source  type={'image/' + image.format} srcset={image.src}/> 
+					{#if image.format === 'png'}
+						<img src={image.src} {alt} />
+					{/if}
+				{/each}
 			</picture>
 		</div>
 	</div>

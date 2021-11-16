@@ -7,6 +7,7 @@
 </script>
 
 <script>
+	import Machine from '$img/svelte-kit-machine.png?w=960&h=960&format=avif;webp;png&meta'
 	import { Hero, Blurb } from '@sveltejs/site-kit';
 </script>
 
@@ -23,7 +24,7 @@
 	title="SvelteKit"
 	logotype="images/svelte-kit-logotype.svg"
 	tagline="The fastest way to build svelte apps"
-	background="/images/svelte-kit-machine"
+	background={Machine}
 	alt="SvelteKit illustration"
 	width={960}
 	height={960}

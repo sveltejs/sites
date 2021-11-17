@@ -1,5 +1,9 @@
 # @sveltejs/site-kit changelog
 
+## 2.0.0-next.2
+
+- Fix exports
+
 ## 2.0.0-next.1
 
 - Various

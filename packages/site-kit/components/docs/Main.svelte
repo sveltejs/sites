@@ -98,7 +98,6 @@
 		margin-top: 8rem;
 		padding: 2rem 1.6rem 4rem 0.2rem;
 		border-top: 2px solid #ddd;
-		/* color: var(--text); */
 		line-height: 1;
 		font-size: var(--h3);
 		letter-spacing: 0.05em;
@@ -259,11 +258,8 @@
 	}
 
 	.content :global(section) :global(blockquote) {
-		/* color: #ff3e00; */
 		color: rgba(0, 0, 0, 0.7);
 		background-color: rgba(255, 62, 0, 0.1);
-		/* background-color: #f6f6f6; */
-		/* border-left: 4px solid var(--flash); */
 		border-left: 4px solid #ff3e00;
 		padding: 1rem;
 	}
@@ -277,9 +273,7 @@
 	}
 
 	.content :global(section) :global(blockquote) :global(code) {
-		/* background: hsl(204, 100%, 95%) !important; */
 		background: #d5e2ea;
-		/* color: hsl(204, 100%, 50%); */
 	}
 
 	.content :global(section) :global(a):hover {
@@ -288,7 +282,6 @@
 
 	.content :global(section) :global(a) :global(code) {
 		color: inherit;
-		/* background: none !important; */
 		background: rgba(255, 62, 0, 0.1) !important;
 	}
 

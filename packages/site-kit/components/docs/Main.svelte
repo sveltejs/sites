@@ -1,14 +1,13 @@
 <script>
-	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
-	import { getFragment } from '../../utils/navigation';
+	import { getFragment, onNavigate } from '../../utils/navigation';
 	import '../../code.css';
 
 	export let path;
 
 	let container;
 
-	onMount(() => {
+	onNavigate(() => {
 		// don't update `selected` for headings above level 4, see _sections.js
 		const anchors = container.querySelectorAll('[id]:not([data-scrollignore])');
 
@@ -40,6 +39,8 @@
 					return;
 				}
 			}
+
+			path = $page.path;
 		};
 
 		window.addEventListener('scroll', onscroll, true);
@@ -289,5 +290,24 @@
 		color: inherit;
 		/* background: none !important; */
 		background: rgba(255, 62, 0, 0.1) !important;
+	}
+
+	/* this replaces the offset-anchor hack, which we should remove from this CSS
+	   once https://github.com/sveltejs/action-deploy-docs/issues/1 is closed */
+	.content :global(h2[id]),
+	.content :global(h3[id]) {
+		padding-top: 10rem;
+		margin-top: -2rem;
+		border-top: none;
+	}
+
+	.content :global(h2[id])::after {
+		content: '';
+		position: absolute;
+		width: 100%;
+		left: 0;
+		top: 8rem;
+		height: 2px;
+		background: #ddd;
 	}
 </style>

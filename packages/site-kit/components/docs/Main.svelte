@@ -1,16 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
-	import Icon from '../Icon.svelte';
-	import Permalink from '../Permalink.svelte';
 	import { getFragment } from '../../utils/navigation';
 	import '../../code.css';
 
-	export let owner = 'sveltejs';
-	export let project = 'svelte';
-	export let path = '/site/content';
-	export let dir = 'docs';
-	export let edit_title = 'edit this section';
-	export let sections;
 	export let selected;
 
 	let container;
@@ -71,26 +63,7 @@
 </script>
 
 <div bind:this={container} class="content listify">
-	<slot name="header" />
-	{#each sections as section}
-		<section data-id={section.slug}>
-			<h2>
-				<span class="offset-anchor" id={section.slug} />
-				{@html section.title}
-				<Permalink href="{dir}#{section.slug}" />
-				<small>
-					<a
-						href="https://github.com/{owner}/{project}/edit/master{path}/{dir}/{section.file}"
-						title={edit_title}
-					>
-						<Icon name="edit" />
-					</a>
-				</small>
-			</h2>
-
-			{@html section.content}
-		</section>
-	{/each}
+	<slot />
 </div>
 
 <style>
@@ -119,7 +92,7 @@
 		}
 	}
 
-	.content h2 {
+	.content :global(h2) {
 		margin-top: 8rem;
 		padding: 2rem 1.6rem 4rem 0.2rem;
 		border-top: 2px solid #ddd;
@@ -130,7 +103,7 @@
 		text-transform: uppercase;
 	}
 
-	.content section:first-of-type > h2 {
+	.content :global(section):first-of-type > :global(h2) {
 		margin-top: 0;
 	}
 
@@ -263,19 +236,19 @@
 		margin: 0 0 2em 0;
 	}
 
-	section > :global(.code-block) > :global(pre) {
+	.content :global(section) > :global(.code-block) > :global(pre) {
 		color: white;
 	}
 
-	section > :global(p) {
+	.content :global(section) > :global(p) {
 		max-width: var(--linemax);
 	}
 
-	section :global(p) {
+	.content :global(section) :global(p) {
 		margin: 1em 0;
 	}
 
-	small {
+	.content :global(small) {
 		font-size: var(--h5);
 		float: right;
 		pointer-events: all;
@@ -283,7 +256,7 @@
 		cursor: pointer;
 	}
 
-	section :global(blockquote) {
+	.content :global(section) :global(blockquote) {
 		/* color: #ff3e00; */
 		color: rgba(0, 0, 0, 0.7);
 		background-color: rgba(255, 62, 0, 0.1);
@@ -293,25 +266,25 @@
 		padding: 1rem;
 	}
 
-	section :global(blockquote) :global(:first-child) {
+	.content :global(section) :global(blockquote) :global(:first-child) {
 		margin-top: 0;
 	}
 
-	section :global(blockquote) :global(:last-child) {
+	.content :global(section) :global(blockquote) :global(:last-child) {
 		margin-bottom: 0;
 	}
 
-	section :global(blockquote) :global(code) {
+	.content :global(section) :global(blockquote) :global(code) {
 		/* background: hsl(204, 100%, 95%) !important; */
 		background: #d5e2ea;
 		/* color: hsl(204, 100%, 50%); */
 	}
 
-	section :global(a):hover {
+	.content :global(section) :global(a):hover {
 		text-decoration: underline;
 	}
 
-	section :global(a) :global(code) {
+	.content :global(section) :global(a) :global(code) {
 		color: inherit;
 		/* background: none !important; */
 		background: rgba(255, 62, 0, 0.1) !important;

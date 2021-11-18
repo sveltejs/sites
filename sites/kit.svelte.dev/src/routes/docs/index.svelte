@@ -11,7 +11,7 @@
 </script>
 
 <script>
-	import { Main, Contents } from '@sveltejs/site-kit/components/docs';
+	import { Contents, Main, Section } from '@sveltejs/site-kit/components/docs';
 
 	export let sections;
 
@@ -26,8 +26,16 @@
 	<meta name="Description" content="Complete documentation for SvelteKit" />
 </svelte:head>
 
-<Main {sections} project="kit" path="/documentation" bind:selected>
-	<h1 slot="header">Documentation</h1>
+<Main bind:selected>
+	<h1>Documentation</h1>
+
+	{#each sections as section}
+		<Section
+			{section}
+			edit="https://github.com/sveltejs/kit/edit/master/site/content/docs/{section.file}"
+			base="/docs"
+		/>
+	{/each}
 </Main>
 
 <Contents {sections} {selected} />

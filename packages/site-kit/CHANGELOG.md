@@ -1,5 +1,9 @@
 # @sveltejs/site-kit changelog
 
+## 2.0.0-next.5
+
+- Tweak docs `h1` styles
+
 ## 2.0.0-next.4
 
 - Fix home link

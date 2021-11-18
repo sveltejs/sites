@@ -77,14 +77,16 @@
 			<li class="hide-if-desktop" class:active={$current === ''}>
 				<a sveltekit:prefetch href="/">{home}</a>
 			</li>
-			<slot name="nav-center" />
+			<div class="nav-center">
+				<slot name="nav-center" />
+			</div>
 			{#if open}
-				<li class="hide-if-desktop">
+				<div class="nav-right hide-if-desktop">
 					<slot name="nav-right" />
-				</li>
+				</div>
 			{/if}
 		</ul>
-		<div class="nav-spot show-if-desktop">
+		<div class="nav-spot nav-right show-if-desktop">
 			<slot name="nav-right" />
 		</div>
 	</nav>
@@ -246,6 +248,36 @@
 		color: var(--flash);
 	}
 
+	.nav-center {
+		height: 100%;
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-end;
+	}
+
+	.nav-right {
+		height: 100%;
+		margin: 0;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		font-family: var(--font);
+		line-height: 1;
+		list-style: none;
+	}
+
+	.nav-right :global(img) {
+		height: 2rem;
+		margin-left: 0;
+		transition: filter 0.3s linear;
+	}
+
+	.nav-right :global(img):hover {
+		filter: brightness(1.3);
+	}
+
 	.show-if-desktop {
 		display: none;
 	}
@@ -285,11 +317,20 @@
 		}
 
 		.show-if-desktop {
-			display: inline;
+			display: flex;
 		}
 
 		.hide-if-desktop {
 			display: none !important;
+		}
+
+		.nav-center {
+			flex-direction: row;
+			align-items: center;
+		}
+
+		.nav-right :global(img) {
+			margin-left: 28px;
 		}
 	}
 </style>

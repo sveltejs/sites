@@ -2,8 +2,8 @@
 	import { afterUpdate } from 'svelte';
 	import Icon from '../Icon.svelte';
 
-	export let sections = [];
-	export let selected = null;
+	export let contents = [];
+	export let path = null;
 	export let prevent_sidebar_scroll = false;
 
 	let show_contents = false;
@@ -46,26 +46,22 @@
 			on:mouseenter={() => (prevent_sidebar_scroll = true)}
 			on:mouseleave={() => (prevent_sidebar_scroll = false)}
 		>
-			{#each sections as section}
+			{#each contents as section}
 				<li>
-					<a class="section" class:active={section.slug === selected} href="#{section.slug}">
+					<a class="section" class:active={section.path === path} href={section.path}>
 						{section.title}
 					</a>
 
 					{#each section.sections as subsection}
-						<a
-							class="subsection"
-							class:active={subsection.slug === selected}
-							href="#{subsection.slug}"
-						>
+						<a class="subsection" class:active={subsection.path === path} href={subsection.path}>
 							{subsection.title}
 						</a>
 
 						{#each subsection.sections as subsection}
 							<a
 								class="nested subsection"
-								class:active={subsection.slug === selected}
-								href="#{subsection.slug}"
+								class:active={subsection.path === path}
+								href={subsection.path}
 							>
 								{subsection.title}
 							</a>

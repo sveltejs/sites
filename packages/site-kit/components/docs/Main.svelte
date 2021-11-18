@@ -1,9 +1,10 @@
 <script>
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 	import { getFragment } from '../../utils/navigation';
 	import '../../code.css';
 
-	export let selected;
+	export let path;
 
 	let container;
 
@@ -32,7 +33,7 @@
 					const { id } = anchor;
 
 					if (id !== last_id) {
-						selected = id;
+						path = `${$page.path}#${id}`;
 						last_id = id;
 					}
 

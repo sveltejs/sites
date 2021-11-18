@@ -15,7 +15,20 @@
 
 	export let sections;
 
-	let selected;
+	let path;
+
+	$: contents = sections.map(section => ({
+		path: `/docs#${section.slug}`,
+		title: section.title,
+		sections: section.sections.map(subsection => ({
+			path: `/docs#${subsection.slug}`,
+			title: subsection.title,
+			sections: subsection.sections.map(subsection => ({
+				path: `/docs#${subsection.slug}`,
+				title: subsection.title,
+			}))
+		}))
+	}));
 </script>
 
 <svelte:head>
@@ -26,7 +39,7 @@
 	<meta name="Description" content="Complete documentation for SvelteKit" />
 </svelte:head>
 
-<Main bind:selected>
+<Main bind:path>
 	<h1>Documentation</h1>
 
 	{#each sections as section}
@@ -38,4 +51,4 @@
 	{/each}
 </Main>
 
-<Contents {sections} {selected} />
+<Contents {contents} {path} />

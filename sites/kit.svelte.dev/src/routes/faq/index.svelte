@@ -19,9 +19,9 @@
 <svelte:head>
 	<title>FAQ • SvelteKit</title>
 
-	<meta name="twitter:title" content="SvelteKit FAQ">
-	<meta name="twitter:description" content="Frequently asked questions about SvelteKit">
-	<meta name="description" content="Frequently asked questions about SvelteKit">
+	<meta name="twitter:title" content="SvelteKit FAQ" />
+	<meta name="twitter:description" content="Frequently asked questions about SvelteKit" />
+	<meta name="description" content="Frequently asked questions about SvelteKit" />
 </svelte:head>
 
 <div class="faqs stretch">
@@ -82,7 +82,7 @@
 	.faqs :global(.anchor) {
 		position: absolute;
 		display: block;
-		background: url(/icons/link.svg) 0 50% no-repeat;
+		background: url(@sveltejs/site-kit/icons/link.svg) 0 50% no-repeat;
 		background-size: 1em 1em;
 		width: 1.4em;
 		height: 1em;

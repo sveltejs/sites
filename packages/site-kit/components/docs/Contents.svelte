@@ -52,21 +52,33 @@
 						{section.title}
 					</a>
 
-					{#each section.sections as subsection}
-						<a class="subsection" class:active={subsection.path === path} href={subsection.path}>
-							{subsection.title}
-						</a>
+					<ul>
+						{#each section.sections as subsection}
+							<li>
+								<a
+									class="subsection"
+									class:active={subsection.path === path}
+									href={subsection.path}
+								>
+									{subsection.title}
+								</a>
 
-						{#each subsection.sections as subsection}
-							<a
-								class="nested subsection"
-								class:active={subsection.path === path}
-								href={subsection.path}
-							>
-								{subsection.title}
-							</a>
+								<ul>
+									{#each subsection.sections as subsection}
+										<li>
+											<a
+												class="nested subsection"
+												class:active={subsection.path === path}
+												href={subsection.path}
+											>
+												{subsection.title}
+											</a>
+										</li>
+									{/each}
+								</ul>
+							</li>
 						{/each}
-					{/each}
+					</ul>
 				</li>
 			{/each}
 		</ul>
@@ -147,7 +159,7 @@
 		bottom: 2em;
 	}
 
-	.reference-toc li {
+	li {
 		display: block;
 		line-height: 1.2;
 		margin: 0 0 4rem 0;
@@ -197,6 +209,11 @@
 
 	.nested {
 		padding-left: 1.2rem;
+	}
+
+	ul ul,
+	ul ul li {
+		margin: 0;
 	}
 
 	@media (min-width: 832px) {

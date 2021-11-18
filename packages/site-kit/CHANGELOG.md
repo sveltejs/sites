@@ -1,5 +1,13 @@
 # @sveltejs/site-kit changelog
 
+## 2.0.0-next.4
+
+- Fix home link
+- Centralise more styles and icons
+- Allow headings to have their own `id` attributes
+- Add permalinks dynamically
+- Support more flexible doc data sources
+
 ## 2.0.0-next.3
 
 - Move nav styles out of app into `<Nav>` component

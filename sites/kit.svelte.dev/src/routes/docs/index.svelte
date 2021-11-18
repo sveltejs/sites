@@ -11,19 +11,23 @@
 </script>
 
 <script>
-	import { Docs } from '@sveltejs/site-kit';
+	import { Main, Contents } from '@sveltejs/site-kit/components/docs';
 
 	export let sections;
+
+	let selected;
 </script>
 
 <svelte:head>
 	<title>Docs • SvelteKit</title>
 
-	<meta name="twitter:title" content="SvelteKit docs">
-	<meta name="twitter:description" content="Complete documentation for SvelteKit">
-	<meta name="Description" content="Complete documentation for SvelteKit">
+	<meta name="twitter:title" content="SvelteKit docs" />
+	<meta name="twitter:description" content="Complete documentation for SvelteKit" />
+	<meta name="Description" content="Complete documentation for SvelteKit" />
 </svelte:head>
 
-<Docs {sections} project="kit" path="/documentation">
+<Main {sections} project="kit" path="/documentation" bind:selected>
 	<h1 slot="header">Documentation</h1>
-</Docs>
+</Main>
+
+<Contents {sections} {selected} />

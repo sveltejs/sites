@@ -1,10 +1,10 @@
 <script>
 	import { onMount } from 'svelte';
-	import GuideContents from './GuideContents.svelte'; // TODO rename
-	import Icon from './Icon.svelte';
-	import Permalink from './Permalink.svelte';
-	import { getFragment } from '../utils/navigation';
-	import '../code.css';
+	import Contents from './Contents.svelte';
+	import Icon from '../Icon.svelte';
+	import Permalink from '../Permalink.svelte';
+	import { getFragment } from '../../utils/navigation';
+	import '../../code.css';
 
 	export let owner = 'sveltejs';
 	export let project = 'svelte';
@@ -12,14 +12,12 @@
 	export let dir = 'docs';
 	export let edit_title = 'edit this section';
 	export let sections;
-	let active_section;
+	export let selected;
 
 	let container;
-	let aside;
-	let show_contents = false;
 
 	onMount(() => {
-		// don't update `active_section` for headings above level 4, see _sections.js
+		// don't update `selected` for headings above level 4, see _sections.js
 		const anchors = container.querySelectorAll('[id]:not([data-scrollignore])');
 
 		let positions;
@@ -43,7 +41,7 @@
 					const { id } = anchor;
 
 					if (id !== last_id) {
-						active_section = id;
+						selected = id;
 						last_id = id;
 					}
 
@@ -74,16 +72,19 @@
 </script>
 
 <div bind:this={container} class="content listify">
-	<slot name="header"></slot>
+	<slot name="header" />
 	{#each sections as section}
 		<section data-id={section.slug}>
 			<h2>
-				<span class="offset-anchor" id={section.slug}></span>
+				<span class="offset-anchor" id={section.slug} />
 				{@html section.title}
 				<Permalink href="{dir}#{section.slug}" />
 				<small>
-					<a href="https://github.com/{owner}/{project}/edit/master{path}/{dir}/{section.file}" title="{edit_title}">
-						<Icon name='edit' />
+					<a
+						href="https://github.com/{owner}/{project}/edit/master{path}/{dir}/{section.file}"
+						title={edit_title}
+					>
+						<Icon name="edit" />
 					</a>
 				</small>
 			</h2>
@@ -93,76 +94,7 @@
 	{/each}
 </div>
 
-<aside bind:this={aside} class="sidebar-container" class:open={show_contents}>
-	<div class="sidebar" on:click="{() => show_contents = false}"> <!-- scroll container -->
-		<GuideContents {sections} {active_section} {show_contents} {dir} />
-	</div>
-
-	<button on:click="{() => show_contents = !show_contents}">
-		<Icon name="{show_contents? 'close' : 'menu'}"/>
-	</button>
-</aside>
-
 <style>
-	aside {
-		position: fixed;
-		background-color: white;
-		left: 0.8rem;
-		bottom: 0.8rem;
-		width: 2em;
-		height: 2em;
-		overflow: hidden;
-		border: 1px solid #eee;
-		box-shadow: 1px 1px 6px rgba(0,0,0,0.1);
-		transition: width 0.2s, height 0.2s;
-	}
-
-	aside button {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 3.4rem;
-		height: 3.4rem;
-	}
-
-	aside.open {
-		width: calc(100vw - 3rem);
-		height: calc(100vh - var(--nav-h));
-	}
-
-	aside.open::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: calc(100% - 2rem);
-		height: 2em;
-		background: linear-gradient(to top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,1) 100%);
-		pointer-events: none;
-		z-index: 2;
-	}
-
-	aside::after {
-		content: '';
-		position: absolute;
-		left: 0;
-		bottom: 1.9em;
-		width: calc(100% - 2rem);
-		height: 2em;
-		background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,1) 100%);
-		pointer-events: none;
-	}
-
-	.sidebar {
-		position: absolute;
-		font-family: var(--font);
-		overflow-y: auto;
-		width: 100%;
-		height: 100%;
-		padding: 4em 1.6rem 2em 3.2rem;
-		bottom: 2em;
-	}
-
 	.content {
 		width: 100%;
 		margin: 0;
@@ -171,45 +103,8 @@
 		-moz-tab-size: 2;
 	}
 
-	@media (min-width: 832px) { /* can't use vars in @media :( */
-		aside {
-			display: block;
-			width: var(--sidebar-w);
-			height: 100vh;
-			top: 0;
-			left: 0;
-			overflow: hidden;
-			box-shadow: none;
-			border: none;
-			overflow: hidden;
-			background-color: var(--second);
-			color: white;
-		}
-
-		aside.open::before {
-			display: none;
-		}
-
-		aside::after {
-			content: '';
-			bottom: 0;
-			height: var(--top-offset);
-			background: linear-gradient(to bottom, rgba(103,103,120,0) 0%, rgba(103,103,120,0.7) 50%, rgba(103,103,120,1) 100%);
-		}
-
-		aside button {
-			display: none;
-		}
-
-		.sidebar {
-			padding: var(--top-offset) 0 6.4rem 3.2rem;
-			font-family: var(--font);
-			overflow-y: auto;
-			height: 100%;
-			bottom: auto;
-			width: 100%;
-		}
-
+	@media (min-width: 832px) {
+		/* can't use vars in @media :( */
 		.content {
 			padding-left: calc(var(--sidebar-w) + var(--side-nav));
 		}
@@ -232,7 +127,7 @@
 		/* color: var(--text); */
 		line-height: 1;
 		font-size: var(--h3);
-		letter-spacing: .05em;
+		letter-spacing: 0.05em;
 		text-transform: uppercase;
 	}
 
@@ -303,7 +198,6 @@
 		font-size: inherit;
 	}
 
-
 	.content :global(h4),
 	.content :global(h4 > code) {
 		font-family: inherit;
@@ -334,7 +228,7 @@
 	.content :global(code) {
 		padding: 0.4rem;
 		margin: 0 0.2rem;
-		top: -.1rem;
+		top: -0.1rem;
 		background: var(--back-api);
 	}
 
@@ -375,7 +269,7 @@
 	}
 
 	section > :global(p) {
-		max-width: var(--linemax)
+		max-width: var(--linemax);
 	}
 
 	section :global(p) {
@@ -392,7 +286,7 @@
 
 	section :global(blockquote) {
 		/* color: #ff3e00; */
-		color: rgba(0,0,0,0.7);
+		color: rgba(0, 0, 0, 0.7);
 		background-color: rgba(255, 62, 0, 0.1);
 		/* background-color: #f6f6f6; */
 		/* border-left: 4px solid var(--flash); */
@@ -421,6 +315,6 @@
 	section :global(a) :global(code) {
 		color: inherit;
 		/* background: none !important; */
-		background: rgba(255,62,0,0.1) !important;
+		background: rgba(255, 62, 0, 0.1) !important;
 	}
 </style>

@@ -103,6 +103,11 @@
 		}
 	}
 
+	.content :global(h1) {
+		font-size: 3.2rem;
+		margin: 0 0 0.5em 0;
+	}
+
 	.content :global(h2) {
 		margin-top: 8rem;
 		padding: 2rem 1.6rem 4rem 0.2rem;
@@ -149,7 +154,17 @@
 		bottom: 1rem;
 	}
 
+	@media (min-width: 400px) {
+		.content :global(h1) {
+			font-size: 4.2rem;
+		}
+	}
+
 	@media (min-width: 768px) {
+		.content :global(h1) {
+			font-size: 5.4rem;
+		}
+
 		.content :global(.anchor:focus),
 		.content :global(h2):hover :global(.anchor),
 		.content :global(h3):hover :global(.anchor),
@@ -269,22 +284,22 @@
 		cursor: pointer;
 	}
 
-	.content :global(section) :global(blockquote) {
+	.content :global(blockquote) {
 		color: rgba(0, 0, 0, 0.7);
 		background-color: rgba(255, 62, 0, 0.1);
 		border-left: 4px solid #ff3e00;
 		padding: 1rem;
 	}
 
-	.content :global(section) :global(blockquote) :global(:first-child) {
+	.content :global(blockquote) :global(:first-child) {
 		margin-top: 0;
 	}
 
-	.content :global(section) :global(blockquote) :global(:last-child) {
+	.content :global(blockquote) :global(:last-child) {
 		margin-bottom: 0;
 	}
 
-	.content :global(section) :global(blockquote) :global(code) {
+	.content :global(blockquote) :global(code) {
 		background: #d5e2ea;
 	}
 

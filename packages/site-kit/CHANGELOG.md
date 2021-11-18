@@ -1,5 +1,10 @@
 # @sveltejs/site-kit changelog
 
+## 2.0.0-next.3
+
+- Move nav styles out of app into `<Nav>` component
+- add some common icons
+
 ## 2.0.0-next.2
 
 - Fix exports

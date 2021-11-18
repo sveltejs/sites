@@ -11,19 +11,23 @@
 </script>
 
 <script>
-	import { Docs } from '@sveltejs/site-kit';
+	import { Main, Contents } from '@sveltejs/site-kit/components/docs';
 
 	export let sections;
+
+	let selected;
 </script>
 
 <svelte:head>
 	<title>Migration • SvelteKit</title>
 
-	<meta name="twitter:title" content="SvelteKit migration guides">
-	<meta name="twitter:description" content="How to migrate your app from Sapper to SvelteKit">
-	<meta name="description" content="How to migrate your app from Sapper to SvelteKit">
+	<meta name="twitter:title" content="SvelteKit migration guides" />
+	<meta name="twitter:description" content="How to migrate your app from Sapper to SvelteKit" />
+	<meta name="description" content="How to migrate your app from Sapper to SvelteKit" />
 </svelte:head>
 
-<Docs {sections} project="kit" path="/documentation" dir="migrating">
+<Main {sections} project="kit" path="/documentation" dir="migrating" bind:selected>
 	<h1 slot="header">Migration</h1>
-</Docs>
+</Main>
+
+<Contents {sections} {selected} />

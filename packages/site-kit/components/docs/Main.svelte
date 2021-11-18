@@ -1,6 +1,5 @@
 <script>
 	import { onMount } from 'svelte';
-	import Contents from './Contents.svelte';
 	import Icon from '../Icon.svelte';
 	import Permalink from '../Permalink.svelte';
 	import { getFragment } from '../../utils/navigation';

@@ -9,14 +9,23 @@
 
 	onNavigate(() => {
 		// don't update `selected` for headings above level 4, see _sections.js
-		const anchors = container.querySelectorAll('[id]:not([data-scrollignore])');
+		const headings = container.querySelectorAll('[id]:not([data-scrollignore])');
+
+		for (const heading of headings) {
+			if (heading.nodeName.startsWith('H') && !heading.querySelector('a')) {
+				const a = document.createElement('a');
+				a.className = 'anchor';
+				a.href = `${$page.path}#${heading.id}`;
+				heading.appendChild(a);
+			}
+		}
 
 		let positions;
 
 		const onresize = () => {
 			const { top } = container.getBoundingClientRect();
-			positions = [].map.call(anchors, anchor => {
-				return anchor.getBoundingClientRect().top - top;
+			positions = [].map.call(headings, heading => {
+				return heading.getBoundingClientRect().top - top;
 			});
 		}
 
@@ -25,11 +34,11 @@
 		const onscroll = () => {
 			const { top } = container.getBoundingClientRect();
 
-			let i = anchors.length;
+			let i = headings.length;
 			while (i--) {
 				if (positions[i] + top < 40) {
-					const anchor = anchors[i];
-					const { id } = anchor;
+					const heading = headings[i];
+					const { id } = heading;
 
 					if (id !== last_id) {
 						path = `${$page.path}#${id}`;
@@ -123,14 +132,21 @@
 	.content :global(.anchor) {
 		position: absolute;
 		display: block;
-		background: url(/icons/link.svg) 0 50% no-repeat;
+		background: url(../../icons/link.svg) 0 50% no-repeat;
 		background-size: 1em 1em;
 		width: 1.4em;
 		height: 1em;
-		top: 0;
 		left: -1.3em;
 		opacity: 0;
 		transition: opacity 0.2s;
+	}
+
+	.content :global(h2) :global(.anchor) {
+		bottom: 4rem;
+	}
+
+	.content :global(h3) :global(.anchor) {
+		bottom: 1rem;
 	}
 
 	@media (min-width: 768px) {
@@ -141,10 +157,6 @@
 		.content :global(h5):hover :global(.anchor),
 		.content :global(h6):hover :global(.anchor) {
 			opacity: 1;
-		}
-
-		.content :global(h2) :global(.anchor) {
-			top: 0.75em;
 		}
 	}
 

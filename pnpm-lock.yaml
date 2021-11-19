@@ -28,14 +28,14 @@ importers:
       '@sveltejs/site-kit': workspace:*
       '@types/node': ^16.6.1
       svelte: ^3.43.0
-      vite-imagetools: ^4.0.0
+      vite-imagetools: ^4.0.1
     devDependencies:
       '@sveltejs/adapter-netlify': 1.0.0-next.35
       '@sveltejs/kit': 1.0.0-next.196_svelte@3.44.1
       '@sveltejs/site-kit': link:../../packages/site-kit
       '@types/node': 16.11.6
       svelte: 3.44.1
-      vite-imagetools: 4.0.0
+      vite-imagetools: 4.0.1
 
 packages:
 
@@ -1289,8 +1289,8 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
-  /imagetools-core/3.0.0:
-    resolution: {integrity: sha512-B7xT95/yRU43bvMRo/9KqXkRFN2wm33PC0HThhrDU6ExPcVg39xuRXiaAW02VsaX+Wd2/z4Qwq9OHnhQGyhN5g==}
+  /imagetools-core/3.0.1:
+    resolution: {integrity: sha512-6W48yS78WPmf3LWrSiH6aG5HfnZNENvMRdGEalRQ+xNK2LtHLQDgzmLNW119rK13UN9AppDV28nVR9wIKifgUQ==}
     engines: {node: '>=12.0.0'}
     dependencies:
       sharp: 0.28.3
@@ -2555,12 +2555,12 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /vite-imagetools/4.0.0:
-    resolution: {integrity: sha512-vg6LQSchnolNNtWX3O6uOLHSSNA5D/JEUzS09GZ7CxtXQc9qiz+FhzDEKspASap9UsiSggnwfRM9MBa3fv82uA==}
+  /vite-imagetools/4.0.1:
+    resolution: {integrity: sha512-CMjbzlQw/duhiyQyKMjyewK5JQC3OWvyyxtOMrIPu7CfCrFPME2ytQzCEvYV+pYx/v4YPRvQ4bdRJibszBfRhQ==}
     engines: {node: '>=12.0.0'}
     dependencies:
       '@rollup/pluginutils': 4.1.1
-      imagetools-core: 3.0.0
+      imagetools-core: 3.0.1
       magic-string: 0.25.7
     dev: true
 

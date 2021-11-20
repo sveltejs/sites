@@ -9,7 +9,7 @@
 </script>
 
 {#if external}
-	<li><a href={external} {title}><slot></slot></a></li>
+	<li><a href={external} {title} rel="external"><slot></slot></a></li>
 {:else}
 	<li class:active="{$current === segment}"><a sveltekit:prefetch href={segment} {title}><slot></slot></a></li>
 {/if}

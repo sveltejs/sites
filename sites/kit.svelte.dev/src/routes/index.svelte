@@ -80,6 +80,7 @@
 
 	<div slot="how">
 		<pre><code>
+<span class="comment"># You'll need Node.js v14 or higher</span>
 npm init <span class="orange-highlight">svelte@next</span> my-app
 cd my-app
 npm install
@@ -99,5 +100,10 @@ npm run dev -- --open
 
 	.orange-highlight {
 		color: var(--prime);
+	}
+
+	.comment {
+		color: var(--second);
+		font-style: italic;
 	}
 </style>

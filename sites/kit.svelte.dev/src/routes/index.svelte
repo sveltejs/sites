@@ -80,7 +80,7 @@
 
 	<div slot="how">
 		<pre><code>
-// You'll need Node.js v14 or higher
+# You'll need Node.js v14 or higher
 npm init <span class="orange-highlight">svelte@next</span> my-app
 cd my-app
 npm install

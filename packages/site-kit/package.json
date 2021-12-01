@@ -27,6 +27,7 @@
 	},
 	"exports": {
 		".": "./index.js",
+		"./package.json": "./package.json",
 		"./base.css": "./base.css",
 		"./code.css": "./code.css",
 		"./components/*": "./components/*",

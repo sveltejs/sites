@@ -1,3 +1,15 @@
 .DS_Store
 .netlify
-/node_modules
+.pnpm-debug.log
+.env
+node_modules/
+.svelte-kit/
+build/
+
+/sites/svelte.dev/static/svelte-app.json
+/sites/svelte.dev/static/contributors.jpg
+/sites/svelte.dev/static/donors.jpg
+/sites/svelte.dev/static/workers/
+/sites/svelte.dev/scripts/svelte-app/
+/sites/svelte.dev/src/routes/_contributors.js
+/sites/svelte.dev/src/routes/_donors.js

@@ -1,10 +1,14 @@
 <script context="module">
-	export async function load({ fetch }) {
-		const sections = await fetch(`/tutorial.json`).then(r => r.json());
-		return {
+	import {API_BASE} from '../../_env';
+
+	export async function load() {
+		const tutorials = await fetch(`${API_BASE}/docs/svelte/tutorial`).then(r => r.json());
+
+		return { 
 			props: {
-				sections
-			}
+				tutorials
+			},
+			maxage: 60 
 		};
 	}
 </script>
@@ -12,8 +16,8 @@
 <script>
 	import { setContext } from 'svelte';
 
-	export let sections;
-	setContext('tutorial', { sections });
+	export let tutorials;
+	setContext('tutorial', { sections: tutorials });
 </script>
 
-<slot></slot>
+<slot />

@@ -7,15 +7,59 @@
 	export let selected;
 
 	function navigate(e) {
-		goto(`tutorial/${e.target.value}`);
+		goto(`${e.target.value}`);
 	}
 </script>
+
+<nav>
+	<a
+		rel="prefetch"
+		aria-label="Previous tutorial step"
+		class="no-underline"
+		href="/tutorial/{(selected.prev || selected).slug}"
+		class:disabled={!selected.prev}
+	>
+		<Icon name="arrow-left" />
+	</a>
+
+	<div>
+		<span>
+			<strong>
+				<span style="position: relative; top: -0.1em; margin: 0 0.5em 0 0"
+					><Icon name="menu" /></span
+				>
+				{selected.section.name} /
+			</strong>
+			{selected.chapter.name}
+		</span>
+
+		<select value={slug} on:change={navigate}>
+			{#each sections as section, i}
+				<optgroup label="{i + 1}. {section.name}">
+					{#each section.tutorials as chapter, i}
+						<option value={chapter.slug}>{String.fromCharCode(i + 97)}. {chapter.name}</option>
+					{/each}
+				</optgroup>
+			{/each}
+		</select>
+	</div>
+
+	<a
+		rel="prefetch"
+		aria-label="Next tutorial step"
+		class="no-underline"
+		href="/tutorial/{(selected.next || selected).slug}"
+		class:disabled={!selected.next}
+	>
+		<Icon name="arrow-right" />
+	</a>
+</nav>
 
 <style>
 	nav {
 		display: grid;
 		grid-template-columns: 2.5em 1fr 2.5em;
-		border-bottom: 1px solid rgba(255,255,255,0.1);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 	}
 
 	div {
@@ -38,7 +82,9 @@
 		opacity: 1;
 	}
 
-	a.disabled, a.disabled:hover, a.disabled:active {
+	a.disabled,
+	a.disabled:hover,
+	a.disabled:active {
 		color: white;
 		opacity: 0.3;
 	}
@@ -46,10 +92,12 @@
 	span {
 		white-space: nowrap;
 		position: relative;
-    	top: 0.3em;
+		top: 0.3em;
 	}
 
-	strong { opacity: 0.7 }
+	strong {
+		opacity: 0.7;
+	}
 
 	select {
 		position: absolute;
@@ -62,33 +110,3 @@
 		-webkit-appearance: none;
 	}
 </style>
-
-<nav>
-	<a sveltekit:prefetch aria-label="Previous tutorial step" class="no-underline" href="tutorial/{(selected.prev || selected).slug}" class:disabled={!selected.prev}>
-		<Icon name="arrow-left" />
-	</a>
-
-	<div>
-		<span>
-			<strong>
-				<span style="position: relative; top: -0.1em; margin: 0 0.5em 0 0"><Icon name="menu"/></span>
-				{selected.section.title} /
-			</strong>
-			{selected.chapter.title}
-		</span>
-
-		<select value={slug} on:change={navigate}>
-			{#each sections as section, i}
-				<optgroup label="{i + 1}. {section.title}">
-					{#each section.chapters as chapter, i}
-						<option value={chapter.slug}>{String.fromCharCode(i + 97)}. {chapter.title}</option>
-					{/each}
-				</optgroup>
-			{/each}
-		</select>
-	</div>
-
-	<a sveltekit:prefetch aria-label="Next tutorial step" class="no-underline" href="tutorial/{(selected.next || selected).slug}" class:disabled={!selected.next}>
-		<Icon name="arrow-right" />
-	</a>
-</nav>

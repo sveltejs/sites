@@ -1,6 +1,8 @@
 <script context="module">
+	import { API_BASE } from '../../_env';
+
 	export async function load({ fetch, page: { params } }) {
-		const res = await fetch(`/blog/${params.slug}.json`);
+		const res = await fetch(`${API_BASE}/docs/svelte/blog/${params.slug}`);
 		if (res.ok) {
 			return { props: { post: await res.json() }};
 		}
@@ -12,20 +14,23 @@
 </script>
 
 <svelte:head>
-	<title>{post.metadata.title}</title>
+	<title>{post.title}</title>
 
-	<meta name="twitter:title" content={post.metadata.title}>
-	<meta name="twitter:description" content={post.metadata.description}>
-	<meta name="Description" content={post.metadata.description}>
+	<meta name="twitter:title" content={post.title} />
+	<meta name="twitter:description" content={post.description} />
+	<meta name="Description" content={post.description} />
 </svelte:head>
 
-<article class='post listify'>
-	<h1>{post.metadata.title}</h1>
-	<p class='standfirst'>{post.metadata.description}</p>
+<article class="post listify">
+	<h1>{post.title}</h1>
+	<p class="standfirst">{post.description}</p>
 
-	<p class='byline'><a href='{post.metadata.authorURL}'>{post.metadata.author}</a> <time datetime='{post.metadata.pubdate}'>{post.metadata.dateString}</time></p>
+	<p class="byline">
+		<a href={post.author.url}>{post.author.name}</a>
+		<time datetime={post.date.numeric}>{post.date.pretty}</time>
+	</p>
 
-	{@html post.html}
+	{@html post.content}
 </article>
 
 <style>
@@ -66,7 +71,7 @@
 	.post h1 {
 		color: var(--second);
 		max-width: 20em;
-		margin: 0 0 .8rem 0;
+		margin: 0 0 0.8rem 0;
 	}
 
 	.post :global(h2) {
@@ -102,9 +107,9 @@
 	}
 
 	.post :global(code) {
-		padding: .3rem .8rem .3rem;
+		padding: 0.3rem 0.8rem 0.3rem;
 		margin: 0 0.2rem;
-		top: -.1rem;
+		top: -0.1rem;
 		background: var(--back-api);
 	}
 
@@ -152,7 +157,7 @@
 		.post :global(.anchor) {
 			transform: scale(0.6);
 			opacity: 1;
-			left: -1.0em;
+			left: -1em;
 		}
 	}
 

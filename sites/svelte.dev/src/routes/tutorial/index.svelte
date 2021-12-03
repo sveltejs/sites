@@ -2,7 +2,7 @@
 	export function load() {
 		return {
 			status: 301,
-			redirect: '/tutorial/basics'
+			redirect: '/tutorial/introduction-basics'
 		};
 	}
 </script>

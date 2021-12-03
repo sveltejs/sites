@@ -2,7 +2,7 @@
 	import '@sveltejs/site-kit/base.css';
 	import { setContext } from 'svelte';
 	import { page, navigating, session } from '$app/stores';
-	import { Icon, Icons, Nav, NavItem } from '@sveltejs/site-kit';
+	import { Icon, Icons, Nav, NavItem } from '@sveltejs/site-kit-legacy';
 	import PreloadingIndicator from '../components/PreloadingIndicator.svelte';
 
 	export let segment;

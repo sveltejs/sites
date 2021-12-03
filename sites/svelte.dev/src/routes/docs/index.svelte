@@ -1,44 +1,54 @@
 <script context="module">
-	const title_replacements = {
-		'1_export_creates_a_component_prop': 'props',
-		'2_Assignments_are_reactive': 'reactive assignments',
-		'3_$_marks_a_statement_as_reactive': 'reactive statements ($:)',
-		'4_Prefix_stores_with_$_to_access_their_values': 'accessing stores ($)'
-	};
+	import { API_BASE } from '../../_env';
 
 	export async function load({ fetch }) {
-		const sections = await fetch(`docs.json`).then(r => r.json());
-		for (const section of sections) {
-			for (const subsection of section.subsections) {
-				const { slug } = subsection;
-				// show abbreviated title in the table of contents
-				if (slug in title_replacements) {
-					subsection.title = title_replacements[slug];
-				}
-			}
-		}
-
+		const sections = await fetch(`${API_BASE}/docs/svelte/docs?content`).then(r => r.json());
 		return {
-			props: {
-				sections
-			}
+			props: { sections },
+			maxage: 60
 		};
 	}
 </script>
 
 <script>
-	import { Docs } from '@sveltejs/site-kit';
+	import { Contents, Main, Section } from '@sveltejs/site-kit/components/docs';
 
 	export let sections;
+
+	let path;
+
+	$: contents = sections.map(section => ({
+		path: `/docs#${section.slug}`,
+		title: section.title,
+		sections: section.sections.map(subsection => ({
+			path: `/docs#${subsection.slug}`,
+			title: subsection.title,
+			sections: subsection.sections.map(subsection => ({
+				path: `/docs#${subsection.slug}`,
+				title: subsection.title,
+			}))
+		}))
+	}));
 </script>
 
 <svelte:head>
-	<title>API Docs • Svelte</title>
+	<title>Docs • SvelteKit</title>
 
-	<meta name="twitter:title" content="Svelte API docs">
-	<meta name="twitter:description" content="Cybernetically enhanced web apps">
-	<meta name="Description" content="Cybernetically enhanced web apps">
+	<meta name="twitter:title" content="SvelteKit docs" />
+	<meta name="twitter:description" content="Complete documentation for SvelteKit" />
+	<meta name="Description" content="Complete documentation for SvelteKit" />
 </svelte:head>
 
-<h1 class="visually-hidden">API Docs</h1>
-<Docs {sections}/>
+<Main bind:path>
+	<h1>Documentation</h1>
+
+	{#each sections as section}
+		<Section
+			{section}
+			edit="https://github.com/sveltejs/kit/edit/master/site/content/docs/{section.file}"
+			base="/docs"
+		/>
+	{/each}
+</Main>
+
+<Contents {contents} {path} />

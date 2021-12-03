@@ -1,5 +1,5 @@
 <script>
-	import { Blurb, Hero, Section } from '@sveltejs/site-kit';
+	import { Blurb, Hero, Section } from '@sveltejs/site-kit-legacy';
 	import Contributors from './_components/Contributors.svelte';
 	import Donors from './_components/Donors.svelte';
 	import Example from './_components/Example.svelte';

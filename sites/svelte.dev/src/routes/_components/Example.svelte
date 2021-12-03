@@ -1,5 +1,4 @@
 <script>
-	import { Section } from '@sveltejs/site-kit';
 	import IntersectionObserver from '../../components/IntersectionObserver.svelte';
 	import ReplWidget from '../../components/Repl/ReplWidget.svelte';
 
@@ -34,9 +33,16 @@
 			align-items: start;
 		}
 	}
+
+	section {
+		position: relative;
+		margin: 10rem auto;
+		padding: 0 var(--side-nav);
+		max-width: 120rem;
+	}
 </style>
 
-<Section>
+<section>
 	<div class="example">
 		<slot></slot>
 
@@ -49,4 +55,4 @@
 			</IntersectionObserver>
 		</div>
 	</div>
-</Section>
+</section>

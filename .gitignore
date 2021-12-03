@@ -1,3 +1,8 @@
 .DS_Store
 .netlify
-/node_modules
+.pnpm-debug.log
+.env
+node_modules/
+.svelte-kit/
+build/
+functions/

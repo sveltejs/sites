@@ -1,4 +1,4 @@
-import get_posts from '../blog/_posts.js';
+import { API_BASE } from '../../_env';
 
 const months = ',Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',');
 
@@ -9,17 +9,18 @@ function formatPubdate(str) {
 
 function escapeHTML(html) {
 	const chars = {
-		'"' : 'quot',
+		'"': 'quot',
 		"'": '#39',
 		'&': 'amp',
-		'<' : 'lt',
-		'>' : 'gt'
+		'<': 'lt',
+		'>': 'gt'
 	};
 
 	return html.replace(/["'&<>]/g, c => `&${chars[c]};`);
 }
 
-const rss = `
+const get_rss = posts =>
+	`
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 
@@ -32,25 +33,35 @@ const rss = `
 		<title>Svelte</title>
 		<link>https://svelte.dev/blog</link>
 	</image>
-	${get_posts().filter(post => !post.metadata.draft).map(post => `
+	${posts
+		.filter(post => !post.draft)
+		.map(
+			post => `
 		<item>
-			<title>${escapeHTML(post.metadata.title)}</title>
+			<title>${escapeHTML(post.title)}</title>
 			<link>https://svelte.dev/blog/${post.slug}</link>
-			<description>${escapeHTML(post.metadata.description)}</description>
-			<pubDate>${formatPubdate(post.metadata.pubdate)}</pubDate>
+			<description>${escapeHTML(post.description)}</description>
+			<pubDate>${formatPubdate(post.date.numeric)}</pubDate>
 		</item>
-	`).join('')}
+	`
+		)
+		.join('')}
 </channel>
 
 </rss>
-`.replace(/>[^\S]+/gm, '>').replace(/[^\S]+</gm, '<').trim();
+`
+		.replace(/>[^\S]+/gm, '>')
+		.replace(/[^\S]+</gm, '<')
+		.trim();
 
-export function get() {
+export async function get() {
+	const posts = await (await fetch(`${API_BASE}/docs/svelte/blog`)).json();
+
 	return {
-		body: rss,
+		body: get_rss(posts),
 		headers: {
 			'Cache-Control': `max-age=${30 * 60 * 1e3}`,
-			'Content-Type': 'application/rss+xml'			
+			'Content-Type': 'application/rss+xml'
 		}
 	};
 }

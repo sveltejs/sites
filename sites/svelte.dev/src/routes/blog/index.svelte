@@ -3,10 +3,10 @@
 
 	export async function load({ fetch }) {
 		const res = await fetch(`${API_BASE}/docs/svelte/blog`);
+
 		if (res.ok) {
 			return { props: { posts: await res.json() }};
 		}
-	
 	}
 </script>
 
@@ -31,12 +31,19 @@
 <h1 class="visually-hidden">Blog</h1>
 <div class="posts stretch">
 	{#each posts as post}
-		<article class="post" data-pubdate={post.date.numeric}>
-			<a class="no-underline" sveltekit:prefetch href="blog/{post.slug}" title="Read the article »">
-				<h2>{post.title}</h2>
-				<p>{post.description}</p>
-			</a>
-		</article>
+		{#if !post.draft}
+			<article class="post" data-pubdate={post.date.numeric}>
+				<a
+					class="no-underline"
+					sveltekit:prefetch
+					href="blog/{post.slug}"
+					title="Read the article »"
+				>
+					<h2>{post.title}</h2>
+					<p>{post.description}</p>
+				</a>
+			</article>
+		{/if}
 	{/each}
 </div>
 

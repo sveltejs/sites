@@ -1,11 +1,12 @@
 <script context="module">
+	import { API_BASE } from '../../_env';
+
 	export async function load({ fetch }) {
-		const posts = await fetch(`blog.json`).then(r => r.json());
-		return {
-			props: {
-				posts
-			}
-		};
+		const res = await fetch(`${API_BASE}/docs/svelte/blog`);
+		if (res.ok) {
+			return { props: { posts: await res.json() }};
+		}
+	
 	}
 </script>
 
@@ -15,20 +16,25 @@
 
 <svelte:head>
 	<title>Blog • Svelte</title>
-	<link rel="alternate" type="application/rss+xml" title="Svelte blog" href="https://svelte.dev/blog/rss.xml">
+	<link
+		rel="alternate"
+		type="application/rss+xml"
+		title="Svelte blog"
+		href="https://svelte.dev/blog/rss.xml"
+	/>
 
-	<meta name="twitter:title" content="Svelte blog">
-	<meta name="twitter:description" content="Articles about Svelte and UI development">
-	<meta name="Description" content="Articles about Svelte and UI development">
+	<meta name="twitter:title" content="Svelte blog" />
+	<meta name="twitter:description" content="Articles about Svelte and UI development" />
+	<meta name="Description" content="Articles about Svelte and UI development" />
 </svelte:head>
 
 <h1 class="visually-hidden">Blog</h1>
-<div class='posts stretch'>
+<div class="posts stretch">
 	{#each posts as post}
-		<article class='post' data-pubdate={post.metadata.dateString}>
-			<a class="no-underline" sveltekit:prefetch href='blog/{post.slug}' title='Read the article »'>
-				<h2>{post.metadata.title}</h2>
-				<p>{post.metadata.description}</p>
+		<article class="post" data-pubdate={post.date.numeric}>
+			<a class="no-underline" sveltekit:prefetch href="blog/{post.slug}" title="Read the article »">
+				<h2>{post.title}</h2>
+				<p>{post.description}</p>
 			</a>
 		</article>
 	{/each}
@@ -71,7 +77,7 @@
 		color: var(--flash);
 		font-size: var(--h6);
 		font-weight: 400;
-		letter-spacing: .05em;
+		letter-spacing: 0.05em;
 		text-transform: uppercase;
 	}
 
@@ -85,10 +91,12 @@
 		color: var(--second);
 	}
 
-	.post > a { display: block }
+	.post > a {
+		display: block;
+	}
 
 	.posts a:hover,
 	.posts a:hover > h2 {
-		color: var(--flash)
+		color: var(--flash);
 	}
 </style>

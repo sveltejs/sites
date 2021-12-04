@@ -5,7 +5,6 @@ import Jimp from 'jimp';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-
 const force = process.env.FORCE_UPDATE === 'true';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -17,7 +16,7 @@ if (!force && fs.existsSync(outputFile)) {
 	process.exit(0);
 }
 
-const MAX = 20;
+const MAX = 24;
 const SIZE = 128;
 
 async function main() {
@@ -43,8 +42,8 @@ async function main() {
 			const image = await Jimp.read(buffer);
 			image.resize(SIZE, SIZE);
 			included.push({ backer, image });
-		} catch( err) {
-			console.log(`Skipping ${backer.name}: no image data`);			
+		} catch (err) {
+			console.log(`Skipping ${backer.name}: no image data`);
 		}
 	}
 
@@ -55,7 +54,9 @@ async function main() {
 
 	await sprite.quality(80).write(`../static/donors.jpg`);
 	// TODO: Optimizing the static/donors.jpg image should probably get automated as well
-	console.log('remember to additionally optimize the resulting /static/donors.jpg image file via e.g. https://squoosh.app ');
+	console.log(
+		'remember to additionally optimize the resulting /static/donors.jpg image file via e.g. https://squoosh.app '
+	);
 
 	const str = `[\n\t${included.map(a => `${JSON.stringify(a.backer.name)}`).join(',\n\t')}\n]`;
 

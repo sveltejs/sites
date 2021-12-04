@@ -89,14 +89,11 @@
 		display: inline-block;
 		background: no-repeat;
 		background-size: auto 102%;
-		border: 1px solid var(--second);
-		filter: grayscale(1) opacity(0.7);
-		transition: filter 0.2s;
+		filter: grayscale(1) opacity(0.7) drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
 	}
 
 	.supporter:hover {
-		filter: none;
-		transition: none;
+		filter: drop-shadow(1px 2px 8px rgba(0, 0, 0, 0.3));
 	}
 
 	.contributors .supporter {

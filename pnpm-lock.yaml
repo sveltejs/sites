@@ -63,6 +63,7 @@ importers:
       shelljs: ^0.8.3
       svelte: ^3.39.0
       uvu: ^0.5.2
+      vite-imagetools: ^4.0.1
     dependencies:
       cookie: 0.4.1
       devalue: 2.0.1
@@ -89,6 +90,7 @@ importers:
       shelljs: 0.8.4
       svelte: 3.44.1
       uvu: 0.5.2
+      vite-imagetools: 4.0.1
 
 packages:
 

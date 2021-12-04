@@ -40,6 +40,7 @@
     "node-pg-migrate": "^6.0.0",
     "shelljs": "^0.8.3",
     "svelte": "^3.39.0",
-    "uvu": "^0.5.2"
+    "uvu": "^0.5.2",
+    "vite-imagetools": "^4.0.1"
   }
 }

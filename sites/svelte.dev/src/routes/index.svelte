@@ -4,6 +4,9 @@
 	import Donors from './_components/Donors.svelte';
 	import Example from './_components/Example.svelte';
 	import WhosUsingSvelte from './_components/WhosUsingSvelte.svelte';
+
+	import Balls from '$img/svelte-balls.png?w=3840&format=avif;webp;png&meta'
+
 	// import Lazy from '../components/Lazy.svelte';
 
 	// TODO this causes a Sapper CSS bug...
@@ -11,21 +14,18 @@
 	// 	console.log('lazy loading');
 	// 	return import('../components/Repl/ReplWidget.svelte').then(mod => mod.default);
 	// }
+
+	const groupBy = (items, key) => items.reduce(
+		(result, item) => ({
+			...result,
+			[item[key]]: [
+				...(result[item[key]] || []),
+				item,
+			],
+		}), 
+		{},
+	);
 </script>
-
-<style>
-	/* darken text for accessibility */
-	/* TODO does this belong elsewhere? */
-	:global(.back-light) {
-		--text: hsl(36, 3%, 44%);
-	}
-
-	.examples {
-		background: var(--second);
-		color: white;
-		overflow: hidden;
-	}
-</style>
 
 <svelte:head>
 	<title>Svelte • Cybernetically enhanced web apps</title>
@@ -116,17 +116,62 @@ npm run dev
 </Section>
 
 <Section>
-	<h3>Supporters</h3>
-
-	<p>Svelte is free and open source software, made possible by the work of hundreds of volunteers and donors. <a href="https://github.com/sveltejs/svelte">Join us</a> or <a href="https://opencollective.com/svelte">give</a>!</p>
-
-	<h4>Contributors</h4>
-
-	<Contributors/>
-
-	<p></p>
-
-	<h4>Donors</h4>
-
+	<h3>Donors</h3>
 	<Donors/>
 </Section>
+
+<div id="balls">
+	<picture>
+		{#each Object.values(groupBy(Balls, 'format')) as imageGroup}
+			<source type={'image/' + imageGroup[0].format} srcset={imageGroup.map(image => image.src)}/> 
+			{#if imageGroup[0].format === 'png'}
+				<img src={imageGroup[0].src} alt="Celebrating Svelte contributors" />
+			{/if}
+		{/each}
+	</picture>
+</div>
+
+<div id="footer">
+	<a href="/tutorial">Tutorial</a>
+	<a href="/docs">Docs</a>
+	<a href="/examples">Examples</a>
+	<a href="/blog">Blog</a>
+	<a href="/faq">FAQ</a>
+	<a href="https://opencollective.com/svelte">Open Collective</a>
+</div>
+
+<style>
+	/* darken text for accessibility */
+	/* TODO does this belong elsewhere? */
+	:global(.back-light) {
+		--text: hsl(36, 3%, 44%);
+	}
+
+	.examples {
+		background: var(--second);
+		color: white;
+		overflow: hidden;
+	}
+
+	#balls {
+		background: steelblue;
+	}
+	#balls picture {
+		width: 100%;
+		height: 100%;
+		display: flex;
+	}
+	#balls picture img {
+		object-fit: cover; 
+		height: auto;
+		width:100%;
+	}
+	#footer {
+		text-align: center;
+		padding: 4rem;
+	}
+	#footer a {
+		color: black;
+		margin: 0 1rem;
+	}
+</style>

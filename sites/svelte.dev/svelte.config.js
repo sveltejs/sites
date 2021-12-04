@@ -1,4 +1,6 @@
 import adapter from '@sveltejs/adapter-node';
+import * as path from 'path';
+import { imagetools } from 'vite-imagetools';
 
 const API_BASE = process.env.DOCS_PREVIEW ? 'http://localhost:3456' : 'https://api.svelte.dev';
 
@@ -43,6 +45,12 @@ export default {
 					'codemirror/addon/fold/markdown-fold.js',
 					'codemirror/addon/fold/comment-fold.js'
 				]
+			},
+			plugins: [imagetools()],
+			resolve: {
+				alias: {
+					$img: path.resolve('src/images')
+				}
 			},
 			server: {
 				fs: {

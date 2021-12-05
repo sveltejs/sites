@@ -28,65 +28,67 @@
 
 <Hero />
 
-<Blurb>
-	<a href="blog/write-less-code" slot="one">
-		<h2>Write less code</h2>
-		<p>
-			Build boilerplate-free components using languages you already know — HTML, CSS and JavaScript
-		</p>
+<div class="blurb-shifter">
+	<Blurb>
+		<a href="blog/write-less-code" slot="one">
+			<h2>Write less code</h2>
+			<p>
+				Build boilerplate-free components using languages you already know — HTML, CSS and
+				JavaScript
+			</p>
 
-		<span class="learn-more">learn more</span>
-	</a>
+			<span class="learn-more">learn more</span>
+		</a>
 
-	<a href="blog/virtual-dom-is-pure-overhead" slot="two">
-		<h2>No virtual DOM</h2>
-		<p>
-			Svelte compiles your code to tiny, framework-less vanilla JS — your app starts fast and stays
-			fast
-		</p>
+		<a href="blog/virtual-dom-is-pure-overhead" slot="two">
+			<h2>No virtual DOM</h2>
+			<p>
+				Svelte compiles your code to tiny, framework-less vanilla JS — your app starts fast and
+				stays fast
+			</p>
 
-		<span class="learn-more">learn more</span>
-	</a>
+			<span class="learn-more">learn more</span>
+		</a>
 
-	<a href="blog/svelte-3-rethinking-reactivity" slot="three">
-		<h2>Truly reactive</h2>
-		<p>
-			No more complex state management libraries — Svelte brings reactivity to JavaScript itself
-		</p>
+		<a href="blog/svelte-3-rethinking-reactivity" slot="three">
+			<h2>Truly reactive</h2>
+			<p>
+				No more complex state management libraries — Svelte brings reactivity to JavaScript itself
+			</p>
 
-		<span class="learn-more">learn more</span>
-	</a>
+			<span class="learn-more">learn more</span>
+		</a>
 
-	<div class="description" slot="what">
-		<p>
-			Svelte is a radical new approach to building user interfaces. Whereas traditional frameworks
-			like React and Vue do the bulk of their work in the <em>browser</em>, Svelte shifts that work
-			into a <em>compile step</em> that happens when you build your app.
-		</p>
+		<div class="description" slot="what">
+			<p>
+				Svelte is a radical new approach to building user interfaces. Whereas traditional frameworks
+				like React and Vue do the bulk of their work in the <em>browser</em>, Svelte shifts that
+				work into a <em>compile step</em> that happens when you build your app.
+			</p>
 
-		<p>
-			Instead of using techniques like virtual DOM diffing, Svelte writes code that surgically
-			updates the DOM when the state of your app changes.
-		</p>
+			<p>
+				Instead of using techniques like virtual DOM diffing, Svelte writes code that surgically
+				updates the DOM when the state of your app changes.
+			</p>
 
-		<p>
-			We're proud that Svelte was recently voted the <a
-				href="https://insights.stackoverflow.com/survey/2021#section-most-loved-dreaded-and-wanted-web-frameworks"
-				>most loved web framework</a
-			>
-			with the
-			<a href="https://2020.stateofjs.com/en-US/technologies/front-end-frameworks/"
-				>most satisfied developers</a
-			>
-			in a pair of industry surveys. We think you'll love it too.
-			<a href="blog/svelte-3-rethinking-reactivity">Read the introductory blog post</a> to learn more.
-		</p>
-	</div>
+			<p>
+				We're proud that Svelte was recently voted the <a
+					href="https://insights.stackoverflow.com/survey/2021#section-most-loved-dreaded-and-wanted-web-frameworks"
+					>most loved web framework</a
+				>
+				with the
+				<a href="https://2020.stateofjs.com/en-US/technologies/front-end-frameworks/"
+					>most satisfied developers</a
+				>
+				in a pair of industry surveys. We think you'll love it too.
+				<a href="blog/svelte-3-rethinking-reactivity">Read the introductory blog post</a> to learn more.
+			</p>
+		</div>
 
-	<div style="grid-area: start; display: flex; flex-direction: column; min-width: 0" slot="how">
-		<pre
-			class="language-bash"
-			style="margin: 0 0 1em 0; min-width: 0; min-height: 0">
+		<div style="grid-area: start; display: flex; flex-direction: column; min-width: 0" slot="how">
+			<pre
+				class="language-bash"
+				style="margin: 0 0 1em 0; min-width: 0; min-height: 0">
 npx degit <a href="https://github.com/sveltejs/template" style="user-select: initial;">sveltejs/template</a> my-svelte-project
 <span class="token comment"># or download and extract <a href="https://github.com/sveltejs/template/archive/master.zip">this .zip file</a></span>
 cd my-svelte-project
@@ -97,13 +99,14 @@ npm install
 npm run dev
 		</pre>
 
-		<p style="flex: 1">
-			See the <a href="blog/the-easiest-way-to-get-started">quickstart guide</a> for more information.
-		</p>
+			<p style="flex: 1">
+				See the <a href="blog/the-easiest-way-to-get-started">quickstart guide</a> for more information.
+			</p>
 
-		<p class="cta"><a sveltekit:prefetch href="tutorial">Learn Svelte</a></p>
-	</div>
-</Blurb>
+			<p class="cta"><a sveltekit:prefetch href="tutorial">Learn Svelte</a></p>
+		</div>
+	</Blurb>
+</div>
 
 <div class="examples">
 	<Example id="hello-world">
@@ -159,25 +162,16 @@ npm run dev
 		--text: hsl(36, 3%, 44%);
 	}
 
+	.blurb-shifter {
+		margin-top: calc(-10rem + var(--side-nav));
+	}
+
 	.examples {
 		background: var(--second);
 		color: white;
 		overflow: hidden;
 	}
 
-	#balls {
-		background: steelblue;
-	}
-	#balls picture {
-		width: 100%;
-		height: 100%;
-		display: flex;
-	}
-	#balls picture img {
-		object-fit: cover;
-		height: auto;
-		width: 100%;
-	}
 	#footer {
 		text-align: center;
 		padding: 4rem;
@@ -185,5 +179,11 @@ npm run dev
 	#footer a {
 		color: black;
 		margin: 0 1rem;
+	}
+
+	@media (min-width: 900px) {
+		.blurb-shifter {
+			margin-top: -12em;
+		}
 	}
 </style>

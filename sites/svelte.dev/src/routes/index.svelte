@@ -1,10 +1,11 @@
 <script>
 	import { Blurb, Hero, Section } from '@sveltejs/site-kit-legacy';
 	import Supporters from './_components/Supporters.svelte';
+	import Image from './_components/Image.svelte';
 	import Example from './_components/Example.svelte';
 	import WhosUsingSvelte from './_components/WhosUsingSvelte.svelte';
 
-	import Balls from '$img/svelte-balls.png?w=3840&format=avif;webp;png&meta'
+	import Balls from '$img/svelte-balls.png?w=640;1280;2560&format=avif;webp;png&meta'
 
 	// import Lazy from '../components/Lazy.svelte';
 
@@ -155,21 +156,7 @@ npm run dev
 
 <Supporters />
 
-<div id="balls">
-	<picture>
-		{#each Object.values(groupBy(Balls, 'format')) as imageGroup}
-			<source type={'image/' + imageGroup[0].format} srcset={imageGroup.map(image => image.src)} />
-			{#if imageGroup[0].format === 'png'}
-				<img
-					src={imageGroup[0].src}
-					alt="Celebrating Svelte contributors"
-					width={imageGroup[0].width}
-					height={imageGroup[0].height}
-				/>
-			{/if}
-		{/each}
-	</picture>
-</div>
+<Image data={Balls} alt="The Svelte logo in a ball pit" />
 
 <div id="footer">
 	<a href="/tutorial">Tutorial</a>

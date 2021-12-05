@@ -1,11 +1,11 @@
 <script>
-	import { Blurb, Hero, Section } from '@sveltejs/site-kit-legacy';
+	import { Blurb, Section } from '@sveltejs/site-kit-legacy';
 	import Supporters from './_components/Supporters.svelte';
+	import Hero from './_components/Hero.svelte';
 	import Image from './_components/Image.svelte';
 	import Example from './_components/Example.svelte';
 	import WhosUsingSvelte from './_components/WhosUsingSvelte.svelte';
-
-	import Balls from '$img/svelte-balls.png?w=640;1280;2560&format=avif;webp;png&meta'
+	import Balls from '$img/svelte-balls.png?w=640;1280;2560&format=avif;webp;png&meta';
 
 	// import Lazy from '../components/Lazy.svelte';
 
@@ -14,17 +14,6 @@
 	// 	console.log('lazy loading');
 	// 	return import('../components/Repl/ReplWidget.svelte').then(mod => mod.default);
 	// }
-
-	const groupBy = (items, key) => items.reduce(
-		(result, item) => ({
-			...result,
-			[item[key]]: [
-				...(result[item[key]] || []),
-				item,
-			],
-		}),
-		{},
-	);
 </script>
 
 <svelte:head>
@@ -36,12 +25,8 @@
 </svelte:head>
 
 <h1 class="visually-hidden">Svelte</h1>
-<Hero
-	title="Svelte"
-	tagline="Cybernetically enhanced web apps"
-	background="svelte-logo-outline.svg"
-	logotype="svelte-logotype.svg"
-/>
+
+<Hero />
 
 <Blurb>
 	<a href="blog/write-less-code" slot="one">

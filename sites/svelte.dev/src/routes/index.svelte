@@ -1,5 +1,5 @@
 <script>
-	import { Blurb, Section } from '@sveltejs/site-kit-legacy';
+	import { Blurb } from '@sveltejs/site-kit-legacy';
 	import Supporters from './_components/Supporters.svelte';
 	import Hero from './_components/Hero.svelte';
 	import Image from './_components/Image.svelte';
@@ -136,11 +136,11 @@ npm run dev
 	</Example>
 </div>
 
-<Section>
+<section>
 	<h3>Who's using Svelte?</h3>
 
 	<WhosUsingSvelte />
-</Section>
+</section>
 
 <Supporters />
 
@@ -160,6 +160,13 @@ npm run dev
 	/* TODO does this belong elsewhere? */
 	:global(.back-light) {
 		--text: hsl(36, 3%, 44%);
+	}
+
+	section {
+		position: relative;
+		margin: 10rem auto;
+		padding: 0 var(--side-nav);
+		max-width: 120rem;
 	}
 
 	.blurb-shifter {

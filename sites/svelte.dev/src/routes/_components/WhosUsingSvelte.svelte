@@ -1,66 +1,78 @@
 <script>
 	import { companies } from './WhosUsingSvelte.js';
-	const randomizer = ({ prominent }) => Math.random();
-	const doSort = (a, b) => randomizer(b) - randomizer(a);
-	const sortedCompanies = companies.sort(doSort);
+
+	const sorted = companies.sort((a, b) => a.alt < b.alt ? -1 : 1);
 </script>
 
 <div class="logos">
-	{#each sortedCompanies as { href, filename, alt, style, picture, span }, index}
-		<a target="_blank" rel="noopener" {href} style={style || ""}>
-			{#if picture}
-				<picture>
-					{#each picture as { type, srcset }}
-						<source {type} {srcset} />
-					{/each}
-					<img src="/whos-using-svelte/{filename}" {alt} loading="lazy" />
-				</picture>
-			{:else}
-				<img src="/whos-using-svelte/{filename}" {alt} loading="lazy" />
-				{#if span}
-					<span>{span}</span>
-				{/if}
-			{/if}
+	{#each sorted as { href, filename, alt, style, invert }}
+		<a target="_blank" rel="noopener" {href} class:invert style={style || ''}>
+			<img src="/whos-using-svelte/{filename}" {alt} loading="lazy" />
 		</a>
+
+		<span class="spacer" />
 	{/each}
 </div>
 
 <style>
 	.logos {
-		margin: 1em 0 0 0;
 		display: flex;
+		margin: 6rem 0 0 0;
 		flex-wrap: wrap;
+		row-gap: 1em;
+		justify-content: center;
+		--row-size: 3;
 	}
+
+	.spacer {
+		width: calc(100% / calc(2 * var(--row-size) - 1));
+	}
+
 	a {
-		height: 40px;
-		margin: 0 0.5em 0.5em 0;
+		width: calc(100% / calc(2 * var(--row-size) - 1));
+		height: auto;
 		display: flex;
 		align-items: center;
-		border: 2px solid var(--second);
+		justify-content: center;
 		padding: 0;
-		border-radius: 20px;
 		color: var(--text);
+		filter: grayscale(1) contrast(4) opacity(0.4) invert(var(--invert, 0));
+		grid-column: span 2;
 	}
-	picture,
+
+	a:last-of-type {
+		/* hide last item at this screen size, it ruins wrapping */
+		display: none;
+	}
+
+	a.invert {
+		--invert: 1;
+	}
+
 	img {
-		height: 100%;
 		padding: 5px 10px;
 		transition: transform 0.2s;
-		min-width:  0; /* Avoid image overflow in Safari */
+		min-width: 0; /* Avoid image overflow in Safari */
 	}
-	picture:hover,
+
 	img:hover {
 		transform: scale(1.2);
 	}
-	@media (min-width: 540px) {
-		a {
-			height: 60px;
-			border-radius: 30px;
+
+	@media (min-width: 640px) {
+		.logos {
+			--row-size: 4;
 		}
 
-		picture,
-		img {
-			padding: 10px 20px;
+		a:last-of-type {
+			/* show 14 items instead of 13 — wraps better */
+			display: flex;
+		}
+	}
+
+	@media (min-width: 960px) {
+		.logos {
+			--row-size: 5;
 		}
 	}
 </style>

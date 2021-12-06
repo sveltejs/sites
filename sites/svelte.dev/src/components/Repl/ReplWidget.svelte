@@ -2,8 +2,8 @@
 	import Repl from '@sveltejs/svelte-repl';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/env';
-
 	import { process_example } from '../../utils/examples';
+	import { API_BASE } from '../../_env';
 	import InputOutputToggle from './InputOutputToggle.svelte';
 
 	export let version = '3';
@@ -60,7 +60,7 @@
 				repl.set({ components });
 			});
 		} else if (example) {
-			fetch(`examples/${example}.json`).then(async response => {
+			fetch(`${API_BASE}/docs/svelte/examples/${example}`).then(async response => {
 				if (response.ok) {
 					const data = await response.json();
 
@@ -82,6 +82,26 @@
 
 	$: mobile = width < 560;
 </script>
+
+<div class="repl-outer" bind:clientWidth={width} class:mobile>
+	<div class="viewport" class:offset={checked}>
+		{#if browser}
+			<Repl
+				bind:this={repl}
+				workersUrl="workers"
+				fixed={mobile}
+				{svelteUrl}
+				{rollupUrl}
+				embedded
+				relaxed
+			/>
+		{/if}
+	</div>
+
+	{#if mobile}
+		<InputOutputToggle bind:checked />
+	{/if}
+</div>
 
 <style>
 	.repl-outer {
@@ -114,23 +134,3 @@
 		transform: translate(-50%, 0);
 	}
 </style>
-
-<div class="repl-outer" bind:clientWidth={width} class:mobile>
-	<div class="viewport" class:offset={checked}>
-		{#if browser}
-			<Repl
-				bind:this={repl}
-				workersUrl="workers"
-				fixed={mobile}
-				{svelteUrl}
-				{rollupUrl}
-				embedded
-				relaxed
-			/>
-		{/if}
-	</div>
-
-	{#if mobile}
-		<InputOutputToggle bind:checked/>
-	{/if}
-</div>

@@ -11,7 +11,7 @@
 		},
 		{
 			id: 'nested-components',
-			title: 'Components',
+			title: 'Scoped CSS',
 			description: 'CSS is component-scoped by default — no more style collisions or specificity wars. Or you can <a href="/blog/svelte-css-in-js">use your favourite CSS-in-JS library</a >.'
 		},
 		{

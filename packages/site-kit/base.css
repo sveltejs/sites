@@ -182,7 +182,7 @@ h5,
 h6 {
 	font-family: var(--font);
 	line-height: 1.25;
-	color: #222;
+	color: var(--heading);
 }
 
 h3 {

@@ -3,6 +3,7 @@
 	import Supporters from './_components/Supporters.svelte';
 	import Hero from './_components/Hero.svelte';
 	import Image from './_components/Image.svelte';
+	import Demo from './_components/Demo.svelte';
 	import Example from './_components/Example.svelte';
 	import WhosUsingSvelte from './_components/WhosUsingSvelte.svelte';
 	import Balls from '$img/svelte-balls.png?w=640;1280;2560&format=avif;webp;png&meta';
@@ -81,7 +82,8 @@
 					>most satisfied developers</a
 				>
 				in a pair of industry surveys. We think you'll love it too.
-				<a href="blog/svelte-3-rethinking-reactivity" class="cta">Read the introductory blog post</a> to learn more.
+				<a href="blog/svelte-3-rethinking-reactivity" class="cta">Read the introductory blog post</a
+				> to learn more.
 			</p>
 		</div>
 
@@ -94,7 +96,8 @@ npm run dev
 			</code></pre>
 
 			<p style="flex: 1">
-				See the <a href="blog/the-easiest-way-to-get-started">quickstart guide</a> for TypeScript support and more details.
+				See the <a href="blog/the-easiest-way-to-get-started">quickstart guide</a> for TypeScript support
+				and more details.
 			</p>
 
 			<a sveltekit:prefetch href="tutorial" class="cta">Learn Svelte</a>
@@ -102,33 +105,7 @@ npm run dev
 	</Blurb>
 </div>
 
-<div class="examples">
-	<Example id="hello-world">
-		<p>Svelte components are built on top of HTML. Just add data.</p>
-	</Example>
-
-	<Example id="nested-components">
-		<p>
-			CSS is component-scoped by default — no more style collisions or specificity wars. Or you can <a
-				href="/blog/svelte-css-in-js">use your favourite CSS-in-JS library</a
-			>.
-		</p>
-	</Example>
-
-	<Example id="reactive-assignments">
-		<p>
-			Trigger efficient, granular updates by assigning to local variables. The compiler does the
-			rest.
-		</p>
-	</Example>
-
-	<Example id="svg-transitions">
-		<p>
-			Build beautiful UIs with a powerful, performant transition engine built right into the
-			framework.
-		</p>
-	</Example>
-</div>
+<Demo />
 
 <section>
 	<h3>Who's using Svelte?</h3>

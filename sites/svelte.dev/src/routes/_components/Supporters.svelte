@@ -1,66 +1,54 @@
 <script>
+	import Section from './Section.svelte';
 	import contributors from '../_contributors.js';
 	import donors from '../_donors.js';
 </script>
 
-<section>
-	<div class="inner">
-		<p class="intro">
-			Svelte is free and open source software, made possible by the work of hundreds of supporters.
-		</p>
+<Section
+	--background="radial-gradient(circle at top right, rgb(230, 233, 236), rgb(244, 245, 247))"
+>
+	<p class="intro">
+		Svelte is free and open source software, made possible by the work of hundreds of supporters.
+	</p>
 
-		<div class="layout">
-			<div class="contributors blurb">
-				<h3>Contributors</h3>
-				<p>
-					<a href="https://github.com/sveltejs/svelte/graphs/contributors">Join us on GitHub</a>
-				</p>
-			</div>
+	<div class="layout">
+		<div class="contributors blurb">
+			<h3>Contributors</h3>
+			<p>
+				<a href="https://github.com/sveltejs/svelte/graphs/contributors">Join us on GitHub</a>
+			</p>
+		</div>
 
-			<div class="contributors grid">
-				{#each contributors as contributor, i}
-					<a
-						class="supporter"
-						style="background-position: {(100 * i) / (contributors.length - 1)}% 0"
-						href="https://github.com/{contributor}"
-					>
-						{contributor}
-					</a>
-				{/each}
-			</div>
+		<div class="contributors grid">
+			{#each contributors as contributor, i}
+				<a
+					class="supporter"
+					style="background-position: {(100 * i) / (contributors.length - 1)}% 0"
+					href="https://github.com/{contributor}"
+				>
+					{contributor}
+				</a>
+			{/each}
+		</div>
 
-			<div class="donors blurb">
-				<h3>Donors</h3>
-				<p><a href="https://opencollective.com/svelte">Support us on OpenCollective</a></p>
-			</div>
+		<div class="donors blurb">
+			<h3>Donors</h3>
+			<p><a href="https://opencollective.com/svelte">Support us on OpenCollective</a></p>
+		</div>
 
-			<div class="donors grid">
-				{#each donors as donor, i}
-					<a
-						class="supporter"
-						style="background-position: {(100 * i) / (donors.length - 1)}% 0"
-						href="https://opencollective.com/svelte">{donor}</a
-					>
-				{/each}
-			</div>
+		<div class="donors grid">
+			{#each donors as donor, i}
+				<a
+					class="supporter"
+					style="background-position: {(100 * i) / (donors.length - 1)}% 0"
+					href="https://opencollective.com/svelte">{donor}</a
+				>
+			{/each}
 		</div>
 	</div>
-</section>
+</Section>
 
 <style>
-	section {
-		/** TODO these styles are ripped from site-kit-legacy, so that we can add a background.
-		    they probably belong in a component inside site-kit that allows control over backgrounds */
-		position: relative;
-		padding: 10rem var(--side-nav);
-		background: radial-gradient(circle at top right, rgb(230, 233, 236), rgb(244, 245, 247));
-	}
-
-	.inner {
-		margin: 0 auto;
-		max-width: 120rem;
-	}
-
 	h3 {
 		color: var(--text);
 	}

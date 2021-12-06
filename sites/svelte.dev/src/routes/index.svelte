@@ -177,7 +177,7 @@ npm run dev
 		padding: 4rem;
 	}
 	#footer a {
-		color: black;
+		color: var(--text);
 		margin: 0 1rem;
 	}
 

@@ -72,8 +72,8 @@
 		flex: 1;
 	}
 
-	.box :global(a),
-	.how :global(a) {
+	.box :global(.cta),
+	.how :global(.cta) {
 		position: relative;
 		max-width: 15em;
 		padding: 0.8rem 1.6rem;
@@ -83,13 +83,13 @@
 		font-size: var(--h6);
 	}
 
-	.how :global(a) {
+	.how :global(.cta) {
 		background: var(--prime);
 		color: var(--back);
 	}
 
-	.box :global(a)::after,
-	.how :global(a)::after {
+	.box :global(.cta)::after,
+	.how :global(.cta)::after {
 		content: '';
 		position: absolute;
 		display: block;
@@ -101,7 +101,7 @@
 		background-size: 100% 100%;
 	}
 
-	.how :global(a)::after {
+	.how :global(.cta)::after {
 		background-image: url(/icons/arrow-right.svg);
 	}
 

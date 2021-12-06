@@ -43,7 +43,6 @@ importers:
       '@sveltejs/adapter-node': next
       '@sveltejs/kit': next
       '@sveltejs/site-kit': workspace:*
-      '@sveltejs/site-kit-legacy': npm:@sveltejs/site-kit@1.4.1
       '@sveltejs/svelte-repl': ^0.4.1
       cookie: ^0.4.0
       degit: ^2.1.4
@@ -80,7 +79,6 @@ importers:
       '@sveltejs/adapter-node': 1.0.0-next.55
       '@sveltejs/kit': 1.0.0-next.201_svelte@3.44.1
       '@sveltejs/site-kit': link:../../packages/site-kit
-      '@sveltejs/site-kit-legacy': /@sveltejs/site-kit/1.4.1
       '@sveltejs/svelte-repl': 0.4.1
       degit: 2.8.4
       dotenv: 10.0.0
@@ -706,13 +704,6 @@ packages:
       - sass
       - stylus
       - supports-color
-    dev: true
-
-  /@sveltejs/site-kit/1.4.1:
-    resolution: {integrity: sha512-K2HplwTqWS5Jw38+GB1LwnojVfTJPxZ3d9FtjbjXoaJ8pCHTBJ+khAV8zeWLlOWkYpJuGD04EZTS87sW7mfVDA==}
-    dependencies:
-      '@sindresorhus/slugify': 0.9.1
-      golden-fleece: 1.0.9
     dev: true
 
   /@sveltejs/svelte-repl/0.4.1:
@@ -1747,6 +1738,7 @@ packages:
 
   /golden-fleece/1.0.9:
     resolution: {integrity: sha512-YSwLaGMOgSBx9roJlNLL12c+FRiw7VECphinc6mGucphc/ZxTHgdEz6gmJqH6NOzYEd/yr64hwjom5pZ+tJVpg==}
+    dev: false
 
   /graceful-fs/4.2.8:
     resolution: {integrity: sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==}

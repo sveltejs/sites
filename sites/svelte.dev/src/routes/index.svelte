@@ -1,5 +1,5 @@
 <script>
-	import { Blurb } from '@sveltejs/site-kit-legacy';
+	import { Blurb } from '@sveltejs/site-kit';
 	import Supporters from './_components/Supporters.svelte';
 	import Hero from './_components/Hero.svelte';
 	import Image from './_components/Image.svelte';
@@ -30,34 +30,34 @@
 
 <div class="blurb-shifter">
 	<Blurb>
-		<a href="blog/write-less-code" slot="one">
+		<div slot="one">
 			<h2>Write less code</h2>
 			<p>
 				Build boilerplate-free components using languages you already know — HTML, CSS and
 				JavaScript
 			</p>
 
-			<span class="learn-more">learn more</span>
-		</a>
+			<a sveltekit:prefetch href="blog/write-less-code" class="cta">learn more</a>
+		</div>
 
-		<a href="blog/virtual-dom-is-pure-overhead" slot="two">
+		<div slot="two">
 			<h2>No virtual DOM</h2>
 			<p>
 				Svelte compiles your code to tiny, framework-less vanilla JS — your app starts fast and
 				stays fast
 			</p>
 
-			<span class="learn-more">learn more</span>
-		</a>
+			<a sveltekit:prefetch href="blog/virtual-dom-is-pure-overhead" class="cta">learn more</a>
+		</div>
 
-		<a href="blog/svelte-3-rethinking-reactivity" slot="three">
+		<div slot="three">
 			<h2>Truly reactive</h2>
 			<p>
 				No more complex state management libraries — Svelte brings reactivity to JavaScript itself
 			</p>
 
-			<span class="learn-more">learn more</span>
-		</a>
+			<a sveltekit:prefetch href="blog/svelte-3-rethinking-reactivity" class="cta">learn more</a>
+		</div>
 
 		<div class="description" slot="what">
 			<p>
@@ -81,14 +81,12 @@
 					>most satisfied developers</a
 				>
 				in a pair of industry surveys. We think you'll love it too.
-				<a href="blog/svelte-3-rethinking-reactivity">Read the introductory blog post</a> to learn more.
+				<a href="blog/svelte-3-rethinking-reactivity" class="cta">Read the introductory blog post</a> to learn more.
 			</p>
 		</div>
 
 		<div style="grid-area: start; display: flex; flex-direction: column; min-width: 0" slot="how">
-			<pre
-				class="language-bash"
-				style="margin: 0 0 1em 0; min-width: 0; min-height: 0">
+			<pre><code>
 npx degit <a href="https://github.com/sveltejs/template" style="user-select: initial;">sveltejs/template</a> my-svelte-project
 <span class="token comment"># or download and extract <a href="https://github.com/sveltejs/template/archive/master.zip">this .zip file</a></span>
 cd my-svelte-project
@@ -97,13 +95,13 @@ cd my-svelte-project
 
 npm install
 npm run dev
-		</pre>
+			</code></pre>
 
 			<p style="flex: 1">
 				See the <a href="blog/the-easiest-way-to-get-started">quickstart guide</a> for more information.
 			</p>
 
-			<p class="cta"><a sveltekit:prefetch href="tutorial">Learn Svelte</a></p>
+			<a sveltekit:prefetch href="tutorial" class="cta">Learn Svelte</a>
 		</div>
 	</Blurb>
 </div>

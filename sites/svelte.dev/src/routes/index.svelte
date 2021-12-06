@@ -85,20 +85,16 @@
 			</p>
 		</div>
 
-		<div style="grid-area: start; display: flex; flex-direction: column; min-width: 0" slot="how">
+		<div slot="how">
 			<pre><code>
 npx degit <a href="https://github.com/sveltejs/template" style="user-select: initial;">sveltejs/template</a> my-svelte-project
-<span class="token comment"># or download and extract <a href="https://github.com/sveltejs/template/archive/master.zip">this .zip file</a></span>
 cd my-svelte-project
-<span class="token comment"># to use <a href="blog/svelte-and-typescript">TypeScript</a> run:</span>
-<span class="token comment"># node scripts/setupTypeScript.js</span>
-
 npm install
 npm run dev
 			</code></pre>
 
 			<p style="flex: 1">
-				See the <a href="blog/the-easiest-way-to-get-started">quickstart guide</a> for more information.
+				See the <a href="blog/the-easiest-way-to-get-started">quickstart guide</a> for TypeScript support and more details.
 			</p>
 
 			<a sveltekit:prefetch href="tutorial" class="cta">Learn Svelte</a>

@@ -2,7 +2,7 @@
 	import '@sveltejs/site-kit/base.css';
 	import { setContext } from 'svelte';
 	import { page, navigating, session } from '$app/stores';
-	import { Icon, Icons, Nav, NavItem } from '@sveltejs/site-kit-legacy';
+	import { Icon, Icons, Nav, NavItem } from '@sveltejs/site-kit';
 	import PreloadingIndicator from '../components/PreloadingIndicator.svelte';
 
 	export let segment;
@@ -28,35 +28,39 @@
 	});
 </script>
 
-<Icons/>
+<Icons />
 
 {#if $navigating && $navigating.to}
-	<PreloadingIndicator/>
+	<PreloadingIndicator />
 {/if}
 
 {#if $page.path !== '/repl/embed'}
 	<Nav {segment} {page} logo="svelte-logo-horizontal.svg">
-		<NavItem segment="tutorial">Tutorial</NavItem>
-		<NavItem segment="docs">Docs</NavItem>
-		<NavItem segment="examples">Examples</NavItem>
-		<NavItem segment="repl">REPL</NavItem>
-		<NavItem segment="blog">Blog</NavItem>
-		<NavItem segment="faq">FAQ</NavItem>
+		<svelte:fragment slot="nav-center">
+			<NavItem segment="tutorial">Tutorial</NavItem>
+			<NavItem segment="docs">Docs</NavItem>
+			<NavItem segment="examples">Examples</NavItem>
+			<NavItem segment="repl">REPL</NavItem>
+			<NavItem segment="blog">Blog</NavItem>
+			<NavItem segment="faq">FAQ</NavItem>
+		</svelte:fragment>
 
-		<NavItem external="https://kit.svelte.dev">SvelteKit</NavItem>
+		<svelte:fragment slot="nav-right">
+			<NavItem external="https://kit.svelte.dev">SvelteKit</NavItem>
 
-		<NavItem external="chat" title="Discord Chat">
-			<Icon name="message-square"/>
-		</NavItem>
+			<NavItem external="chat" title="Discord Chat">
+				<Icon name="message-square" />
+			</NavItem>
 
-		<NavItem external="https://github.com/sveltejs/svelte" title="GitHub Repo">
-			<Icon name="github"/>
-		</NavItem>
+			<NavItem external="https://github.com/sveltejs/svelte" title="GitHub Repo">
+				<Icon name="github" />
+			</NavItem>
+		</svelte:fragment>
 	</Nav>
 {/if}
 
 <main>
-	<slot></slot>
+	<slot />
 </main>
 
 <style>

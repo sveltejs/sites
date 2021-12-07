@@ -50,287 +50,167 @@
 
 <svelte:window on:hashchange={handle_hashchange} on:scroll={handle_scroll} />
 
-<header class:visible={visible || open}>
-	<nav>
-		{#if open}
-			<div class="modal-background hide-if-desktop" on:click={() => (open = false)} />
-		{/if}
+{#if open}
+	<div class="modal-background hide-if-desktop" on:click={() => (open = false)} />
+{/if}
 
-		<a
-			sveltekit:prefetch
-			href="/"
-			class="nav-spot home"
-			title={home_title}
-			style="background-image: url({logo})"
-		>
-			{home}
-		</a>
-		<ul
-			class:open
-			on:touchstart|capture={intercept_touchstart}
-			on:mouseenter={() => (open = true)}
-			on:mouseleave={() => (open = false)}
-		>
-			<div class="open-menu-button hide-if-desktop" class:open>
-				<Icon name="chevron" size="1em" />
-			</div>
-			<li class="hide-if-desktop" class:active={$current === ''}>
-				<a sveltekit:prefetch href="/">{home}</a>
-			</li>
-			<div class="nav-center">
-				<slot name="nav-center" />
-			</div>
-			{#if open}
-				<div class="nav-right hide-if-desktop">
-					<slot name="nav-right" />
-				</div>
-			{/if}
-		</ul>
-		<div class="nav-spot nav-right show-if-desktop">
-			<slot name="nav-right" />
+<nav class:visible={visible || open} class:open>
+	<a
+		sveltekit:prefetch
+		href="/"
+		class="nav-spot home"
+		title={home_title}
+		style="background-image: url({logo})"
+	>
+		{home}
+	</a>
+
+	<ul>
+		<slot name="nav-center" />
+	</ul>
+
+	<ul class="external">
+		<slot name="nav-right" />
+	</ul>
+
+	<button class="menu-toggle" class:open on:click={() => (open = !open)}>
+		<Icon name="menu" size="1em" />
+	</button>
+
+	<!-- <ul class:open on:touchstart|capture={intercept_touchstart} on:click={() => (open = true)}>
+		<div class="open-menu-button hide-if-desktop" class:open>
+			<Icon name="menu" size="1em" />
 		</div>
-	</nav>
-</header>
+
+		<li class="hide-if-desktop" class:active={$current === ''}>
+			<a sveltekit:prefetch href="/">{home}</a>
+		</li>
+		<div class="nav-center">
+			<slot name="nav-center" />
+		</div>
+		{#if open}
+			<div class="nav-right hide-if-desktop">
+				<slot name="nav-right" />
+			</div>
+		{/if}
+	</ul>
+	<div class="nav-spot nav-right show-if-desktop">
+		<slot name="nav-right" />
+	</div> -->
+</nav>
 
 <style>
-	header {
+	nav {
+		--shadow-height: 0.5rem;
+		--shadow-gradient: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0.1) 0%,
+			rgba(0, 0, 0, 0.05) 30%,
+			transparent 100%
+		);
 		position: fixed;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
 		width: 100vw;
 		height: var(--nav-h);
-		padding: 0 var(--side-nav);
 		margin: 0 auto;
 		background-color: white;
-		box-shadow: 0 -0.4rem 0.9rem 0.2rem rgba(0, 0, 0, 0.5);
 		font-family: var(--font);
 		z-index: 100;
 		user-select: none;
 		transition: transform 0.2s;
 	}
 
-	header:not(.visible):not(:focus-within) {
-		transform: translate(0, calc(-100% - 1rem));
-	}
-
-	nav {
-		position: fixed;
-		top: 0;
+	nav::after {
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: var(--shadow-height);
 		left: 0;
-		width: 100vw;
-		height: var(--nav-h);
-		padding: 0 var(--side-nav) 0 var(--side-nav);
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		background-color: transparent;
-		transform: none;
-		transition: none;
-		box-shadow: none;
+		bottom: calc(-1 * var(--shadow-height));
+		background: var(--shadow-gradient);
 	}
 
-	.nav-spot {
-		width: 50rem;
-		height: 4.2rem;
-	}
-
-	ul :global(li) {
-		display: block;
-		display: none;
-	}
-
-	ul :global(li).active {
-		display: block;
+	nav:not(.visible):not(:focus-within) {
+		transform: translate(0, calc(-100% - 1rem));
 	}
 
 	ul {
 		position: relative;
+		display: none;
+		width: 100%;
+		padding: 0;
 		margin: 0;
-		padding: 0 1.5rem 0 0;
-	}
-
-	ul::after {
-		/* prevent clicks from registering if nav is closed */
-		position: absolute;
-		content: '';
-		width: 100%;
-		height: 100%;
-		left: 0;
-		top: 0;
-	}
-
-	ul.open {
-		width: 100%;
-		padding: 0 0 1em 0;
+		list-style: none;
 		background: white;
-		border-left: 1px solid #eee;
-		border-right: 1px solid #eee;
-		border-bottom: 1px solid #eee;
-		border-radius: 0 0 var(--border-r) var(--border-r);
-		align-self: start;
+		padding: 0 var(--side-nav);
+		z-index: 101;
 	}
 
-	ul.open :global(li) {
-		display: block;
-		text-align: right;
+	ul.external {
+		padding: 0.5rem var(--side-nav);
 	}
 
-	ul.open::after {
-		display: none;
-	}
-
-	ul :global(li) :global(a) {
-		font-size: var(--h5);
-		padding: 0 0.8rem;
-		border: none;
-		color: inherit;
-	}
-
-	ul.open :global(li) :global(a) {
-		padding: 1.5rem 3.7rem 1.5rem 4rem;
-		display: block;
-	}
-
-	ul.open :global(.nav-right) {
-		padding-right: 2rem;
-	}
-
-	ul.open :global(.nav-right) :global(a) {
-		padding: 1.5rem;
-		display: block;
-	}
-
-	ul.open :global(li):first-child :global(a) {
-		padding-top: 1.5rem;
-	}
-
-	.open-menu-button {
+	ul.external::before {
+		content: '';
 		position: absolute;
 		top: 0;
-		right: 0;
+		left: var(--side-nav);
+		width: calc(100% - 2 * var(--side-nav));
+		height: 1px;
+		background: red;
 	}
 
-	.open-menu-button.open {
-		display: none;
+	ul.external::after {
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: var(--shadow-height);
+		left: 0;
+		bottom: calc(-1 * var(--shadow-height));
+		background: var(--shadow-gradient);
+	}
+
+	ul :global(li) {
+		padding: 0.5rem 0;
+	}
+
+	ul :global(a) {
+		color: var(--text);
+	}
+
+	.open ul {
+		display: block;
 	}
 
 	.home {
-		position: relative;
-		top: -0.1rem;
-		-webkit-tap-highlight-color: transparent;
-		-webkit-touch-callout: none;
-		background: 0 50% no-repeat;
-		background-size: auto 100%;
+		width: 30rem;
+		height: var(--nav-h);
+		display: flex;
 		text-indent: -9999px;
+		background-position: calc(var(--side-nav) - 1rem) 50%;
+		background-repeat: no-repeat;
+		background-size: auto 70%;
 	}
 
-	ul :global(li).active :global(a) {
-		color: var(--prime);
+	button {
+		position: absolute;
+		top: calc(var(--nav-h) / 2 - 1rem);
+		right: var(--side-nav);
 	}
 
-	.modal-background {
-		position: fixed;
-		width: 100%;
-		height: 100%;
-		left: 0;
-		top: 0;
-		background-color: rgba(255, 255, 255, 0.9);
-	}
-
-	a {
-		color: inherit;
-		border-bottom: none;
-		transition: none;
-	}
-
-	ul :global(li):not(.active) :global(a):hover {
-		color: var(--flash);
-	}
-
-	.nav-center {
-		height: 100%;
-		display: flex;
-		flex: 1;
-		flex-direction: column;
-		justify-content: center;
-		align-items: flex-end;
-	}
-
-	.nav-right {
-		height: 100%;
-		margin: 0;
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-		font-family: var(--font);
-		line-height: 1;
-		list-style: none;
-	}
-
-	.nav-right :global(img) {
-		height: 2rem;
-		margin-left: 0;
-		transition: filter 0.3s linear;
-	}
-
-	.nav-right :global(img):hover {
-		filter: brightness(1.3);
-	}
-
-	.show-if-desktop {
-		display: none;
-	}
-
-	@media (min-width: 768px) {
-		ul {
-			width: 100%;
+	@media (min-width: 800px) {
+		nav {
 			display: flex;
-			flex-direction: row;
-			padding: 0;
-		}
-
-		ul.open {
-			padding: 0;
-			background: white;
-			border: none;
-			align-self: initial;
-		}
-
-		ul.open :global(li) {
-			display: inline;
-			text-align: left;
-		}
-
-		ul.open :global(li) :global(a) {
-			font-size: var(--h5);
-			padding: 0 0.8rem;
-			display: inline;
-		}
-
-		ul::after {
-			display: none;
-		}
-
-		ul :global(li) {
-			display: inline !important;
-		}
-
-		.show-if-desktop {
-			display: flex;
-		}
-
-		.hide-if-desktop {
-			display: none !important;
-		}
-
-		.nav-center {
-			flex-direction: row;
 			align-items: center;
+			justify-content: space-between;
 		}
 
-		.nav-right :global(img) {
-			margin-left: 28px;
+		ul {
+			display: flex;
+			width: auto;
+		}
+
+		button {
+			display: none;
 		}
 	}
 </style>

@@ -5,14 +5,13 @@
 	- https://feathericons.com/
 -----------------------------------------------
 -->
-
 <script>
 	export let name;
 	export let size = 20;
 </script>
 
 <svg class="icon" width={size} height={size}>
-	<use xlink:href='#{name}' />
+	<use xlink:href="#{name}" />
 </svg>
 
 <style>

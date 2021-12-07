@@ -20,14 +20,6 @@
 		open = false;
 	});
 
-	function intercept_touchstart(event) {
-		if (!open) {
-			event.preventDefault();
-			event.stopPropagation();
-			open = true;
-		}
-	}
-
 	// Prevents navbar to show/hide when clicking in docs sidebar
 	let hash_changed = false;
 	function handle_hashchange() {

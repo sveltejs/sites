@@ -146,38 +146,11 @@
 
 	ul {
 		position: relative;
-		display: none;
 		width: 100%;
 		padding: 0;
 		margin: 0;
 		list-style: none;
-		background: white;
-		padding: 1rem var(--side-nav);
 		z-index: 101;
-	}
-
-	ul.external {
-		padding: 1rem var(--side-nav) 1rem;
-	}
-
-	ul.external::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: var(--side-nav);
-		width: calc(100% - 2 * var(--side-nav));
-		height: 1px;
-		background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
-	}
-
-	ul.external::after {
-		content: '';
-		position: absolute;
-		width: 100%;
-		height: var(--shadow-height);
-		left: 0;
-		bottom: calc(-1 * var(--shadow-height));
-		background: var(--shadow-gradient);
 	}
 
 	ul :global(li) {
@@ -186,10 +159,6 @@
 
 	ul :global(a) {
 		color: var(--text);
-	}
-
-	.open ul {
-		display: block;
 	}
 
 	.home {
@@ -209,6 +178,44 @@
 		line-height: 1;
 	}
 
+	@media (max-width: 799px) {
+		ul {
+			position: relative;
+			display: none;
+			width: 100%;
+			background: white;
+			padding: 1rem var(--side-nav);
+		}
+
+		.open ul {
+			display: block;
+		}
+
+		ul.external {
+			padding: 1rem var(--side-nav) 1rem;
+		}
+
+		ul.external::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: var(--side-nav);
+			width: calc(100% - 2 * var(--side-nav));
+			height: 1px;
+			background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
+		}
+
+		ul.external::after {
+			content: '';
+			position: absolute;
+			width: 100%;
+			height: var(--shadow-height);
+			left: 0;
+			bottom: calc(-1 * var(--shadow-height));
+			background: var(--shadow-gradient);
+		}
+	}
+
 	@media (min-width: 800px) {
 		nav {
 			display: flex;
@@ -219,6 +226,16 @@
 		ul {
 			display: flex;
 			width: auto;
+		}
+
+		ul :global(li) {
+			margin: 0 0.5rem;
+		}
+
+		ul.external {
+			width: 30rem;
+			padding: 0 var(--side-nav) 0 0;
+			justify-content: end;
 		}
 
 		button {

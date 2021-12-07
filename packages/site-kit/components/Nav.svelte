@@ -1,16 +1,10 @@
 <script>
-	import { setContext } from 'svelte';
-	import { writable } from 'svelte/store';
 	import Icon from './Icon.svelte';
 
-	export let segment;
 	export let page;
 	export let logo;
 	export let home = 'Home';
 	export let home_title = 'Homepage';
-
-	const current = writable(null);
-	setContext('nav', current);
 
 	let open = false;
 	let visible = true;
@@ -36,8 +30,6 @@
 		last_scroll = scroll;
 		hash_changed = false;
 	}
-
-	$: $current = segment;
 </script>
 
 <svelte:window on:hashchange={handle_hashchange} on:scroll={handle_scroll} />

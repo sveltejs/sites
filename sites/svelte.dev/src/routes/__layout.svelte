@@ -49,11 +49,13 @@
 			<NavItem external="https://kit.svelte.dev">SvelteKit</NavItem>
 
 			<NavItem external="chat" title="Discord Chat">
-				<Icon name="message-square" />
+				<span class="small">Discord</span>
+				<span class="large"><Icon name="message-square" /></span>
 			</NavItem>
 
 			<NavItem external="https://github.com/sveltejs/svelte" title="GitHub Repo">
-				<Icon name="github" />
+				<span class="small">GitHub</span>
+				<span class="large"><Icon name="github" /></span>
 			</NavItem>
 		</svelte:fragment>
 	</Nav>
@@ -70,5 +72,23 @@
 		/* padding: var(--nav-h) var(--side-nav) 0 var(--side-nav); */
 		padding: var(--nav-h) 0 0 0;
 		overflow-x: hidden;
+	}
+
+	.small {
+		display: inline;
+	}
+
+	.large {
+		display: none;
+	}
+
+	@media (min-width: 800px) {
+		.small {
+			display: none;
+		}
+
+		.large {
+			display: inline;
+		}
 	}
 </style>

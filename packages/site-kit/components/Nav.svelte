@@ -74,7 +74,7 @@
 	</ul>
 
 	<button class="menu-toggle" class:open on:click={() => (open = !open)}>
-		<Icon name="menu" size="1em" />
+		<Icon name={open ? 'close' : 'menu'} size="1em" />
 	</button>
 
 	<!-- <ul class:open on:touchstart|capture={intercept_touchstart} on:click={() => (open = true)}>
@@ -100,6 +100,17 @@
 </nav>
 
 <style>
+	.modal-background {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background: rgba(255, 255, 255, 0.8);
+		z-index: 2;
+		backdrop-filter: grayscale(0.5) blur(2px);
+	}
+
 	nav {
 		--shadow-height: 0.5rem;
 		--shadow-gradient: linear-gradient(
@@ -141,12 +152,12 @@
 		margin: 0;
 		list-style: none;
 		background: white;
-		padding: 0 var(--side-nav);
+		padding: 1rem var(--side-nav);
 		z-index: 101;
 	}
 
 	ul.external {
-		padding: 0.5rem var(--side-nav);
+		padding: 1rem var(--side-nav) 1rem;
 	}
 
 	ul.external::before {
@@ -156,7 +167,7 @@
 		left: var(--side-nav);
 		width: calc(100% - 2 * var(--side-nav));
 		height: 1px;
-		background: red;
+		background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
 	}
 
 	ul.external::after {
@@ -195,6 +206,7 @@
 		position: absolute;
 		top: calc(var(--nav-h) / 2 - 1rem);
 		right: var(--side-nav);
+		line-height: 1;
 	}
 
 	@media (min-width: 800px) {

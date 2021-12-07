@@ -14,11 +14,17 @@
 	--sidebar-mid-w: 36rem;
 	--sidebar-large-w: 48rem;
 	--main-width: 80rem;
-	--side-nav: 3.2rem;
+	--side-nav: 2.4rem;
 	--side-page: var(--side-nav);
 
 	/* easings */
 	--out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@media screen and (min-width: 480px) {
+	:root {
+		--side-nav: 3.2rem;
+	}
 }
 
 @media screen and (min-width: 768px) {

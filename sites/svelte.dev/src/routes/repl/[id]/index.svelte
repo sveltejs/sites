@@ -18,6 +18,7 @@
 	import { mapbox_setup } from '../../../config';
 	import InputOutputToggle from '../../../components/Repl/InputOutputToggle.svelte';
 	import AppControls from './_components/AppControls/index.svelte';
+	import { API_BASE } from '../../../_env';
 
 	export let version;
 	export let id;
@@ -45,45 +46,48 @@
 
 	$: if (typeof history !== 'undefined') update_query_string(version);
 
-	function fetch_gist(id) {
+	async function fetch_gist(id) {
 		if (gist && gist.uid === id) {
 			// if the id changed because we just forked, don't refetch
 			return;
 		}
 
 		// TODO handle `relaxed` logic
-		fetch(`/repl/${id}.json`).then(r => {
-			if (r.ok) {
-				r.json().then(data => {
-					gist = data;
-					name = data.name;
+		const [a, b] = await Promise.all([
+			fetch(`${API_BASE}/docs/svelte/examples/${id}`),
+			fetch(`${API_BASE}/gists/${id}`),
+		]);
 
-					is_relaxed_gist = data.relaxed;
+		const r = a.ok ? a : b;
 
-					const components = data.files.map(file => {
-						const dot = file.name.lastIndexOf(".");
-						let name = file.name.slice(0, dot);
-						let type = file.name.slice(dot + 1);
+		if (!r.ok) {
+			console.warn('TODO: 404 Gist');
+		}
 
-						if (type === 'html') type = 'svelte'; // TODO do this on the server
-						return { name, type, source: file.source };
-					});
+		gist = await r.json();
+		name = gist.name;
 
-					components.sort((a, b) => {
-						if (a.name === 'App' && a.type === 'svelte') return -1;
-						if (b.name === 'App' && b.type === 'svelte') return 1;
+		is_relaxed_gist = gist.relaxed;
 
-						if (a.type !== b.type) return a.type === 'svelte' ? -1 : 1;
+		const components = gist.files.map(file => {
+			const dot = file.name.lastIndexOf(".");
+			let name = file.name.slice(0, dot);
+			let type = file.name.slice(dot + 1);
 
-						return a.name < b.name ? -1 : 1;
-					});
-
-					repl.set({ components });
-				});
-			} else {
-				console.warn('TODO: 404 Gist');
-			}
+			if (type === 'html') type = 'svelte'; // TODO do this on the server
+			return { name, type, source: file.source };
 		});
+
+		components.sort((a, b) => {
+			if (a.name === 'App' && a.type === 'svelte') return -1;
+			if (b.name === 'App' && b.type === 'svelte') return 1;
+
+			if (a.type !== b.type) return a.type === 'svelte' ? -1 : 1;
+
+			return a.name < b.name ? -1 : 1;
+		});
+
+		repl.set({ components });
 	}
 
 	$: if (browser) fetch_gist(id);
@@ -118,6 +122,41 @@
 
 	$: relaxed = is_relaxed_gist || ($session.user && gist && $session.user.uid === gist.owner);
 </script>
+
+<svelte:head>
+	<title>{name} • REPL • Svelte</title>
+
+	<meta name="twitter:title" content="Svelte REPL" />
+	<meta name="twitter:description" content="Cybernetically enhanced web apps" />
+	<meta name="Description" content="Interactive Svelte playground" />
+</svelte:head>
+
+<svelte:window bind:innerWidth={width} />
+
+<div class="repl-outer {zen_mode ? 'zen-mode' : ''}" class:mobile>
+	<AppControls {gist} {repl} bind:name bind:zen_mode bind:modified_count on:forked={handle_fork} />
+
+	{#if browser}
+		<div class="viewport" class:offset={checked}>
+			<Repl
+				bind:this={repl}
+				workersUrl="workers"
+				{svelteUrl}
+				{rollupUrl}
+				{relaxed}
+				fixed={mobile}
+				injectedJS={mapbox_setup}
+				on:change={handle_change}
+				on:add={handle_change}
+				on:remove={handle_change}
+			/>
+		</div>
+
+		{#if mobile}
+			<InputOutputToggle bind:checked />
+		{/if}
+	{/if}
+</div>
 
 <style>
 	.repl-outer {
@@ -173,49 +212,11 @@
 	}
 
 	@keyframes fade-in {
-		0%   { opacity: 0 }
-		100% { opacity: 1 }
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
 	}
 </style>
-
-<svelte:head>
-	<title>{name} • REPL • Svelte</title>
-
-	<meta name="twitter:title" content="Svelte REPL">
-	<meta name="twitter:description" content="Cybernetically enhanced web apps">
-	<meta name="Description" content="Interactive Svelte playground">
-</svelte:head>
-
-<svelte:window bind:innerWidth={width}/>
-
-<div class="repl-outer {zen_mode ? 'zen-mode' : ''}" class:mobile>
-	<AppControls
-		{gist}
-		{repl}
-		bind:name
-		bind:zen_mode
-		bind:modified_count
-		on:forked={handle_fork}
-	/>
-
-	{#if browser}
-		<div class="viewport" class:offset={checked}>
-			<Repl
-				bind:this={repl}
-				workersUrl="workers"
-				{svelteUrl}
-				{rollupUrl}
-				{relaxed}
-				fixed={mobile}
-				injectedJS={mapbox_setup}
-				on:change={handle_change}
-				on:add={handle_change}
-				on:remove={handle_change}
-			/>
-		</div>
-
-		{#if mobile}
-			<InputOutputToggle bind:checked/>
-		{/if}
-	{/if}
-</div>

@@ -3,10 +3,15 @@
 	import { API_BASE } from '../../../_env';
 
 	export async function load({ page }) {
-		const example_sections = await fetch(`${API_BASE}/docs/svelte/examples/${page.params.slug}`);
+		const example = await fetch(`${API_BASE}/docs/svelte/examples/${page.params.slug}`, {
+			credentials: 'omit'
+		});
 
 		return {
-			props: { example: await example_sections.json(), slug: page.params.slug },
+			props: {
+				example: await example.json(),
+				slug: page.params.slug
+			},
 			maxage: 60
 		};
 }
@@ -38,7 +43,7 @@
 		source: file.content
 	});
 
-	
+
 
 	$: mobile = width < 768; // note: same as per media query below
 	$: replOrientation = (mobile || width > 1080) ? 'columns' : 'rows';

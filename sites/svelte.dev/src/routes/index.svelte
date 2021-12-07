@@ -144,12 +144,6 @@ npm run dev
 		margin-top: calc(-10rem + var(--side-nav));
 	}
 
-	.examples {
-		background: var(--second);
-		color: white;
-		overflow: hidden;
-	}
-
 	#footer {
 		text-align: center;
 		padding: 4rem;

@@ -76,27 +76,6 @@
 	<button class="menu-toggle" class:open on:click={() => (open = !open)}>
 		<Icon name={open ? 'close' : 'menu'} size="1em" />
 	</button>
-
-	<!-- <ul class:open on:touchstart|capture={intercept_touchstart} on:click={() => (open = true)}>
-		<div class="open-menu-button hide-if-desktop" class:open>
-			<Icon name="menu" size="1em" />
-		</div>
-
-		<li class="hide-if-desktop" class:active={$current === ''}>
-			<a sveltekit:prefetch href="/">{home}</a>
-		</li>
-		<div class="nav-center">
-			<slot name="nav-center" />
-		</div>
-		{#if open}
-			<div class="nav-right hide-if-desktop">
-				<slot name="nav-right" />
-			</div>
-		{/if}
-	</ul>
-	<div class="nav-spot nav-right show-if-desktop">
-		<slot name="nav-right" />
-	</div> -->
 </nav>
 
 <style>

@@ -3,6 +3,7 @@ import * as path from 'path';
 import { imagetools } from 'vite-imagetools';
 
 const API_BASE = process.env.DOCS_PREVIEW ? 'http://localhost:3456' : 'https://api.svelte.dev';
+process.env.VITE_API_BASE = API_BASE;
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
@@ -20,9 +21,6 @@ export default {
 						manualChunks: undefined
 					}
 				}
-			},
-			define: {
-				'process.env.API_BASE': JSON.stringify(API_BASE)
 			},
 			optimizeDeps: {
 				include: [
@@ -49,7 +47,8 @@ export default {
 			plugins: [imagetools()],
 			resolve: {
 				alias: {
-					$img: path.resolve('src/images')
+					$img: path.resolve('src/images'),
+					'@sveltejs/repl': path.resolve('../../packages/repl/src/lib/index.svelte')
 				}
 			},
 			server: {

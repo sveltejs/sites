@@ -1,5 +1,5 @@
 <script context="module">
-	export function load({ page: { params, query }}) {
+	export function load({ page: { params, query } }) {
 		return {
 			props: {
 				version: query.get('version') || '3',
@@ -10,7 +10,7 @@
 </script>
 
 <script>
-	import Repl from '@sveltejs/svelte-repl';
+	import Repl from '@sveltejs/repl';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/env';
 	import { goto } from '$app/navigation';
@@ -37,9 +37,7 @@
 
 		if (version !== 'latest') params.push(`version=${version}`);
 
-		const url = params.length > 0
-			? `/repl/${id}?${params.join('&')}`
-			: `/repl/${id}`;
+		const url = params.length > 0 ? `/repl/${id}?${params.join('&')}` : `/repl/${id}`;
 
 		history.replaceState({}, 'x', url);
 	}
@@ -55,7 +53,7 @@
 		// TODO handle `relaxed` logic
 		const [a, b] = await Promise.all([
 			fetch(`${API_BASE}/docs/svelte/examples/${id}`),
-			fetch(`${API_BASE}/gists/${id}`),
+			fetch(`${API_BASE}/gists/${id}`)
 		]);
 
 		const r = a.ok ? a : b;
@@ -69,8 +67,8 @@
 
 		is_relaxed_gist = gist.relaxed;
 
-		const components = gist.files.map(file => {
-			const dot = file.name.lastIndexOf(".");
+		const components = gist.files.map((file) => {
+			const dot = file.name.lastIndexOf('.');
 			let name = file.name.slice(0, dot);
 			let type = file.name.slice(dot + 1);
 
@@ -95,8 +93,8 @@
 	onMount(() => {
 		if (version !== 'local') {
 			fetch(`https://unpkg.com/svelte@${version || '3'}/package.json`)
-				.then(r => r.json())
-				.then(pkg => {
+				.then((r) => r.json())
+				.then((pkg) => {
 					version = pkg.version;
 				});
 		}
@@ -109,12 +107,13 @@
 	}
 
 	function handle_change(event) {
-		modified_count = event.detail.components.filter(c => c.modified).length;
+		modified_count = event.detail.components.filter((c) => c.modified).length;
 	}
 
-	$: svelteUrl = browser && version === 'local' ?
-		`${location.origin}/repl/local` :
-		`https://unpkg.com/svelte@${version}`;
+	$: svelteUrl =
+		browser && version === 'local'
+			? `${location.origin}/repl/local`
+			: `https://unpkg.com/svelte@${version}`;
 
 	const rollupUrl = `https://unpkg.com/rollup@1/dist/rollup.browser.js`;
 

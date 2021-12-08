@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 
 export function get({ params: { path } }) {
-	if (process.env.NODE_ENV !== 'development' || ('/' + path).includes('/.')) {
+	if (import.meta.env.PROD || ('/' + path).includes('/.')) {
 		return { status: 403 };
 	}
 	return {

@@ -23,7 +23,7 @@
 	let justForked = false;
 
 	function wait(ms) {
-		return new Promise(f => setTimeout(f, ms));
+		return new Promise((f) => setTimeout(f, ms));
 	}
 
 	$: canSave = $session.user && gist && gist.owner === $session.user.uid;
@@ -41,7 +41,7 @@
 		const { components } = repl.toJSON();
 
 		try {
-			const r = await fetch(`repl/create.json`, {
+			const r = await fetch(`/repl/create.json`, {
 				method: 'POST',
 				credentials: 'include',
 				headers: {
@@ -49,7 +49,7 @@
 				},
 				body: JSON.stringify({
 					name,
-					files: components.map(component => ({
+					files: components.map((component) => ({
 						name: `${component.name}.${component.type}`,
 						source: component.source
 					}))
@@ -102,7 +102,7 @@
 			// ~> Any missing files are considered deleted!
 			const { components } = repl.toJSON();
 
-			const r = await fetch(`repl/${gist.uid}.json`, {
+			const r = await fetch(`/repl/${gist.uid}.json`, {
 				method: 'PATCH',
 				credentials: 'include',
 				headers: {
@@ -110,7 +110,7 @@
 				},
 				body: JSON.stringify({
 					name,
-					files: components.map(component => ({
+					files: components.map((component) => ({
 						name: `${component.name}.${component.type}`,
 						source: component.source
 					}))
@@ -151,7 +151,7 @@
 			const idx = files.findIndex(({ path }) => path === 'package.json');
 			const pkg = JSON.parse(files[idx].data);
 			const { devDependencies } = pkg;
-			imports.forEach(mod => {
+			imports.forEach((mod) => {
 				const match = /^(@[^/]+\/)?[^@/]+/.exec(mod);
 				devDependencies[match[0]] = 'latest';
 			});
@@ -159,15 +159,22 @@
 			files[idx].data = JSON.stringify(pkg, null, '  ');
 		}
 
-		files.push(...components.map(component => ({ path: `src/${component.name}.${component.type}`, data: component.source })));
+		files.push(
+			...components.map((component) => ({
+				path: `src/${component.name}.${component.type}`,
+				data: component.source
+			}))
+		);
 		files.push({
-			path: `src/main.js`, data: `import App from './App.svelte';
+			path: `src/main.js`,
+			data: `import App from './App.svelte';
 
 var app = new App({
 	target: document.body
 });
 
-export default app;` });
+export default app;`
+		});
 
 		downloadBlob(doNotZip.toBlob(files), 'svelte-app.zip');
 
@@ -178,14 +185,10 @@ export default app;` });
 <svelte:window on:keydown={handleKeydown} />
 
 <div class="app-controls">
-	<input
-		bind:value={name}
-		on:focus="{e => e.target.select()}"
-		use:enter="{e => e.target.blur()}"
-	>
+	<input bind:value={name} on:focus={(e) => e.target.select()} use:enter={(e) => e.target.blur()} />
 
 	<div style="text-align: right; margin-right:.4rem">
-		<button class="icon" on:click="{() => zen_mode = !zen_mode}" title="fullscreen editor">
+		<button class="icon" on:click={() => (zen_mode = !zen_mode)} title="fullscreen editor">
 			{#if zen_mode}
 				<Icon name="close" />
 			{:else}
@@ -197,7 +200,12 @@ export default app;` });
 			<Icon name="download" />
 		</button>
 
-		<button class="icon" disabled="{saving || !$session.user}" on:click={() => fork(false)} title="fork">
+		<button
+			class="icon"
+			disabled={saving || !$session.user}
+			on:click={() => fork(false)}
+			title="fork"
+		>
 			{#if justForked}
 				<Icon name="check" />
 			{:else}
@@ -205,7 +213,7 @@ export default app;` });
 			{/if}
 		</button>
 
-		<button class="icon" disabled="{saving || !$session.user}" on:click={save} title="save">
+		<button class="icon" disabled={saving || !$session.user} on:click={save} title="save">
 			{#if justSaved}
 				<Icon name="check" />
 			{:else}
@@ -217,7 +225,7 @@ export default app;` });
 		</button>
 
 		{#if $session.user}
-			<UserMenu/>
+			<UserMenu />
 		{:else}
 			<button class="icon" on:click|preventDefault={login}>
 				<Icon name="log-in" />
@@ -237,7 +245,7 @@ export default app;` });
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding: .6rem var(--side-nav);
+		padding: 0.6rem var(--side-nav);
 		background-color: var(--second);
 		color: white;
 		white-space: nowrap;
@@ -249,8 +257,8 @@ export default app;` });
 		top: -0.1rem;
 		display: inline-block;
 		padding: 0.2em;
-		opacity: .7;
-		transition: opacity .3s;
+		opacity: 0.7;
+		transition: opacity 0.3s;
 		font-family: var(--font);
 		font-size: 1.6rem;
 		color: white;
@@ -260,10 +268,16 @@ export default app;` });
 		margin: 0 0 0 0.2em;
 	}
 
-	.icon:hover    { opacity: 1 }
-	.icon:disabled { opacity: .3 }
+	.icon:hover {
+		opacity: 1;
+	}
+	.icon:disabled {
+		opacity: 0.3;
+	}
 
-	.icon[title^='fullscreen'] { display: none }
+	.icon[title^='fullscreen'] {
+		display: none;
+	}
 
 	input {
 		background: transparent;
@@ -274,7 +288,7 @@ export default app;` });
 		opacity: 0.7;
 		outline: none;
 		flex: 1;
-		margin: 0 0.2em 0 .4rem;
+		margin: 0 0.2em 0 0.4rem;
 		padding-top: 0.2em;
 		border-bottom: 1px solid transparent;
 	}
@@ -306,7 +320,9 @@ export default app;` });
 	}
 
 	@media (min-width: 600px) {
-		.icon[title^='fullscreen'] { display: inline }
+		.icon[title^='fullscreen'] {
+			display: inline;
+		}
 
 		button span {
 			display: inline-block;

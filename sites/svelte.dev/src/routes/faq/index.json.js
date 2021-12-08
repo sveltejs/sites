@@ -3,15 +3,14 @@ import get_faqs from './_faqs.js';
 let json;
 
 export function get() {
-	if (!json || process.env.NODE_ENV !== 'production') {
-		const faqs = get_faqs()
-			.map(faq => {
-				return {
-					fragment: faq.fragment,
-					answer: faq.answer,
-					metadata: faq.metadata
-				};
-			});
+	if (!json || !import.meta.env.PROD) {
+		const faqs = get_faqs().map(faq => {
+			return {
+				fragment: faq.fragment,
+				answer: faq.answer,
+				metadata: faq.metadata
+			};
+		});
 
 		json = JSON.stringify(faqs);
 	}

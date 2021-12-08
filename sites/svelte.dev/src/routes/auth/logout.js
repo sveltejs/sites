@@ -1,5 +1,4 @@
 import * as cookie from 'cookie';
-import { secure } from './_config.js';
 import { delete_session } from '../../utils/auth.js';
 
 export async function get(request) {
@@ -11,8 +10,8 @@ export async function get(request) {
 				maxAge: -1,
 				path: '/',
 				httpOnly: true,
-				secure
-			})	
+				secure: !request.host.startsWith('localhost:')
+			})
 		}
 	};
 }

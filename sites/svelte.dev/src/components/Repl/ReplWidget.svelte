@@ -13,54 +13,54 @@
 
 	let repl;
 	let name = 'loading...';
-	let width = browser
-		? window.innerWidth - 32
-		: 1000;
+	let width = browser ? window.innerWidth - 32 : 1000;
 
 	let checked = false;
 
 	onMount(() => {
 		if (version !== 'local') {
 			fetch(`https://unpkg.com/svelte@${version}/package.json`)
-				.then(r => r.json())
-				.then(pkg => {
+				.then((r) => r.json())
+				.then((pkg) => {
 					version = pkg.version;
 				});
 		}
 
 		if (gist) {
-			fetch(`repl/${gist}.json`).then(r => r.json()).then(data => {
-				const { description, files } = data;
+			fetch(`repl/${gist}.json`)
+				.then((r) => r.json())
+				.then((data) => {
+					const { description, files } = data;
 
-				name = description;
+					name = description;
 
-				const components = Object.keys(files)
-					.map(file => {
-						const dot = file.lastIndexOf('.');
-						if (!~dot) return;
+					const components = Object.keys(files)
+						.map((file) => {
+							const dot = file.lastIndexOf('.');
+							if (!~dot) return;
 
-						const source = files[file].content;
+							const source = files[file].content;
 
-						return {
-							name: file.slice(0, dot),
-							type: file.slice(dot + 1),
-							source
-						};
-					})
-					.filter(x => x.type === 'svelte' || x.type === 'js')
-					.sort((a, b) => {
-						if (a.name === 'App' && a.type === 'svelte') return -1;
-						if (b.name === 'App' && b.type === 'svelte') return 1;
+							return {
+								name: file.slice(0, dot),
+								type: file.slice(dot + 1),
+								source
+							};
+						})
+						.filter((x) => x.type === 'svelte' || x.type === 'js')
+						.sort((a, b) => {
+							if (a.name === 'App' && a.type === 'svelte') return -1;
+							if (b.name === 'App' && b.type === 'svelte') return 1;
 
-						if (a.type !== b.type) return a.type === 'svelte' ? -1 : 1;
+							if (a.type !== b.type) return a.type === 'svelte' ? -1 : 1;
 
-						return a.name < b.name ? -1 : 1;
-					});
+							return a.name < b.name ? -1 : 1;
+						});
 
-				repl.set({ components });
-			});
+					repl.set({ components });
+				});
 		} else if (example) {
-			fetch(`${API_BASE}/docs/svelte/examples/${example}`).then(async response => {
+			fetch(`${API_BASE}/docs/svelte/examples/${example}`).then(async (response) => {
 				if (response.ok) {
 					const data = await response.json();
 
@@ -74,9 +74,10 @@
 
 	$: if (embedded) document.title = `${name} • Svelte REPL`;
 
-	$: svelteUrl = browser && version === 'local' ?
-		`${location.origin}/repl/local` :
-		`https://unpkg.com/svelte@${version}`;
+	$: svelteUrl =
+		browser && version === 'local'
+			? `${location.origin}/repl/local`
+			: `https://unpkg.com/svelte@${version}`;
 
 	const rollupUrl = `https://unpkg.com/rollup@1/dist/rollup.browser.js`;
 
@@ -86,15 +87,7 @@
 <div class="repl-outer" bind:clientWidth={width} class:mobile>
 	<div class="viewport" class:offset={checked}>
 		{#if browser}
-			<Repl
-				bind:this={repl}
-				workersUrl="workers"
-				fixed={mobile}
-				{svelteUrl}
-				{rollupUrl}
-				embedded
-				relaxed
-			/>
+			<Repl bind:this={repl} fixed={mobile} {svelteUrl} {rollupUrl} embedded relaxed />
 		{/if}
 	</div>
 

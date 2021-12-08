@@ -8,7 +8,7 @@
 			return {
 				status: 301,
 				redirect: '/tutorial/introduction-basics'
-			}
+			};
 		}
 
 		return {
@@ -20,7 +20,7 @@
 
 <script>
 	// import '@sveltejs/site-kit/code.css';
-	import { browser } from '$app/env'
+	import { browser } from '$app/env';
 	import Repl from '@sveltejs/svelte-repl';
 	import { getContext } from 'svelte';
 
@@ -46,8 +46,8 @@
 	let width = browser ? window.innerWidth : 1000;
 	let offset = 0;
 
-	sections.forEach(section => {
-		section.tutorials.forEach(chapter => {
+	sections.forEach((section) => {
+		section.tutorials.forEach((chapter) => {
 			const obj = {
 				slug: chapter.slug,
 				section,
@@ -57,27 +57,28 @@
 
 			lookup.set(chapter.slug, obj);
 
-			if (browser) { // pending https://github.com/sveltejs/svelte/issues/2135
+			if (browser) {
+				// pending https://github.com/sveltejs/svelte/issues/2135
 				if (prev) prev.next = obj;
 				prev = obj;
 			}
 		});
 	});
 
-
 	// TODO is there a non-hacky way to trigger scroll when chapter changes?
 	$: if (scrollable) tutorial, scrollable.scrollTo(0, 0);
 
 	// TODO: this will need to be changed to the master branch, and probably should be dynamic instead of included
 	//   here statically
-	const tutorial_repo_link = 'https://github.com/sveltejs/svelte/tree/master/documentation/tutorial';
+	const tutorial_repo_link =
+		'https://github.com/sveltejs/svelte/tree/master/documentation/tutorial';
 
 	$: selected = lookup.get(slug);
-	$: improve_link = ''
-	
+	$: improve_link = '';
+
 	//`${tutorial_repo_link}/${selected.chapter.section_dir}/${selected.chapter.chapter_dir}`;
 
-	const clone = file => ({
+	const clone = (file) => ({
 		name: file.name.replace(/.\w+$/, ''),
 		type: file.type,
 		source: file.content
@@ -109,7 +110,8 @@
 	function handle_change(event) {
 		completed = event.detail.components.every((file, i) => {
 			const expected = tutorial.complete[i] && clone(tutorial.complete[i]);
-			return expected && (
+			return (
+				expected &&
 				file.name === expected.name &&
 				file.type === expected.type &&
 				file.source.trim().replace(/\s+$/gm, '') === expected.source.trim().replace(/\s+$/gm, '')
@@ -162,7 +164,6 @@
 			{#if browser}
 				<Repl
 					bind:this={repl}
-					workersUrl="/workers"
 					{svelteUrl}
 					{rollupUrl}
 					orientation={mobile ? 'columns' : 'rows'}

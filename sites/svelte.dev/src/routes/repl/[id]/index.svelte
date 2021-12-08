@@ -139,9 +139,7 @@
 		<div class="viewport" class:offset={checked}>
 			<Repl
 				bind:this={repl}
-				workersUrl="workers"
 				{svelteUrl}
-				{rollupUrl}
 				{relaxed}
 				fixed={mobile}
 				injectedJS={mapbox_setup}

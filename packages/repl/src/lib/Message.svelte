@@ -7,7 +7,7 @@
 	export let kind;
 	export let details = null;
 	export let filename = null;
-	export let truncate;
+	export let truncate = false;
 
 	function message(details) {
 		let str = details.message || '[missing message]';
@@ -21,8 +21,21 @@
 		if (details.start) loc.push(details.start.line, details.start.column);
 
 		return str + (loc.length ? ` (${loc.join(':')})` : ``);
-	};
+	}
 </script>
+
+<div
+	in:slide={{ delay: 150, duration: 100 }}
+	out:slide={{ duration: 100 }}
+	class="message {kind}"
+	class:truncate
+>
+	{#if details}
+		<p class:navigable={details.filename} on:click={() => navigate(details)}>{message(details)}</p>
+	{:else}
+		<slot />
+	{/if}
+</div>
 
 <style>
 	.message {
@@ -78,14 +91,3 @@
 		background-color: var(--second);
 	}
 </style>
-
-<div in:slide={{delay: 150, duration: 100}} out:slide={{duration: 100}} class="message {kind}" class:truncate>
-	{#if details}
-		<p
-			class:navigable={details.filename}
-			on:click="{() => navigate(details)}"
-		>{message(details)}</p>
-	{:else}
-		<slot></slot>
-	{/if}
-</div>

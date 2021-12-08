@@ -5,11 +5,13 @@
 	import { Icon, Icons, Nav, NavItem } from '@sveltejs/site-kit';
 	import PreloadingIndicator from '../components/PreloadingIndicator.svelte';
 
-	export let segment;
-
 	setContext('app', {
 		login: () => {
-			const login_window = window.open(`${window.location.origin}/auth/login`, 'login', 'width=600,height=400');
+			const login_window = window.open(
+				`${window.location.origin}/auth/login`,
+				'login',
+				'width=600,height=400'
+			);
 
 			window.addEventListener('message', function handler(event) {
 				login_window.close();
@@ -35,7 +37,7 @@
 {/if}
 
 {#if $page.path !== '/repl/embed'}
-	<Nav {segment} {page} logo="svelte-logo-horizontal.svg">
+	<Nav {page} logo="svelte-logo-horizontal.svg">
 		<svelte:fragment slot="nav-center">
 			<NavItem segment="tutorial">Tutorial</NavItem>
 			<NavItem segment="docs">Docs</NavItem>

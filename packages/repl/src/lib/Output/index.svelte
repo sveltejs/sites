@@ -100,11 +100,11 @@
 <!-- js output -->
 <div class="tab-content" class:visible={selected_type !== 'md' && view === 'js'}>
 	{#if embedded}
-		<CodeMirror bind:this={js_editor} mode="js" errorLoc={sourceErrorLoc} readonly />
+		<CodeMirror bind:this={js_editor} errorLoc={sourceErrorLoc} readonly />
 	{:else}
 		<PaneWithPanel pos={67} panel="Compiler options">
 			<div slot="main">
-				<CodeMirror bind:this={js_editor} mode="js" errorLoc={sourceErrorLoc} readonly />
+				<CodeMirror bind:this={js_editor} errorLoc={sourceErrorLoc} readonly />
 			</div>
 
 			<div slot="panel-body">
@@ -116,7 +116,7 @@
 
 <!-- css output -->
 <div class="tab-content" class:visible={selected_type !== 'md' && view === 'css'}>
-	<CodeMirror bind:this={css_editor} mode="css" errorLoc={sourceErrorLoc} readonly />
+	<CodeMirror bind:this={css_editor} errorLoc={sourceErrorLoc} readonly />
 </div>
 
 <!-- markdown output -->

@@ -14,7 +14,7 @@
 			},
 			maxage: 60
 		};
-}
+	}
 </script>
 
 <script>
@@ -35,23 +35,18 @@
 	let offset = 1;
 	let repl;
 
-	const {sections} = getContext('examples');
+	const { sections } = getContext('examples');
 
-	const clone = file => ({
+	const clone = (file) => ({
 		name: file.name.replace(/.\w+$/, ''),
 		type: file.type,
 		source: file.content
 	});
 
-
-
 	$: mobile = width < 768; // note: same as per media query below
-	$: replOrientation = (mobile || width > 1080) ? 'columns' : 'rows';
+	$: replOrientation = mobile || width > 1080 ? 'columns' : 'rows';
 
-
-	$: repl && repl.set({components: example.files.map(clone)});
-
-
+	$: repl && repl.set({ components: example.files.map(clone) });
 </script>
 
 <svelte:head>
@@ -69,7 +64,6 @@
 		<div class="repl-container" class:loading={$navigating}>
 			<Repl
 				bind:this={repl}
-				workersUrl="/workers"
 				{svelteUrl}
 				{rollupUrl}
 				orientation={replOrientation}

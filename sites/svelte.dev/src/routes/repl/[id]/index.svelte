@@ -18,16 +18,20 @@
 	import { mapbox_setup } from '../../../config';
 	import InputOutputToggle from '../../../components/Repl/InputOutputToggle.svelte';
 	import AppControls from './_components/AppControls/index.svelte';
-	import { API_BASE } from '../../../_env';
 
 	export let version;
 	export let id;
 
 	let repl;
-	let gist;
+	let gist = {
+		id: null,
+		name: null,
+		owner: null,
+		relaxed: false,
+		components: []
+	};
 	let name = 'Loading...';
 	let zen_mode = false;
-	let is_relaxed_gist = false;
 	let width = browser ? window.innerWidth : 1000;
 	let checked = false;
 	let modified_count = 0;
@@ -45,47 +49,25 @@
 	$: if (typeof history !== 'undefined') update_query_string(version);
 
 	async function fetch_gist(id) {
-		if (gist && gist.uid === id) {
+		if (gist.id === id) {
 			// if the id changed because we just forked, don't refetch
 			return;
 		}
 
-		// TODO handle `relaxed` logic
-		const [a, b] = await Promise.all([
-			fetch(`${API_BASE}/docs/svelte/examples/${id}`),
-			fetch(`${API_BASE}/gists/${id}`)
-		]);
+		const res = await fetch(`/repl/${id}.json`);
 
-		const r = a.ok ? a : b;
-
-		if (!r.ok) {
-			console.warn('TODO: 404 Gist');
+		if (!res.ok) {
+			console.warn('TODO: show error');
+			return;
 		}
 
-		gist = await r.json();
+		gist = await res.json();
+
 		name = gist.name;
 
-		is_relaxed_gist = gist.relaxed;
-
-		const components = gist.files.map((file) => {
-			const dot = file.name.lastIndexOf('.');
-			let name = file.name.slice(0, dot);
-			let type = file.name.slice(dot + 1);
-
-			if (type === 'html') type = 'svelte'; // TODO do this on the server
-			return { name, type, source: file.source };
+		repl.set({
+			components: gist.components
 		});
-
-		components.sort((a, b) => {
-			if (a.name === 'App' && a.type === 'svelte') return -1;
-			if (b.name === 'App' && b.type === 'svelte') return 1;
-
-			if (a.type !== b.type) return a.type === 'svelte' ? -1 : 1;
-
-			return a.name < b.name ? -1 : 1;
-		});
-
-		repl.set({ components });
 	}
 
 	$: if (browser) fetch_gist(id);
@@ -115,11 +97,9 @@
 			? `${location.origin}/repl/local`
 			: `https://unpkg.com/svelte@${version}`;
 
-	const rollupUrl = `https://unpkg.com/rollup@1/dist/rollup.browser.js`;
-
 	$: mobile = width < 540;
 
-	$: relaxed = is_relaxed_gist || ($session.user && gist && $session.user.uid === gist.owner);
+	$: relaxed = gist.relaxed || ($session.user && $session.user.uid === gist.owner);
 </script>
 
 <svelte:head>

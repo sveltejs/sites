@@ -32,7 +32,7 @@ export async function get({ host, query }) {
 		// Create or update user in database, and create a session
 
 		const user = {
-			id: profile.id,
+			id: String(profile.id), // stringifying makes life easier when we use it as a URL parameter
 			name: profile.name,
 			username: profile.login,
 			avatar: profile.avatar_url

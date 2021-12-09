@@ -26,7 +26,7 @@
 		return new Promise((f) => setTimeout(f, ms));
 	}
 
-	$: canSave = $session.user && gist && gist.owner === $session.user.uid;
+	$: canSave = $session.user && gist && gist.owner === $session.user.id;
 
 	function handleKeydown(event) {
 		if (event.key === 's' && (isMac ? event.metaKey : event.ctrlKey)) {
@@ -103,7 +103,7 @@
 			const { components } = repl.toJSON();
 
 			const r = await fetch(`/repl/${gist.uid}.json`, {
-				method: 'PATCH',
+				method: 'PUT',
 				credentials: 'include',
 				headers: {
 					'Content-Type': 'application/json'
@@ -121,8 +121,6 @@
 				const { error } = await r.json();
 				throw new Error(`Received an HTTP ${r.status} response: ${error}`);
 			}
-
-			await r.json();
 
 			modified_count = 0;
 			repl.markSaved();

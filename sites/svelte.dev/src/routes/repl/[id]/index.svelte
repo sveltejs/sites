@@ -99,7 +99,7 @@
 
 	$: mobile = width < 540;
 
-	$: relaxed = gist.relaxed || ($session.user && $session.user.uid === gist.owner);
+	$: relaxed = gist.relaxed || ($session.user && $session.user.id === gist.owner);
 </script>
 
 <svelte:head>

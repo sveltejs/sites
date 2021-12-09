@@ -2,7 +2,7 @@ import adapter from '@sveltejs/adapter-node';
 import * as path from 'path';
 import { imagetools } from 'vite-imagetools';
 
-const API_BASE = process.env.DOCS_PREVIEW ? 'http://localhost:3456' : 'https://api.svelte.dev';
+const API_BASE = process.env.DOCS_PREVIEW ? 'http://localhost:8787' : 'https://api.svelte.dev';
 process.env.VITE_API_BASE = API_BASE;
 
 /** @type {import('@sveltejs/kit').Config} */

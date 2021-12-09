@@ -4,28 +4,18 @@ dotenv.config();
 
 import * as cookie from 'cookie';
 import { get_user, sanitize_user } from './utils/auth';
-import { query } from './utils/db';
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ request, resolve }) {
-	if (process.env['PGHOST']) {
-		// this is a convenient time to clear out expired sessions
-		query('delete from sessions where expiry < now()');
+	request.locals.cookies = cookie.parse(request.headers.cookie || '');
+	request.locals.user = await get_user(request.locals.cookies.sid);
 
-		request.locals.cookies = cookie.parse(request.headers.cookie || '');
-		request.locals.user = await get_user(request.locals.cookies.sid);
-	}
-
-	const response = await resolve(request);
-
-	return response;
+	return resolve(request);
 }
 
 /** @type {import('@sveltejs/kit').GetSession} */
 export function getSession(request) {
-	return request.locals.user
-		? {
-			user: sanitize_user(request.locals.user)
-		}
-		: {};
+	return {
+		user: request.locals.user
+	};
 }

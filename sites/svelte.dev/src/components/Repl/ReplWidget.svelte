@@ -1,5 +1,5 @@
 <script>
-	import Repl from '@sveltejs/svelte-repl';
+	import Repl from '@sveltejs/repl';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/env';
 	import { process_example } from '../../utils/examples';

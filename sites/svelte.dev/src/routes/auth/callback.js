@@ -2,13 +2,14 @@ import devalue from 'devalue';
 import * as cookie from 'cookie';
 import * as httpie from 'httpie';
 import { parse, stringify } from 'querystring';
-import { sanitize_user, create_user, create_session } from '../../utils/auth';
+import { create_session } from '../../utils/auth';
+import { API_BASE } from '../../_env';
 import { oauth, client_id, client_secret } from './_config.js';
 
 export async function get({ host, query }) {
 	try {
 		// Trade "code" for "access_token"
-		const r1 = await httpie.post(
+		const r1 = await fetch(
 			`${oauth}/access_token?` +
 				stringify({
 					code: query.get('code'),
@@ -16,23 +17,33 @@ export async function get({ host, query }) {
 					client_secret
 				})
 		);
+		const access_token = new URLSearchParams(await r1.text()).get('access_token');
 
 		// Now fetch User details
-		const { access_token } = parse(r1.data);
-		const r2 = await httpie.get('https://api.github.com/user', {
+		const r2 = await fetch('https://api.github.com/user', {
 			headers: {
 				'User-Agent': 'svelte.dev',
 				Authorization: `token ${access_token}`
 			}
 		});
 
-		const user = await create_user(r2.data, access_token);
-		const session = await create_session(user);
+		const profile = await r2.json();
+
+		// Create or update user in database, and create a session
+
+		const user = {
+			id: profile.id,
+			name: profile.name,
+			username: profile.login,
+			avatar: profile.avatar_url
+		};
+
+		const { sessionid, expires } = await create_session(user, access_token);
 
 		return {
 			headers: {
-				'Set-Cookie': cookie.serialize('sid', session.uid, {
-					maxAge: 31536000,
+				'Set-Cookie': cookie.serialize('sid', sessionid, {
+					expires: new Date(expires),
 					path: '/',
 					httpOnly: true,
 					secure: !host.startsWith('localhost:')
@@ -42,7 +53,7 @@ export async function get({ host, query }) {
 			body: `
 			<script>
 				window.opener.postMessage({
-					user: ${devalue(sanitize_user(user))}
+					user: ${devalue(user)}
 				}, window.location.origin);
 			</script>
 			`

@@ -32,7 +32,6 @@
 		"@sveltejs/adapter-node": "next",
 		"@sveltejs/kit": "next",
 		"@sveltejs/site-kit": "workspace:*",
-		"@sveltejs/svelte-repl": "^0.4.1",
 		"degit": "^2.1.4",
 		"dotenv": "^10.0.0",
 		"jimp": "^0.8.0",

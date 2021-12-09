@@ -21,7 +21,7 @@
 <script>
 	// import '@sveltejs/site-kit/code.css';
 	import { browser } from '$app/env';
-	import Repl from '@sveltejs/svelte-repl';
+	import Repl from '@sveltejs/repl';
 	import { getContext } from 'svelte';
 
 	import ScreenToggle from '../../../components/ScreenToggle.svelte';

@@ -20,7 +20,7 @@
 <script>
 	import { getContext } from 'svelte';
 	import { navigating } from '$app/stores';
-	import Repl from '@sveltejs/svelte-repl';
+	import Repl from '@sveltejs/repl';
 	import ScreenToggle from '../../../components/ScreenToggle.svelte';
 	import {
 		mapbox_setup, // see site/content/examples/15-context/00-context-api

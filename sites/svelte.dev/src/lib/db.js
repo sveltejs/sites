@@ -10,8 +10,30 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { fetch });
 /** @typedef {{ uid: number; name: string; owner: UserID; files: Array<{ name: string, type: string, source: string }> }} Gist */
 
 const session_cache = flru(1000);
+const PAGE_SIZE = 100;
 
 export const gists = {
+	list: async (user, offset) => {
+		const { data, error } = await supabase
+			.from('gist')
+			.select('id,name,created_at,updated_at')
+			.eq('userid', user.userid)
+			.order('updated_at', { ascending: false })
+			.range(offset, offset + PAGE_SIZE + 1);
+
+		if (error) throw new Error(error.message);
+
+		// normalize IDs
+		data.forEach(gist => {
+			gist.id = gist.id.replace(/-/g, '');
+		});
+
+		return {
+			gists: data.slice(0, PAGE_SIZE),
+			next: data.length > PAGE_SIZE ? offset + PAGE_SIZE : null
+		};
+	},
+
 	/**
 	 * @param {User} user
 	 * @param {Pick<Gist, 'name'|'files'>} gist

@@ -1,10 +1,7 @@
 import devalue from 'devalue';
 import * as cookie from 'cookie';
-import * as httpie from 'httpie';
-import { parse, stringify } from 'querystring';
+import { stringify } from 'querystring';
 import { session } from '$lib/db';
-import { create_session } from '../../utils/auth';
-import { API_BASE } from '../../_env';
 import { oauth, client_id, client_secret } from './_config.js';
 
 export async function get({ host, query }) {

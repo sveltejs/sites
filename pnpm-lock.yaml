@@ -82,7 +82,6 @@ importers:
       do-not-zip: ^1.0.0
       dotenv: ^10.0.0
       flru: ^1.0.2
-      httpie: ^1.1.2
       jimp: ^0.8.0
       jsonwebtoken: ^8.5.1
       marked: ^4.0.6
@@ -102,7 +101,6 @@ importers:
       devalue: 2.0.1
       do-not-zip: 1.0.0
       flru: 1.0.2
-      httpie: 1.1.2
       jsonwebtoken: 8.5.1
       marked: 4.0.6
       pg: 8.7.1
@@ -2238,11 +2236,6 @@ packages:
   /hosted-git-info/2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
     dev: true
-
-  /httpie/1.1.2:
-    resolution: {integrity: sha512-VQ82oXG95oY1fQw/XecHuvcFBA+lZQ9Vwj1RfLcO8a7HpDd4cc2ukwpJt+TUlFaLUAzZErylxWu6wclJ1rUhUQ==}
-    engines: {node: '>=8'}
-    dev: false
 
   /human-id/1.0.2:
     resolution: {integrity: sha512-UNopramDEhHJD+VR+ehk8rOslwSfByxPIZyJRfV739NDhN5LF1fa1MqnzKm2lGTQRjNrjK19Q5fhkgIfjlVUKw==}

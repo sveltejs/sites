@@ -1,7 +1,7 @@
 <script context="module">
-	export async function load({ fetch, page, session: { user }}) {
-		let apps = [];
-		let offset = null;
+	export async function load({ fetch, page, session: { user } }) {
+		let gists = [];
+		let next = null;
 
 		if (user) {
 			let url = 'apps.json';
@@ -13,23 +13,24 @@
 			});
 			if (!r.ok) return { status: r.status, body: await r.text() };
 
-			({ apps, offset } = await r.json());
+			({ gists, next } = await r.json());
 		}
 
-		return { props: { user, apps, offset }};
+		return { props: { user, gists, next } };
 	}
 </script>
 
 <script>
 	import { getContext } from 'svelte';
+	import { ago } from '$lib/time';
 
 	export let user;
-	export let apps;
-	export let offset;
+	export let gists;
+	export let next;
 
 	const { login, logout } = getContext('app');
 
-	const formatter = new Intl.DateTimeFormat(undefined, {
+	const formatter = new Intl.DateTimeFormat('en-GB', {
 		year: 'numeric',
 		month: 'short',
 		day: 'numeric',
@@ -37,7 +38,7 @@
 		minute: '2-digit'
 	});
 
-	const format = str => formatter.format(new Date(str));
+	const format = (str) => ago(new Date(str));
 </script>
 
 <svelte:head>
@@ -50,7 +51,7 @@
 			<h1>Your apps</h1>
 
 			<div class="user">
-				<img class="avatar" alt="{user.name || user.username} avatar" src="{user.avatar}">
+				<img class="avatar" alt="{user.name || user.username} avatar" src={user.avatar} />
 				<span>
 					{user.name || user.username}
 					(<a on:click|preventDefault={logout} href="auth/logout">log out</a>)
@@ -59,21 +60,23 @@
 		</header>
 
 		<ul>
-			{#each apps as app}
+			{#each gists as gist}
 				<li>
-					<a href="repl/{app.uid}">
-						<h2>{app.name}</h2>
-						<span>updated {format(app.updated_at)}</span>
+					<a href="repl/{gist.id}">
+						<h2>{gist.name}</h2>
+						<span>updated {format(gist.updated_at || gist.created_at)}</span>
 					</a>
 				</li>
 			{/each}
 		</ul>
 
-		{#if offset !== null}
-			<div><a href="apps?offset={offset}">Next page...</a></div>
+		{#if next !== null}
+			<div><a href="apps?offset={next}">Next page...</a></div>
 		{/if}
 	{:else}
-		<p>Please <a on:click|preventDefault={login} href="auth/login">log in</a> to see your saved apps.</p>
+		<p>
+			Please <a on:click|preventDefault={login} href="auth/login">log in</a> to see your saved apps.
+		</p>
 	{/if}
 </div>
 
@@ -107,7 +110,7 @@
 		top: 0.1rem;
 		width: 2.4rem;
 		height: 2.4rem;
-		border: 1px solid rgba(0,0,0,0.3);
+		border: 1px solid rgba(0, 0, 0, 0.3);
 		border-radius: 0.2rem;
 	}
 

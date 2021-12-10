@@ -7,7 +7,7 @@
 		if (!tutorial.ok) {
 			return {
 				status: 301,
-				redirect: '/tutorial/introduction-basics'
+				redirect: '/tutorial/basics'
 			};
 		}
 

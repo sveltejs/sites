@@ -1,7 +1,6 @@
 <script>
 	import Example from './Example.svelte';
 	import Section from './Section.svelte';
-	import { fade } from 'svelte/transition';
 
 	const examples = [
 		{
@@ -12,18 +11,21 @@
 		{
 			id: 'nested-components',
 			title: 'Scoped CSS',
-			description: 'CSS is component-scoped by default — no more style collisions or specificity wars. Or you can <a href="/blog/svelte-css-in-js">use your favourite CSS-in-JS library</a >.'
+			description:
+				'CSS is component-scoped by default — no more style collisions or specificity wars. Or you can <a href="/blog/svelte-css-in-js">use your favourite CSS-in-JS library</a >.'
 		},
 		{
 			id: 'reactive-assignments',
 			title: 'Reactivity',
-			description: 'Trigger efficient, granular updates by assigning to local variables. The compiler does the rest.'
+			description:
+				'Trigger efficient, granular updates by assigning to local variables. The compiler does the rest.'
 		},
 		{
 			id: 'svg-transitions',
 			title: 'Transitions',
-			description: 'Build beautiful UIs with a powerful, performant transition engine built right into the framework.'
-		},
+			description:
+				'Build beautiful UIs with a powerful, performant transition engine built right into the framework.'
+		}
 	];
 
 	let selected = examples[0];

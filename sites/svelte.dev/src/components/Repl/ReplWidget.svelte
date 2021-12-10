@@ -15,9 +15,11 @@
 	let name = 'loading...';
 	let width = browser ? window.innerWidth - 32 : 1000;
 
+	let mounted = false;
+
 	let checked = false;
 
-	onMount(() => {
+	function load(gist, example) {
 		if (version !== 'local') {
 			fetch(`https://unpkg.com/svelte@${version}/package.json`)
 				.then((r) => r.json())
@@ -63,14 +65,21 @@
 			fetch(`${API_BASE}/docs/svelte/examples/${example}`).then(async (response) => {
 				if (response.ok) {
 					const data = await response.json();
+					const components = process_example(data.files);
 
 					repl.set({
-						components: process_example(data.files)
+						components
 					});
 				}
 			});
 		}
+	}
+
+	onMount(() => {
+		mounted = true;
 	});
+
+	$: if (mounted) load(gist, example);
 
 	$: if (embedded) document.title = `${name} • Svelte REPL`;
 

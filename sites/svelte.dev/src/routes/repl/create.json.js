@@ -7,6 +7,9 @@ export async function post({ locals, body }) {
 	try {
 		const gist = await gists.create(user, body);
 
+		// normalize id
+		gist.id = gist.id.replace(/-/g, '');
+
 		return {
 			status: 201,
 			body: gist

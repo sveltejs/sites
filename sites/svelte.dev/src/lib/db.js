@@ -1,5 +1,9 @@
 import flru from 'flru';
-import { API_BASE } from '../_env';
+import { createClient } from '@supabase/supabase-js';
+
+const SUPABASE_URL = process.env['SUPABASE_URL'];
+const SUPABASE_KEY = process.env['SUPABASE_KEY'];
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { fetch });
 
 /** @typedef {number} UserID */
 /** @typedef {{ id: UserID; name: string; username: string; avatar: string }} User */
@@ -7,40 +11,39 @@ import { API_BASE } from '../_env';
 
 const session_cache = flru(1000);
 
-async function api(method, endpoint, body) {
-	const res = await fetch(`${API_BASE}/${endpoint}`, {
-		method,
-		headers: {
-			authorization: `Basic ${process.env['SECRET']}`,
-			'content-type': 'application/json'
-		},
-		body: body && JSON.stringify(body)
-	});
-
-	if (res.ok) {
-		return res.status === 200 || res.status === 201 ? await res.json() : null;
-	}
-
-	const { message } = await res.json();
-	const error = new Error(message);
-	error.statusCode = res.status;
-
-	return error;
-}
-
 export const gists = {
 	/**
 	 * @param {User} user
 	 * @param {Pick<Gist, 'name'|'files'>} gist
 	 * @returns {Gist}
 	 */
-	create: (user, gist) => api('POST', `gists?userid=${user.id}`, gist),
+	create: async (user, gist) => {
+		const { data, error } = await supabase.rpc('gist_create', {
+			name: gist.name,
+			files: gist.files,
+			userid: user.userid
+		});
+
+		if (error) {
+			throw new Error(error.message);
+		}
+
+		return data;
+	},
 
 	/**
-	 * @param {string} gistid
+	 * @param {string} id
 	 * @returns {Gist}
 	 */
-	read: gistid => api('GET', `gists/${gistid}`),
+	read: async id => {
+		const { data, error } = await supabase
+			.from('gist')
+			.select('id,name,files,userid')
+			.eq('id', id);
+
+		if (error) throw new Error(error.message);
+		return data[0];
+	},
 
 	/**
 	 * @param {User} user
@@ -48,14 +51,38 @@ export const gists = {
 	 * @param {Pick<Gist, 'name'|'files'>} gist
 	 * @returns {Gist}
 	 */
-	update: (user, gistid, gist) => api('PUT', `gists/${gistid}?userid=${user.id}`, gist),
+	update: async (user, gistid, gist) => {
+		const { data, error } = await supabase.rpc('gist_update', {
+			gist_id: gistid,
+			gist_name: gist.name,
+			gist_files: gist.files,
+			gist_userid: user.userid
+		});
+
+		if (error) {
+			throw new Error(error.message);
+		}
+
+		return data;
+	},
 
 	/**
 	 * @param {User} user
 	 * @param {Gist} gist
 	 * @returns {void}
 	 */
-	destroy: (user, gist) => api('DELETE', `gists/${gist.uid}?userid=${user.id}`)
+	destroy: async (user, gist) => {
+		const { error } = await supabase.rpc('gist_destroy', {
+			gist_id,
+			gist_userid
+		});
+
+		if (error) {
+			throw new Error(error.message);
+		}
+
+		session_cache.set(sessionid, null);
+	}
 };
 
 export const session = {
@@ -64,13 +91,24 @@ export const session = {
 	 * @param {string} access_token
 	 */
 	create: async (user, access_token) => {
-		const session = await api('POST', 'session', {
-			...user,
-			token: access_token
+		const { data, error } = await supabase.rpc('login', {
+			user_id: user.id,
+			user_name: user.name,
+			user_username: user.username,
+			user_avatar: user.avatar,
+			user_token: access_token
 		});
 
-		session_cache.set(session.sessionid, user);
-		return session;
+		if (error) {
+			throw new Error(error.message);
+		}
+
+		session_cache.set(data.sessionid, user);
+
+		return {
+			sessionid: data.sessionid,
+			expires: new Date(data.expires)
+		};
 	},
 
 	/**
@@ -80,11 +118,18 @@ export const session = {
 	read: async sessionid => {
 		if (!sessionid) return null;
 
-		if (session_cache.get(sessionid)) {
+		if (!session_cache.get(sessionid)) {
 			session_cache.set(
 				sessionid,
-				api('GET', `session/${sessionid}`)
-					.then(({ user }) => user)
+				supabase
+					.rpc('get_user', { sessionid })
+					.then(({ data, error }) => {
+						if (error) {
+							throw new Error(error.message);
+						}
+
+						return data;
+					})
 					.catch(() => {
 						session_cache.set(sessionid, null);
 					})
@@ -96,7 +141,12 @@ export const session = {
 
 	/** @param {string} sessionid */
 	destroy: async sessionid => {
-		await api('DELETE', `session/${sessionid}`);
+		const { error } = await supabase.rpc('logout', { sessionid });
+
+		if (error) {
+			throw new Error(error.message);
+		}
+
 		session_cache.set(sessionid, null);
 	}
 };

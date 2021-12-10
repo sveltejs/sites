@@ -1,8 +1,8 @@
 import * as cookie from 'cookie';
-import { delete_session } from '../../utils/auth.js';
+import { session } from '$lib/db';
 
 export async function get(request) {
-	await delete_session(request.locals.cookies.sid);
+	await session.destroy(request.locals.cookies.sid);
 
 	return {
 		headers: {

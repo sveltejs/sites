@@ -4,10 +4,9 @@
 	"description": "Docs and examples for Svelte",
 	"type": "module",
 	"scripts": {
-		"dev": "node scripts/update.js && npm run copy-workers && svelte-kit dev",
-		"copy-workers": "node scripts/copy-workers.js",
+		"dev": "node scripts/update.js && svelte-kit dev",
 		"migrate": "node-pg-migrate -r dotenv/config",
-		"build": "node scripts/update.js && npm run copy-workers && svelte-kit build",
+		"build": "node scripts/update.js && svelte-kit build",
 		"update": "node scripts/update.js --force=true",
 		"preview": "svelte-kit preview",
 		"start": "node build",
@@ -15,6 +14,7 @@
 		"deploy": "make deploy"
 	},
 	"dependencies": {
+		"@supabase/supabase-js": "^1.28.5",
 		"@sveltejs/repl": "workspace:*",
 		"cookie": "^0.4.0",
 		"devalue": "^2.0.0",

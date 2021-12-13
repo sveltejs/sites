@@ -129,6 +129,7 @@
 		width: 1.4em;
 		height: 1em;
 		left: -1.3em;
+		bottom: 0.3rem;
 		opacity: 0;
 		transition: opacity 0.2s;
 	}

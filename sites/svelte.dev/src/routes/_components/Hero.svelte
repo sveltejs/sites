@@ -21,7 +21,7 @@
 
 	h3 {
 		position: absolute;
-		font-size: min(4vw, max(2vw, var(--h4)));
+		font-size: min(4vw, var(--h4));
 		max-width: 10em;
 		text-transform: uppercase;
 		font-weight: 700;
@@ -42,14 +42,27 @@
 		.logotype {
 			position: absolute;
 			display: block;
-			width: 30vw;
-			top: 30%;
+			width: min(30vw, 36rem);
+			bottom: 58%;
 			left: 10%;
 		}
 
 		h3 {
 			max-width: 16em;
 			top: 45%;
+		}
+
+		.logotype,
+		h3 {
+			left: calc(var(--side-nav) + 4rem);
+			/* left: calc(50% - 56rem + var(--side-nav)); */
+		}
+	}
+
+	@media (min-width: 1200px) {
+		h3,
+		.logotype {
+			left: calc(50% - 56rem + var(--side-nav));
 		}
 	}
 </style>

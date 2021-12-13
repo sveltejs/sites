@@ -19,9 +19,14 @@ self.addEventListener('message', async (event) => {
 		case 'init':
 			packagesUrl = event.data.packagesUrl;
 			svelteUrl = event.data.svelteUrl;
-			await import(/* @vite-ignore */ `${svelteUrl}/compiler.js`);
-			fulfil_ready();
 
+			try {
+				importScripts(`${svelteUrl}/compiler.js`);
+			} catch {
+				await import(/* @vite-ignore */ `${svelteUrl}/compiler.js`);
+			}
+
+			fulfil_ready();
 			break;
 
 		case 'bundle':

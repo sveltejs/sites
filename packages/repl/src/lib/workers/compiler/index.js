@@ -8,7 +8,12 @@ const ready = new Promise((f) => {
 self.addEventListener('message', async (event) => {
 	switch (event.data.type) {
 		case 'init':
-			await import(/* @vite-ignore */ `${event.data.svelteUrl}/compiler.js`);
+			try {
+				importScripts(`${event.data.svelteUrl}/compiler.js`);
+			} catch {
+				await import(/* @vite-ignore */ `${event.data.svelteUrl}/compiler.js`);
+			}
+
 			fulfil_ready();
 			break;
 

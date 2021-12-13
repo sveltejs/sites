@@ -1,20 +1,15 @@
+<script context="module">
+	export const prerender = true;
+</script>
+
 <script>
 	import { Blurb } from '@sveltejs/site-kit';
 	import Supporters from './_components/Supporters.svelte';
 	import Hero from './_components/Hero.svelte';
 	import Image from './_components/Image.svelte';
 	import Demo from './_components/Demo.svelte';
-	import Example from './_components/Example.svelte';
 	import WhosUsingSvelte from './_components/WhosUsingSvelte.svelte';
 	import Balls from '$img/svelte-balls.png?w=640;1280;2560&format=avif;webp;png&meta';
-
-	// import Lazy from '../components/Lazy.svelte';
-
-	// TODO this causes a Sapper CSS bug...
-	// function loadReplWidget() {
-	// 	console.log('lazy loading');
-	// 	return import('../components/Repl/ReplWidget.svelte').then(mod => mod.default);
-	// }
 </script>
 
 <svelte:head>

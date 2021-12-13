@@ -72,6 +72,7 @@ importers:
     specifiers:
       '@sindresorhus/slugify': ^0.9.1
       '@supabase/supabase-js': ^1.28.5
+      '@sveltejs/adapter-auto': ^1.0.0-next.3
       '@sveltejs/adapter-node': next
       '@sveltejs/kit': next
       '@sveltejs/repl': workspace:*
@@ -108,6 +109,7 @@ importers:
       prismjs: 1.25.0
     devDependencies:
       '@sindresorhus/slugify': 0.9.1
+      '@sveltejs/adapter-auto': 1.0.0-next.3
       '@sveltejs/adapter-node': 1.0.0-next.55
       '@sveltejs/kit': 1.0.0-next.201_svelte@3.44.2
       '@sveltejs/site-kit': link:../../packages/site-kit

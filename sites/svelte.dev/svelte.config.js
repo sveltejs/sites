@@ -1,19 +1,17 @@
-import adapter from '@sveltejs/adapter-node';
+import adapter from '@sveltejs/adapter-auto';
 import * as path from 'path';
 import { imagetools } from 'vite-imagetools';
 
-const API_BASE = process.env.DOCS_PREVIEW ? 'http://localhost:8787' : 'https://api.svelte.dev';
-process.env.VITE_API_BASE = API_BASE;
+process.env.VITE_API_BASE = process.env.DOCS_PREVIEW
+	? 'http://localhost:8787'
+	: 'https://api.svelte.dev';
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
 	kit: {
 		adapter: adapter(),
 		target: '#svelte',
-		prerender: {
-			enabled: false
-		},
-		vite: () => ({
+		vite: {
 			// https://github.com/sveltejs/kit/issues/1632#issuecomment-854056053
 			build: {
 				rollupOptions: {
@@ -56,6 +54,6 @@ export default {
 					strict: false
 				}
 			}
-		})
+		}
 	}
 };

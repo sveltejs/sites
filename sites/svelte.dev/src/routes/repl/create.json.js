@@ -1,18 +1,18 @@
-import { gists } from '$lib/db';
+import * as gist from '$lib/db/gist';
 
 export async function post({ locals, body }) {
 	const { user } = locals;
 	if (!user) return; // response already sent
 
 	try {
-		const gist = await gists.create(user, body);
+		const result = await gist.create(user, body);
 
 		// normalize id
-		gist.id = gist.id.replace(/-/g, '');
+		result.id = result.id.replace(/-/g, '');
 
 		return {
 			status: 201,
-			body: gist
+			body: result
 		};
 	} catch (err) {
 		return {

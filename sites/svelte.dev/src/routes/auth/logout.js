@@ -1,5 +1,5 @@
 import * as cookie from 'cookie';
-import { session } from '$lib/db';
+import * as session from '$lib/db/session';
 
 export async function get(request) {
 	await session.destroy(request.locals.cookies.sid);

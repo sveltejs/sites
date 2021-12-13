@@ -1,7 +1,7 @@
 import devalue from 'devalue';
 import * as cookie from 'cookie';
 import { stringify } from 'querystring';
-import { session } from '$lib/db';
+import * as session from '$lib/db/session';
 import { oauth, client_id, client_secret } from './_config.js';
 
 export async function get({ host, query }) {
@@ -30,7 +30,7 @@ export async function get({ host, query }) {
 		// Create or update user in database, and create a session
 
 		const user = {
-			id: String(profile.id), // stringifying makes life easier when we use it as a URL parameter
+			githubid: profile.id,
 			name: profile.name,
 			username: profile.login,
 			avatar: profile.avatar_url

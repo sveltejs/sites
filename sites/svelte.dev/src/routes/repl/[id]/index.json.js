@@ -1,4 +1,4 @@
-import { gists } from '$lib/db';
+import * as gist from '$lib/db/gist';
 import { API_BASE } from '../../../_env';
 
 /** @type {Set<string>} */
@@ -58,15 +58,22 @@ export async function get({ params }) {
 		};
 	}
 
-	const gist = await gists.read(params.id);
+	const app = await gist.read(params.id);
+
+	if (!app) {
+		return {
+			status: 404,
+			body: 'not found'
+		};
+	}
 
 	return {
 		body: {
 			uid: params.id,
-			name: gist.name,
-			owner: gist.owner,
+			name: app.name,
+			owner: app.owner,
 			relaxed: false,
-			components: munge(gist.files)
+			components: munge(app.files)
 		}
 	};
 }
@@ -79,7 +86,7 @@ export async function put({ locals, params, body }) {
 		};
 	}
 
-	await gists.update(locals.user, params.id, body);
+	await gist.update(locals.user, params.id, body);
 
 	return {
 		status: 204

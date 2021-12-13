@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import * as cookie from 'cookie';
-import { session } from '$lib/db';
+import * as session from '$lib/db/session';
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ request, resolve }) {

@@ -7,7 +7,7 @@
 	export let selected;
 
 	function navigate(e) {
-		goto(`${e.target.value}`);
+		goto(`/tutorial/${e.target.value}`);
 	}
 </script>
 

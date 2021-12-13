@@ -16,9 +16,21 @@
  *
  */
 
+pre {
+	tab-size: 2;
+	-moz-tab-size: 2;
+}
+
 .code-block pre {
+	background-color: #333;
+	border-radius: 0.5rem;
 	padding: 1rem;
 	margin: 0 0 1rem 0;
+	font-size: 14px;
+}
+
+.code-block pre code {
+	color: white;
 }
 
 .token.tag,

@@ -19,7 +19,7 @@
 </script>
 
 <script>
-	// import '@sveltejs/site-kit/code.css';
+	import '@sveltejs/site-kit/code.css';
 	import { browser } from '$app/env';
 	import Repl from '@sveltejs/repl';
 	import { getContext } from 'svelte';

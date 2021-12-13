@@ -233,9 +233,6 @@
 		width: 100%;
 		max-width: var(--linemax);
 		padding: 1rem 1rem;
-		background: #333;
-		border-radius: 0.5rem;
-		font-size: 14px;
 	}
 
 	.content :global(.icon) {
@@ -250,10 +247,6 @@
 
 	.content :global(table) {
 		margin: 0 0 2em 0;
-	}
-
-	.content :global(section) > :global(.code-block) > :global(pre) {
-		color: white;
 	}
 
 	.content :global(section) :global(p) {

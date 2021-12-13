@@ -116,6 +116,15 @@
 		display: none;
 	}
 
+	a,
+	.description :global(a) {
+		color: white;
+	}
+
+	.description :global(a) {
+		text-decoration: underline;
+	}
+
 	@media (min-width: 640px) {
 		.small-show {
 			display: none;

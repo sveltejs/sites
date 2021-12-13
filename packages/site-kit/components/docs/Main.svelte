@@ -24,10 +24,10 @@
 
 		const onresize = () => {
 			const { top } = container.getBoundingClientRect();
-			positions = [].map.call(headings, heading => {
+			positions = [].map.call(headings, (heading) => {
 				return heading.getBoundingClientRect().top - top;
 			});
-		}
+		};
 
 		let last_id = getFragment();
 
@@ -56,10 +56,7 @@
 		window.addEventListener('resize', onresize, true);
 
 		// wait for fonts to load...
-		const timeouts = [
-			setTimeout(onresize, 1000),
-			setTimeout(onscroll, 5000)
-		];
+		const timeouts = [setTimeout(onresize, 1000), setTimeout(onscroll, 5000)];
 
 		onresize();
 		onscroll();
@@ -68,7 +65,7 @@
 			window.removeEventListener('scroll', onscroll, true);
 			window.removeEventListener('resize', onresize, true);
 
-			timeouts.forEach(timeout => clearTimeout(timeout));
+			timeouts.forEach((timeout) => clearTimeout(timeout));
 		};
 	});
 </script>
@@ -90,16 +87,6 @@
 		/* can't use vars in @media :( */
 		.content {
 			padding-left: calc(var(--sidebar-w) + var(--side-nav));
-		}
-
-		.content :global(.side-by-side) {
-			display: grid;
-			grid-template-columns: calc(50% - 0.5em) calc(50% - 0.5em);
-			grid-gap: 1em;
-		}
-
-		.content :global(.side-by-side) :global(.code) {
-			padding: 1em 0;
 		}
 	}
 
@@ -268,11 +255,8 @@
 		color: white;
 	}
 
-	.content :global(section) > :global(p) {
-		max-width: var(--linemax);
-	}
-
 	.content :global(section) :global(p) {
+		max-width: var(--linemax);
 		margin: 1em 0;
 	}
 

@@ -232,6 +232,7 @@
 		width: 100%;
 		max-width: var(--linemax);
 		padding: 1rem 1rem;
+		box-shadow: inset 1px 1px 6px hsla(205.7, 63.6%, 30.8%, 0.06);
 	}
 
 	.content :global(.icon) {

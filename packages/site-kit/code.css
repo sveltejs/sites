@@ -2,10 +2,10 @@
 
 :root {
 	--code-bg: var(--back-light);
-	--code-base: hsl(45, 7%, 45%);
-	--code-comment: hsl(210, 25%, 60%);
-	--code-keyword: hsl(204, 58%, 45%);
-	--code-function: hsl(19, 67%, 45%);
+	--code-base: hsl(45, 7%, 35%);
+	--code-comment: hsl(210, 25%, 50%);
+	--code-keyword: hsl(204, 88%, 35%);
+	--code-function: hsl(19, 87%, 45%);
 	--code-string: hsl(41, 37%, 45%);
 	--code-number: hsl(102, 27%, 50%);
 	--code-tags: var(--code-function);

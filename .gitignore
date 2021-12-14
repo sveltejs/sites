@@ -1,3 +1,7 @@
 .DS_Store
 .netlify
-/node_modules
+.pnpm-debug.log
+node_modules/
+.vercel
+.env
+/db/data

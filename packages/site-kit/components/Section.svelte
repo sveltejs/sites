@@ -5,8 +5,8 @@
 <style>
 	section {
 		position: relative;
-		margin: -12rem auto 10rem auto;
-		padding: 0 var(--side-nav);
+		margin: 0 auto 0 auto;
+		padding: 10rem var(--side-nav);
 		max-width: 120rem;
 	}
 

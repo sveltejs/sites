@@ -14,11 +14,17 @@
 	--sidebar-mid-w: 36rem;
 	--sidebar-large-w: 48rem;
 	--main-width: 80rem;
-	--side-nav: 3.2rem;
+	--side-nav: 2.4rem;
 	--side-page: var(--side-nav);
 
 	/* easings */
 	--out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@media screen and (min-width: 480px) {
+	:root {
+		--side-nav: 3.2rem;
+	}
 }
 
 @media screen and (min-width: 768px) {
@@ -182,7 +188,7 @@ h5,
 h6 {
 	font-family: var(--font);
 	line-height: 1.25;
-	color: #222;
+	color: var(--heading);
 }
 
 h3 {
@@ -235,10 +241,6 @@ pre code {
 }
 
 /* sync CodeMirror with prism  */
-.CodeMirror {
-	font-size: var(--code-fs) !important;
-}
-
 ::selection {
 	background: var(--flash);
 	color: white;
@@ -246,7 +248,7 @@ pre code {
 
 /*	opinionated styles --------------------- */
 
-li:not(.white) > h2 {
+li > h2 {
 	color: var(--second);
 }
 
@@ -254,8 +256,6 @@ blockquote {
 	position: relative;
 	margin: 1.6rem 0 2.4rem;
 	padding: 2rem 2.4rem 1.8rem 2.4rem;
-	/* border-radius: var(--border-r); */
-	/* font-family: var(--font); */
 	max-width: var(--linemax);
 }
 
@@ -351,7 +351,7 @@ a {
 } */
 
 a:hover {
-	padding: 0;
+	/* padding: 0; */
 	/* border-bottom: 2px solid currentColor; */
 }
 
@@ -430,45 +430,6 @@ figcaption,
 	margin: 0 auto;
 	padding: 1.6rem 0 0 0.8rem;
 	font: 1.2rem/1.6 var(--font-mono);
-}
-
-.filename {
-	display: inline-block;
-	padding: 1.6rem 0 0 1rem;
-	font: var(--h6) var(--font-mono);
-}
-
-/*	theme colors --------------------------- */
-.prime {
-	color: var(--prime) !important;
-}
-.second {
-	color: var(--second) !important;
-}
-.flash {
-	color: var(--flash) !important;
-}
-.black {
-	color: black !important;
-}
-.white {
-	color: white !important;
-}
-
-.back {
-	background-color: var(--back) !important;
-}
-.back-light {
-	background-color: var(--back-light) !important;
-}
-.bg-prime {
-	background-color: var(--prime) !important;
-}
-.bg-second {
-	background-color: var(--second) !important;
-}
-.bg-flash {
-	background-color: var(--flash) !important;
 }
 
 /* visually hidden, but accessible to assistive tech */

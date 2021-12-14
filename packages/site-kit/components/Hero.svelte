@@ -16,8 +16,6 @@
 		}), 
 		{},
 	);
-
-	const imageGroups = Object.values(groupBy(background, 'format'));
 </script>
 
 <section class="hero-banner">
@@ -29,7 +27,7 @@
 
 		<div class="hero-image">
 			<picture>
-				{#each imageGroups as imageGroup}
+				{#each Object.values(groupBy(background, 'format')) as imageGroup}
 					<source type={'image/' + imageGroup[0].format} srcset={imageGroup.map(image => `${image.src} ${image.width === width ? '1x' : '2x'}`).join(', ')}/> 
 					{#if imageGroup[0].format === 'png'}
 						<img src={imageGroup[0].src} {alt} />

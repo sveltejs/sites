@@ -37,7 +37,7 @@
 			footprint
 		</p>
 
-		<a href="https://svelte.dev">learn Svelte</a>
+		<a href="https://svelte.dev" class="cta">learn Svelte</a>
 	</div>
 
 	<div slot="two">
@@ -47,7 +47,7 @@
 			an SPA
 		</p>
 
-		<a sveltekit:prefetch href="/docs">read the docs</a>
+		<a sveltekit:prefetch href="/docs" class="cta">read the docs</a>
 	</div>
 
 	<div slot="three">
@@ -57,7 +57,7 @@
 			support and more
 		</p>
 
-		<a sveltekit:prefetch href="/docs">read the docs</a>
+		<a sveltekit:prefetch href="/docs" class="cta">read the docs</a>
 	</div>
 
 	<div class="description" slot="what">
@@ -73,7 +73,7 @@
 		</p>
 
 		<p>
-			Read the <a href="https://svelte.dev/blog/whats-the-deal-with-sveltekit">introductory blog</a>
+			Read the <a href="https://svelte.dev/blog/whats-the-deal-with-sveltekit" class="cta">introductory blog</a>
 			post to learn more.
 		</p>
 	</div>
@@ -85,7 +85,7 @@ cd my-app
 npm install
 npm run dev -- --open
 </code></pre>
-		<a sveltekit:prefetch href="/docs">get started</a>
+		<a sveltekit:prefetch href="/docs" class="cta">get started</a>
 	</div>
 </Blurb>
 

@@ -24,10 +24,10 @@
 
 		const onresize = () => {
 			const { top } = container.getBoundingClientRect();
-			positions = [].map.call(headings, heading => {
+			positions = [].map.call(headings, (heading) => {
 				return heading.getBoundingClientRect().top - top;
 			});
-		}
+		};
 
 		let last_id = getFragment();
 
@@ -56,10 +56,7 @@
 		window.addEventListener('resize', onresize, true);
 
 		// wait for fonts to load...
-		const timeouts = [
-			setTimeout(onresize, 1000),
-			setTimeout(onscroll, 5000)
-		];
+		const timeouts = [setTimeout(onresize, 1000), setTimeout(onscroll, 5000)];
 
 		onresize();
 		onscroll();
@@ -68,7 +65,7 @@
 			window.removeEventListener('scroll', onscroll, true);
 			window.removeEventListener('resize', onresize, true);
 
-			timeouts.forEach(timeout => clearTimeout(timeout));
+			timeouts.forEach((timeout) => clearTimeout(timeout));
 		};
 	});
 </script>
@@ -90,16 +87,6 @@
 		/* can't use vars in @media :( */
 		.content {
 			padding-left: calc(var(--sidebar-w) + var(--side-nav));
-		}
-
-		.content :global(.side-by-side) {
-			display: grid;
-			grid-template-columns: calc(50% - 0.5em) calc(50% - 0.5em);
-			grid-gap: 1em;
-		}
-
-		.content :global(.side-by-side) :global(.code) {
-			padding: 1em 0;
 		}
 	}
 
@@ -142,6 +129,7 @@
 		width: 1.4em;
 		height: 1em;
 		left: -1.3em;
+		bottom: 0.3rem;
 		opacity: 0;
 		transition: opacity 0.2s;
 	}
@@ -237,7 +225,6 @@
 		margin: 0;
 		top: 0;
 		background: transparent;
-		color: white;
 	}
 
 	.content :global(pre) {
@@ -245,9 +232,7 @@
 		width: 100%;
 		max-width: var(--linemax);
 		padding: 1rem 1rem;
-		background: #333;
-		border-radius: 0.5rem;
-		font-size: 14px;
+		box-shadow: inset 1px 1px 6px hsla(205.7, 63.6%, 30.8%, 0.06);
 	}
 
 	.content :global(.icon) {
@@ -264,15 +249,8 @@
 		margin: 0 0 2em 0;
 	}
 
-	.content :global(section) > :global(.code-block) > :global(pre) {
-		color: white;
-	}
-
-	.content :global(section) > :global(p) {
-		max-width: var(--linemax);
-	}
-
 	.content :global(section) :global(p) {
+		max-width: var(--linemax);
 		margin: 1em 0;
 	}
 

@@ -9,7 +9,7 @@ export async function list(user, offset) {
 	const { data, error } = await client
 		.from('gist')
 		.select('id,name,created_at,updated_at')
-		.eq('id', user.id)
+		.eq('userid', user.id)
 		.order('updated_at', { ascending: false })
 		.range(offset, offset + PAGE_SIZE + 1);
 

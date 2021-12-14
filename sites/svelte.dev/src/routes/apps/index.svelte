@@ -30,14 +30,6 @@
 
 	const { login, logout } = getContext('app');
 
-	const formatter = new Intl.DateTimeFormat('en-GB', {
-		year: 'numeric',
-		month: 'short',
-		day: 'numeric',
-		hour: 'numeric',
-		minute: '2-digit'
-	});
-
 	const format = (str) => ago(new Date(str));
 </script>
 
@@ -51,9 +43,13 @@
 			<h1>Your apps</h1>
 
 			<div class="user">
-				<img class="avatar" alt="{user.name || user.username} avatar" src={user.avatar} />
+				<img
+					class="avatar"
+					alt="{user.github_name || user.github_login} avatar"
+					src={user.github_avatar_url}
+				/>
 				<span>
-					{user.name || user.username}
+					{user.github_name || user.github_login}
 					(<a on:click|preventDefault={logout} href="auth/logout">log out</a>)
 				</span>
 			</div>

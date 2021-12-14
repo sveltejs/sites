@@ -36,6 +36,9 @@
 	}
 
 	async function fork(intentWasSave) {
+		alert('Saving/forking is temporarily disabled while we migrate data from the old site. Please check back soon!');
+		return;
+
 		saving = true;
 
 		const { components } = repl.toJSON();
@@ -88,6 +91,9 @@
 	}
 
 	async function save() {
+		alert('Saving/forking is temporarily disabled while we migrate data from the old site. Please check back soon!');
+		return;
+
 		if (saving) return;
 
 		if (!canSave) {
@@ -233,6 +239,12 @@ export default app;`
 	</div>
 </div>
 
+<div class="notice">
+	Saving/forking is temporarily disabled<span class="desktop"
+		>&#160;while we migrate data from the old site. Please check back soon!</span
+	>
+</div>
+
 <style>
 	.app-controls {
 		position: absolute;
@@ -248,6 +260,24 @@ export default app;`
 		color: white;
 		white-space: nowrap;
 		flex: 0;
+	}
+
+	.notice {
+		position: absolute;
+		left: 0;
+		top: var(--app-controls-h);
+		width: 100%;
+		height: var(--notice-h);
+		background: var(--prime);
+		color: white;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 1.6rem;
+	}
+
+	.notice .desktop {
+		display: none;
 	}
 
 	.icon {
@@ -324,6 +354,12 @@ export default app;`
 
 		button span {
 			display: inline-block;
+		}
+	}
+
+	@media (min-width: 800px) {
+		.notice .desktop {
+			display: inline;
 		}
 	}
 </style>

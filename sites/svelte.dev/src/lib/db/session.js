@@ -11,18 +11,22 @@ const session_cache = flru(1000);
  */
 export async function create(user, access_token) {
 	const { data, error } = await client.rpc('login', {
-		user_githubid: user.githubid,
-		user_name: user.name,
-		user_username: user.username,
-		user_avatar: user.avatar,
-		user_token: access_token
+		user_github_id: user.github_id,
+		user_github_name: user.github_name,
+		user_github_login: user.github_login,
+		user_github_avatar_url: user.github_avatar_url
 	});
 
 	if (error) {
 		throw new Error(error.message);
 	}
 
-	session_cache.set(data.sessionid, user);
+	session_cache.set(data.sessionid, {
+		id: data.userid,
+		github_name: user.github_name,
+		github_login: user.github_login,
+		github_avatar_url: user.github_avatar_url
+	});
 
 	return {
 		sessionid: data.sessionid,
@@ -47,7 +51,7 @@ export async function read(sessionid) {
 						throw new Error(error.message);
 					}
 
-					return data.githubid && data;
+					return data.id && data;
 				})
 				.catch(() => {
 					session_cache.set(sessionid, null);

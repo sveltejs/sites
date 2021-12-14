@@ -30,10 +30,10 @@ export async function get({ host, query }) {
 		// Create or update user in database, and create a session
 
 		const user = {
-			githubid: profile.id,
-			name: profile.name,
-			username: profile.login,
-			avatar: profile.avatar_url
+			github_id: profile.id,
+			github_name: profile.name,
+			github_login: profile.login,
+			github_avatar_url: profile.avatar_url
 		};
 
 		const { sessionid, expires } = await session.create(user, access_token);

@@ -26,7 +26,7 @@
 		return new Promise((f) => setTimeout(f, ms));
 	}
 
-	$: canSave = $session.user && gist && gist.owner === $session.user.id;
+	$: canSave = $session.user && gist && gist.userid === $session.user.id;
 
 	function handleKeydown(event) {
 		if (event.key === 's' && (isMac ? event.metaKey : event.ctrlKey)) {
@@ -102,7 +102,7 @@
 			// ~> Any missing files are considered deleted!
 			const { components } = repl.toJSON();
 
-			const r = await fetch(`/repl/${gist.uid}.json`, {
+			const r = await fetch(`/repl/${gist.id}.json`, {
 				method: 'PUT',
 				credentials: 'include',
 				headers: {
@@ -183,7 +183,7 @@ export default app;`
 <svelte:window on:keydown={handleKeydown} />
 
 <div class="app-controls">
-	<input bind:value={name} on:focus={(e) => e.target.select()} use:enter={(e) => e.target.blur()} />
+	<input bind:value={name} on:focus={e => e.target.select()} use:enter={e => e.target.blur()} />
 
 	<div style="text-align: right; margin-right:.4rem">
 		<button class="icon" on:click={() => (zen_mode = !zen_mode)} title="fullscreen editor">

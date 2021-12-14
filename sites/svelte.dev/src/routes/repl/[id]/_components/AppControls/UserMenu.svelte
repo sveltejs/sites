@@ -7,12 +7,12 @@
 	let showMenu = false;
 	let name;
 
-	$: name = $session.user.name || $session.user.username;
+	$: name = $session.user.github_name || $session.user.github_login;
 </script>
 
-<div class="user" on:mouseenter="{() => showMenu = true}" on:mouseleave="{() => showMenu = false}">
+<div class="user" on:mouseenter={() => (showMenu = true)} on:mouseleave={() => (showMenu = false)}>
 	<span>{name}</span>
-	<img alt="{name} avatar" src="{$session.user.avatar}">
+	<img alt="{name} avatar" src={$session.user.github_avatar_url} />
 
 	{#if showMenu}
 		<div class="menu">
@@ -61,7 +61,7 @@
 		right: 0;
 		width: 2.1rem;
 		height: 2.1rem;
-		border: 1px solid rgba(255,255,255,0.3);
+		border: 1px solid rgba(255, 255, 255, 0.3);
 		border-radius: 0.2rem;
 	}
 
@@ -80,7 +80,8 @@
 		flex-direction: column;
 	}
 
-	.menu button, .menu a {
+	.menu button,
+	.menu a {
 		background-color: transparent;
 		font-family: var(--font);
 		font-size: 1.6rem;
@@ -92,7 +93,8 @@
 		color: inherit;
 	}
 
-	.menu button:hover, .menu a:hover {
+	.menu button:hover,
+	.menu a:hover {
 		opacity: 1;
 		color: inherit;
 	}

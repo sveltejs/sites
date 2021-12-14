@@ -15,19 +15,19 @@ drop function if exists public.login;
 drop function if exists public.logout;
 
 create table public.user (
-	githubid int8 not null primary key,
+	id bigserial primary key,
 	created_at timestamptz default now(),
-	name text,
-	username text,
-	avatar text,
-	token text,
-	updated_at timestamptz
+	updated_at timestamptz,
+	github_id int8 unique,
+	github_name text,
+	github_login text,
+	github_avatar_url text
 );
 
 create table public.session (
 	id uuid default extensions.uuid_generate_v4() not null primary key,
 	created_at timestamptz default now(),
-	githubid int8, -- foreign key
+	userid int8,
 	expires timestamptz default now() + '1 year'
 );
 
@@ -37,18 +37,18 @@ create table public.gist (
 	name text,
 	files json,
 	updated_at timestamptz,
-	githubid int8
+	userid int8
 );
 
 -- foreign key relations
-alter table public.gist add constraint gist_userid_fkey foreign key (githubid) references public.user (githubid);
-alter table public.session add constraint session_userid_fkey foreign key (githubid) references public.user (githubid);
+alter table public.gist add constraint gist_userid_fkey foreign key (userid) references public.user (id);
+alter table public.session add constraint session_userid_fkey foreign key (userid) references public.user (id);
 
 -- indexes
-create index gist_owner_idx on public.gist using btree (githubid);
+create index gist_owner_idx on public.gist using btree (userid);
 
 -- functions
-create or replace function get_user (sessionid uuid)
+create or replace function public.get_user (sessionid uuid)
 returns record
 language plpgsql volatile
 as $$
@@ -56,29 +56,29 @@ as $$
 		ret record;
 		_ record;
 	begin
-		select githubid from session where session.id = sessionid into _;
+		select userid from session where session.id = sessionid into _;
 
-		select githubid, name, username, avatar from public.user into ret where public.user.githubid = _.githubid;
+		select id, github_name, github_login, github_avatar_url from public.user into ret where public.user.id = _.userid;
 
 		return ret;
 	end;
 $$;
 
-create or replace function gist_create (name text, files json, githubid int8)
+create or replace function public.gist_create (name text, files json, userid int8)
 returns record
 language plpgsql volatile
 as $$
 	declare
 		ret record;
 	begin
-		insert into gist (name, files, githubid)
-		values (name, files, githubid) returning gist.id, gist.name, gist.files, gist.githubid into ret;
+		insert into gist (name, files, userid)
+		values (name, files, userid) returning gist.id, gist.name, gist.files, gist.userid into ret;
 
 		return ret;
 	end;
 $$;
 
-create or replace function gist_destroy (
+create or replace function public.gist_destroy (
 	gist_id uuid,
 	gist_userid int8
 )
@@ -86,11 +86,11 @@ returns void
 language plpgsql volatile
 as $$
 	begin
-		delete from gist where id = gist_id and githubid = gist_userid;
+		delete from gist where id = gist_id and userid = gist_userid;
 	end;
 $$;
 
-create or replace function gist_update (
+create or replace function public.gist_update (
 	gist_id uuid,
 	gist_name text,
 	gist_files json,
@@ -104,37 +104,38 @@ as $$
 	begin
 		update gist
 			set name = gist_name, files = gist_files, updated_at = now()
-			where id = gist_id and githubid = gist_userid
-			returning id, name, files, githubid into ret;
+			where id = gist_id and userid = gist_userid
+			returning id, name, files, userid into ret;
 
 		return ret;
 	end;
 $$;
 
-create or replace function login (
-	user_githubid int8,
-	user_name text,
-	user_username text,
-	user_avatar text,
-	user_token text
+create or replace function public.login (
+	user_github_id int8,
+	user_github_name text,
+	user_github_login text,
+	user_github_avatar_url text
 )
 returns record
 language plpgsql volatile
 as $$
 	declare
+		_ record;
 		ret record;
 	begin
-		insert into "user" (githubid, name, username, avatar, token, updated_at)
-		values (user_githubid, user_name, user_username, user_avatar, user_token, now())
-		on conflict (githubid) do update set name = user_name, username = user_username, avatar = user_avatar, token = user_token, updated_at = now() where "user".githubid = user_githubid;
+		insert into "user" (github_id, github_name, github_login, github_avatar_url, updated_at)
+		values (user_github_id, user_github_name, user_github_login, user_github_avatar_url, now())
+		on conflict (github_id) do update set github_name = user_github_name, github_login = user_github_login, github_avatar_url = user_github_avatar_url, updated_at = now() where public."user".github_id = user_github_id
+		returning id into _;
 
-		insert into "session" (githubid) values (user_githubid) returning session.id as sessionid, session.expires into ret;
+		insert into "session" (userid) values (_.id) returning session.id as sessionid, session.userid, session.expires into ret;
 
 		return ret;
 	end;
 $$;
 
-create or replace function logout (
+create or replace function public.logout (
 	sessionid uuid
 )
 returns void

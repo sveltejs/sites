@@ -9,7 +9,7 @@ export async function list(user, offset) {
 	const { data, error } = await client
 		.from('gist')
 		.select('id,name,created_at,updated_at')
-		.eq('githubid', user.githubid)
+		.eq('id', user.id)
 		.order('updated_at', { ascending: false })
 		.range(offset, offset + PAGE_SIZE + 1);
 
@@ -37,7 +37,7 @@ export async function create(user, gist) {
 	const { data, error } = await client.rpc('gist_create', {
 		name: gist.name,
 		files: gist.files,
-		githubid: user.githubid
+		userid: user.id
 	});
 
 	if (error) {
@@ -54,7 +54,7 @@ export async function create(user, gist) {
 export async function read(id) {
 	const { data, error } = await client
 		.from('gist')
-		.select('id,name,files,githubid')
+		.select('id,name,files,userid')
 		.eq('id', id);
 
 	if (error) throw new Error(error.message);
@@ -72,7 +72,7 @@ export async function update(user, gistid, gist) {
 		gist_id: gistid,
 		gist_name: gist.name,
 		gist_files: gist.files,
-		gist_userid: user.githubid
+		gist_userid: user.id
 	});
 
 	if (error) {
@@ -90,7 +90,7 @@ export async function update(user, gistid, gist) {
 export async function destroy(user, gist) {
 	const { error } = await client.rpc('gist_destroy', {
 		gist_id: gist.id,
-		gist_userid: user.githubid
+		gist_userid: user.id
 	});
 
 	if (error) {

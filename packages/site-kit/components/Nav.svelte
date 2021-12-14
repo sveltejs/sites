@@ -116,10 +116,6 @@
 		z-index: 101;
 	}
 
-	ul :global(li) {
-		padding: 0.5rem 0;
-	}
-
 	ul :global(a) {
 		color: var(--text);
 	}
@@ -180,6 +176,10 @@
 	}
 
 	@media (min-width: 800px) {
+		.modal-background {
+			display: none;
+		}
+
 		nav {
 			display: flex;
 			align-items: center;
@@ -189,10 +189,18 @@
 		ul {
 			display: flex;
 			width: auto;
+			height: 100%;
 		}
 
 		ul :global(li) {
 			margin: 0 0.5rem;
+			padding: 0;
+		}
+
+		ul :global(a) {
+			display: flex;
+			align-items: center;
+			height: 100%;
 		}
 
 		ul.external {

@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	
+
 	export let sections = [];
 	export let active_section = null;
 	export let isLoading = false;
@@ -75,8 +75,6 @@
 	}
 
 	div.active {
-		background: rgba(0, 0, 0, 0.15) calc(100% - 3rem) 47% no-repeat url(/icons/arrow-right.svg);
-		background-size: 1em 1em;
 		color: white;
 	}
 

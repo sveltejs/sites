@@ -5,7 +5,11 @@
 
 <div class="hero">
 	<h3>Cybernetically enhanced web apps</h3>
-	<Image data={Machine} alt="The Svelte compiler packaging up your component code" />
+	<Image
+		data={Machine}
+		alt="The Svelte compiler packaging up your component code"
+		--max-height="65vh"
+	/>
 	<img alt="Svelte logotype" class="logotype" src="/svelte-logotype.svg" />
 </div>
 

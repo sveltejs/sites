@@ -1,6 +1,6 @@
 <script>
 	import Image from './Image.svelte';
-	import Machine from '$img/svelte-machine.png?w=640;1280;2560&format=avif;webp;png&meta';
+	import Machine from '$img/svelte-machine.png?w=640;1280;2560;3840&format=avif;webp;png&meta';
 </script>
 
 <div class="hero">

@@ -1,13 +1,13 @@
 <script>
-	import { companies } from './WhosUsingSvelte.js';
+	import { companies } from './companies.js';
 
 	const sorted = companies.sort((a, b) => a.alt < b.alt ? -1 : 1);
 </script>
 
 <div class="logos">
-	{#each sorted as { href, filename, alt, style, invert }}
+	{#each sorted as { href, filename, alt, style, invert, width, height }}
 		<a target="_blank" rel="noopener" {href} class:invert style={style || ''}>
-			<img src="/whos-using-svelte/{filename}" {alt} loading="lazy" />
+			<img src="/whos-using-svelte/{filename}" {alt} {width} {height} loading="lazy" />
 		</a>
 
 		<span class="spacer" />
@@ -53,6 +53,8 @@
 		padding: 5px 10px;
 		transition: transform 0.2s;
 		min-width: 0; /* Avoid image overflow in Safari */
+		width: auto;
+		height: auto;
 	}
 
 	img:hover {

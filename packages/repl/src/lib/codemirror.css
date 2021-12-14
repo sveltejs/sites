@@ -1,7 +1,7 @@
 /* BASICS */
 
 .CodeMirror {
-	/* copied colors over from prism */
+	/* TODO use vars defined in code.css, and document this stuff */
 	--background: var(--back-light);
 	--base: hsl(45, 7%, 45%);
 	--comment: hsl(210, 25%, 60%);
@@ -11,6 +11,8 @@
 	--number: hsl(102, 27%, 50%);
 	--tags: var(--function);
 	--important: var(--string);
+
+	font-size: var(--code-fs) !important;
 
 	/* Set height, width, borders, and global font properties here */
 	height: 300px;

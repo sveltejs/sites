@@ -225,7 +225,6 @@
 		margin: 0;
 		top: 0;
 		background: transparent;
-		color: white;
 	}
 
 	.content :global(pre) {

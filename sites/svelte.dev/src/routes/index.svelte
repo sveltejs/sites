@@ -122,12 +122,6 @@ npm run dev
 </div>
 
 <style>
-	/* darken text for accessibility */
-	/* TODO does this belong elsewhere? */
-	:global(.back-light) {
-		--text: hsl(36, 3%, 44%);
-	}
-
 	section {
 		position: relative;
 		margin: 10rem auto;

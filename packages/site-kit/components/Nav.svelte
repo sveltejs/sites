@@ -57,7 +57,7 @@
 		<slot name="nav-right" />
 	</ul>
 
-	<button class="menu-toggle" class:open on:click={() => (open = !open)}>
+	<button aria-label="Toggle menu" class="menu-toggle" class:open on:click={() => (open = !open)}>
 		<Icon name={open ? 'close' : 'menu'} size="1em" />
 	</button>
 </nav>

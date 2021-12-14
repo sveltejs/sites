@@ -4,7 +4,7 @@
 </script>
 
 <div class="hero">
-	<h3>Cybernetically enhanced web apps</h3>
+	<strong>Cybernetically enhanced web apps</strong>
 	<Image
 		data={Machine}
 		alt="The Svelte compiler packaging up your component code"
@@ -23,7 +23,7 @@
 		display: none;
 	}
 
-	h3 {
+	strong {
 		position: absolute;
 		font-size: min(4vw, var(--h4));
 		max-width: 10em;
@@ -36,7 +36,7 @@
 	}
 
 	@media (min-width: 580px) {
-		h3 {
+		strong {
 			max-width: 12em;
 			top: 30%;
 		}
@@ -51,20 +51,20 @@
 			left: 10%;
 		}
 
-		h3 {
+		strong {
 			max-width: 16em;
 			top: 45%;
 		}
 
 		.logotype,
-		h3 {
+		strong {
 			left: calc(var(--side-nav) + 4rem);
 			/* left: calc(50% - 56rem + var(--side-nav)); */
 		}
 	}
 
 	@media (min-width: 1200px) {
-		h3,
+		strong,
 		.logotype {
 			left: calc(50% - 56rem + var(--side-nav));
 		}

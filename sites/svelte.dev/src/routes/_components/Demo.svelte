@@ -96,11 +96,15 @@
 		height: 100%;
 		align-items: center;
 		justify-content: center;
+		border-radius: var(--border-r) var(--border-r) 0 0;
 	}
 
-	.selected {
+	button:hover {
+		background-color: rgba(255, 255, 255, 0.2);
+	}
+
+	button.selected {
 		background-color: white;
-		border-radius: var(--border-r) var(--border-r) 0 0;
 		color: var(--text);
 	}
 

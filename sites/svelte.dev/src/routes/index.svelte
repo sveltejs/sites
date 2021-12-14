@@ -112,14 +112,14 @@ npm run dev
 
 <Image data={Balls} alt="The Svelte logo in a ball pit" />
 
-<div id="footer">
+<footer>
 	<a href="/tutorial">Tutorial</a>
 	<a href="/docs">Docs</a>
 	<a href="/examples">Examples</a>
 	<a href="/blog">Blog</a>
 	<a href="/faq">FAQ</a>
 	<a href="https://opencollective.com/svelte">Open Collective</a>
-</div>
+</footer>
 
 <style>
 	section {
@@ -133,13 +133,17 @@ npm run dev
 		margin-top: calc(-10rem + var(--side-nav));
 	}
 
-	#footer {
-		text-align: center;
+	footer {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
 		padding: 4rem;
 	}
-	#footer a {
+
+	footer a {
 		color: var(--text);
-		margin: 0 1rem;
+		padding: 0.5rem 1rem;
+		display: block;
 	}
 
 	@media (min-width: 900px) {

@@ -10,7 +10,7 @@ const force = process.env.FORCE_UPDATE === 'true';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 process.chdir(__dirname);
 
-const outputFile = `../src/routes/_contributors.js`;
+const outputFile = `../src/routes/_components/Supporters/contributors.js`;
 if (!force && fs.existsSync(outputFile)) {
 	console.info(`[update/contributors] ${outputFile} exists. Skipping`);
 	process.exit(0);
@@ -57,7 +57,7 @@ async function main() {
 		sprite.composite(image, i * SIZE, 0);
 	}
 
-	await sprite.quality(80).write(`../static/contributors.jpg`);
+	await sprite.quality(80).write(`../src/routes/_components/Supporters/contributors.jpg`);
 	// TODO: Optimizing the static/contributors.jpg image should probably get automated as well
 	console.log(
 		'remember to additionally optimize the resulting /static/contributors.jpg image file via e.g. https://squoosh.app '

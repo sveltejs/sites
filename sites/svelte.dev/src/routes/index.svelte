@@ -4,7 +4,7 @@
 
 <script>
 	import { Blurb } from '@sveltejs/site-kit';
-	import Supporters from './_components/Supporters.svelte';
+	import Supporters from './_components/Supporters/index.svelte';
 	import Hero from './_components/Hero.svelte';
 	import Image from './_components/Image.svelte';
 	import Demo from './_components/Demo.svelte';

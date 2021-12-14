@@ -1,7 +1,7 @@
 <script>
-	import Section from './Section.svelte';
-	import contributors from '../_contributors.js';
-	import donors from '../_donors.js';
+	import Section from '../Section.svelte';
+	import contributors from './contributors.js';
+	import donors from './donors.js';
 </script>
 
 <Section
@@ -85,11 +85,11 @@
 	}
 
 	.contributors .supporter {
-		background-image: url(/contributors.jpg);
+		background-image: url(./contributors.jpg);
 	}
 
 	.donors .supporter {
-		background-image: url(/donors.jpg);
+		background-image: url(./donors.jpg);
 	}
 
 	@media (min-width: 480px) {

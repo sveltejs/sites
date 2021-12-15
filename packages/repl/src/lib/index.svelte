@@ -199,9 +199,7 @@
 		}
 	}
 
-	let input;
 	let sourceErrorLoc;
-	let runtimeErrorLoc; // TODO refactor this stuff — runtimeErrorLoc is unused
 	let status = null;
 
 	const bundler =
@@ -229,7 +227,7 @@
 	>
 		<section slot="a">
 			<ComponentSelector {handle_select} on:add on:remove />
-			<ModuleEditor bind:this={input} errorLoc={sourceErrorLoc || runtimeErrorLoc} />
+			<ModuleEditor errorLoc={sourceErrorLoc} />
 		</section>
 
 		<section slot="b" style="height: 100%;">

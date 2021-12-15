@@ -1,5 +1,4 @@
 <script>
-	import './codemirror.css';
 	import { onMount, createEventDispatcher } from 'svelte';
 	import Message from './Message.svelte';
 
@@ -7,9 +6,9 @@
 
 	export let readonly = false;
 	export let errorLoc = null;
-	export let flex = false;
 	export let lineNumbers = true;
 	export let tab = true;
+	export let theme;
 
 	let w;
 	let h;
@@ -170,7 +169,8 @@
 				'Esc Tab': false
 			}),
 			foldGutter: true,
-			gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']
+			gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+			theme
 		};
 
 		if (!tab) {
@@ -216,22 +216,7 @@
 
 	.codemirror-container :global(.CodeMirror) {
 		height: 100%;
-		background: transparent;
-		font: 400 14px/1.7 var(--font-mono);
-		color: var(--base);
-	}
-
-	.codemirror-container.flex :global(.CodeMirror) {
-		height: auto;
-	}
-
-	.codemirror-container.flex :global(.CodeMirror-lines) {
-		padding: 0;
-	}
-
-	.codemirror-container :global(.CodeMirror-gutters) {
-		padding: 0 16px 0 8px;
-		border: none;
+		font: 400 var(--code-fs)/1.7 var(--font-mono);
 	}
 
 	.codemirror-container :global(.error-loc) {
@@ -265,14 +250,9 @@
 		tab-size: 2;
 		-moz-tab-size: 2;
 	}
-
-	.flex pre {
-		padding: 0 0 0 4px;
-		height: auto;
-	}
 </style>
 
-<div class='codemirror-container' class:flex bind:offsetWidth={w} bind:offsetHeight={h}>
+<div class='codemirror-container' bind:offsetWidth={w} bind:offsetHeight={h}>
 	<textarea
 		bind:this={refs.editor}
 		readonly

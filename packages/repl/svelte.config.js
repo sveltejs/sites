@@ -6,6 +6,10 @@ const config = {
 	kit: {
 		adapter: adapter(),
 
+		package: {
+			exports: file => file === 'index.js'
+		},
+
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
 

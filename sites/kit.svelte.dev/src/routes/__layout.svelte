@@ -40,7 +40,7 @@
 			<span class="large"><Icon name="message-square" /></span>
 		</NavItem>
 
-		<NavItem external="https://github.com/sveltejs/svelte" title="GitHub Repo">
+		<NavItem external="https://github.com/sveltejs/kit" title="GitHub Repo">
 			<span class="small">GitHub</span>
 			<span class="large"><Icon name="github" /></span>
 		</NavItem>

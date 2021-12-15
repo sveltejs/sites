@@ -6,6 +6,7 @@
 	const { bundle, selected, handle_change, register_module_editor } = getContext('REPL');
 
 	export let errorLoc;
+	export let theme;
 
 	let editor;
 	onMount(() => {
@@ -49,6 +50,7 @@
 		<CodeMirror
 			bind:this={editor}
 			{errorLoc}
+			{theme}
 			on:change={handle_change}
 		/>
 	</div>

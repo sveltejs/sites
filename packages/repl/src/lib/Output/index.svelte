@@ -19,6 +19,7 @@
 	export let relaxed = false;
 	export let injectedJS;
 	export let injectedCSS;
+	export let theme;
 
 	let foo; // TODO workaround for https://github.com/sveltejs/svelte/issues/2122
 
@@ -100,11 +101,11 @@
 <!-- js output -->
 <div class="tab-content" class:visible={selected_type !== 'md' && view === 'js'}>
 	{#if embedded}
-		<CodeMirror bind:this={js_editor} errorLoc={sourceErrorLoc} readonly />
+		<CodeMirror bind:this={js_editor} errorLoc={sourceErrorLoc} {theme} readonly />
 	{:else}
 		<PaneWithPanel pos={67} panel="Compiler options">
 			<div slot="main">
-				<CodeMirror bind:this={js_editor} errorLoc={sourceErrorLoc} readonly />
+				<CodeMirror bind:this={js_editor} errorLoc={sourceErrorLoc} {theme} readonly />
 			</div>
 
 			<div slot="panel-body">
@@ -116,7 +117,7 @@
 
 <!-- css output -->
 <div class="tab-content" class:visible={selected_type !== 'md' && view === 'css'}>
-	<CodeMirror bind:this={css_editor} errorLoc={sourceErrorLoc} readonly />
+	<CodeMirror bind:this={css_editor} errorLoc={sourceErrorLoc} {theme} readonly />
 </div>
 
 <!-- markdown output -->

@@ -1,6 +1,8 @@
 <script>
 	import Repl from '@sveltejs/repl';
 	import { onMount } from 'svelte';
+	import '../../../site-kit/base.css';
+	import '../../../site-kit/code.css';
 
 	let repl;
 
@@ -10,7 +12,11 @@
 				{
 					name: 'App',
 					type: 'svelte',
-					source: '<h1>Hello world</h1>'
+					source: `<scr` + `ipt>
+	let name = 'world';
+</scr` + `ipt>
+
+<h1>Hello {name}!</h1>`
 				}
 			]
 		});
@@ -18,7 +24,7 @@
 </script>
 
 <main>
-	<Repl bind:this={repl} />
+	<Repl bind:this={repl}/>
 </main>
 
 <style>
@@ -29,14 +35,5 @@
 
 	main {
 		height: 100vh;
-
-		/* TODO get rid of these, use REPL-specific vars so that it is more portable */
-		--font: sans-serif;
-		--font-mono: Menlo;
-		--base: black;
-		--prime: #ff3e00;
-		--flash: rgb(13, 172, 184);
-		--second: rgb(2, 75, 56);
-		--back-light: #def;
 	}
 </style>

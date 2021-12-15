@@ -14,6 +14,11 @@ const config = {
 				alias: {
 					'@sveltejs/repl': path.resolve('src/lib/index.svelte')
 				}
+			},
+			server: {
+				fs: {
+					strict: false
+				}
 			}
 		}
 	}

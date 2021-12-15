@@ -17,6 +17,7 @@
 	export let fixedPos = 50;
 	export let injectedJS = '';
 	export let injectedCSS = '';
+	export let theme = 'svelte';
 
 	const historyMap = new Map();
 
@@ -227,11 +228,11 @@
 	>
 		<section slot="a">
 			<ComponentSelector {handle_select} on:add on:remove />
-			<ModuleEditor errorLoc={sourceErrorLoc} />
+			<ModuleEditor errorLoc={sourceErrorLoc} {theme} />
 		</section>
 
 		<section slot="b" style="height: 100%;">
-			<Output {svelteUrl} {status} {embedded} {relaxed} {injectedJS} {injectedCSS} />
+			<Output {svelteUrl} {status} {embedded} {relaxed} {injectedJS} {injectedCSS} {theme} />
 		</section>
 	</SplitPane>
 </div>

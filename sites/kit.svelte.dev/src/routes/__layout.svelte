@@ -35,7 +35,7 @@
 
 		<NavItem external="https://svelte.dev">Svelte</NavItem>
 
-		<NavItem external="chat" title="Discord Chat">
+		<NavItem external="https://svelte.dev/chat" title="Discord Chat">
 			<span class="small">Discord</span>
 			<span class="large"><Icon name="message-square" /></span>
 		</NavItem>

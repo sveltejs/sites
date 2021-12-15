@@ -1,7 +1,6 @@
 <script>
-	import { getContext, onMount } from 'svelte';
+	import { getContext } from 'svelte';
 	import { parse } from 'marked';
-	import SplitPane from '../SplitPane.svelte';
 	import Viewer from './Viewer.svelte';
 	import PaneWithPanel from './PaneWithPanel.svelte';
 	import CompilerOptions from './CompilerOptions.svelte';
@@ -20,8 +19,6 @@
 	export let injectedJS;
 	export let injectedCSS;
 	export let theme;
-
-	let foo; // TODO workaround for https://github.com/sveltejs/svelte/issues/2122
 
 	register_output({
 		set: async (selected, options) => {
@@ -64,10 +61,8 @@
 	const compiler = is_browser && new Compiler(svelteUrl);
 
 	// refs
-	let viewer;
 	let js_editor;
 	let css_editor;
-	const setters = {};
 
 	let view = 'result';
 	let selected_type = '';
@@ -79,9 +74,7 @@
 		<button class="active">Markdown</button>
 	{:else}
 		<button class:active={view === 'result'} on:click={() => (view = 'result')}>Result</button>
-
 		<button class:active={view === 'js'} on:click={() => (view = 'js')}>JS output</button>
-
 		<button class:active={view === 'css'} on:click={() => (view = 'css')}>CSS output</button>
 	{/if}
 </div>
@@ -89,7 +82,6 @@
 <!-- component viewer -->
 <div class="tab-content" class:visible={selected_type !== 'md' && view === 'result'}>
 	<Viewer
-		bind:this={viewer}
 		bind:error={runtimeError}
 		{status}
 		{relaxed}
@@ -160,13 +152,12 @@
 		position: absolute;
 		width: 100%;
 		height: calc(100% - 42px) !important;
-		opacity: 0;
+		visibility: hidden;
 		pointer-events: none;
 	}
 
 	.tab-content.visible {
-		/* can't use visibility due to a weird painting bug in Chrome */
-		opacity: 1;
+		visibility: visible;
 		pointer-events: all;
 	}
 	iframe {

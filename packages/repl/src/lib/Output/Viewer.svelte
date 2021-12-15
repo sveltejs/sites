@@ -98,8 +98,6 @@
 
 				const styles = document.querySelectorAll('style[id^=svelte-]');
 
-				${$bundle.dom.code}
-
 				let i = styles.length;
 				while (i--) styles[i].parentNode.removeChild(styles[i]);
 
@@ -114,6 +112,8 @@
 				document.body.innerHTML = '';
 				window.location.hash = '';
 				window._svelteTransitionManager = null;
+
+				${$bundle.dom.code}
 
 				window.component = new SvelteComponent.default({
 					target: document.body

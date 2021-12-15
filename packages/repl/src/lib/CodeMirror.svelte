@@ -156,7 +156,7 @@
 			readOnly: readonly,
 			autoCloseBrackets: true,
 			autoCloseTags: true,
-			extraKeys: {
+			extraKeys: CodeMirror.normalizeKeyMap({
 				'Enter': 'newlineAndIndentContinueMarkdownList',
 				'Ctrl-/': 'toggleComment',
 				'Cmd-/': 'toggleComment',
@@ -165,8 +165,10 @@
 				},
 				'Cmd-Q': function (cm) {
 					cm.foldCode(cm.getCursor());
-				}
-			},
+				},
+				// allow escaping the CodeMirror with Esc Tab
+				'Esc Tab': false
+			}),
 			foldGutter: true,
 			gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']
 		};
@@ -271,9 +273,7 @@
 </style>
 
 <div class='codemirror-container' class:flex bind:offsetWidth={w} bind:offsetHeight={h}>
-	<!-- svelte-ignore a11y-positive-tabindex -->
 	<textarea
-		tabindex='2'
 		bind:this={refs.editor}
 		readonly
 		value={code}

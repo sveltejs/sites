@@ -32,11 +32,11 @@
 </script>
 
 <svelte:head>
-	<title>Docs • SvelteKit</title>
+	<title>Docs • Svelte</title>
 
-	<meta name="twitter:title" content="SvelteKit docs" />
-	<meta name="twitter:description" content="Complete documentation for SvelteKit" />
-	<meta name="Description" content="Complete documentation for SvelteKit" />
+	<meta name="twitter:title" content="Svelte docs" />
+	<meta name="twitter:description" content="Complete documentation for Svelte" />
+	<meta name="Description" content="Complete documentation for Svelte" />
 </svelte:head>
 
 <Main bind:path>

@@ -18,11 +18,11 @@
 </script>
 
 <svelte:head>
-	<title>FAQ • SvelteKit</title>
+	<title>FAQ • Svelte</title>
 
-	<meta name="twitter:title" content="SvelteKit FAQ" />
-	<meta name="twitter:description" content="Frequently asked questions about SvelteKit" />
-	<meta name="description" content="Frequently asked questions about SvelteKit" />
+	<meta name="twitter:title" content="Svelte FAQ" />
+	<meta name="twitter:description" content="Frequently asked questions about Svelte" />
+	<meta name="description" content="Frequently asked questions about Svelte" />
 </svelte:head>
 
 <div class="faqs stretch">

@@ -16,6 +16,20 @@
 	export function focus() {
 		editor.focus();
 	}
+
+	let timeout;
+
+	function on_change(event) {
+		if ($bundle && $bundle.error) {
+			clearTimeout(timeout);
+			handle_change(event);
+		} else {
+			clearTimeout(timeout);
+			timeout = setTimeout(() => {
+				handle_change(event);
+			}, 150);
+		}
+	}
 </script>
 
 <style>
@@ -51,7 +65,7 @@
 			bind:this={editor}
 			{errorLoc}
 			{theme}
-			on:change={handle_change}
+			on:change={on_change}
 		/>
 	</div>
 

@@ -212,19 +212,21 @@
 			packagesUrl,
 			svelteUrl,
 			onstatus: (message) => {
-				// show bundler status, but only after time has elapsed, to
-				// prevent the banner flickering
-				if (!status_visible && !status_timeout) {
-					status_timeout = setTimeout(() => {
-						status_visible = true;
-					}, 200);
-				}
-
-				status = message;
-				if (!status) {
+				if (message) {
+					// show bundler status, but only after time has elapsed, to
+					// prevent the banner flickering
+					if (!status_visible && !status_timeout) {
+						status_timeout = setTimeout(() => {
+							status_visible = true;
+						}, 400);
+					}
+				} else {
+					clearTimeout(status_timeout);
 					status_visible = false;
 					status_timeout = null;
 				}
+
+				status = message;
 			}
 		});
 

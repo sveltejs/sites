@@ -1,4 +1,5 @@
 import * as rollup from 'rollup/dist/es/rollup.browser.js';
+import { sleep } from 'yootils';
 import commonjs from './plugins/commonjs.js';
 import glsl from './plugins/glsl.js';
 import json from './plugins/json.js';
@@ -58,10 +59,13 @@ let cached = {
 const ABORT = { aborted: true };
 
 const fetch_cache = new Map();
-function fetch_if_uncached(url) {
+async function fetch_if_uncached(url, uid) {
 	if (fetch_cache.has(url)) {
 		return fetch_cache.get(url);
 	}
+
+	await sleep(250);
+	if (uid !== current_id) throw ABORT;
 
 	const promise = fetch(url)
 		.then(async (r) => {
@@ -83,8 +87,8 @@ function fetch_if_uncached(url) {
 	return promise;
 }
 
-async function follow_redirects(url) {
-	const res = await fetch_if_uncached(url);
+async function follow_redirects(url, uid) {
+	const res = await fetch_if_uncached(url, uid);
 	return res.url;
 }
 
@@ -145,7 +149,7 @@ async function get_bundle(uid, mode, cache, lookup) {
 				const url = new URL(importee, importer).href;
 				self.postMessage({ type: 'status', uid, message: `resolving ${url}` });
 
-				return await follow_redirects(url);
+				return await follow_redirects(url, uid);
 			} else {
 				// fetch from unpkg
 				self.postMessage({ type: 'status', uid, message: `resolving ${importee}` });
@@ -156,8 +160,8 @@ async function get_bundle(uid, mode, cache, lookup) {
 				}
 
 				try {
-					const pkg_url = await follow_redirects(`${packagesUrl}/${importee}/package.json`);
-					const pkg_json = (await fetch_if_uncached(pkg_url)).body;
+					const pkg_url = await follow_redirects(`${packagesUrl}/${importee}/package.json`, uid);
+					const pkg_json = (await fetch_if_uncached(pkg_url, uid)).body;
 					const pkg = JSON.parse(pkg_json);
 
 					if (pkg.svelte || pkg.module || pkg.main) {
@@ -168,7 +172,7 @@ async function get_bundle(uid, mode, cache, lookup) {
 					// ignore
 				}
 
-				return await follow_redirects(`${packagesUrl}/${importee}`);
+				return await follow_redirects(`${packagesUrl}/${importee}`, uid);
 			}
 		},
 		async load(resolved) {
@@ -180,7 +184,7 @@ async function get_bundle(uid, mode, cache, lookup) {
 				self.postMessage({ type: 'status', uid, message: `fetching ${resolved}` });
 			}
 
-			const res = await fetch_if_uncached(resolved);
+			const res = await fetch_if_uncached(resolved, uid);
 			return res.body;
 		},
 		transform(code, id) {

@@ -26,7 +26,7 @@
 		return new Promise((f) => setTimeout(f, ms));
 	}
 
-	$: canSave = $session.user && gist && gist.userid === $session.user.id;
+	$: canSave = $session.user && gist && gist.owner === $session.user.id;
 
 	function handleKeydown(event) {
 		if (event.key === 's' && (isMac ? event.metaKey : event.ctrlKey)) {

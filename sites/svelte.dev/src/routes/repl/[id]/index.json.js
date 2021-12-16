@@ -49,7 +49,7 @@ export async function get({ params }) {
 
 		return {
 			body: {
-				uid: params.id,
+				id: params.id,
 				name: example.name,
 				owner: null,
 				relaxed: example.relaxed, // TODO is this right?
@@ -69,7 +69,7 @@ export async function get({ params }) {
 
 	return {
 		body: {
-			uid: params.id,
+			id: params.id,
 			name: app.name,
 			owner: app.userid,
 			relaxed: false,

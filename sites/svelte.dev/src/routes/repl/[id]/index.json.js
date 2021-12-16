@@ -71,7 +71,7 @@ export async function get({ params }) {
 		body: {
 			uid: params.id,
 			name: app.name,
-			owner: app.owner,
+			owner: app.userid,
 			relaxed: false,
 			components: munge(app.files)
 		}

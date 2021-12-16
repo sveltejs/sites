@@ -24,7 +24,7 @@ function munge(files) {
 		});
 }
 
-export async function get({ params }) {
+export async function get({ params, query }) {
 	if (!examples) {
 		const res = await fetch(`${API_BASE}/docs/svelte/examples`);
 		examples = new Set(
@@ -58,7 +58,7 @@ export async function get({ params }) {
 		};
 	}
 
-	const app = await gist.read(params.id);
+	const app = query.get('meta') ? await gist.read_meta(params.id) : await gist.read(params.id);
 
 	if (!app) {
 		return {
@@ -73,7 +73,7 @@ export async function get({ params }) {
 			name: app.name,
 			owner: app.owner,
 			relaxed: false,
-			components: munge(app.files)
+			components: munge(app.files ?? [])
 		}
 	};
 }

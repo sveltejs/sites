@@ -49,12 +49,26 @@ export async function create(user, gist) {
 
 /**
  * @param {string} id
- * @returns {Gist}
+ * @returns {Promise<Gist>}
  */
 export async function read(id) {
 	const { data, error } = await client
 		.from('gist')
 		.select('id,name,files,userid')
+		.eq('id', id);
+
+	if (error) throw new Error(error.message);
+	return data[0];
+}
+
+/**
+ * @param {string} id
+ * @returns {Promise<Omit<Gist, 'files'>>}
+ */
+export async function read_meta(id) {
+	const { data, error } = await client
+		.from('gist')
+		.select('id,name,userid')
 		.eq('id', id);
 
 	if (error) throw new Error(error.message);

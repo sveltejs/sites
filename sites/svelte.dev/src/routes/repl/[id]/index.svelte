@@ -1,9 +1,10 @@
 <script context="module">
-	export function load({ page: { params, query } }) {
+	export async function load({ page: { params, query }, fetch }) {
 		return {
 			props: {
 				version: query.get('version') || '3',
-				id: params.id
+				id: params.id,
+				meta: await (await fetch(`/repl/${params.id}.json?meta=true`)).json()
 			}
 		};
 	}
@@ -21,16 +22,18 @@
 
 	export let version;
 	export let id;
+	export let meta;
 
 	let repl;
 	let gist = {
 		id: null,
-		name: null,
-		owner: null,
+		name: meta.name,
+		owner: meta.owner,
 		relaxed: false,
 		components: []
 	};
-	let name = 'Loading...';
+	let name = `Loading '${meta.name}'...`;
+
 	let zen_mode = false;
 	let width = browser ? window.innerWidth : 1000;
 	let checked = false;
@@ -105,7 +108,7 @@
 <svelte:head>
 	<title>{name} • REPL • Svelte</title>
 
-	<meta name="twitter:title" content="Svelte REPL" />
+	<meta name="twitter:title" content="{gist.name} • REPL • Svelte" />
 	<meta name="twitter:description" content="Cybernetically enhanced web apps" />
 	<meta name="Description" content="Interactive Svelte playground" />
 </svelte:head>

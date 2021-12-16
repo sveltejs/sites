@@ -1,7 +1,0 @@
-{
-	"type": "module",
-	"dependencies": {
-		"@supabase/supabase-js": "^1.28.5",
-		"d3-dsv": "^3.0.1"
-	}
-}

@@ -64,7 +64,7 @@ async function fetch_if_uncached(url, uid) {
 		return fetch_cache.get(url);
 	}
 
-	await sleep(250);
+	await sleep(200);
 	if (uid !== current_id) throw ABORT;
 
 	const promise = fetch(url)

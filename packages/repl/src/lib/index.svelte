@@ -217,7 +217,7 @@
 				if (!status_visible && !status_timeout) {
 					status_timeout = setTimeout(() => {
 						status_visible = true;
-					}, 100);
+					}, 200);
 				}
 
 				status = message;

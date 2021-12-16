@@ -127,7 +127,13 @@
 			const component = $components.find((c) => c.name === name && c.type === type);
 			handle_select(component);
 
-			// TODO select the line/column in question
+			setTimeout(() => {
+				module_editor.focus();
+				module_editor.setCursor({
+					line: item.start.line - 1,
+					ch: item.start.column,
+				});
+			}, 0);
 		},
 
 		handle_change: (event) => {

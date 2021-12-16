@@ -60,6 +60,10 @@
 		if (editor) editor.clearHistory();
 	}
 
+	export function setCursor(pos) {
+		if (editor) editor.setCursor(pos);
+	}
+
 	const modes = {
 		js: {
 			name: 'javascript',

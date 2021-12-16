@@ -2,6 +2,7 @@
 	import { getContext, createEventDispatcher } from 'svelte';
 
 	export let handle_select;
+	export let show_modified;
 
 	let { components, selected, request_focus, rebundle } = getContext('REPL');
 	const dispatch = createEventDispatcher();
@@ -150,7 +151,7 @@
 					<i class="drag-handle" />
 					{#if component.name === 'App' && component !== editing}
 						<div class="uneditable">
-							App.svelte{#if component.modified}*{/if}
+							App.svelte{#if show_modified && component.modified}*{/if}
 						</div>
 					{:else if component === editing}
 						<span class="input-sizer"
@@ -169,7 +170,7 @@
 						/>
 					{:else}
 						<div class="editable" title="edit component name" on:click={() => editTab(component)}>
-							{component.name}.{component.type}{#if component.modified}*{/if}
+							{component.name}.{component.type}{#if show_modified && component.modified}*{/if}
 						</div>
 
 						<span class="remove" on:click={() => remove(component)}>

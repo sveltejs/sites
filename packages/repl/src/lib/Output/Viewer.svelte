@@ -1,7 +1,6 @@
 <script>
 	import { onMount, getContext } from 'svelte';
 	import getLocationFromStack from './getLocationFromStack.js';
-	import SplitPane from '../SplitPane.svelte';
 	import PaneWithPanel from './PaneWithPanel.svelte';
 	import ReplProxy from './ReplProxy.js';
 	import Console from './Console.svelte';

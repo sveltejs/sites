@@ -208,7 +208,10 @@
 	}
 
 	let sourceErrorLoc;
+
 	let status = null;
+	let status_visible = false;
+	let status_timeout = null;
 
 	const bundler =
 		is_browser &&
@@ -216,6 +219,20 @@
 			packagesUrl,
 			svelteUrl,
 			onstatus: (message) => {
+				if (message) {
+					// show bundler status, but only after time has elapsed, to
+					// prevent the banner flickering
+					if (!status_visible && !status_timeout) {
+						status_timeout = setTimeout(() => {
+							status_visible = true;
+						}, 400);
+					}
+				} else {
+					clearTimeout(status_timeout);
+					status_visible = false;
+					status_timeout = null;
+				}
+
 				status = message;
 			}
 		});
@@ -239,7 +256,7 @@
 		</section>
 
 		<section slot="b" style="height: 100%;">
-			<Output {svelteUrl} {status} {embedded} {relaxed} {injectedJS} {injectedCSS} {theme} />
+			<Output {svelteUrl} status={status_visible && status} {embedded} {relaxed} {injectedJS} {injectedCSS} {theme} />
 		</section>
 	</SplitPane>
 </div>

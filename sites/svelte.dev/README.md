@@ -1,12 +1,10 @@
 ## Running locally
 
-Set up the site sub-project:
+Run the site sub-project:
 
 ```bash
-git clone https://github.com/sveltejs/svelte.git
-cd site
-npm ci
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 and navigate to [localhost:3000](http://localhost:3000).
@@ -14,7 +12,7 @@ and navigate to [localhost:3000](http://localhost:3000).
 The first time you run the site locally, it will update the list of Contributors and REPL dependencies. After this it won't run again unless you force it by running:
 
 ```bash
-npm run update
+pnpm update
 ```
 
 ## Running using the local copy of Svelte
@@ -28,12 +26,11 @@ git clone https://github.com/sveltejs/svelte.git
 cd svelte
 npm ci
 PUBLISH=1 npm run build
-cd site
-npm ci
-npm run dev
 ```
 
-Then visit the REPL at [localhost:3000/repl?version=local](http://localhost:3000/repl?version=local). Please note that the local REPL only works with `npm run dev` and not when building the site for production usage.
+You'll then need to update the project to use that version of Svelte. Please update these docs with instructions on how to do that
+
+Then visit the REPL at [localhost:3000/repl?version=local](http://localhost:3000/repl?version=local). Please note that the local REPL only works with `pnpm dev` and not when building the site for production usage.
 
 ## REPL GitHub integration
 
@@ -51,31 +48,11 @@ In order for the REPL's GitHub integration to work properly when running locally
 
 ## Building the site
 
-To build the website, run `npm run build`. The output can be found in `build`.
+To build the website, run `pnpm build`. The output can be found in `build`.
 
 ## Testing
 
-Tests can be run using `npm run test`.
-
-
-## Linking `@sveltejs/site-kit` and `@sveltejs/svelte-repl`
-
-This site depends on `@sveltejs/site-kit` (a collection of styles, components and icons used in common by *.svelte.dev websites), and `@sveltejs/svelte-repl`.
-
-In order to work on features that depend on those packages, you need to [link](https://docs.npmjs.com/cli/link) their repositories:
-
-- `cd <somewhere>`
-- `git clone https://github.com/sveltejs/site-kit`
-- `git clone https://github.com/sveltejs/svelte-repl`
-- `cd <somewhere>/site-kit`
-- `npm link`
-- `cd <somewhere>/svelte-repl`
-- `npm link`
-- `cd <svelte-repo>/site`
-- `npm link @sveltejs/site-kit`
-- `npm link @sveltejs/svelte-repl`
-
-
+Tests can be run using `pnpm test`.
 
 ## Translating the API docs
 

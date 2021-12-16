@@ -14,7 +14,7 @@ export default {
 
 		try {
 			const ast = acorn.parse(code, {
-				ecmaVersion: 12
+				ecmaVersion: 'latest'
 			});
 
 			const requires = [];

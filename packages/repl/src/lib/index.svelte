@@ -18,6 +18,7 @@
 	export let injectedJS = '';
 	export let injectedCSS = '';
 	export let theme = 'svelte';
+	export let showModified = false;
 
 	const historyMap = new Map();
 
@@ -194,7 +195,7 @@
 	}
 
 	function beforeUnload(event) {
-		if ($components.find((component) => component.modified)) {
+		if (showModified && $components.find((component) => component.modified)) {
 			event.preventDefault();
 			event.returnValue = '';
 		}
@@ -227,7 +228,7 @@
 		{fixed}
 	>
 		<section slot="a">
-			<ComponentSelector {handle_select} on:add on:remove />
+			<ComponentSelector show_modified={showModified} {handle_select} on:add on:remove />
 			<ModuleEditor errorLoc={sourceErrorLoc} {theme} />
 		</section>
 

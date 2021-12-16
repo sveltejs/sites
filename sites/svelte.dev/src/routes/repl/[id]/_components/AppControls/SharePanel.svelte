@@ -3,16 +3,22 @@
   import { fade, fly } from 'svelte/transition';
   import { Icon } from '@sveltejs/site-kit';
   import setClipboard from '../../../_utils/setClipboard'
+
   const dispatch = createEventDispatcher();
+
   export let name;
   export let gist;
   export let version;
+
   const REPL_BUTTON_URL = `${window.location.origin}/svelte-share-repl.svg`
   let linkCopied = false
+
   $: canShare = gist?.uid && version;
+
 	function getForkedReplUrl() {
 		return `${window.location.origin}/repl/${gist.uid}?version=${version}`
 	}
+
   function copyLink() {
     linkCopied = true;
     setClipboard(getForkedReplUrl());
@@ -21,7 +27,12 @@
     }, 500);
   }
 </script>
-<div class="share-panel" transition:fly="{{ y: -5, duration: 500 }}">
+
+<div
+  class="share-panel"
+  aria-labelledby="shareReplDropdown" 
+  transition:fly="{{ y: -5, duration: 500 }}"
+>
   {#if canShare}
     <h4>Share REPL Button</h4>
     <img src="/svelte-share-repl.svg" alt="share REPL icon" width="150" />
@@ -29,7 +40,9 @@
     <textarea name="markdown" rows="2" readonly>[![Edit {name}]({REPL_BUTTON_URL})]({getForkedReplUrl()})</textarea>
     <h5>HTML</h5>
     <textarea name="html" rows="2" readonly><a href="{getForkedReplUrl()}"><img alt="Edit {name}" src="{REPL_BUTTON_URL}"></a></textarea>
+
     <hr>
+
     <div class="actions">
       <button class="cancel" on:click={() => dispatch('close')}>Cancel</button>
       <button 
@@ -48,12 +61,14 @@
   {:else}
      <p>You need to save the REPL to share it!</p>
   {/if}
-  </div>
+</div>
+
 <style>
   p {
     color: #333;
     margin: 0;
   }
+
   .share-panel {
     position: absolute;
     left: 0;
@@ -67,6 +82,7 @@
     transform: translateX(-50%);
     z-index: 15;
   }
+
   textarea {
     resize: none;
     width: 100%;
@@ -75,9 +91,11 @@
     line-height: 1.3em;
     white-space: nowrap;
   }
+
   h5, hr {
     margin-top: .5em;
   }
+
   hr {
     display: block;
     height: 1px;
@@ -85,10 +103,12 @@
     border-top: 1px solid #eee;
     margin-bottom: .5em;
   }
+
   .actions {
     display: flex;
     justify-content: flex-end;
   }
+
   button {
     color: var(--heading);
     font-size: .8em;
@@ -96,18 +116,22 @@
     border: 1px solid #eee;
     border-radius: var(--border-r);
   }
+
   .cancel {
     background-color: var(--back-light);
   }
+
   .copy-link {
     position: relative;
     color: var(--prime);
     border-color: var(--prime);
     margin-left: .5em;
   }
+
   .copy-link.click span {
     color: transparent;
   }
+
   .copy-link :global(.icon) {
     position: absolute;
     top: 50%;

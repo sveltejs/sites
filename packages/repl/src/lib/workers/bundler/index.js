@@ -2,6 +2,7 @@ import * as rollup from 'rollup/dist/es/rollup.browser.js';
 import commonjs from './plugins/commonjs.js';
 import glsl from './plugins/glsl.js';
 import json from './plugins/json.js';
+import replace from './plugins/replace.js';
 
 self.window = self; // egregious hack to get magic-string to work in a worker
 
@@ -229,7 +230,15 @@ async function get_bundle(uid, mode, cache, lookup) {
 	try {
 		bundle = await rollup.rollup({
 			input: './App.svelte',
-			plugins: [repl_plugin, commonjs, json, glsl],
+			plugins: [
+				repl_plugin,
+				commonjs,
+				json,
+				glsl,
+				replace({
+					'process.env.NODE_ENV': JSON.stringify('production')
+				})
+			],
 			inlineDynamicImports: true,
 			onwarn(warning) {
 				all_warnings.push({

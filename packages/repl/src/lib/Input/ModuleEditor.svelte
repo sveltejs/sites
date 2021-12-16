@@ -16,6 +16,23 @@
 	export function focus() {
 		editor.focus();
 	}
+
+	let error = null;
+	let warnings = [];
+	let timeout = null;
+
+	$: if ($bundle) {
+		clearTimeout(timeout);
+
+		// if there's already an error/warnings displayed, update them
+		if (error) error = $bundle.error;
+		if (warnings.length > 0) warnings = $bundle.warnings;
+
+		timeout = setTimeout(() => {
+			error = $bundle.error;
+			warnings = $bundle.warnings;
+		}, 400);
+	}
 </script>
 
 <style>
@@ -56,14 +73,12 @@
 	</div>
 
 	<div class="info">
-		{#if $bundle}
-			{#if $bundle.error}
-				<Message kind="error" details={$bundle.error} filename="{$selected.name}.{$selected.type}"/>
-			{:else if $bundle.warnings.length > 0}
-				{#each $bundle.warnings as warning}
-					<Message kind="warning" details={warning} filename="{$selected.name}.{$selected.type}"/>
-				{/each}
-			{/if}
+		{#if error}
+			<Message kind="error" details={error} filename="{$selected.name}.{$selected.type}"/>
+		{:else if warnings.length > 0}
+			{#each warnings as warning}
+				<Message kind="warning" details={warning} filename="{$selected.name}.{$selected.type}"/>
+			{/each}
 		{/if}
 	</div>
 </div>

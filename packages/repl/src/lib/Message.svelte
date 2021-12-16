@@ -25,8 +25,7 @@
 </script>
 
 <div
-	in:slide={{ delay: 150, duration: 100 }}
-	out:slide={{ duration: 100 }}
+	transition:slide={{ duration: 100 }}
 	class="message {kind}"
 	class:truncate
 >

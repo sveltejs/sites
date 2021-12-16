@@ -8,6 +8,7 @@
 
 	let open = false;
 	let visible = true;
+	let nav;
 
 	// hide nav whenever we navigate
 	page.subscribe(() => {
@@ -30,15 +31,25 @@
 		last_scroll = scroll;
 		hash_changed = false;
 	}
+
+	function handle_focus() {
+		if (open && !nav.contains(document.activeElement)) {
+			open = false;
+		}
+	}
 </script>
 
-<svelte:window on:hashchange={handle_hashchange} on:scroll={handle_scroll} />
+<svelte:window
+	on:hashchange={handle_hashchange}
+	on:scroll={handle_scroll}
+	on:focusin={handle_focus}
+/>
 
 {#if open}
 	<div class="modal-background hide-if-desktop" on:click={() => (open = false)} />
 {/if}
 
-<nav class:visible={visible || open} class:open>
+<nav class:visible={visible || open} class:open bind:this={nav}>
 	<a
 		sveltekit:prefetch
 		href="/"
@@ -49,6 +60,16 @@
 		{home}
 	</a>
 
+	<button
+		aria-label="Toggle menu"
+		aria-expanded={open.toString()}
+		class="menu-toggle"
+		class:open
+		on:click={() => (open = !open)}
+	>
+		<Icon name={open ? 'close' : 'menu'} size="1em" />
+	</button>
+
 	<ul>
 		<slot name="nav-center" />
 	</ul>
@@ -56,10 +77,6 @@
 	<ul class="external">
 		<slot name="nav-right" />
 	</ul>
-
-	<button aria-label="Toggle menu" class="menu-toggle" class:open on:click={() => (open = !open)}>
-		<Icon name={open ? 'close' : 'menu'} size="1em" />
-	</button>
 </nav>
 
 <style>

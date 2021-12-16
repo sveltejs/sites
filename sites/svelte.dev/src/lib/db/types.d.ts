@@ -8,7 +8,7 @@ export interface User {
 }
 
 export interface Gist {
-	uid: number;
+	id: number;
 	name: string;
 	owner: UserID;
 	files: Array<{ name: string; type: string; source: string }>;

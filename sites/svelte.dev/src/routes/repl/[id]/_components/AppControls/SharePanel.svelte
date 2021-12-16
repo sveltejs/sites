@@ -2,7 +2,7 @@
   import { createEventDispatcher } from 'svelte';
   import { fade, fly } from 'svelte/transition';
   import { Icon } from '@sveltejs/site-kit';
-  import setClipboard from '../../../_utils/setClipboard'
+  import setClipboard from '../../../_utils/setClipboard';
 
   const dispatch = createEventDispatcher();
 
@@ -10,20 +10,20 @@
   export let gist;
   export let version;
 
-  const REPL_BUTTON_URL = `${window.location.origin}/svelte-share-repl.svg`
-  let linkCopied = false
+  const REPL_BUTTON_URL = `${window.location.origin}/svelte-share-repl.svg`;
+  let linkCopied = false;
 
   $: canShare = gist?.uid && version;
 
 	function getForkedReplUrl() {
-		return `${window.location.origin}/repl/${gist.uid}?version=${version}`
+		return `${window.location.origin}/repl/${gist.uid}?version=${version}`;
 	}
 
   function copyLink() {
     linkCopied = true;
     setClipboard(getForkedReplUrl());
     setTimeout(() => {
-      dispatch('close')
+      dispatch('close');
     }, 500);
   }
 </script>

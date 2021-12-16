@@ -123,6 +123,7 @@
 				{relaxed}
 				fixed={mobile}
 				injectedJS={mapbox_setup}
+				showModified
 				on:change={handle_change}
 				on:add={handle_change}
 				on:remove={handle_change}

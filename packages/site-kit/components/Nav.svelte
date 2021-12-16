@@ -1,32 +1,19 @@
 <script>
-	import { setContext } from 'svelte';
-	import { writable } from 'svelte/store';
 	import Icon from './Icon.svelte';
 
-	export let segment;
 	export let page;
 	export let logo;
 	export let home = 'Home';
 	export let home_title = 'Homepage';
 
-	const current = writable(null);
-	setContext('nav', current);
-
 	let open = false;
 	let visible = true;
+	let nav;
 
 	// hide nav whenever we navigate
 	page.subscribe(() => {
 		open = false;
 	});
-
-	function intercept_touchstart(event) {
-		if (!open) {
-			event.preventDefault();
-			event.stopPropagation();
-			open = true;
-		}
-	}
 
 	// Prevents navbar to show/hide when clicking in docs sidebar
 	let hash_changed = false;
@@ -45,251 +32,202 @@
 		hash_changed = false;
 	}
 
-	$: $current = segment;
+	function handle_focus() {
+		if (open && !nav.contains(document.activeElement)) {
+			open = false;
+		}
+	}
 </script>
 
-<svelte:window on:hashchange={handle_hashchange} on:scroll={handle_scroll} />
+<svelte:window
+	on:hashchange={handle_hashchange}
+	on:scroll={handle_scroll}
+	on:focusin={handle_focus}
+/>
 
-<header class:visible={visible || open}>
-	<nav>
-		{#if open}
-			<div class="modal-background hide-if-desktop" on:click={() => (open = false)} />
-		{/if}
+{#if open}
+	<div class="modal-background hide-if-desktop" on:click={() => (open = false)} />
+{/if}
 
-		<a
-			sveltekit:prefetch
-			href="."
-			class="nav-spot home"
-			title={home_title}
-			style="background-image: url({logo})"
-		>
-			{home}
-		</a>
-		<ul
-			class:open
-			on:touchstart|capture={intercept_touchstart}
-			on:mouseenter={() => (open = true)}
-			on:mouseleave={() => (open = false)}
-		>
-			<div class="open-menu-button hide-if-desktop" class:open>
-				<Icon name="chevron" size="1em" />
-			</div>
-			<li class="hide-if-desktop" class:active={$current === ''}>
-				<a sveltekit:prefetch href="/">{home}</a>
-			</li>
-			<slot name="nav-center" />
-			{#if open}
-				<li class="hide-if-desktop">
-					<slot name="nav-right" />
-				</li>
-			{/if}
-		</ul>
-		<div class="nav-spot show-if-desktop">
-			<slot name="nav-right" />
-		</div>
-	</nav>
-</header>
+<nav class:visible={visible || open} class:open bind:this={nav}>
+	<a
+		sveltekit:prefetch
+		href="/"
+		class="nav-spot home"
+		title={home_title}
+		style="background-image: url({logo})"
+	>
+		{home}
+	</a>
+
+	<button
+		aria-label="Toggle menu"
+		aria-expanded={open.toString()}
+		class="menu-toggle"
+		class:open
+		on:click={() => (open = !open)}
+	>
+		<Icon name={open ? 'close' : 'menu'} size="1em" />
+	</button>
+
+	<ul>
+		<slot name="nav-center" />
+	</ul>
+
+	<ul class="external">
+		<slot name="nav-right" />
+	</ul>
+</nav>
 
 <style>
-	header {
+	.modal-background {
 		position: fixed;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background: rgba(255, 255, 255, 0.8);
+		z-index: 2;
+		backdrop-filter: grayscale(0.5) blur(2px);
+	}
+
+	nav {
+		--shadow-height: 0.5rem;
+		--shadow-gradient: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0.1) 0%,
+			rgba(0, 0, 0, 0.05) 30%,
+			transparent 100%
+		);
+		position: fixed;
 		width: 100vw;
 		height: var(--nav-h);
-		padding: 0 var(--side-nav);
 		margin: 0 auto;
 		background-color: white;
-		box-shadow: 0 -0.4rem 0.9rem 0.2rem rgba(0, 0, 0, 0.5);
 		font-family: var(--font);
 		z-index: 100;
 		user-select: none;
 		transition: transform 0.2s;
 	}
 
-	header:not(.visible):not(:focus-within) {
-		transform: translate(0, calc(-100% - 1rem));
-	}
-
-	nav {
-		position: fixed;
-		top: 0;
+	nav::after {
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: var(--shadow-height);
 		left: 0;
-		width: 100vw;
-		height: var(--nav-h);
-		padding: 0 var(--side-nav) 0 var(--side-nav);
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		background-color: transparent;
-		transform: none;
-		transition: none;
-		box-shadow: none;
+		bottom: calc(-1 * var(--shadow-height));
+		background: var(--shadow-gradient);
 	}
 
-	.nav-spot {
-		width: 50rem;
-		height: 4.2rem;
-	}
-
-	ul :global(li) {
-		display: block;
-		display: none;
-	}
-
-	ul :global(li).active {
-		display: block;
+	nav:not(.visible):not(:focus-within) {
+		transform: translate(0, calc(-100% - 1rem));
 	}
 
 	ul {
 		position: relative;
+		width: 100%;
+		padding: 0;
 		margin: 0;
-		padding: 0 1.5rem 0 0;
+		list-style: none;
+		z-index: 101;
 	}
 
-	ul::after {
-		/* prevent clicks from registering if nav is closed */
-		position: absolute;
-		content: '';
-		width: 100%;
-		height: 100%;
-		left: 0;
-		top: 0;
-	}
-
-	ul.open {
-		width: 100%;
-		padding: 0 0 1em 0;
-		background: white;
-		border-left: 1px solid #eee;
-		border-right: 1px solid #eee;
-		border-bottom: 1px solid #eee;
-		border-radius: 0 0 var(--border-r) var(--border-r);
-		align-self: start;
-	}
-
-	ul.open :global(li) {
-		display: block;
-		text-align: right;
-	}
-
-	ul.open::after {
-		display: none;
-	}
-
-	ul :global(li) :global(a) {
-		font-size: var(--h5);
-		padding: 0 0.8rem;
-		border: none;
-		color: inherit;
-	}
-
-	ul.open :global(li) :global(a) {
-		padding: 1.5rem 3.7rem 1.5rem 4rem;
-		display: block;
-	}
-
-	ul.open :global(.nav-right) {
-		padding-right: 2rem;
-	}
-
-	ul.open :global(.nav-right) :global(a) {
-		padding: 1.5rem;
-		display: block;
-	}
-
-	ul.open :global(li):first-child :global(a) {
-		padding-top: 1.5rem;
-	}
-
-	.open-menu-button {
-		position: absolute;
-		top: 0;
-		right: 0;
-	}
-
-	.open-menu-button.open {
-		display: none;
+	ul :global(a) {
+		color: var(--text);
 	}
 
 	.home {
-		position: relative;
-		top: -0.1rem;
-		-webkit-tap-highlight-color: transparent;
-		-webkit-touch-callout: none;
-		background: 0 50% no-repeat;
-		background-size: auto 100%;
+		width: 30rem;
+		height: var(--nav-h);
+		display: flex;
 		text-indent: -9999px;
+		background-position: calc(var(--side-nav) - 1rem) 50%;
+		background-repeat: no-repeat;
+		background-size: auto 70%;
 	}
 
-	ul :global(li).active :global(a) {
-		color: var(--prime);
+	button {
+		position: absolute;
+		top: calc(var(--nav-h) / 2 - 1rem);
+		right: var(--side-nav);
+		line-height: 1;
 	}
 
-	.modal-background {
-		position: fixed;
-		width: 100%;
-		height: 100%;
-		left: 0;
-		top: 0;
-		background-color: rgba(255, 255, 255, 0.9);
-	}
-
-	a {
-		color: inherit;
-		border-bottom: none;
-		transition: none;
-	}
-
-	ul :global(li):not(.active) :global(a):hover {
-		color: var(--flash);
-	}
-
-	.show-if-desktop {
-		display: none;
-	}
-
-	@media (min-width: 768px) {
+	@media (max-width: 799px) {
 		ul {
+			position: relative;
+			display: none;
 			width: 100%;
-			display: flex;
-			flex-direction: row;
-			padding: 0;
-		}
-
-		ul.open {
-			padding: 0;
 			background: white;
-			border: none;
-			align-self: initial;
+			padding: 1rem var(--side-nav);
 		}
 
-		ul.open :global(li) {
-			display: inline;
-			text-align: left;
+		.open ul {
+			display: block;
 		}
 
-		ul.open :global(li) :global(a) {
-			font-size: var(--h5);
-			padding: 0 0.8rem;
-			display: inline;
+		ul.external {
+			padding: 1rem var(--side-nav) 1rem;
 		}
 
-		ul::after {
+		ul.external::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: var(--side-nav);
+			width: calc(100% - 2 * var(--side-nav));
+			height: 1px;
+			background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
+		}
+
+		ul.external::after {
+			content: '';
+			position: absolute;
+			width: 100%;
+			height: var(--shadow-height);
+			left: 0;
+			bottom: calc(-1 * var(--shadow-height));
+			background: var(--shadow-gradient);
+		}
+	}
+
+	@media (min-width: 800px) {
+		.modal-background {
 			display: none;
 		}
 
+		nav {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		ul {
+			display: flex;
+			width: auto;
+			height: 100%;
+		}
+
 		ul :global(li) {
-			display: inline !important;
+			margin: 0 0.5rem;
+			padding: 0;
 		}
 
-		.show-if-desktop {
-			display: inline;
+		ul :global(a) {
+			display: flex;
+			align-items: center;
+			height: 100%;
 		}
 
-		.hide-if-desktop {
-			display: none !important;
+		ul.external {
+			width: 30rem;
+			padding: 0 var(--side-nav) 0 0;
+			justify-content: end;
+		}
+
+		button {
+			display: none;
 		}
 	}
 </style>

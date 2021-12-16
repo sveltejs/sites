@@ -72,24 +72,38 @@
 		flex: 1;
 	}
 
-	.box :global(a),
-	.how :global(a) {
+	.box :global(.cta),
+	.how :global(.cta) {
 		position: relative;
 		max-width: 15em;
 		padding: 0.8rem 1.6rem;
 		border-radius: 4px;
 		background: var(--back);
+		border: 1px solid white;
 		color: var(--second);
 		font-size: var(--h6);
+		text-decoration: none;
 	}
 
-	.how :global(a) {
-		background: var(--prime);
+	.how :global(.cta) {
+		border: 1px solid var(--prime);
+		background-color: var(--prime);
+		color: white;
+	}
+
+	.box :global(.cta):hover {
+		background: transparent;
 		color: var(--back);
 	}
 
-	.box :global(a)::after,
-	.how :global(a)::after {
+	.how :global(.cta):hover {
+		/* border: 1px solid var(--prime); */
+		background-color: transparent;
+		color: var(--prime);
+	}
+
+	.box :global(.cta)::after,
+	.how :global(.cta)::after {
 		content: '';
 		position: absolute;
 		display: block;
@@ -97,12 +111,20 @@
 		top: 0em;
 		width: 1em;
 		height: 100%;
-		background: url(/icons/arrow-right-black.svg);
+		background: url(../icons/arrow-right-black.svg);
 		background-size: 100% 100%;
 	}
 
-	.how :global(a)::after {
-		background-image: url(/icons/arrow-right.svg);
+	.how :global(.cta)::after {
+		background-image: url(../icons/arrow-right.svg);
+	}
+
+	.blurb :global(.cta):hover::after {
+		background-image: url(../icons/arrow-right.svg);
+	}
+
+	.how :global(.cta):hover::after {
+		background-image: url(../icons/arrow-right-prime.svg);
 	}
 
 	.box :global(h2) {
@@ -157,7 +179,8 @@
 				'what what';
 		}
 
-		.box, .how {
+		.box,
+		.how {
 			padding: 2em;
 		}
 	}

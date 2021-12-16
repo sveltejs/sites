@@ -11,19 +11,44 @@
 </script>
 
 <script>
-	import { Docs } from '@sveltejs/site-kit';
+	import { Contents, Main, Section } from '@sveltejs/site-kit/components/docs';
 
 	export let sections;
+
+	let path;
+
+	$: contents = sections.map(section => ({
+		path: `/docs#${section.slug}`,
+		title: section.title,
+		sections: section.sections.map(subsection => ({
+			path: `/docs#${subsection.slug}`,
+			title: subsection.title,
+			sections: subsection.sections.map(subsection => ({
+				path: `/docs#${subsection.slug}`,
+				title: subsection.title,
+			}))
+		}))
+	}));
 </script>
 
 <svelte:head>
 	<title>Docs • SvelteKit</title>
 
-	<meta name="twitter:title" content="SvelteKit docs">
-	<meta name="twitter:description" content="Complete documentation for SvelteKit">
-	<meta name="Description" content="Complete documentation for SvelteKit">
+	<meta name="twitter:title" content="SvelteKit docs" />
+	<meta name="twitter:description" content="Complete documentation for SvelteKit" />
+	<meta name="Description" content="Complete documentation for SvelteKit" />
 </svelte:head>
 
-<Docs {sections} project="kit" path="/documentation">
-	<h1 slot="header">Documentation</h1>
-</Docs>
+<Main bind:path>
+	<h1>Documentation</h1>
+
+	{#each sections as section}
+		<Section
+			{section}
+			edit="https://github.com/sveltejs/kit/edit/master/site/content/docs/{section.file}"
+			base="/docs"
+		/>
+	{/each}
+</Main>
+
+<Contents {contents} {path} />

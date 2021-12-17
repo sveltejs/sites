@@ -11,3 +11,23 @@ export async function get({ query, locals }) {
 		return { status: 401 };
 	}
 }
+
+export async function del({ locals, body }) {
+	const { user } = locals;
+	if (!user) return;
+
+	try {
+		await gist.destroy(user, body);
+
+		return {
+			status: 202
+		};
+	} catch (err) {
+		return {
+			status: 500,
+			body: {
+				error: err.message
+			}
+		};
+	}
+}

@@ -31,6 +31,28 @@
 	const { login, logout } = getContext('app');
 
 	const format = (str) => ago(new Date(str));
+
+	async function delete_gist(gist) {
+		if (!confirm(`Do you wish to permanently delete the gist "${gist.name}"`)) {
+			return;
+		}
+		try {
+			const r = await fetch('apps.json', {
+				method: 'DELETE',
+				credentials: 'include',
+				body: JSON.stringify(gist),
+				headers: { 'content-type': 'application/json' }
+			});
+			if (r.status !== 202) {
+				throw new Error(
+					`Unexpected response when trying to delete gist. ${r.status}: ${r.statusText}`
+				);
+			}
+			window.location.reload();
+		} catch (e) {
+			console.log('Error', e);
+		}
+	}
 </script>
 
 <svelte:head>
@@ -62,6 +84,7 @@
 						<h2>{gist.name}</h2>
 						<span>updated {format(gist.updated_at || gist.created_at)}</span>
 					</a>
+					<button on:click={() => delete_gist(gist)} class="delete-gist-btn">&times;</button>
 				</li>
 			{/each}
 		</ul>
@@ -116,6 +139,7 @@
 
 	li {
 		margin: 0 0 1em 0;
+		display: flex;
 	}
 
 	h2 {
@@ -135,5 +159,20 @@
 	li span {
 		font-size: 14px;
 		color: #999;
+	}
+
+	.delete-gist-btn {
+		font-size: medium;
+		color: #999;
+		border-radius: 100%;
+		width: 2rem;
+		height: 2rem;
+		margin: 4px 0 0 8px;
+		display: none;
+		border: 0;
+		background: none;
+	}
+	li:hover .delete-gist-btn {
+		display: block;
 	}
 </style>

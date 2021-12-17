@@ -57,10 +57,6 @@
 		height: auto;
 	}
 
-	img:hover {
-		transform: scale(1.2);
-	}
-
 	@media (min-width: 640px) {
 		.logos {
 			--row-size: 4;

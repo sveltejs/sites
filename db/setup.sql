@@ -36,8 +36,9 @@ create table public.gist (
 	created_at timestamptz default now(),
 	name text,
 	files json,
+	userid int8,
 	updated_at timestamptz,
-	userid int8
+	deleted_at timestamptz
 );
 
 -- foreign key relations
@@ -86,7 +87,7 @@ returns void
 language plpgsql volatile
 as $$
 	begin
-		delete from gist where id = gist_id and userid = gist_userid;
+		update gist set deleted_at = now() where id = gist_id and userid = gist_userid;
 	end;
 $$;
 

@@ -64,6 +64,30 @@ as $$
 	end;
 $$;
 
+create or replace function public.gist_list (
+	list_userid int8,
+	list_count int4,
+	list_start int4
+)
+returns table (
+	id uuid,
+	name text,
+	created_at timestamptz,
+	updated_at timestamptz
+)
+language plpgsql volatile
+as $$
+	begin
+		return query
+		select gist.id, gist.name, gist.created_at, gist.updated_at
+		from gist
+		where gist.userid = list_userid
+		order by coalesce(gist.updated_at, gist.created_at) desc
+		limit list_count + 1
+		offset list_start;
+	end;
+$$;
+
 create or replace function public.gist_create (name text, files json, userid int8)
 returns record
 language plpgsql volatile

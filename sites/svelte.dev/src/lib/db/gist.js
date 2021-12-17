@@ -6,12 +6,11 @@ import { client } from './client.js';
 const PAGE_SIZE = 100;
 
 export async function list(user, offset) {
-	const { data, error } = await client
-		.from('gist')
-		.select('id,name,created_at,updated_at')
-		.eq('userid', user.id)
-		.order('updated_at', { ascending: false })
-		.range(offset, offset + PAGE_SIZE + 1);
+	const { data, error } = await client.rpc('gist_list', {
+		list_userid: user.id,
+		list_count: PAGE_SIZE,
+		list_start: offset
+	});
 
 	if (error) throw new Error(error.message);
 

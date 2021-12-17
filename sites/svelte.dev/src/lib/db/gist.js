@@ -83,14 +83,15 @@ export async function update(user, gistid, gist) {
 }
 
 /**
- * @param {User} user
- * @param {Gist} gist
+ * @param {number} userid
+ * @param {string} id
  * @returns {void}
  */
-export async function destroy(user, gist) {
+export async function destroy(userid, id) {
 	const { error } = await client.rpc('gist_destroy', {
-		gist_id: gist.id,
-		gist_userid: user.id
+		// TODO we will probably want the ability to delete in bulk
+		gist_id: id,
+		gist_userid: userid
 	});
 
 	if (error) {

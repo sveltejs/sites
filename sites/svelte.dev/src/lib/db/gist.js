@@ -54,7 +54,8 @@ export async function read(id) {
 	const { data, error } = await client
 		.from('gist')
 		.select('id,name,files,userid')
-		.eq('id', id);
+		.eq('id', id)
+		.is('deleted_at', null);
 
 	if (error) throw new Error(error.message);
 	return data[0];

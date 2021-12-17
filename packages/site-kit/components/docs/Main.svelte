@@ -196,11 +196,11 @@
 		font-weight: 600;
 		font-size: 2.4rem;
 		color: var(--second);
-		margin: 6.4rem 0 1.6rem 0;
+		margin: -5.5rem 0 1.6rem 0;
 		padding-left: 0;
 		background: transparent;
 		line-height: 1;
-		padding: 0;
+		padding: 10rem 0 0 0;
 		top: 0;
 	}
 

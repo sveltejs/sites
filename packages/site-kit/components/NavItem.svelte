@@ -9,8 +9,13 @@
 {#if external}
 	<li><a href={external} {title} rel="external"><slot /></a></li>
 {:else}
-	<li class:active={$page.path.startsWith(href)}>
-		<a sveltekit:prefetch {href} {title}><slot /></a>
+	<li>
+		<a
+			aria-current={$page.path.startsWith(href) ? true : undefined}
+			sveltekit:prefetch
+			{href}
+			{title}
+		><slot /></a>
 	</li>
 {/if}
 
@@ -24,7 +29,7 @@
 		opacity: 1;
 	}
 
-	.active a {
+	[aria-current] {
 		color: var(--prime);
 	}
 </style>

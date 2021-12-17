@@ -27,6 +27,4 @@
 	.active a {
 		color: var(--prime);
 	}
-
-	/* TODO figure out some active styles */
 </style>

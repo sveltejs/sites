@@ -26,5 +26,6 @@
 		"codemirror": "5",
 		"svelte-json-tree": "^0.1.0",
 		"yootils": "^0.3.1"
-	}
+	},
+	"license": "MIT"
 }

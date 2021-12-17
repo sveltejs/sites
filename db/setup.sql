@@ -82,7 +82,7 @@ as $$
 		return query
 		select gist.id, gist.name, gist.created_at, gist.updated_at
 		from gist
-		where gist.userid = list_userid
+		where gist.userid = list_userid and gist.deleted_at is null
 		order by coalesce(gist.updated_at, gist.created_at) desc
 		limit list_count + 1
 		offset list_start;
@@ -129,7 +129,7 @@ as $$
 	begin
 		update gist
 			set name = gist_name, files = gist_files, updated_at = now()
-			where id = gist_id and userid = gist_userid
+			where id = gist_id and userid = gist_userid and deleted_at is null
 			returning id, name, files, userid into ret;
 
 		return ret;

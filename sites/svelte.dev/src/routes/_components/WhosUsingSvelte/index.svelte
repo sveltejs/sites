@@ -53,7 +53,7 @@
 		padding: 5px 10px;
 		transition: transform 0.2s;
 		min-width: 0; /* Avoid image overflow in Safari */
-		width: auto;
+		width: 100%;
 		height: auto;
 	}
 

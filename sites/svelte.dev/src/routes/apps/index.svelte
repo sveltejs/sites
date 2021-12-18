@@ -37,11 +37,9 @@
 			return;
 		}
 		try {
-			const r = await fetch('apps.json', {
+			const r = await fetch(`/repl/${gist.id}.json`, {
 				method: 'DELETE',
-				credentials: 'include',
-				body: JSON.stringify(gist),
-				headers: { 'content-type': 'application/json' }
+				credentials: 'include'
 			});
 			if (r.status !== 202) {
 				throw new Error(

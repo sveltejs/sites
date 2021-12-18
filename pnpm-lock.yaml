@@ -41,16 +41,22 @@ importers:
 
   packages/site-kit:
     specifiers:
+      '@sveltejs/kit': next
       esm: ^3.2.25
       golden-fleece: ^1.0.9
       mocha: ^6.2.3
       svelte: ^3.43.0
+      svelte2tsx: ^0.4.11
+      typescript: ^4.5.3
     dependencies:
       golden-fleece: 1.0.9
     devDependencies:
+      '@sveltejs/kit': 1.0.0-next.202_svelte@3.44.2
       esm: 3.2.25
       mocha: 6.2.3
       svelte: 3.44.2
+      svelte2tsx: 0.4.11_svelte@3.44.2+typescript@4.5.3
+      typescript: 4.5.3
 
   sites/kit.svelte.dev:
     specifiers:

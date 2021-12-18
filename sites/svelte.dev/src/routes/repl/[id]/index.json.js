@@ -92,3 +92,23 @@ export async function put({ locals, params, body }) {
 		status: 204
 	};
 }
+
+export async function del({ locals, params }) {
+	const { user } = locals;
+	if (!user) return;
+
+	try {
+		await gist.destroy(user.id, params.id);
+
+		return {
+			status: 202
+		};
+	} catch (err) {
+		return {
+			status: 500,
+			body: {
+				error: err.message
+			}
+		};
+	}
+}

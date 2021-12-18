@@ -6,7 +6,8 @@
 	"svelte": "index.js",
 	"scripts": {
 		"dev": "svelte-kit dev",
-		"prepublishOnly": "svelte-kit package",
+		"package": "svelte-kit package",
+		"prepublishOnly": "npm run package",
 		"testunit": "mocha -r esm test/unit/**"
 	},
 	"repository": {
@@ -29,16 +30,5 @@
 	},
 	"dependencies": {
 		"golden-fleece": "^1.0.9"
-	},
-	"exports": {
-		".": "./index.js",
-		"./package.json": "./package.json",
-		"./base.css": "./base.css",
-		"./code.css": "./code.css",
-		"./components/*": "./components/*",
-		"./components/docs": "./components/docs/index.js",
-		"./fonts/*": "./fonts/*",
-		"./icons/*": "./icons/*",
-		"./utils/*": "./utils/*"
 	}
 }

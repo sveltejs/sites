@@ -46,7 +46,8 @@ export default {
 			resolve: {
 				alias: {
 					$img: path.resolve('src/images'),
-					'@sveltejs/repl': path.resolve('../../packages/repl/src/lib/index.svelte')
+					'@sveltejs/repl': path.resolve('../../packages/repl/src/lib/index.svelte'),
+					'@sveltejs/site-kit': path.resolve('../../packages/site-kit/src/lib')
 				}
 			},
 			server: {

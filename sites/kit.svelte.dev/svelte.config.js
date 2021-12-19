@@ -15,7 +15,8 @@ export default {
 			plugins: [imagetools()],
 			resolve: {
 				alias: {
-					$img: path.resolve('src/images')
+					$img: path.resolve('src/images'),
+					'@sveltejs/site-kit': path.resolve('../../packages/site-kit/src/lib')
 				}
 			},
 			server: {

@@ -21,7 +21,9 @@ export async function list(user, offset) {
 
 	return {
 		gists: data.slice(0, PAGE_SIZE),
-		next: data.length > PAGE_SIZE ? offset + PAGE_SIZE : null
+		next: data.length > PAGE_SIZE ? offset + PAGE_SIZE : null,
+		current: offset || null,
+		prev: offset ? Math.max(offset - PAGE_SIZE, 0) : null
 	};
 }
 

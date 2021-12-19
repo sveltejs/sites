@@ -1,41 +1,46 @@
 <script context="module">
+	import { fetch_page_list } from './_utils/page-list';
 	export async function load({ fetch, page, session: { user } }) {
 		let gists = [];
 		let next = null;
+		let current = null;
+		let prev = null;
 
 		if (user) {
-			let url = 'apps.json';
-			if (page.query.get('offset')) {
-				url += `?offset=${encodeURIComponent(page.query.get('offset'))}`;
-			}
-			const r = await fetch(url, {
-				credentials: 'include'
-			});
+			const r = await fetch_page_list(fetch, page.query.get('offset'));
 			if (!r.ok) return { status: r.status, body: await r.text() };
 
-			({ gists, next } = await r.json());
+			({ gists, next, current, prev } = await r.json());
 		}
 
-		return { props: { user, gists, next } };
+		return { props: { user, gists, next, current, prev } };
 	}
 </script>
 
 <script>
 	import { getContext } from 'svelte';
+	import { goto } from '$app/navigation';
 	import { ago } from '$lib/time';
+	import { page_list } from './_utils/page-list';
 
 	export let user;
 	export let gists;
 	export let next;
+	export let current;
+	export let prev;
+
+	/** @type {"IDLE" | "DELETING"} */
+	let deleteState = 'IDLE';
 
 	const { login, logout } = getContext('app');
 
 	const format = (str) => ago(new Date(str));
 
 	async function delete_gist(gist) {
-		if (!confirm(`Do you wish to permanently delete the gist "${gist.name}"`)) {
+		if (!confirm(`This will permanently delete the gist "${gist.name}"`)) {
 			return;
 		}
+		deleteState = 'DELETING';
 		try {
 			const r = await fetch(`/repl/${gist.id}.json`, {
 				method: 'DELETE',
@@ -46,10 +51,19 @@
 					`Unexpected response when trying to delete gist. ${r.status}: ${r.statusText}`
 				);
 			}
-			window.location.reload();
+			// Re-fetch gists for current page
+			let pageListResult = await page_list(fetch, current);
+			// If no gists, and we have a prev page, goto prev.
+			if (pageListResult.gists.length < 1 && prev !== null) {
+				deleteState = 'IDLE';
+				goto(`/apps?offset=${encodeURIComponent(prev)}`);
+				return;
+			}
+			({ gists, prev, next, current } = pageListResult);
 		} catch (e) {
 			console.log('Error', e);
 		}
+		deleteState = 'IDLE';
 	}
 </script>
 
@@ -82,14 +96,23 @@
 						<h2>{gist.name}</h2>
 						<span>updated {format(gist.updated_at || gist.created_at)}</span>
 					</a>
-					<button on:click={() => delete_gist(gist)} class="delete-gist-btn">&times;</button>
+					<button
+						disabled={deleteState === 'DELETING'}
+						on:click={() => delete_gist(gist)}
+						class="delete-gist-btn">&times;</button
+					>
 				</li>
 			{/each}
 		</ul>
 
-		{#if next !== null}
-			<div><a href="apps?offset={next}">Next page...</a></div>
-		{/if}
+		<div class="pagination-wrapper">
+			{#if prev !== null}
+				<div class="prev-page"><a href="apps?offset={prev}">&lt; Previous page</a></div>
+			{/if}
+			{#if next !== null}
+				<div><a href="apps?offset={next}">Next page &gt;</a></div>
+			{/if}
+		</div>
 	{:else}
 		<p>
 			Please <a on:click|preventDefault={login} href="auth/login">log in</a> to see your saved apps.
@@ -170,7 +193,16 @@
 		border: 0;
 		background: none;
 	}
+	.delete-gist-btn:disabled {
+		color: #ccc;
+	}
 	li:hover .delete-gist-btn {
 		display: block;
+	}
+	.pagination-wrapper {
+		display: flex;
+	}
+	.prev-page {
+		margin-right: 2rem;
 	}
 </style>

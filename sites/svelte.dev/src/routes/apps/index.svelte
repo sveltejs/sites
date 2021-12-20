@@ -34,8 +34,27 @@
 
 	const format = (str) => ago(new Date(str));
 
-	let selected = [];
+	let destroying = false;
 
+	async function destroy(selected) {
+		destroying = true;
+
+		const res = await fetch(`/apps/destroy`, {
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json'
+			},
+			body: JSON.stringify({
+				ids: selected
+			})
+		});
+
+		if (!res.ok) alert('Deletion failed');
+
+		destroying = false;
+	}
+
+	let selected = [];
 	$: selecting = selected.length > 0;
 </script>
 
@@ -62,7 +81,7 @@
 
 		<div class="controls">
 			{#if selected.length > 0}
-				<button class="delete" on:click={() => destroy(selected)}>
+				<button class="delete" on:click={() => destroy(selected)} disabled={destroying}>
 					<Icon name="delete"/>
 					Delete {selected.length} {selected.length === 1 ? 'app' : 'apps'}
 				</button>

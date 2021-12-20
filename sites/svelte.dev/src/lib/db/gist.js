@@ -81,14 +81,14 @@ export async function update(user, gistid, gist) {
 }
 
 /**
- * @param {User} user
- * @param {Gist} gist
+ * @param {number} userid
+ * @param {string[]} ids
  * @returns {void}
  */
-export async function destroy(user, gist) {
+export async function destroy(userid, ids) {
 	const { error } = await client.rpc('gist_destroy', {
-		gist_id: gist.id,
-		gist_userid: user.id
+		gist_ids: ids,
+		gist_userid: userid
 	});
 
 	if (error) {

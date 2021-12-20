@@ -101,8 +101,8 @@
 				<button on:click={() => selected = []}>Clear selection</button>
 			{:else}
 				<form on:submit|preventDefault={e => {
-					const fd = new FormData(e.target);
-					goto(`/apps?search=${encodeURIComponent(fd.get('search'))}`);
+					const search = new FormData(e.target).get('search');
+					goto(search ? `/apps?search=${encodeURIComponent(search)}` : '/apps');
 				}}>
 					<input type="search" placeholder="Search" aria-label="Search" name="search" value={search}>
 				</form>

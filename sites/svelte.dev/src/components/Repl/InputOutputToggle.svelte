@@ -13,6 +13,7 @@
 		width: 100%;
 		height: 42px;
 		border-top: 1px solid var(--second);
+		z-index: 0;
 	}
 
 	input { display: block }

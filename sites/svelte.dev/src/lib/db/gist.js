@@ -53,7 +53,8 @@ export async function read(id) {
 	const { data, error } = await client
 		.from('gist')
 		.select('id,name,files,userid')
-		.eq('id', id);
+		.eq('id', id)
+		.is('deleted_at', null);
 
 	if (error) throw new Error(error.message);
 	return data[0];
@@ -83,7 +84,6 @@ export async function update(user, gistid, gist) {
 /**
  * @param {number} userid
  * @param {string[]} ids
- * @returns {void}
  */
 export async function destroy(userid, ids) {
 	const { error } = await client.rpc('gist_destroy', {

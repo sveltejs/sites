@@ -36,8 +36,9 @@ create table public.gist (
 	created_at timestamptz default now(),
 	name text,
 	files json,
+	userid int8,
 	updated_at timestamptz,
-	userid int8
+	deleted_at timestamptz
 );
 
 -- foreign key relations
@@ -82,7 +83,7 @@ as $$
 		return query
 		select gist.id, gist.name, gist.created_at, gist.updated_at
 		from gist
-		where gist.userid = list_userid and gist.name ilike ('%' || list_search || '%')
+		where gist.userid = list_userid and gist.deleted_at is null and gist.name ilike ('%' || list_search || '%')
 		order by coalesce(gist.updated_at, gist.created_at) desc
 		limit list_count + 1
 		offset list_start;
@@ -111,7 +112,7 @@ returns void
 language plpgsql volatile
 as $$
 	begin
-		delete from gist where id = gist_id and userid = gist_userid;
+		update gist set deleted_at = now() where id = gist_id and userid = gist_userid;
 	end;
 $$;
 
@@ -129,7 +130,7 @@ as $$
 	begin
 		update gist
 			set name = gist_name, files = gist_files, updated_at = now()
-			where id = gist_id and userid = gist_userid
+			where id = gist_id and userid = gist_userid and deleted_at is null
 			returning id, name, files, userid into ret;
 
 		return ret;

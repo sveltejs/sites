@@ -138,11 +138,7 @@
 		</symbol>
 
 		<symbol id="delete" class="icon" viewBox="0 0 24 24">
-			<path d="M4.5 5V22H19.5V5H4.5Z " fill="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-			<path d="M10 10V16.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-			<path d="M14 10V16.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-			<path d="M2 5H22" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-			<path d="M8 5L9.6445 2H14.3885L16 5H8Z" fill="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+			<path fill="currentColor" stroke="none" d="M22 4.2h-5.6L15 1.6c-.1-.2-.4-.4-.7-.4H9.6c-.2 0-.5.2-.6.4L7.6 4.2H2c-.4 0-.8.4-.8.8s.4.8.8.8h1.8V22c0 .4.3.8.8.8h15c.4 0 .8-.3.8-.8V5.8H22c.4 0 .8-.3.8-.8s-.4-.8-.8-.8zM10.8 16.5c0 .4-.3.8-.8.8s-.8-.3-.8-.8V10c0-.4.3-.8.8-.8s.8.3.8.8v6.5zm4 0c0 .4-.3.8-.8.8s-.8-.3-.8-.8V10c0-.4.3-.8.8-.8s.8.3.8.8v6.5z" />
 		</symbol>
 	</svg>
 </div>

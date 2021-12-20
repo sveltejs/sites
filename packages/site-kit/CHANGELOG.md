@@ -1,5 +1,10 @@
 # @sveltejs/site-kit changelog
 
+## Unreleased
+
+- Rebuilt using SvelteKit
+- Shipped with declaration files
+
 ## 2.0.0-next.6
 
 - Remove some problematic CSS

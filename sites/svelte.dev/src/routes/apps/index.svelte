@@ -118,7 +118,9 @@
 							<span>updated {format(gist.updated_at || gist.created_at)}</span>
 						</a>
 
-						<input type="checkbox" bind:group={selected} value={gist.id}>
+						<label>
+							<input aria-label="Select for delection" type="checkbox" bind:group={selected} value={gist.id}>
+						</label>
 					</li>
 				{/each}
 			</ul>
@@ -264,10 +266,15 @@
 		color: rgba(0,0,0,0.6);
 	}
 
-	li input {
+	li label {
 		position: absolute;
-		right: 1rem;
-		top: 1rem;
+		right: 0;
+		top: 0;
+		padding: 1rem;
+	}
+
+	li input {
+		display: block;
 		opacity: 0.2;
 	}
 

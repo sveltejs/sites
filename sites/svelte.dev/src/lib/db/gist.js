@@ -3,10 +3,11 @@ import { client } from './client.js';
 /** @typedef {import('./types').UserID} UserID */
 /** @typedef {import('./types').Gist} Gist */
 
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 90;
 
-export async function list(user, offset) {
+export async function list(user, { offset, search }) {
 	const { data, error } = await client.rpc('gist_list', {
+		list_search: search || '',
 		list_userid: user.id,
 		list_count: PAGE_SIZE,
 		list_start: offset
@@ -31,8 +32,6 @@ export async function list(user, offset) {
  * @returns {Gist}
  */
 export async function create(user, gist) {
-	console.log(user, gist);
-
 	const { data, error } = await client.rpc('gist_create', {
 		name: gist.name,
 		files: gist.files,
@@ -84,13 +83,11 @@ export async function update(user, gistid, gist) {
 
 /**
  * @param {number} userid
- * @param {string} id
- * @returns {void}
+ * @param {string[]} ids
  */
-export async function destroy(userid, id) {
-	const { error } = await client.rpc('gist_destroy', {
-		// TODO we will probably want the ability to delete in bulk
-		gist_id: id,
+export async function destroy(userid, ids) {
+	const { data, error } = await client.rpc('gist_destroy', {
+		gist_ids: ids,
 		gist_userid: userid
 	});
 

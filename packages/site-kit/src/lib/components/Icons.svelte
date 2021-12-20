@@ -136,5 +136,13 @@
 		<symbol id="chevron" class="icon" viewBox="0 0 24 24">
 			<path d="M2,7 L12,17 L20,7" />
 		</symbol>
+
+		<symbol id="delete" class="icon" viewBox="0 0 24 24">
+			<path d="M4.5 5V22H19.5V5H4.5Z " fill="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+			<path d="M10 10V16.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+			<path d="M14 10V16.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+			<path d="M2 5H22" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+			<path d="M8 5L9.6445 2H14.3885L16 5H8Z" fill="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+		</symbol>
 	</svg>
 </div>

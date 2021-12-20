@@ -5,13 +5,27 @@ import { client } from './client.js';
 
 const PAGE_SIZE = 100;
 
-export async function list(user, offset) {
-	const { data, error } = await client
+/**
+ *
+ * @param {{id:number}} user
+ * @param {Object} param0
+ * @param {number} param0.offset
+ * @param {string|void} param0.search
+ * @returns
+ */
+export async function list(user, { offset, search }) {
+	let query = client
 		.from('gist')
 		.select('id,name,created_at,updated_at')
 		.eq('userid', user.id)
 		.order('updated_at', { ascending: false })
 		.range(offset, offset + PAGE_SIZE + 1);
+
+	if (search) {
+		query = query.ilike('name', `%${search}%`);
+	}
+
+	const { data, error } = await query;
 
 	if (error) throw new Error(error.message);
 

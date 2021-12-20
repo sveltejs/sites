@@ -2,12 +2,9 @@
 	export async function load({ fetch, page, session: { user } }) {
 		let gists = [];
 		let next = null;
-
+		let search = page.query.get('search') || '';
 		if (user) {
-			let url = 'apps.json';
-			if (page.query.get('offset')) {
-				url += `?offset=${encodeURIComponent(page.query.get('offset'))}`;
-			}
+			const url = `apps.json?${page.query.toString()}`;
 			const r = await fetch(url, {
 				credentials: 'include'
 			});
@@ -16,19 +13,46 @@
 			({ gists, next } = await r.json());
 		}
 
-		return { props: { user, gists, next } };
+		return { props: { user, gists, next, search } };
 	}
 </script>
 
 <script>
 	import { getContext } from 'svelte';
 	import { ago } from '$lib/time';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
+	import { browser } from '$app/env';
 
 	export let user;
 	export let gists;
 	export let next;
+	export let search;
 
 	const { login, logout } = getContext('app');
+
+	let searchValue = search;
+
+	$: if (browser) filter(searchValue);
+
+	function filter(search) {
+		const query = new URLSearchParams($page.query);
+		query.set('search', search);
+		query.set('offset', 0);
+		history.replaceState({}, 'x', `apps?${query.toString()}`);
+		debounceGoto(`apps?${query.toString()}`, { replaceState: true, keepfocus: true });
+	}
+
+	let debounceTimeoutId;
+	function debounceGoto(url, options) {
+		if (debounceTimeoutId) clearTimeout(debounceTimeoutId);
+		debounceTimeoutId = setTimeout(() => {
+			if (search !== searchValue) {
+				goto(url, options);
+			}
+			debounceTimeoutId = undefined;
+		}, 500);
+	}
 
 	const format = (str) => ago(new Date(str));
 </script>
@@ -54,6 +78,8 @@
 				</span>
 			</div>
 		</header>
+
+		<input placeholder="Search apps..." bind:value={searchValue} />
 
 		<ul>
 			{#each gists as gist}
@@ -135,5 +161,12 @@
 	li span {
 		font-size: 14px;
 		color: #999;
+	}
+
+	input {
+		width: 100%;
+		padding: 8px;
+		margin-bottom: 8px;
+		color: var(--text);
 	}
 </style>

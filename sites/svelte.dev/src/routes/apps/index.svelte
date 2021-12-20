@@ -22,6 +22,7 @@
 
 <script>
 	import { getContext } from 'svelte';
+	import { Icon } from '@sveltejs/site-kit';
 	import { ago } from '$lib/time';
 
 	export let user;
@@ -31,6 +32,10 @@
 	const { login, logout } = getContext('app');
 
 	const format = (str) => ago(new Date(str));
+
+	let selected = [];
+
+	$: selecting = selected.length > 0;
 </script>
 
 <svelte:head>
@@ -41,7 +46,6 @@
 	{#if user}
 		<header>
 			<h1>Your apps</h1>
-
 			<div class="user">
 				<img
 					class="avatar"
@@ -55,13 +59,28 @@
 			</div>
 		</header>
 
-		<ul>
+		<div class="controls">
+			{#if selected.length > 0}
+				<button class="delete" on:click={() => destroy(selected)}>
+					<Icon name="delete"/>
+					Delete {selected.length} {selected.length === 1 ? 'app' : 'apps'}
+				</button>
+
+				<button on:click={() => selected = []}>Clear selection</button>
+			{:else}
+				<input type="search" placeholder="Search">
+			{/if}
+		</div>
+
+		<ul class:selecting>
 			{#each gists as gist}
-				<li>
-					<a href="repl/{gist.id}">
+				<li class:selected={selected.includes(gist.id)}>
+					<a href={selecting ? undefined : `/repl/${gist.id}`}>
 						<h2>{gist.name}</h2>
 						<span>updated {format(gist.updated_at || gist.created_at)}</span>
 					</a>
+
+					<input type="checkbox" bind:group={selected} value={gist.id}>
 				</li>
 			{/each}
 		</ul>
@@ -96,7 +115,7 @@
 		display: flex;
 		padding: 0 0 0 3.2rem;
 		position: relative;
-		margin: 1rem 0 5rem 0;
+		margin: 1rem 0;
 		color: var(--text);
 	}
 
@@ -110,10 +129,67 @@
 		border-radius: 0.2rem;
 	}
 
+	.controls {
+		position: sticky;
+		background: white;
+		top: 1rem;
+		display: flex;
+		align-items: center;
+		width: 100%;
+		height: 4rem;
+		margin: 0 0 2rem 0;
+		font-size: 1.6rem;
+		z-index: 2;
+		justify-content: space-between;
+		outline: 1rem solid white;
+	}
+
+	.controls::after {
+		content: '';
+		position: absolute;
+		width: 100%;
+		bottom: -2rem;
+		height: 2rem;
+		background: linear-gradient(to bottom, white 0%, white 50%, transparent);
+	}
+
+	.controls input, .controls button {
+		font-family: inherit;
+		font-size: inherit;
+	}
+
+	.controls input[type=search] {
+		width: 100%;
+		height: 100%;
+		padding: 0.5rem 1rem;
+		line-height: 1;
+		display: flex;
+		border: 1px solid #eee;
+		border-radius: var(--border-r);
+	}
+
+	.controls button {
+		display: flex;
+		gap: 1rem;
+		padding: 0 1rem;
+		height: 100%;
+		border-radius: var(--border-r);
+		align-items: center;
+	}
+
+	.delete {
+		background-color: #da106e;
+		color: white;
+	}
+
 	ul {
 		list-style: none;
 		display: grid;
 		grid-gap: 1rem;
+	}
+
+	li {
+		position: relative;
 	}
 
 	h2 {
@@ -125,26 +201,54 @@
 	li a {
 		display: block;
 		background: var(--back-light);
-		padding: 1rem;
+		padding: 1rem 3rem 1rem 1rem;
 		height: 100%;
 		line-height: 1;
 		border-radius: var(--border-r);
 		text-decoration: none;
 	}
 
-	li a:hover {
+	li span {
+		font-size: 12px;
+		color: rgba(0,0,0,0.6);
+	}
+
+	li input {
+		position: absolute;
+		right: 1rem;
+		top: 1rem;
+		opacity: 0.2;
+	}
+
+	ul:not(.selecting) li:hover a {
 		background-color: var(--second);
 		color: white;
 	}
 
-	li a:hover h2,
-	li a:hover span {
+	ul:not(.selecting) li:hover h2,
+	ul:not(.selecting) li:hover span {
 		color: white;
 	}
 
-	li span {
-		font-size: 12px;
-		color: rgba(0,0,0,0.6);
+	ul:not(.selecting) li:hover input {
+		opacity: 1;
+	}
+
+	li.selected {
+		filter: drop-shadow(1px 2px 4px hsla(205.7, 63.6%, 30.8%, 0.1));
+	}
+
+	li.selected input {
+		opacity: 1;
+	}
+
+	.selecting li:not(.selected) {
+		opacity: 0.4;
+	}
+
+	.selecting li:not(.selected):hover,
+	.selecting li:not(.selected):focus-within {
+		opacity: 1;
 	}
 
 	@media (min-width: 640px) {

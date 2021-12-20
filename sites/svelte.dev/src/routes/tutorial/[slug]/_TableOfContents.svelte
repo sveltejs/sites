@@ -58,6 +58,7 @@
 <style>
 	nav {
 		display: grid;
+		align-items: center;
 		grid-template-columns: 2.5em 1fr 2.5em;
 		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 	}
@@ -92,7 +93,7 @@
 	span {
 		white-space: nowrap;
 		position: relative;
-		top: 0.3em;
+		top: 0.1em;
 	}
 
 	strong {

@@ -306,13 +306,13 @@
 		height: 4rem;
 	}
 
-	@media (min-width: 640px) {
+	@media (min-width: 540px) {
 		ul {
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
-	@media (min-width: 960px) {
+	@media (min-width: 720px) {
 		ul {
 			grid-template-columns: repeat(3, 1fr);
 		}

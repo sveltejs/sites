@@ -4,7 +4,6 @@
 	import { browser } from '$app/env';
 	import { process_example } from '../../utils/examples';
 	import { API_BASE } from '../../_env';
-	import InputOutputToggle from './InputOutputToggle.svelte';
 
 	export let version = '3';
 	export let gist = null;
@@ -13,11 +12,8 @@
 
 	let repl;
 	let name = 'loading...';
-	let width = browser ? window.innerWidth - 32 : 1000;
 
 	let mounted = false;
-
-	let checked = false;
 
 	function load(gist, example) {
 		if (version !== 'local') {
@@ -89,50 +85,8 @@
 			: `https://unpkg.com/svelte@${version}`;
 
 	const rollupUrl = `https://unpkg.com/rollup@1/dist/rollup.browser.js`;
-
-	$: mobile = width < 560;
 </script>
 
-<div class="repl-outer" bind:clientWidth={width} class:mobile>
-	<div class="viewport" class:offset={checked}>
-		{#if browser}
-			<Repl bind:this={repl} fixed={mobile} {svelteUrl} {rollupUrl} embedded relaxed />
-		{/if}
-	</div>
-
-	{#if mobile}
-		<InputOutputToggle bind:checked />
-	{/if}
-</div>
-
-<style>
-	.repl-outer {
-		position: relative;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-		background-color: var(--back);
-		overflow: hidden;
-		box-sizing: border-box;
-		--pane-controls-h: 4.2rem;
-	}
-
-	.viewport {
-		width: 100%;
-		height: 100%;
-		flex: 1;
-	}
-
-	.mobile .viewport {
-		width: 200%;
-		height: calc(100% - 42px);
-		transition: transform 0.3s;
-	}
-
-	.mobile .offset {
-		transform: translate(-50%, 0);
-	}
-</style>
+{#if browser}
+	<Repl bind:this={repl} {svelteUrl} {rollupUrl} embedded relaxed />
+{/if}

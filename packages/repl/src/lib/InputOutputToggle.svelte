@@ -1,6 +1,6 @@
 <script>
 	export let checked;
-	import Checkbox from '@sveltejs/site-kit/components/Checkbox.svelte'
+	import Checkbox from './Checkbox.svelte'
 </script>
 
 <style>

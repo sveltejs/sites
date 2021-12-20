@@ -16,7 +16,6 @@
 	import { goto } from '$app/navigation';
 	import { session } from '$app/stores';
 	import { mapbox_setup } from '../../../config';
-	import InputOutputToggle from '../../../components/Repl/InputOutputToggle.svelte';
 	import AppControls from './_components/AppControls/index.svelte';
 
 	export let version;
@@ -112,27 +111,20 @@
 
 <svelte:window bind:innerWidth={width} />
 
-<div class="repl-outer {zen_mode ? 'zen-mode' : ''}" class:mobile>
+<div class="repl-outer {zen_mode ? 'zen-mode' : ''}">
 	<AppControls {gist} {repl} bind:name bind:zen_mode bind:modified_count on:forked={handle_fork} />
 
 	{#if browser}
-		<div class="viewport" class:offset={checked}>
-			<Repl
-				bind:this={repl}
-				{svelteUrl}
-				{relaxed}
-				fixed={mobile}
-				injectedJS={mapbox_setup}
-				showModified
-				on:change={handle_change}
-				on:add={handle_change}
-				on:remove={handle_change}
-			/>
-		</div>
-
-		{#if mobile}
-			<InputOutputToggle bind:checked />
-		{/if}
+		<Repl
+			bind:this={repl}
+			{svelteUrl}
+			{relaxed}
+			injectedJS={mapbox_setup}
+			showModified
+			on:change={handle_change}
+			on:add={handle_change}
+			on:remove={handle_change}
+		/>
 	{/if}
 </div>
 
@@ -151,33 +143,17 @@
 		flex-direction: column;
 	}
 
-	.viewport {
-		width: 100%;
-		height: 100%;
-	}
-
-	.mobile .viewport {
-		width: 200%;
-		height: calc(100% - 42px);
-		transition: transform 0.3s;
-		flex: 1;
-	}
-
-	.mobile .offset {
-		transform: translate(-50%, 0);
-	}
-
 	/* temp fix for #2499 and #2550 while waiting for a fix for https://github.com/sveltejs/svelte-repl/issues/8 */
 
-	.viewport :global(.tab-content),
-	.viewport :global(.tab-content.visible) {
+	.repl-outer :global(.tab-content),
+	.repl-outer :global(.tab-content.visible) {
 		pointer-events: all;
 		opacity: 1;
 	}
-	.viewport :global(.tab-content) {
+	.repl-outer :global(.tab-content) {
 		visibility: hidden;
 	}
-	.viewport :global(.tab-content.visible) {
+	.repl-outer :global(.tab-content.visible) {
 		visibility: visible;
 	}
 

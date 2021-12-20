@@ -5,8 +5,9 @@ import { client } from './client.js';
 
 const PAGE_SIZE = 100;
 
-export async function list(user, offset) {
+export async function list(user, { offset, search }) {
 	const { data, error } = await client.rpc('gist_list', {
+		list_search: search || '',
 		list_userid: user.id,
 		list_count: PAGE_SIZE,
 		list_start: offset
@@ -31,8 +32,6 @@ export async function list(user, offset) {
  * @returns {Gist}
  */
 export async function create(user, gist) {
-	console.log(user, gist);
-
 	const { data, error } = await client.rpc('gist_create', {
 		name: gist.name,
 		files: gist.files,

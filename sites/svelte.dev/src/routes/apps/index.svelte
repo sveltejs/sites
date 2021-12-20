@@ -3,6 +3,8 @@
 		let gists = [];
 		let next = null;
 
+		const search = page.query.get('search');
+
 		if (user) {
 			const r = await fetch(`apps.json?${page.query}`, {
 				credentials: 'include'
@@ -13,7 +15,7 @@
 			({ gists, next } = await r.json());
 		}
 
-		return { props: { user, gists, next } };
+		return { props: { user, gists, next, search } };
 	}
 </script>
 
@@ -21,10 +23,12 @@
 	import { getContext } from 'svelte';
 	import { Icon } from '@sveltejs/site-kit';
 	import { ago } from '$lib/time';
+	import { goto } from '$app/navigation';
 
 	export let user;
 	export let gists;
 	export let next;
+	export let search;
 
 	const { login, logout } = getContext('app');
 
@@ -65,25 +69,34 @@
 
 				<button on:click={() => selected = []}>Clear selection</button>
 			{:else}
-				<input type="search" placeholder="Search">
+				<form on:submit|preventDefault={e => {
+					const fd = new FormData(e.target);
+					goto(`/apps?search=${encodeURIComponent(fd.get('search'))}`);
+				}}>
+					<input type="search" placeholder="Search" name="search" value={search}>
+				</form>
 			{/if}
 		</div>
 
-		<ul class:selecting>
-			{#each gists as gist}
-				<li class:selected={selected.includes(gist.id)}>
-					<a href={selecting ? undefined : `/repl/${gist.id}`}>
-						<h2>{gist.name}</h2>
-						<span>updated {format(gist.updated_at || gist.created_at)}</span>
-					</a>
+		{#if gists.length > 0}
+			<ul class:selecting>
+				{#each gists as gist}
+					<li class:selected={selected.includes(gist.id)}>
+						<a href={selecting ? undefined : `/repl/${gist.id}`}>
+							<h2>{gist.name}</h2>
+							<span>updated {format(gist.updated_at || gist.created_at)}</span>
+						</a>
 
-					<input type="checkbox" bind:group={selected} value={gist.id}>
-				</li>
-			{/each}
-		</ul>
+						<input type="checkbox" bind:group={selected} value={gist.id}>
+					</li>
+				{/each}
+			</ul>
 
-		{#if next !== null}
-			<div><a href="apps?offset={next}">Next page...</a></div>
+			{#if next !== null}
+				<div><a href="/apps?offset={next}{search ? `&search=${encodeURIComponent(search)}` : ''}">Next page...</a></div>
+			{/if}
+		{:else}
+			<p>No apps here. <a href="/repl">Go make one!</a></p>
 		{/if}
 	{:else}
 		<p>
@@ -150,12 +163,18 @@
 		background: linear-gradient(to bottom, white 0%, white 50%, transparent);
 	}
 
+	.controls form {
+		width: 100%;
+		height: 100%;
+	}
+
 	.controls input, .controls button {
 		font-family: inherit;
 		font-size: inherit;
 	}
 
 	.controls input[type=search] {
+		position: relative;
 		width: 100%;
 		height: 100%;
 		padding: 0.5rem 1rem;
@@ -163,6 +182,7 @@
 		display: flex;
 		border: 1px solid #eee;
 		border-radius: var(--border-r);
+		z-index: 2;
 	}
 
 	.controls button {

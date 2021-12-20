@@ -65,6 +65,7 @@ as $$
 $$;
 
 create or replace function public.gist_list (
+	list_search text,
 	list_userid int8,
 	list_count int4,
 	list_start int4
@@ -81,7 +82,7 @@ as $$
 		return query
 		select gist.id, gist.name, gist.created_at, gist.updated_at
 		from gist
-		where gist.userid = list_userid
+		where gist.userid = list_userid and gist.name ilike ('%' || list_search || '%')
 		order by coalesce(gist.updated_at, gist.created_at) desc
 		limit list_count + 1
 		offset list_start;

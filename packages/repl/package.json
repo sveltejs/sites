@@ -23,6 +23,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@sveltejs/site-kit": "workspace:*",
 		"codemirror": "5",
 		"svelte-json-tree": "^0.1.0",
 		"yootils": "^0.3.1"

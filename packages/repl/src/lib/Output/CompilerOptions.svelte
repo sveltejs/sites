@@ -1,5 +1,7 @@
+<!-- svelte-ignore a11y-label-has-associated-control -->
 <script>
 	import { getContext } from 'svelte';
+	import Checkbox from '@sveltejs/site-kit/components/Checkbox.svelte'
 
 	const { compile_options } = getContext('REPL');
 </script>
@@ -42,7 +44,7 @@
 		color: var(--string);
 	}
 
-	input[type=checkbox] {
+	label :global(input[type=checkbox]) {
 		top: -1px;
 	}
 
@@ -116,32 +118,32 @@
 
 	<label class="option">
 		<span class="key">dev:</span>
-		<input type="checkbox" bind:checked={$compile_options.dev}> <span class="boolean">{$compile_options.dev}</span>,
+		<Checkbox bind:checked={$compile_options.dev}/> <span class="boolean">{$compile_options.dev}</span>,
 	</label>
 
 	<label class="option">
 		<span class="key">css:</span>
-		<input type="checkbox" bind:checked={$compile_options.css}> <span class="boolean">{$compile_options.css}</span>,
+		<Checkbox bind:checked={$compile_options.css}/> <span class="boolean">{$compile_options.css}</span>,
 	</label>
 
 	<label class="option">
 		<span class="key">hydratable:</span>
-		<input type="checkbox" bind:checked={$compile_options.hydratable}> <span class="boolean">{$compile_options.hydratable}</span>,
+		<Checkbox bind:checked={$compile_options.hydratable}/> <span class="boolean">{$compile_options.hydratable}</span>,
 	</label>
 
 	<label class="option">
 		<span class="key">customElement:</span>
-		<input type="checkbox" bind:checked={$compile_options.customElement}> <span class="boolean">{$compile_options.customElement}</span>,
+		<Checkbox bind:checked={$compile_options.customElement}/> <span class="boolean">{$compile_options.customElement}</span>,
 	</label>
 
 	<label class="option">
 		<span class="key">immutable:</span>
-		<input type="checkbox" bind:checked={$compile_options.immutable}> <span class="boolean">{$compile_options.immutable}</span>,
+		<Checkbox bind:checked={$compile_options.immutable}/> <span class="boolean">{$compile_options.immutable}</span>,
 	</label>
 
 	<label class="option">
 		<span class="key">legacy:</span>
-		<input type="checkbox" bind:checked={$compile_options.legacy}> <span class="boolean">{$compile_options.legacy}</span>
+		<Checkbox bind:checked={$compile_options.legacy}/> <span class="boolean">{$compile_options.legacy}</span>
 	</label>
 	});
 </div>

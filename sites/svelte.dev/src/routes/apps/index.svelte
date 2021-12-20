@@ -4,13 +4,10 @@
 		let next = null;
 
 		if (user) {
-			let url = 'apps.json';
-			if (page.query.get('offset')) {
-				url += `?offset=${encodeURIComponent(page.query.get('offset'))}`;
-			}
-			const r = await fetch(url, {
+			const r = await fetch(`apps.json?${page.query}`, {
 				credentials: 'include'
 			});
+
 			if (!r.ok) return { status: r.status, body: await r.text() };
 
 			({ gists, next } = await r.json());

@@ -112,28 +112,50 @@
 
 	ul {
 		list-style: none;
-	}
-
-	li {
-		margin: 0 0 1em 0;
+		display: grid;
+		grid-gap: 1rem;
 	}
 
 	h2 {
 		color: var(--text);
-		font-size: var(--h3);
+		font-size: var(--h5);
 		font-weight: 400;
 	}
 
 	li a {
-		border: none;
+		display: block;
+		background: var(--back-light);
+		padding: 1rem;
+		height: 100%;
+		line-height: 1;
+		border-radius: var(--border-r);
+		text-decoration: none;
 	}
 
-	li a:hover h2 {
-		color: var(--flash);
+	li a:hover {
+		background-color: var(--second);
+		color: white;
+	}
+
+	li a:hover h2,
+	li a:hover span {
+		color: white;
 	}
 
 	li span {
-		font-size: 14px;
-		color: #999;
+		font-size: 12px;
+		color: rgba(0,0,0,0.6);
+	}
+
+	@media (min-width: 640px) {
+		ul {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (min-width: 960px) {
+		ul {
+			grid-template-columns: repeat(3, 1fr);
+		}
 	}
 </style>

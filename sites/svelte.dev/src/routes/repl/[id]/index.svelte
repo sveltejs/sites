@@ -113,7 +113,7 @@
 <svelte:window bind:innerWidth={width} />
 
 <div class="repl-outer {zen_mode ? 'zen-mode' : ''}" class:mobile>
-	<AppControls {gist} {repl} bind:name bind:zen_mode bind:modified_count on:forked={handle_fork} />
+	<AppControls {gist} {repl} {version} bind:name bind:zen_mode bind:modified_count on:forked={handle_fork} />
 
 	{#if browser}
 		<div class="viewport" class:offset={checked}>

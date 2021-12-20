@@ -280,6 +280,7 @@
 		position: relative;
 		width: 100%;
 		height: 100%;
+		background: white;
 	}
 
 	.container :global(section) {
@@ -296,7 +297,6 @@
 		width: 100%;
 		height: 42px;
 		box-sizing: border-box;
-		background: white;
 	}
 
 	.container :global(section) > :global(*):last-child {

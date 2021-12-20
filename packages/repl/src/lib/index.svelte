@@ -246,16 +246,18 @@
 	}
 
 	$: mobile = width < 540;
+
+	$: toggleable = mobile && orientation === 'columns';
 </script>
 
 <svelte:window on:beforeunload={beforeUnload} />
 
-<div class="container" class:mobile bind:clientWidth={width}>
+<div class="container" class:toggleable bind:clientWidth={width}>
 	<div class="viewport" class:output={show_output}>
 		<SplitPane
 			type={orientation === 'rows' ? 'vertical' : 'horizontal'}
-			pos={mobile ? fixedPos : orientation === 'rows' ? 50 : 60}
-			fixed={mobile}
+			pos={(mobile || fixed) ? fixedPos : orientation === 'rows' ? 50 : 60}
+			fixed={fixed}
 		>
 			<section slot="a">
 				<ComponentSelector show_modified={showModified} {handle_select} on:add on:remove />
@@ -268,7 +270,7 @@
 		</SplitPane>
 	</div>
 
-	{#if mobile}
+	{#if toggleable}
 		<InputOutputToggle bind:checked={show_output}/>
 	{/if}
 </div>
@@ -305,13 +307,13 @@
 		height: 100%;
 	}
 
-	.mobile .viewport {
+	.toggleable .viewport {
 		width: 200%;
 		height: calc(100% - 42px);
 		transition: transform 0.3s;
 	}
 
-	.mobile .viewport.output {
+	.toggleable .viewport.output {
 		transform: translate(-50%);
 	}
 </style>

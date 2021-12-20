@@ -123,9 +123,12 @@
 				{/each}
 			</ul>
 
-			{#if next !== null}
-				<div><a href="/apps?offset={next}{search ? `&search=${encodeURIComponent(search)}` : ''}">Next page...</a></div>
-			{/if}
+			<div class="pagination">
+				<!-- TODO more sophisticated pagination -->
+				{#if next !== null && !selecting}
+					<a href="/apps?offset={next}{search ? `&search=${encodeURIComponent(search)}` : ''}">Next page...</a>
+				{/if}
+			</div>
 		{:else}
 			<p>No apps here. <a href="/repl">Go make one!</a></p>
 		{/if}
@@ -297,6 +300,10 @@
 	.selecting li:not(.selected):hover,
 	.selecting li:not(.selected):focus-within {
 		opacity: 1;
+	}
+
+	.pagination {
+		height: 4rem;
 	}
 
 	@media (min-width: 640px) {

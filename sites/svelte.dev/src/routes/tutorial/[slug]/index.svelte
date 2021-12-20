@@ -74,7 +74,7 @@
 		'https://github.com/sveltejs/svelte/tree/master/site/content/tutorial';
 
 	$: selected = lookup.get(slug);
-	$: improve_link = ``;
+	$: improve_link = '';
 
 	//`${tutorial_repo_link}/${selected.chapter.section_dir}/${selected.chapter.chapter_dir}`;
 

@@ -104,7 +104,7 @@
 					const fd = new FormData(e.target);
 					goto(`/apps?search=${encodeURIComponent(fd.get('search'))}`);
 				}}>
-					<input type="search" placeholder="Search" name="search" value={search}>
+					<input type="search" placeholder="Search" aria-label="Search" name="search" value={search}>
 				</form>
 			{/if}
 		</div>

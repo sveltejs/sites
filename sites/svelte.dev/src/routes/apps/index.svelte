@@ -6,7 +6,7 @@
 		const search = page.query.get('search');
 
 		if (user) {
-			const r = await fetch(`apps.json?${page.query}`, {
+			const r = await fetch(`/apps.json?${page.query}`, {
 				credentials: 'include'
 			});
 
@@ -23,7 +23,7 @@
 	import { getContext } from 'svelte';
 	import { Icon } from '@sveltejs/site-kit';
 	import { ago } from '$lib/time';
-	import { goto } from '$app/navigation';
+	import { goto, invalidate } from '$app/navigation';
 
 	export let user;
 	export let gists;
@@ -37,6 +37,9 @@
 	let destroying = false;
 
 	async function destroy(selected) {
+		const confirmed = confirm(`Are you sure you want to delete ${selected.length} ${selected.length === 1 ? 'app' : 'apps'}?`);
+		if (!confirmed) return;
+
 		destroying = true;
 
 		const res = await fetch(`/apps/destroy`, {
@@ -49,7 +52,16 @@
 			})
 		});
 
-		if (!res.ok) alert('Deletion failed');
+		if (res.ok) {
+			// await invalidate('/apps.json');
+			// selected = [];
+
+			// this is a temporary fix because invalidation only works once
+			// TODO raise an issue
+			location.reload();
+		} else {
+			alert('Deletion failed');
+		}
 
 		destroying = false;
 	}

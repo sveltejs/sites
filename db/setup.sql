@@ -105,14 +105,14 @@ as $$
 $$;
 
 create or replace function public.gist_destroy (
-	gist_id uuid,
+	gist_ids uuid[],
 	gist_userid int8
 )
 returns void
 language plpgsql volatile
 as $$
 	begin
-		update gist set deleted_at = now() where id = gist_id and userid = gist_userid;
+		update gist set deleted_at = now() where id = any(gist_ids) and userid = gist_userid;
 	end;
 $$;
 

@@ -3,7 +3,7 @@ import { client } from './client.js';
 /** @typedef {import('./types').UserID} UserID */
 /** @typedef {import('./types').Gist} Gist */
 
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 90;
 
 export async function list(user, { offset, search }) {
 	const { data, error } = await client.rpc('gist_list', {
@@ -86,7 +86,7 @@ export async function update(user, gistid, gist) {
  * @param {string[]} ids
  */
 export async function destroy(userid, ids) {
-	const { error } = await client.rpc('gist_destroy', {
+	const { data, error } = await client.rpc('gist_destroy', {
 		gist_ids: ids,
 		gist_userid: userid
 	});

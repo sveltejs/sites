@@ -93,7 +93,7 @@
 	span {
 		white-space: nowrap;
 		position: relative;
-		top: 0.3em;
+		top: 0.1em;
 	}
 
 	strong {

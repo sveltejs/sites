@@ -1,5 +1,7 @@
 ## Running locally
 
+Setup a database on supabase with the instructions [here](../../db/) and set the corresponding environment variables.
+
 Run the site sub-project:
 
 ```bash

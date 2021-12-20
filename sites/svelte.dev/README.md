@@ -1,6 +1,6 @@
 ## Running locally
 
-Setup a database on supabase with the instructions [here](../../db/) and set the corresponding environment variables.
+Setup a database on [Supabase](https://supabase.com) with the instructions [here](../../db) and set the corresponding environment variables.
 
 Run the site sub-project:
 
@@ -45,7 +45,6 @@ In order for the REPL's GitHub integration to work properly when running locally
    ```
    GITHUB_CLIENT_ID=[your app's Client ID]
    GITHUB_CLIENT_SECRET=[your app's Client Secret]
-   BASEURL=http://localhost:3000
    ```
 
 ## Building the site

@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 
-	export let segment = null;
+	export let href = null;
 	export let external = null;
 	export let title = null;
 </script>
@@ -9,8 +9,13 @@
 {#if external}
 	<li><a href={external} {title} rel="external"><slot /></a></li>
 {:else}
-	<li class:active={$page.path.split('/')[1] === segment}>
-		<a sveltekit:prefetch href={segment} {title}><slot /></a>
+	<li>
+		<a
+			aria-current={$page.path.startsWith(href) ? true : undefined}
+			sveltekit:prefetch
+			{href}
+			{title}
+		><slot /></a>
 	</li>
 {/if}
 
@@ -24,5 +29,7 @@
 		opacity: 1;
 	}
 
-	/* TODO figure out some active styles */
+	[aria-current] {
+		color: var(--prime);
+	}
 </style>

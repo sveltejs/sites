@@ -5,6 +5,7 @@
 
 <style>
 	.input-output-toggle {
+		position: relative;
 		display: grid;
 		user-select: none;
 		flex: 0;
@@ -14,6 +15,7 @@
 		width: 100%;
 		height: 42px;
 		border-top: 1px solid var(--second);
+		z-index: 2;
 	}
 
 	span { color: #ccc }

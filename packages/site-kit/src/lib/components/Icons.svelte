@@ -22,7 +22,7 @@
 		</symbol>
 
 		<symbol id="check" class="icon" viewBox="0 0 24 24">
-			<polyline points="20 6 9 17 4 12" />
+			<path d="M21.5 5.5L8.4375 18.5L2.5 12.5909"/>
 		</symbol>
 
 		<symbol id="close" class="icon" viewBox="0 0 24 24">
@@ -31,9 +31,9 @@
 		</symbol>
 
 		<symbol id="download" class="icon" viewBox="0 0 24 24">
-			<path d="M21 15V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V15" />
-			<polyline points="7 10 12 15 17 10" />
-			<line x1="12" y1="15" x2="12" y2="3" />
+			<path d="M3 12.0042V21H21V12"/>
+			<path d="M16.5 11.5L12 16L7.5 11.5"/>
+			<path d="M11.9958 3V16"/>
 		</symbol>
 
 		<symbol id="edit" class="icon" viewBox="0 0 24 24">
@@ -58,11 +58,11 @@
 			/>
 		</symbol>
 
-		<symbol id="git-branch" class="icon" viewBox="0 0 24 24">
-			<line x1="6" y1="3" x2="6" y2="15" />
-			<circle cx="18" cy="6" r="3" />
-			<circle cx="6" cy="18" r="3" />
-			<path d="M18 9a9 9 0 0 1-9 9" />
+		<symbol id="fork" class="icon" viewBox="0 0 24 24">
+			<path fill="currentColor" d="M18.5,6c1.1,0,2-0.9,2-2s-0.9-2-2-2s-2,0.9-2,2S17.4,6,18.5,6z"/>
+			<path fill="currentColor" d="M5.5,6c1.1,0,2-0.9,2-2s-0.9-2-2-2s-2,0.9-2,2S4.4,6,5.5,6z"/>
+			<path fill="currentColor" d="M12,22c1.1,0,2-0.9,2-2s-0.9-2-2-2s-2,0.9-2,2S10.9,22,12,22z"/>
+			<path d="M5.5,6v1.5c0,3.5,6.5,5,6.5,8.5v2v-2c0-3.5,6.5-5,6.5-8.5V6"/>
 		</symbol>
 
 		<symbol id="log-in" class="icon" viewBox="0 0 24 24">
@@ -72,16 +72,19 @@
 		</symbol>
 
 		<symbol id="maximize" class="icon" viewBox="0 0 24 24">
-			<path
-				d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"
-			/>
+			<path fill="currentColor" d="M7,7h10v10H7V7z"/>
+			<path d="M2,19v3h3"/>
+			<path d="M22,19v3h-3"/>
+			<path d="M2,5V2h3"/>
+			<path d="M22,5V2h-3"/>
 		</symbol>
 
-		<symbol id="maximize-2" class="icon" viewBox="0 0 24 24">
-			<polyline points="15 3 21 3 21 9" />
-			<polyline points="9 21 3 21 3 15" />
-			<line x1="21" y1="3" x2="14" y2="10" />
-			<line x1="3" y1="21" x2="10" y2="14" />
+		<symbol id="minimize" class="icon" viewBox="0 0 24 24">
+			<path fill="currentColor" d="M7 7H17V17H7V7Z" />
+			<path d="M5 22V19H2" />
+			<path d="M19 22V19H22" />
+			<path d="M5 2V5H2" />
+			<path d="M19 2V5H22" />
 		</symbol>
 
 		<symbol id="menu" class="icon" viewBox="0 0 24 24">

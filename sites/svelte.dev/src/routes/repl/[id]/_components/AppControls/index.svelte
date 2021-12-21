@@ -188,7 +188,7 @@ export default app;`
 	<div style="text-align: right; margin-right:.4rem">
 		<button class="icon" on:click={() => (zen_mode = !zen_mode)} title="fullscreen editor">
 			{#if zen_mode}
-				<Icon name="close" />
+				<Icon name="minimize" />
 			{:else}
 				<Icon name="maximize" />
 			{/if}
@@ -207,7 +207,7 @@ export default app;`
 			{#if justForked}
 				<Icon name="check" />
 			{:else}
-				<Icon name="git-branch" />
+				<Icon name="fork" />
 			{/if}
 		</button>
 

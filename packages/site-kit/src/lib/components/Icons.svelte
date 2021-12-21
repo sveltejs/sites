@@ -122,9 +122,8 @@
 		</symbol>
 
 		<symbol id="save" class="icon" viewBox="0 0 24 24">
-			<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-			<polyline points="17 21 17 13 7 13 7 21" />
-			<polyline points="7 3 7 8 15 8" />
+			<path fill="currentColor" stroke="none" d="M13.5,8.2c0.4,0,0.8-0.3,0.8-0.8v-2c0-0.4-0.3-0.8-0.8-0.8s-0.8,0.3-0.8,0.8v2C12.8,7.9,13.1,8.2,13.5,8.2z"/>
+			<path fill="currentColor" stroke="none" d="M20.5,1.2h-2H17H7.5H6H3.5c-1.2,0-2.2,1-2.2,2.2v17c0,1.2,1,2.2,2.2,2.2h17c1.2,0,2.2-1,2.2-2.2v-17 C22.8,2.3,21.7,1.2,20.5,1.2z M17.8,11c0,0.4-0.3,0.8-0.8,0.8H7.5c-0.4,0-0.8-0.3-0.8-0.8V2.8h11V11z"/>
 		</symbol>
 
 		<symbol id="link" class="icon" viewBox="0 0 24 24">

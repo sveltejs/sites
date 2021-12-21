@@ -259,7 +259,8 @@ blockquote {
 	max-width: var(--linemax);
 }
 
-blockquote p {
+blockquote p,
+blockquote ul {
 	font-size: var(--h5);
 }
 

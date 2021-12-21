@@ -16,7 +16,7 @@
 
 	{#if showMenu}
 		<div class="menu">
-			<a href="apps">Your saved apps</a>
+			<a href="/apps">Your saved apps</a>
 			<button on:click={logout}>Log out</button>
 		</div>
 	{/if}

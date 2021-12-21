@@ -32,7 +32,7 @@
 			<h2>
 				<span id={faq.slug} class="offset-anchor" />
 				{faq.title}
-				<Permalink href="faq#{faq.slug}" />
+				<Permalink href="/faq#{faq.slug}" />
 			</h2>
 			{@html faq.content}
 		</article>

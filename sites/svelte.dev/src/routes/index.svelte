@@ -33,7 +33,7 @@
 				JavaScript
 			</p>
 
-			<a sveltekit:prefetch href="blog/write-less-code" class="cta">learn more</a>
+			<a sveltekit:prefetch href="/blog/write-less-code" class="cta">learn more</a>
 		</div>
 
 		<div slot="two">
@@ -43,7 +43,7 @@
 				stays fast
 			</p>
 
-			<a sveltekit:prefetch href="blog/virtual-dom-is-pure-overhead" class="cta">learn more</a>
+			<a sveltekit:prefetch href="/blog/virtual-dom-is-pure-overhead" class="cta">learn more</a>
 		</div>
 
 		<div slot="three">
@@ -52,7 +52,7 @@
 				No more complex state management libraries — Svelte brings reactivity to JavaScript itself
 			</p>
 
-			<a sveltekit:prefetch href="blog/svelte-3-rethinking-reactivity" class="cta">learn more</a>
+			<a sveltekit:prefetch href="/blog/svelte-3-rethinking-reactivity" class="cta">learn more</a>
 		</div>
 
 		<div class="description" slot="what">
@@ -77,7 +77,7 @@
 					>most satisfied developers</a
 				>
 				in a pair of industry surveys. We think you'll love it too.
-				<a href="blog/svelte-3-rethinking-reactivity" class="cta">Read the introductory blog post</a
+				<a href="/blog/svelte-3-rethinking-reactivity" class="cta">Read the introductory blog post</a
 				> to learn more.
 			</p>
 		</div>
@@ -91,11 +91,11 @@ npm run dev
 			</code></pre>
 
 			<p style="flex: 1">
-				See the <a href="blog/the-easiest-way-to-get-started">quickstart guide</a> for TypeScript support
+				See the <a href="/blog/the-easiest-way-to-get-started">quickstart guide</a> for TypeScript support
 				and more details.
 			</p>
 
-			<a sveltekit:prefetch href="tutorial" class="cta">Learn Svelte</a>
+			<a sveltekit:prefetch href="/tutorial" class="cta">Learn Svelte</a>
 		</div>
 	</Blurb>
 </div>

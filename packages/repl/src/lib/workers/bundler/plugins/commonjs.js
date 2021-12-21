@@ -15,7 +15,7 @@ export default {
 		try {
 			const ast = acorn.parse(code, {
 				// for some reason this hangs for some code if you use 'latest'. change with caution
-				ecmaVersion: 13
+				ecmaVersion: 'latest'
 			});
 
 			const requires = [];

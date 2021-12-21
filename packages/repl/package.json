@@ -24,7 +24,10 @@
 	"type": "module",
 	"dependencies": {
 		"@sveltejs/site-kit": "workspace:*",
+		"acorn": "^8.6.0",
 		"codemirror": "5",
+		"estree-walker": "^3.0.1",
+		"rollup": "^2.61.1",
 		"svelte-json-tree": "^0.1.0",
 		"yootils": "^0.3.1"
 	},

@@ -1,9 +1,19 @@
 <script context="module">
-	export function load({ page: { params, query } }) {
+	export async function load({ page, fetch }) {
+		const res = await fetch(`/repl/${page.params.id}.json`);
+
+		if (!res.ok) {
+			return {
+				status: res.status
+			};
+		}
+
+		const gist = await res.json();
+
 		return {
 			props: {
-				version: query.get('version') || '3',
-				id: params.id
+				gist,
+				version: page.query.get('version') || '3'
 			}
 		};
 	}
@@ -19,20 +29,11 @@
 	import AppControls from './_components/AppControls/index.svelte';
 
 	export let version;
-	export let id;
+	export let gist;
 
 	let repl;
-	let gist = {
-		id: null,
-		name: null,
-		owner: null,
-		relaxed: false,
-		components: []
-	};
-	let name = 'Loading...';
+	let name = gist.name;
 	let zen_mode = false;
-	let width = browser ? window.innerWidth : 1000;
-	let checked = false;
 	let modified_count = 0;
 
 	function update_query_string(version) {
@@ -40,36 +41,12 @@
 
 		if (version !== 'latest') params.push(`version=${version}`);
 
-		const url = params.length > 0 ? `/repl/${id}?${params.join('&')}` : `/repl/${id}`;
+		const url = params.length > 0 ? `/repl/${gist.id}?${params.join('&')}` : `/repl/${gist.id}`;
 
 		history.replaceState({}, 'x', url);
 	}
 
 	$: if (typeof history !== 'undefined') update_query_string(version);
-
-	async function fetch_gist(id) {
-		if (gist.id === id) {
-			// if the id changed because we just forked, don't refetch
-			return;
-		}
-
-		const res = await fetch(`/repl/${id}.json`);
-
-		if (!res.ok) {
-			console.warn('TODO: show error');
-			return;
-		}
-
-		gist = await res.json();
-
-		name = gist.name;
-
-		repl.set({
-			components: gist.components
-		});
-	}
-
-	$: if (browser) fetch_gist(id);
 
 	onMount(() => {
 		if (version !== 'local') {
@@ -79,6 +56,10 @@
 					version = pkg.version;
 				});
 		}
+
+		repl.set({
+			components: gist.components
+		});
 	});
 
 	function handle_fork(event) {
@@ -96,20 +77,16 @@
 			? `${location.origin}/repl/local`
 			: `https://unpkg.com/svelte@${version}`;
 
-	$: mobile = width < 540;
-
 	$: relaxed = gist.relaxed || ($session.user && $session.user.id === gist.owner);
 </script>
 
 <svelte:head>
 	<title>{name} • REPL • Svelte</title>
 
-	<meta name="twitter:title" content="Svelte REPL" />
+	<meta name="twitter:title" content="{gist.name} • REPL • Svelte" />
 	<meta name="twitter:description" content="Cybernetically enhanced web apps" />
 	<meta name="Description" content="Interactive Svelte playground" />
 </svelte:head>
-
-<svelte:window bind:innerWidth={width} />
 
 <div class="repl-outer {zen_mode ? 'zen-mode' : ''}">
 	<AppControls {gist} {repl} bind:name bind:zen_mode bind:modified_count on:forked={handle_fork} />

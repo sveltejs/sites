@@ -13,12 +13,15 @@ importers:
       '@sveltejs/adapter-auto': next
       '@sveltejs/kit': next
       '@sveltejs/site-kit': workspace:*
+      acorn: ^8.6.0
       codemirror: '5'
       eslint: ^7.32.0
       eslint-config-prettier: ^8.3.0
       eslint-plugin-svelte3: ^3.2.1
+      estree-walker: ^3.0.1
       prettier: ^2.4.1
       prettier-plugin-svelte: ^2.4.0
+      rollup: ^2.61.1
       svelte: ^3.44.0
       svelte-json-tree: ^0.1.0
       svelte2tsx: ^0.4.11
@@ -26,7 +29,10 @@ importers:
       yootils: ^0.3.1
     dependencies:
       '@sveltejs/site-kit': link:../site-kit
+      acorn: 8.6.0
       codemirror: 5.64.0
+      estree-walker: 3.0.1
+      rollup: 2.61.1
       svelte-json-tree: 0.1.0
       yootils: 0.3.1
     devDependencies:
@@ -909,6 +915,12 @@ packages:
     hasBin: true
     dev: true
 
+  /acorn/8.6.0:
+    resolution: {integrity: sha512-U1riIR+lBSNi3IbxtaHOIKdH8sLFv3NYfNv8sg7ZsNhcfl4HF2++BfqqrNAxoCLQW1iiylOj76ecnaUxz+z9yw==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+    dev: false
+
   /ajv/6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
     dependencies:
@@ -1758,6 +1770,10 @@ packages:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
     dev: true
 
+  /estree-walker/3.0.1:
+    resolution: {integrity: sha512-woY0RUD87WzMBUiZLx8NsYr23N5BKsOMZHhu2hoNRVh6NXGfoiT1KOL8G3UHlJAnEDGmfa5ubNA/AacfG+Kb0g==}
+    dev: false
+
   /esutils/2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
     engines: {node: '>=0.10.0'}
@@ -1923,7 +1939,6 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /function-bind/1.1.1:
@@ -3005,13 +3020,12 @@ packages:
       glob: 7.2.0
     dev: true
 
-  /rollup/2.60.2:
-    resolution: {integrity: sha512-1Bgjpq61sPjgoZzuiDSGvbI1tD91giZABgjCQBKM5aYLnzjq52GoDuWVwT/cm/MCxCMPU8gqQvkj8doQ5C8Oqw==}
+  /rollup/2.61.1:
+    resolution: {integrity: sha512-BbTXlEvB8d+XFbK/7E5doIcRtxWPRiqr0eb5vQ0+2paMM04Ye4PZY5nHOQef2ix24l/L0SpLd5hwcH15QHPdvA==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.2
-    dev: true
 
   /run-parallel/1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
@@ -3566,7 +3580,7 @@ packages:
       esbuild: 0.13.15
       postcss: 8.4.4
       resolve: 1.20.0
-      rollup: 2.60.2
+      rollup: 2.61.1
     optionalDependencies:
       fsevents: 2.3.2
     dev: true

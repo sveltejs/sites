@@ -86,7 +86,7 @@
 				/>
 				<span>
 					{user.github_name || user.github_login}
-					(<a on:click|preventDefault={logout} href="auth/logout">log out</a>)
+					(<a on:click|preventDefault={logout} href="/auth/logout">log out</a>)
 				</span>
 			</div>
 		</header>
@@ -136,7 +136,7 @@
 		{/if}
 	{:else}
 		<p>
-			Please <a on:click|preventDefault={login} href="auth/login">log in</a> to see your saved apps.
+			Please <a on:click|preventDefault={login} href="/auth/login">log in</a> to see your saved apps.
 		</p>
 	{/if}
 </div>

@@ -35,7 +35,7 @@ export default function get_faqs() {
 				return `
 					<h${level}>
 						<span id="${fragment}" class="offset-anchor"></span>
-						<a href="faq#${fragment}" class="anchor" aria-hidden="true"></a>
+						<a href="/faq#${fragment}" class="anchor" aria-hidden="true"></a>
 						${text}
 					</h${level}>`;
 			};

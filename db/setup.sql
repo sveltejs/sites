@@ -6,6 +6,7 @@ drop index if exists gist_owner_idx;
 drop table if exists public.user;
 drop table if exists public.session;
 drop table if exists public.gist;
+drop table if exists public.todo;
 
 drop function if exists public.get_user;
 drop function if exists public.gist_create;
@@ -41,12 +42,21 @@ create table public.gist (
 	deleted_at timestamptz
 );
 
+create table public.todo (
+	uid uuid default extensions.uuid_generate_v4() not null primary key,
+	created_at timestamptz default now(),
+	guestid uuid not null,
+	text text,
+	done boolean
+);
+
 -- foreign key relations
 alter table public.gist add constraint gist_userid_fkey foreign key (userid) references public.user (id);
 alter table public.session add constraint session_userid_fkey foreign key (userid) references public.user (id);
 
 -- indexes
 create index gist_owner_idx on public.gist using btree (userid);
+create index todo_owner_idx on public.todo using btree (guestid);
 
 -- functions
 create or replace function public.get_user (sessionid uuid)

@@ -78,7 +78,7 @@
 		background: #eee;
 		display: block;
 		box-sizing: border-box;
-		float: inline-start;
+		float: left;
 		inline-size: 15px;
 		block-size: 15px;
 		margin-inline-start: -21px;

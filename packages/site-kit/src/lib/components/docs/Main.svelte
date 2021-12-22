@@ -267,7 +267,7 @@
 
 	.content :global(small) {
 		font-size: var(--h5);
-		float: inline-end;
+		float: right;
 		pointer-events: all;
 		color: var(--prime);
 		cursor: pointer;

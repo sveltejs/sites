@@ -114,7 +114,7 @@
 
 	.pane {
 		position: relative;
-		float: inline-start;
+		float: left;
 		inline-size: 100%;
 		block-size: 100%;
 		overflow: auto;
@@ -176,7 +176,7 @@
 
 	.left, .right {
 		block-size: 100%;
-		float: inline-start;
+		float: left;
 	}
 
 	.top, .bottom {

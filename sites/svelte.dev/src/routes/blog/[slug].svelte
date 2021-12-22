@@ -133,7 +133,7 @@
 	}
 
 	.post :global(aside) {
-		float: inline-end;
+		float: right;
 		margin-inline: 1em 0;
 		margin-block: 0 1em;
 		inline-size: 16rem;

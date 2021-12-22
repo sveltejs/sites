@@ -42,7 +42,7 @@
 		padding: 1em;
 		display: flex;
 		flex-direction: column;
-		border-bottom: none;
+		border-block-end: none;
 		color: var(--back);
 		border-radius: var(--border-r);
 	}
@@ -53,7 +53,8 @@
 	}
 
 	.how :global(pre) {
-		margin: 0 0 1em 0;
+		margin: 0;
+		margin-block-end: 1em;
 	}
 
 	.how :global(code) {
@@ -65,7 +66,7 @@
 	.how > :global(div) {
 		display: flex;
 		flex-direction: column;
-		height: 100%;
+		block-size: 100%;
 	}
 
 	.box :global(p) {
@@ -75,8 +76,9 @@
 	.box :global(.cta),
 	.how :global(.cta) {
 		position: relative;
-		max-width: 15em;
-		padding: 0.8rem 1.6rem;
+		max-inline-size: 15em;
+		padding-inline: 1.6rem;
+		padding-block: 0.8rem;
 		border-radius: 4px;
 		background: var(--back);
 		border: 1px solid white;
@@ -107,10 +109,10 @@
 		content: '';
 		position: absolute;
 		display: block;
-		right: 0.5em;
-		top: 0em;
-		width: 1em;
-		height: 100%;
+		inset-inline-end: 0.5em;
+		inset-block-start: 0em;
+		inline-size: 1em;
+		block-size: 100%;
 		background: url(../icons/arrow-right-black.svg);
 		background-size: 100% 100%;
 	}
@@ -129,7 +131,8 @@
 
 	.box :global(h2) {
 		padding: 0;
-		margin: 0 0 0.5em 0;
+		margin: 0;
+		margin-block-end: 0.5em;
 		font-size: var(--h2);
 		font-weight: 300;
 		color: white;
@@ -157,14 +160,15 @@
 	.how {
 		/* needed to prevent the <pre> from
 		   breaking the grid layout */
-		min-width: 0;
+		min-inline-size: 0;
 		grid-area: how;
 		background: var(--back-light);
 		box-shadow: inset 1px 1px 3px rgba(81, 81, 81, 0.2);
 	}
 
 	.what {
-		margin: 2em 0 0 0;
+		margin: 0;
+		margin-block-start: 2em;
 		grid-area: what;
 	}
 

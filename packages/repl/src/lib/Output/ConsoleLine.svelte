@@ -14,7 +14,7 @@
 	<ConsoleTable data={log.args[0]} columns={log.args[1]} />
 {/if}
 
-<div class="log console-{log.level}" style="padding-left: {level * 15}px" on:click={log.level === 'group' ? toggleGroupCollapse : undefined}>
+<div class="log console-{log.level}" style="padding-inline-start: {level * 15}px" on:click={log.level === 'group' ? toggleGroupCollapse : undefined}>
 	{#if log.count > 1}
 		<span class="count">{log.count}x</span>
 	{/if}
@@ -46,7 +46,7 @@
 		{/each}
 	{/if}
 	{#each new Array(level - 1) as _, idx}
-		<div class="outline" style="left: {idx * 15 + 15}px" />
+		<div class="outline" style="inset-inline-start: {idx * 15 + 15}px" />
 	{/each}
 </div>
 
@@ -66,8 +66,9 @@
 
 <style>
 	.log {
-		border-bottom: 1px solid #eee;
-		padding: 5px 10px 0px;
+		border-block-end: 1px solid #eee;
+		padding-inline: 10px;
+		padding-block: 5px 0;
 		display: flex;
 		position: relative;
 		font-size: 12px;
@@ -75,7 +76,7 @@
 	}
 
 	.log > :global(*) {
-		margin-right: 10px;
+		margin-inline-end: 10px;
 		font-family: var(--font-mono);
 	}
 
@@ -95,7 +96,7 @@
 	}
 
 	.console-trace, .console-assert {
-		border-bottom: none;
+		border-block-end: none;
 	}
 
 	.console-assert + .trace {
@@ -104,14 +105,14 @@
 	}
 
 	.trace {
-		border-bottom: 1px solid #eee;
+		border-block-end: 1px solid #eee;
 		font-size: 12px;
 		font-family: var(--font-mono);
-		padding: 4px 0 2px;
+		padding-block: 4px 2px;
 	}
 
 	.trace > :global(div) {
-		margin-left: 15px;
+		margin-inline-start: 15px;
 	}
 
 	.count {
@@ -131,10 +132,10 @@
 	}
 
 	.outline {
-		border-left: 1px solid #9c9cab;
+		border-inline-start: 1px solid #9c9cab;
 		position: absolute;
-		top: 0;
-		bottom: -1px;
+		inset-block-start: 0;
+		inset-block-end: -1px;
 	}
 
 	.arrow {
@@ -153,12 +154,12 @@
 		font-family: var(--font-mono);
 		font-size: 13px;
 		font-weight: bold;
-		padding-left: 11px;
-		height: 19px;
+		padding-inline-start: 11px;
+		block-size: 19px;
 	}
 
 	.assert {
-		padding-left: 11px;
+		padding-inline-start: 11px;
 		font-weight: bold;
 		color: #da106e;
 	}

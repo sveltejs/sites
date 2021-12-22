@@ -231,13 +231,13 @@
 		position: absolute;
 		background-color: white;
 		border: none;
-		width: 100%;
-		height: 100%;
+		inline-size: 100%;
+		block-size: 100%;
 	}
 
 	iframe {
-		width: 100%;
-		height: 100%;
+		inline-size: 100%;
+		block-size: 100%;
 		/* height: calc(100vh - var(--nav-h)); */
 		border: none;
 		display: block;
@@ -261,7 +261,7 @@
 
 	.overlay {
 		position: absolute;
-		bottom: 0;
-		width: 100%;
+		inset-block-end: 0;
+		inline-size: 100%;
 	}
 </style>

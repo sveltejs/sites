@@ -124,13 +124,14 @@ npm run dev
 <style>
 	section {
 		position: relative;
-		margin: 10rem auto;
-		padding: 0 var(--side-nav);
-		max-width: 120rem;
+		margin-inline: auto;
+		margin-block: 10rem;
+		padding-inline: var(--side-nav);
+		max-inline-size: 120rem;
 	}
 
 	.blurb-shifter {
-		margin-top: calc(-10rem + var(--side-nav));
+		margin-block-start: calc(-10rem + var(--side-nav));
 	}
 
 	footer {
@@ -142,13 +143,14 @@ npm run dev
 
 	footer a {
 		color: var(--text);
-		padding: 0.5rem 1rem;
+		padding-inline: 1rem;
+		padding-block: 0.5rem;
 		display: block;
 	}
 
 	@media (min-width: 900px) {
 		.blurb-shifter {
-			margin-top: -12em;
+			margin-block-start: -12em;
 		}
 	}
 </style>

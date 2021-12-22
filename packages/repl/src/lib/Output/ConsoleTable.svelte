@@ -58,7 +58,7 @@
 	.table {
 		margin: 8px;
 		overflow: auto;
-		max-height: 200px;
+		max-block-size: 200px;
 	}
 	table {
 		font-size: 12px;
@@ -69,18 +69,20 @@
 	}
 	th {
 		background: #f3f3f3;
-		padding: 4px 8px;
+		padding-inline: 8px;
+		padding-block: 4px;
 		border: 1px solid #aaa;
 		position: sticky;
-		top: 0;
+		inset-block-start: 0;
 	}
 	td {
-		padding: 2px 8px;
+		padding-inline: 8px;
+		padding-block: 2px;
 	}
 	tr:nth-child(2n) {
 		background: #f2f7fd;
 	}
 	th, td {
-		border-right: 1px solid #aaa;
+		border-inline-end: 1px solid #aaa;
 	}
 </style>

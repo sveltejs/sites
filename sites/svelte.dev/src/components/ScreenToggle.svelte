@@ -6,21 +6,23 @@
 <style>
 	.toggle {
 		position: fixed;
-		bottom: 0;
-		width: 100%;
-		height: 4.6rem;
+		inset-block-end: 0;
+		inline-size: 100%;
+		block-size: 4.6rem;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		border-top: 1px solid var(--second);
+		border-block-start: 1px solid var(--second);
 		background-color: white;
 	}
 
 	button {
-		margin: 0 .15em;
-		width: 4em;
-		height: 1em;
-		padding: .3em .4em;
+		margin-block: 0;
+		margin-inline: .15em;
+		inline-size: 4em;
+		block-size: 1em;
+		padding-inline: .4rem;
+		padding-block: .3rem;
 		border-radius: var(--border-r);
 		line-height: 1em;
 		box-sizing: content-box;

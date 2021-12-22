@@ -15,8 +15,8 @@
 
 <style>
 	.repl-container {
-		width: 100%;
-		height: 420px;
+		inline-size: 100%;
+		block-size: 420px;
 		border-radius: var(--border-r);
 		overflow: hidden;
 	}

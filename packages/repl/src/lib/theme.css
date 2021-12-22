@@ -18,7 +18,7 @@
 }
 
 .cm-s-svelte .CodeMirror-gutters {
-	padding: 0 16px 0 8px;
+	padding-inline: 8px 16px;
 	background: var(--back-light);
 	border: none;
 }
@@ -33,7 +33,7 @@
 }
 
 .cm-s-svelte .CodeMirror-cursor {
-	border-left: 1px solid black;
+	border-inline-start: 1px solid black;
 }
 
 .cm-s-svelte span.cm-comment {
@@ -76,7 +76,7 @@
 }
 
 .cm-s-svelte .CodeMirror-foldgutter {
-	width: 0.7em;
+	inline-size: 0.7em;
 }
 
 .cm-s-svelte .CodeMirror-foldgutter-open,
@@ -91,7 +91,7 @@
 	opacity: 0.8;
 	transition: transform 0.2s;
 	display: inline-block;
-	top: -0.1em;
+	inset-block-start: -0.1em;
 	position: relative;
 	transform: rotate(90deg);
 }

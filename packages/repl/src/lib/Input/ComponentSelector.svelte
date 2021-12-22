@@ -196,7 +196,7 @@
 <style>
 	.component-selector {
 		position: relative;
-		border-bottom: 1px solid #eee;
+		border-block-end: 1px solid #eee;
 		overflow: hidden;
 	}
 
@@ -206,7 +206,7 @@
 		white-space: nowrap;
 		overflow-x: auto;
 		overflow-y: hidden;
-		height: 10em;
+		block-size: 10em;
 	}
 
 	.file-tabs .button,
@@ -216,8 +216,9 @@
 		font: 400 12px/1.5 var(--font);
 		background: white;
 		border: none;
-		border-bottom: 3px solid transparent;
-		padding: 12px 14px 8px 16px;
+		border-block-end: 3px solid transparent;
+		padding-inline: 16px 14px;
+		padding-block: 12px 8px;
 		margin: 0;
 		color: #999;
 		border-radius: 0;
@@ -227,7 +228,7 @@
 	.file-tabs .button.active {
 		/* color: var(--second); */
 		color: #333;
-		border-bottom: 3px solid var(--prime);
+		border-block-end: 3px solid var(--prime);
 	}
 
 	.editable,
@@ -245,9 +246,9 @@
 
 	input {
 		position: absolute;
-		width: 100%;
-		left: 16px;
-		top: 12px;
+		inline-size: 100%;
+		inset-inline-start: 16px;
+		inset-block-start: 12px;
 		font: 400 12px/1.5 var(--font);
 		border: none;
 		color: var(--flash);
@@ -262,11 +263,12 @@
 	.remove {
 		position: absolute;
 		display: none;
-		right: 1px;
-		top: 4px;
-		width: 16px;
+		inset-inline-end: 1px;
+		inset-block-start: 4px;
+		inline-size: 16px;
 		text-align: right;
-		padding: 12px 0 12px 5px;
+		padding-block: 12px;
+		padding-inline-start: 5px;
 		font-size: 8px;
 		cursor: pointer;
 	}
@@ -293,10 +295,11 @@
 
 	.add-new {
 		position: absolute;
-		left: 0;
-		top: 0;
-		padding: 12px 10px 8px 0 !important;
-		height: 40px;
+		inset-inline-start: 0;
+		inset-block-start: 0;
+		padding-block: 12px 8px !important;
+		padding-inline: 0 10px !important;
+		block-size: 40px;
 		text-align: center;
 		background-color: white;
 	}
@@ -307,11 +310,11 @@
 
 	.drag-handle {
 		cursor: move;
-		width: 5px;
-		height: 25px;
+		inline-size: 5px;
+		block-size: 25px;
 		position: absolute;
-		left: 5px;
-		top: 9px;
+		inset-inline-start: 5px;
+		inset-block-start: 9px;
 		--drag-handle-color: #dedede;
 		background: linear-gradient(
 			to right,

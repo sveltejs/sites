@@ -44,11 +44,11 @@
 
 <style>
 	.panel-header {
-		height: 42px;
+		block-size: 42px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 0 0.5em;
+		padding-inline: 0.5em;
 		cursor: pointer;
 	}
 

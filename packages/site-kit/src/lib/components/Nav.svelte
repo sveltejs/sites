@@ -82,10 +82,10 @@
 <style>
 	.modal-background {
 		position: fixed;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		left: 0;
+		inline-size: 100%;
+		block-size: 100%;
+		inset-block-start: 0;
+		inset-inline-start: 0;
 		background: rgba(255, 255, 255, 0.8);
 		z-index: 2;
 		backdrop-filter: grayscale(0.5) blur(2px);
@@ -100,9 +100,10 @@
 			transparent 100%
 		);
 		position: fixed;
-		width: 100vw;
-		height: var(--nav-h);
-		margin: 0 auto;
+		inline-size: 100vw;
+		block-size: var(--nav-h);
+		margin-inline: auto;
+		margin-block: 0;
 		background-color: white;
 		font-family: var(--font);
 		z-index: 100;
@@ -113,10 +114,10 @@
 	nav::after {
 		content: '';
 		position: absolute;
-		width: 100%;
-		height: var(--shadow-height);
-		left: 0;
-		bottom: calc(-1 * var(--shadow-height));
+		inline-size: 100%;
+		block-size: var(--shadow-height);
+		inset-inline-start: 0;
+		inset-block-end: calc(-1 * var(--shadow-height));
 		background: var(--shadow-gradient);
 	}
 
@@ -126,7 +127,7 @@
 
 	ul {
 		position: relative;
-		width: 100%;
+		inline-size: 100%;
 		padding: 0;
 		margin: 0;
 		list-style: none;
@@ -138,8 +139,8 @@
 	}
 
 	.home {
-		width: 30rem;
-		height: var(--nav-h);
+		inline-size: 30rem;
+		block-size: var(--nav-h);
 		display: flex;
 		text-indent: -9999px;
 		background-position: calc(var(--side-nav) - 1rem) 50%;
@@ -147,10 +148,14 @@
 		background-size: auto 70%;
 	}
 
+	.home:dir(rtl) {
+		background-position: calc(100% - (var(--side-nav) - 1rem)) 50%;
+	}
+
 	button {
 		position: absolute;
-		top: calc(var(--nav-h) / 2 - 1rem);
-		right: var(--side-nav);
+		inset-block-start: calc(var(--nav-h) / 2 - 1rem);
+		inset-inline-end: var(--side-nav);
 		line-height: 1;
 	}
 
@@ -158,9 +163,10 @@
 		ul {
 			position: relative;
 			display: none;
-			width: 100%;
+			inline-size: 100%;
 			background: white;
-			padding: 1rem var(--side-nav);
+			padding-inline: var(--side-nav);
+			padding-block: 1rem;
 		}
 
 		.open ul {
@@ -168,26 +174,27 @@
 		}
 
 		ul.external {
-			padding: 1rem var(--side-nav) 1rem;
+			padding-inline: var(--side-nav);
+			padding-block: 1rem;
 		}
 
 		ul.external::before {
 			content: '';
 			position: absolute;
-			top: 0;
-			left: var(--side-nav);
-			width: calc(100% - 2 * var(--side-nav));
-			height: 1px;
+			inset-block-start: 0;
+			inset-inline-start: var(--side-nav);
+			inline-size: calc(100% - 2 * var(--side-nav));
+			block-size: 1px;
 			background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
 		}
 
 		ul.external::after {
 			content: '';
 			position: absolute;
-			width: 100%;
-			height: var(--shadow-height);
-			left: 0;
-			bottom: calc(-1 * var(--shadow-height));
+			inline-size: 100%;
+			block-size: var(--shadow-height);
+			inset-inline-start: 0;
+			inset-block-end: calc(-1 * var(--shadow-height));
 			background: var(--shadow-gradient);
 		}
 	}
@@ -205,24 +212,25 @@
 
 		ul {
 			display: flex;
-			width: auto;
-			height: 100%;
+			inline-size: auto;
+			block-size: 100%;
 		}
 
 		ul :global(li) {
-			margin: 0 0.5rem;
+			margin-block: 0;
+			margin-inline: 0.5rem;
 			padding: 0;
 		}
 
 		ul :global(a) {
 			display: flex;
 			align-items: center;
-			height: 100%;
+			block-size: 100%;
 		}
 
 		ul.external {
-			width: 30rem;
-			padding: 0 var(--side-nav) 0 0;
+			inline-size: 30rem;
+			padding-inline-end: var(--side-nav);
 			justify-content: end;
 		}
 

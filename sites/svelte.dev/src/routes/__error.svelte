@@ -21,23 +21,32 @@
 
 <style>
 	.container {
-		padding: var(--top-offset) var(--side-nav) 6rem var(--side-nav);
+		padding-inline: var(--side-nav);
+		padding-block: var(--top-offset) 6rem;
 	}
 
-	h1, p { margin: 0 auto }
+	h1, p {
+		margin-inline: auto;
+		margin-block: 0;
+	}
 
 	h1 {
 		font-size: 2.8em;
 		font-weight: 300;
-		margin: 0 0 0.5em 0;
+		margin: 0;
+		margin-block-end: 0.5em;
 	}
 
-	p { margin: 1em auto }
+	p {
+		margin-inline: auto;
+		margin-block: 1em;
+	}
 
 	.error {
 		background-color: var(--second);
 		color: white;
-		padding: 12px 16px;
+		padding-inline: 16px;
+		padding-block: 12px;
 		font: 600 16px/1.7 var(--font);
 		border-radius: 2px;
 	}

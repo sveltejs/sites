@@ -108,24 +108,24 @@
 <style>
 	.container {
 		position: relative;
-		width: 100%;
-		height: 100%;
+		inline-size: 100%;
+		block-size: 100%;
 	}
 
 	.pane {
 		position: relative;
-		float: left;
-		width: 100%;
-		height: 100%;
+		float: inline-start;
+		inline-size: 100%;
+		block-size: 100%;
 		overflow: auto;
 	}
 
 	.mousecatcher {
 		position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
+		inset-inline-start: 0;
+		inset-block-start: 0;
+		inline-size: 100%;
+		block-size: 100%;
 		background: rgba(255,255,255,.01);
 	}
 
@@ -143,31 +143,31 @@
 	}
 
 	.horizontal {
-		padding: 0 8px;
-		width: 0;
-		height: 100%;
+		padding-inline: 8px;
+		inline-size: 0;
+		block-size: 100%;
 		cursor: ew-resize;
 	}
 
 	.horizontal::after {
-		left: 8px;
-		top: 0;
-		width: 1px;
-		height: 100%;
+		inset-inline-start: 8px;
+		inset-block-start: 0;
+		inline-size: 1px;
+		block-size: 100%;
 	}
 
 	.vertical {
-		padding: 8px 0;
-		width: 100%;
-		height: 0;
+		padding-block: 8px;
+		inline-size: 100%;
+		block-size: 0;
 		cursor: ns-resize;
 	}
 
 	.vertical::after {
-		top: 8px;
-		left: 0;
-		width: 100%;
-		height: 1px;
+		inset-block-start: 8px;
+		inset-inline-start: 0;
+		inline-size: 100%;
+		block-size: 1px;
 	}
 
 	.left, .right, .divider {
@@ -175,17 +175,17 @@
 	}
 
 	.left, .right {
-		height: 100%;
-		float: left;
+		block-size: 100%;
+		float: inline-start;
 	}
 
 	.top, .bottom {
 		position: absolute;
-		width: 100%;
+		inline-size: 100%;
 	}
 
-	.top { top: 0; }
-	.bottom { bottom: 0; }
+	.top { inset-block-start: 0; }
+	.bottom { inset-block-end: 0; }
 </style>
 
 <div class="container" bind:this={refs.container} bind:clientWidth={w} bind:clientHeight={h}>

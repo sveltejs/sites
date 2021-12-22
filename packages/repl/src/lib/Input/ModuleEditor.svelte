@@ -44,20 +44,20 @@
 	}
 
 	.editor {
-		height: 0;
+		block-size: 0;
 		flex: 1 1 auto;
 	}
 
 	.info {
 		background-color: var(--second);
-		max-height: 50%;
+		max-block-size: 50%;
 		overflow: auto;
 	}
 
 	:global(.columns) .editor-wrapper {
 		/* make it easier to interact with scrollbar */
-		padding-right: 8px;
-		height: auto;
+		padding-inline-end: 8px;
+		block-size: auto;
 		/* height: 100%; */
 	}
 </style>

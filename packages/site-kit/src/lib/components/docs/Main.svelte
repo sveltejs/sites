@@ -80,9 +80,10 @@
 
 <style>
 	.content {
-		width: 100%;
+		inline-size: 100%;
 		margin: 0;
-		padding: var(--top-offset) var(--side-nav);
+		padding-inline: var(--side-nav);
+		padding-block: var(--top-offset);
 		tab-size: 2;
 		-moz-tab-size: 2;
 	}
@@ -90,19 +91,20 @@
 	@media (min-width: 832px) {
 		/* can't use vars in @media :( */
 		.content {
-			padding-left: calc(var(--sidebar-w) + var(--side-nav));
+			padding-inline-start: calc(var(--sidebar-w) + var(--side-nav));
 		}
 	}
 
 	.content :global(h1) {
 		font-size: 3.2rem;
-		margin: 0 0 0.5em 0;
+		margin-block-end: 0.5em;
 	}
 
 	.content :global(h2) {
-		margin-top: 8rem;
-		padding: 2rem 1.6rem 4rem 0.2rem;
-		border-top: 2px solid #ddd;
+		margin-block-start: 8rem;
+		padding-inline: 0.2rem 1.6rem;
+		padding-block: 2rem 4rem;
+		border-block-start: 2px solid #ddd;
 		line-height: 1;
 		font-size: var(--h3);
 		letter-spacing: 0.05em;
@@ -110,19 +112,19 @@
 	}
 
 	.content :global(section):first-of-type > :global(h2) {
-		margin-top: 0;
+		margin-block-start: 0;
 	}
 
 	.content :global(h4) {
-		margin: 2em 0 1em 0;
+		margin-block: 2em 1em;
 	}
 
 	.content :global(.offset-anchor) {
 		position: relative;
 		display: block;
-		top: calc(-1 * var(--top-offset));
-		width: 0;
-		height: 0;
+		inset-block-start: calc(-1 * var(--top-offset));
+		inline-size: 0;
+		block-size: 0;
 	}
 
 	.content :global(.anchor) {
@@ -130,20 +132,20 @@
 		display: block;
 		background: url(../../icons/link.svg) 0 50% no-repeat;
 		background-size: 1em 1em;
-		width: 1.4em;
-		height: 1em;
-		left: -1.3em;
-		bottom: 0.3rem;
+		inline-size: 1.4em;
+		block-size: 1em;
+		inset-inline-start: -1.3em;
+		inset-block-end: 0.3rem;
 		opacity: 0;
 		transition: opacity 0.2s;
 	}
 
 	.content :global(h2) :global(.anchor) {
-		bottom: 4rem;
+		inset-block-end: 4rem;
 	}
 
 	.content :global(h3) :global(.anchor) {
-		bottom: 1rem;
+		inset-block-end: 1rem;
 	}
 
 	@media (min-width: 400px) {
@@ -169,11 +171,12 @@
 
 	.content :global(h3),
 	.content :global(h3 > code) {
-		margin: 6.4rem 0 1rem 0;
-		padding: 0 0 1rem 0;
+		margin-inline: 0;
+		margin-block: 6.4rem 1rem;
+		padding-block-end: 1rem;
 		color: var(--text);
-		max-width: var(--linemax);
-		border-bottom: 1px solid #ddd;
+		max-inline-size: var(--linemax);
+		border-block-end: 1px solid #ddd;
 		background: transparent;
 		line-height: 1;
 	}
@@ -196,12 +199,13 @@
 		font-weight: 600;
 		font-size: 2.4rem;
 		color: var(--second);
-		margin: -5.5rem 0 1.6rem 0;
-		padding-left: 0;
+		margin-inline: 0;
+		margin-block: -5.5rem 1.6rem;
+		padding-inline-start: 0;
 		background: transparent;
 		line-height: 1;
-		padding: 10rem 0 0 0;
-		top: 0;
+		padding-block-start: 10rem;
+		inset-block-start: 0;
 	}
 
 	.content :global(h4 > em) {
@@ -209,39 +213,41 @@
 	}
 
 	.content :global(h4 > .anchor) {
-		top: 0.05em;
+		inset-block-start: 0.05em;
 	}
 
 	.content :global(h5) {
 		font-size: 2.4rem;
-		margin: 2em 0 0.5em 0;
+		margin-block: 2em 0.5em;
 	}
 
 	.content :global(code) {
 		padding: 0.4rem;
-		margin: 0 0.2rem;
-		top: -0.1rem;
+		margin-inline: 0.2rem;
+		margin-block: 0;
+		inset-block-start: -0.1rem;
 		background: var(--back-api);
 	}
 
 	.content :global(pre) :global(code) {
 		padding: 0;
 		margin: 0;
-		top: 0;
+		inset-block-start: 0;
 		background: transparent;
 	}
 
 	.content :global(pre) {
-		margin: 0 0 2rem 0;
-		width: 100%;
-		max-width: var(--linemax);
-		padding: 1rem 1rem;
+		margin: 0;
+		margin-block-end: 2rem;
+		inline-size: 100%;
+		max-inline-size: var(--linemax);
+		padding: 1rem;
 		box-shadow: inset 1px 1px 6px hsla(205.7, 63.6%, 30.8%, 0.06);
 	}
 
 	.content :global(.icon) {
-		width: 2rem;
-		height: 2rem;
+		inline-size: 2rem;
+		block-size: 2rem;
 		stroke: currentColor;
 		stroke-width: 2;
 		stroke-linecap: round;
@@ -250,17 +256,18 @@
 	}
 
 	.content :global(table) {
-		margin: 0 0 2em 0;
+		margin: 0;
+		margin-block-end: 2em;
 	}
 
 	.content :global(section) :global(p) {
-		max-width: var(--linemax);
-		margin: 1em 0;
+		max-inline-size: var(--linemax);
+		margin-block: 1em;
 	}
 
 	.content :global(small) {
 		font-size: var(--h5);
-		float: right;
+		float: inline-end;
 		pointer-events: all;
 		color: var(--prime);
 		cursor: pointer;
@@ -269,16 +276,16 @@
 	.content :global(blockquote) {
 		color: rgba(0, 0, 0, 0.7);
 		background-color: rgba(255, 62, 0, 0.1);
-		border-left: 4px solid #ff3e00;
+		border-inline-start: 4px solid #ff3e00;
 		padding: 1rem;
 	}
 
 	.content :global(blockquote) :global(:first-child) {
-		margin-top: 0;
+		margin-block-start: 0;
 	}
 
 	.content :global(blockquote) :global(:last-child) {
-		margin-bottom: 0;
+		margin-block-end: 0;
 	}
 
 	.content :global(blockquote) :global(code) {
@@ -298,18 +305,18 @@
 	   once https://github.com/sveltejs/action-deploy-docs/issues/1 is closed */
 	.content :global(h2[id]),
 	.content :global(h3[id]) {
-		padding-top: 10rem;
-		margin-top: -2rem;
-		border-top: none;
+		padding-block-start: 10rem;
+		margin-block-start: -2rem;
+		border-block-start: none;
 	}
 
 	.content :global(h2[id])::after {
 		content: '';
 		position: absolute;
-		width: 100%;
-		left: 0;
-		top: 8rem;
-		height: 2px;
+		inline-size: 100%;
+		inset-inline-start: 0;
+		inset-block-start: 8rem;
+		block-size: 2px;
 		background: #ddd;
 	}
 </style>

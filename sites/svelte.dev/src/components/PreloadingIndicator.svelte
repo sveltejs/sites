@@ -20,26 +20,26 @@
 <style>
 	.progress-container {
 		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 4px;
+		inset-block-start: 0;
+		inset-inline-start: 0;
+		inline-size: 100%;
+		block-size: 4px;
 		z-index: 999;
 	}
 
 	.progress {
 		position: absolute;
-		left: 0;
-		top: 0;
-		height: 100%;
+		inset-inline-start: 0;
+		inset-block-start: 0;
+		block-size: 100%;
 		background-color: var(--prime);
 		transition: width 0.4s;
 	}
 
 	.fade {
 		position: fixed;
-		width: 100%;
-		height: 100%;
+		inline-size: 100%;
+		block-size: 100%;
 		background-color: rgba(255,255,255,0.3);
 		pointer-events: none;
 		z-index: 998;
@@ -54,7 +54,7 @@
 
 {#if visible}
 	<div class="progress-container">
-		<div class="progress" style="width: {p * 100}%"></div>
+		<div class="progress" style="inline-size: {p * 100}%"></div>
 	</div>
 {/if}
 

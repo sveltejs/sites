@@ -25,7 +25,7 @@
 	<div>
 		<span>
 			<strong>
-				<span style="position: relative; top: -0.1em; margin: 0 0.5em 0 0"
+				<span style="position: relative; inset-block-start: -0.1em; margin-inline-end: 0.5em;"
 					><Icon name="menu" /></span
 				>
 				{selected.section.name} /
@@ -60,12 +60,13 @@
 		display: grid;
 		align-items: center;
 		grid-template-columns: 2.5em 1fr 2.5em;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		border-block-end: 1px solid rgba(255, 255, 255, 0.1);
 	}
 
 	div {
 		position: relative;
-		padding: 1em 0.5em;
+		padding-inline: 0.5em;
+		padding-block: 1em;
 		font-weight: 300;
 		font-size: var(--h6);
 		color: white;
@@ -73,7 +74,7 @@
 
 	a {
 		display: block;
-		padding: 0.7em 0;
+		padding-block: 0.7rem;
 		text-align: center;
 		opacity: 0.75;
 		color: white;
@@ -93,7 +94,7 @@
 	span {
 		white-space: nowrap;
 		position: relative;
-		top: 0.1em;
+		inset-block-start: 0.1em;
 	}
 
 	strong {
@@ -102,10 +103,10 @@
 
 	select {
 		position: absolute;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
+		inset-inline-start: 0;
+		inset-block-start: 0;
+		inline-size: 100%;
+		block-size: 100%;
 		opacity: 0.0001;
 		cursor: pointer;
 		-webkit-appearance: none;

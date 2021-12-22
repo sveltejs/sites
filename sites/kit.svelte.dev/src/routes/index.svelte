@@ -94,8 +94,12 @@ npm run dev -- --open
 </div>
 
 <style>
+	:global(.hero-container:dir(rtl)) {
+		max-inline-size: 116rem;
+	}
+
 	pre {
-		height: 100%;
+		block-size: 100%;
 		display: flex;
 		flex-direction: column;
 		color: var(--second-text);
@@ -106,12 +110,12 @@ npm run dev -- --open
 	}
 
 	.blurb-shifter {
-		margin-top: calc(-10rem + var(--side-nav));
+		margin-block-start: calc(-10rem + var(--side-nav));
 	}
 
 	@media (min-width: 900px) {
 		.blurb-shifter {
-			margin-top: -12em;
+			margin-block-start: -12em;
 		}
 	}
 </style>

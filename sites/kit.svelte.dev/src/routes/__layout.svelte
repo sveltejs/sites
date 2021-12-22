@@ -39,8 +39,9 @@
 <style>
 	main {
 		position: relative;
-		margin: 0 auto;
-		padding: var(--nav-h) 0 0 0;
+		margin-inline: auto;
+		margin-block: 0;
+		padding-block-start: var(--nav-h);
 		overflow-x: hidden;
 	}
 

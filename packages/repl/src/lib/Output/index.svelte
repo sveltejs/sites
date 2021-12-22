@@ -119,39 +119,40 @@
 
 <style>
 	.view-toggle {
-		height: 4.2rem;
-		border-bottom: 1px solid #eee;
+		block-size: 4.2rem;
+		border-block-end: 1px solid #eee;
 		white-space: nowrap;
 		box-sizing: border-box;
 	}
 
 	button {
-		/* width: 50%;
-		height: 100%; */
+		/* inline-size: 50%;
+		block-size: 100%; */
 		background: white;
 		text-align: left;
 		position: relative;
 		font: 400 12px/1.5 var(--font);
 		border: none;
-		border-bottom: 3px solid transparent;
-		padding: 12px 12px 8px 12px;
+		border-block-end: 3px solid transparent;
+		padding: 12px;
+		padding-block-end: 8px;
 		color: #999;
 		border-radius: 0;
 	}
 
 	button.active {
-		border-bottom: 3px solid var(--prime);
+		border-block-end: 3px solid var(--prime);
 		color: #333;
 	}
 
 	div[slot] {
-		height: 100%;
+		block-size: 100%;
 	}
 
 	.tab-content {
 		position: absolute;
-		width: 100%;
-		height: calc(100% - 42px) !important;
+		inline-size: 100%;
+		block-size: calc(100% - 42px) !important;
 		visibility: hidden;
 		pointer-events: none;
 	}
@@ -161,8 +162,8 @@
 		pointer-events: all;
 	}
 	iframe {
-		width: 100%;
-		height: 100%;
+		inline-size: 100%;
+		block-size: 100%;
 		border: none;
 		display: block;
 	}

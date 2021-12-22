@@ -40,13 +40,14 @@
 
 <style>
 	.hero-banner {
-		max-width: 100vw;
+		max-inline-size: 100vw;
 		background: rgb(211, 214, 217);
 		background: radial-gradient(34.14% 72.25% at 47.58% 31.75%, rgba(232, 244, 255, 0.52) 0%, rgba(255, 255, 255, 0) 100%),
 linear-gradient(92.4deg, #D1D4D7 14.67%, rgba(238, 247, 255, 0.48) 54.37%, rgba(206, 216, 224, 0.62) 92.49%),
 linear-gradient(0deg, #DBE7EF, #DBE7EF);
 		position: relative;
-		padding: 8rem var(--side-nav) 0;
+		padding-inline: var(--side-nav);
+		padding-block: 8rem 0;
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
@@ -54,9 +55,10 @@ linear-gradient(0deg, #DBE7EF, #DBE7EF);
 	}
 
 	.hero-container {
-		width: 100%;
-		max-width: 90rem;
-		margin: 0 auto;
+		inline-size: 100%;
+		max-inline-size: 90rem;
+		margin-inline: auto;
+		margin-block: 0;
 		/* display: flex; */
 		justify-content: center;
 	}
@@ -70,7 +72,7 @@ linear-gradient(0deg, #DBE7EF, #DBE7EF);
 	}
 
 	.hero-banner .tagline {
-		margin-top: 0;
+		margin-block-start: 0;
 		position: relative;
 		font-size: 2rem;
 		font-weight: 200;
@@ -79,15 +81,15 @@ linear-gradient(0deg, #DBE7EF, #DBE7EF);
 		text-align: center;
 		text-transform: uppercase;
 		color: var(--text);
-		max-width: 12em;
+		max-inline-size: 12em;
 		font-family: var(--font);
 	}
 
 	.logotype {
 		position: relative;
-		width: 100%;
-		max-width: 400px;
-		margin: 0 0 2rem 0;
+		inline-size: 100%;
+		max-inline-size: 400px;
+		margin-block-end: 2rem;
 	}
 
 	.hero-image {
@@ -98,30 +100,31 @@ linear-gradient(0deg, #DBE7EF, #DBE7EF);
 	}
 
 	.hero-image img {
-		width: 600px;
-		height: 450px;
+		inline-size: 600px;
+		block-size: 450px;
 		object-fit: cover;
 		transform: translate(-2%,-10%);
 	}
 
 	@media (min-width: 480px) {
 		.hero-banner .tagline {
-			max-width: auto;
+			max-inline-size: auto;
 		}
 
 		.hero-image img {
-			width: 800px;
-			height: 600px;
+			inline-size: 800px;
+			block-size: 600px;
 		}
 	}
 
 	@media (min-width: 1024px) {
 		.hero-banner {
-			padding: 0 var(--side-nav);
+			padding-block: 0;
+			padding-inline: var(--side-nav);
 		}
 
 		.hero-text {
-			margin-top: -10rem;
+			margin-block-start: -10rem;
 			align-items: flex-end;
 			flex: 1;
 		}
@@ -131,21 +134,22 @@ linear-gradient(0deg, #DBE7EF, #DBE7EF);
 		}
 
 		.hero-image img {
-			width: 480px;
+			inline-size: 480px;
 			object-fit: contain;
 			transform: scale(1.8);
 		}
 
 		.hero-banner .tagline {
 			text-align: right;
-			max-width: 12em;
+			max-inline-size: 12em;
 		}
 
 		.hero-container {
-			height: 70vh;
+			block-size: 70vh;
 			display: flex;
 			justify-content: flex-start;
-			margin: 0 auto;
+			margin-inline: auto;
+			margin-block: 0;
 			padding: 0;
 		}
 	}

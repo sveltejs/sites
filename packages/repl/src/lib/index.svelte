@@ -278,39 +278,39 @@
 <style>
 	.container {
 		position: relative;
-		width: 100%;
-		height: 100%;
+		inline-size: 100%;
+		block-size: 100%;
 		background: white;
 	}
 
 	.container :global(section) {
 		position: relative;
-		padding: 42px 0 0 0;
-		height: 100%;
+		padding-block-start: 42px;
+		block-size: 100%;
 		box-sizing: border-box;
 	}
 
 	.container :global(section) > :global(*):first-child {
 		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 42px;
+		inset-block-start: 0;
+		inset-inline-start: 0;
+		inline-size: 100%;
+		block-size: 42px;
 		box-sizing: border-box;
 	}
 
 	.container :global(section) > :global(*):last-child {
-		width: 100%;
-		height: 100%;
+		inline-size: 100%;
+		block-size: 100%;
 	}
 
 	.viewport {
-		height: 100%;
+		block-size: 100%;
 	}
 
 	.toggleable .viewport {
-		width: 200%;
-		height: calc(100% - 42px);
+		inline-size: 200%;
+		block-size: calc(100% - 42px);
 		transition: transform 0.3s;
 	}
 

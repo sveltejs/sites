@@ -93,10 +93,10 @@
 	aside {
 		position: fixed;
 		background-color: white;
-		left: 0.8rem;
-		bottom: 0.8rem;
-		width: 2em;
-		height: 2em;
+		inset-inline-start: 0.8rem;
+		inset-block-end: 0.8rem;
+		inline-size: 2em;
+		block-size: 2em;
 		overflow: hidden;
 		border: 1px solid #eee;
 		box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.1);
@@ -105,24 +105,24 @@
 
 	aside button {
 		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 3.4rem;
-		height: 3.4rem;
+		inset-block-end: 0;
+		inset-inline-start: 0;
+		inline-size: 3.4rem;
+		block-size: 3.4rem;
 	}
 
 	aside.open {
-		width: calc(100vw - 3rem);
-		height: calc(100vh - var(--nav-h));
+		inline-size: calc(100vw - 3rem);
+		block-size: calc(100vh - var(--nav-h));
 	}
 
 	aside.open::before {
 		content: '';
 		position: absolute;
-		top: 0;
-		left: 0;
-		width: calc(100% - 2rem);
-		height: 2em;
+		inset-block-start: 0;
+		inset-inline-start: 0;
+		inline-size: calc(100% - 2rem);
+		block-size: 2em;
 		background: linear-gradient(
 			to top,
 			rgba(255, 255, 255, 0) 0%,
@@ -136,10 +136,10 @@
 	aside::after {
 		content: '';
 		position: absolute;
-		left: 0;
-		bottom: 1.9em;
-		width: calc(100% - 2rem);
-		height: 2em;
+		inset-inline-start: 0;
+		inset-block-end: 1.9em;
+		inline-size: calc(100% - 2rem);
+		block-size: 2em;
 		background: linear-gradient(
 			to bottom,
 			rgba(255, 255, 255, 0) 0%,
@@ -153,22 +153,24 @@
 		position: absolute;
 		font-family: var(--font);
 		overflow-y: auto;
-		width: 100%;
-		height: 100%;
-		padding: 4em 1.6rem 2em 3.2rem;
-		bottom: 2em;
+		inline-size: 100%;
+		block-size: 100%;
+		padding-inline: 3.2rem 1.6rem;
+		padding-block: 4rem 2rem;
+		inset-block-end: 2em;
 	}
 
 	li {
 		display: block;
 		line-height: 1.2;
-		margin: 0 0 4rem 0;
+		margin: 0;
+		margin-block-end: 4rem;
 	}
 
 	a {
 		position: relative;
 		transition: color 0.2s;
-		border-bottom: none;
+		border-block-end: none;
 		padding: 0;
 		color: var(--second);
 		user-select: none;
@@ -176,7 +178,7 @@
 
 	.section {
 		display: block;
-		padding: 0 0 0.8rem 0;
+		padding-block-end: 0.8rem;
 		font-size: var(--h6);
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
@@ -187,7 +189,7 @@
 		display: block;
 		font-size: 1.6rem;
 		font-family: var(--font);
-		padding: 0 0 0.6em 0;
+		padding-block-end: 0.6em;
 	}
 
 	.section:hover,
@@ -199,16 +201,16 @@
 	.active::after {
 		content: '';
 		position: absolute;
-		right: 0;
-		top: 2px;
-		width: 0;
-		height: 0;
+		inset-inline-end: 0;
+		inset-block-start: 2px;
+		inline-size: 0;
+		block-size: 0;
 		border: 6px solid transparent;
-		border-right-color: white;
+		border-inline-end-color: white;
 	}
 
 	.nested {
-		padding-left: 1.2rem;
+		padding-inline-start: 1.2rem;
 	}
 
 	ul ul,
@@ -219,10 +221,10 @@
 	@media (min-width: 832px) {
 		aside {
 			display: block;
-			width: var(--sidebar-w);
-			height: 100vh;
-			top: 0;
-			left: 0;
+			inline-size: var(--sidebar-w);
+			block-size: 100vh;
+			inset-block-start: 0;
+			inset-inline-start: 0;
 			overflow: hidden;
 			box-shadow: none;
 			border: none;
@@ -237,8 +239,8 @@
 
 		aside::after {
 			content: '';
-			bottom: 0;
-			height: var(--top-offset);
+			inset-block-end: 0;
+			block-size: var(--top-offset);
 			background: linear-gradient(
 				to bottom,
 				rgba(103, 103, 120, 0) 0%,
@@ -252,12 +254,13 @@
 		}
 
 		.sidebar {
-			padding: var(--top-offset) 0 6.4rem 3.2rem;
+			padding-inline: 3.2rem 0;
+			padding-block: var(--top-offset) 6.4rem;
 			font-family: var(--font);
 			overflow-y: auto;
-			height: 100%;
-			bottom: auto;
-			width: 100%;
+			block-size: 100%;
+			inset-block-end: auto;
+			inline-size: 100%;
 		}
 
 		a {

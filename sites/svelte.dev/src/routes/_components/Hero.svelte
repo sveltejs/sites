@@ -26,19 +26,19 @@
 	strong {
 		position: absolute;
 		font-size: min(4vw, var(--h4));
-		max-width: 10em;
+		max-inline-size: 10em;
 		text-transform: uppercase;
 		font-weight: 700;
 		color: var(--second);
 		letter-spacing: 0.05em;
 		left: max(var(--side-nav), 10%);
-		top: 25%;
+		inset-block-start: 25%;
 	}
-
+	
 	@media (min-width: 580px) {
 		strong {
-			max-width: 12em;
-			top: 30%;
+			max-inline-size: 12em;
+			inset-block-start: 30%;
 		}
 	}
 
@@ -46,20 +46,20 @@
 		.logotype {
 			position: absolute;
 			display: block;
-			width: min(30vw, 36rem);
-			bottom: 58%;
+			inline-size: min(30vw, 36rem);
+			inset-block-end: 58%;
 			left: 10%;
 		}
 
 		strong {
-			max-width: 16em;
-			top: 45%;
+			max-inline-size: 16em;
+			inset-block-start: 45%;
 		}
 
 		.logotype,
 		strong {
 			left: calc(var(--side-nav) + 4rem);
-			/* left: calc(50% - 56rem + var(--side-nav)); */
+			/* inset-inline-start: calc(50% - 56rem + var(--side-nav)); */
 		}
 	}
 

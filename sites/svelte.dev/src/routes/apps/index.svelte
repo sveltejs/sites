@@ -143,13 +143,16 @@
 
 <style>
 	.apps {
-		padding: var(--top-offset) var(--side-nav) 6rem var(--side-nav);
-		max-width: var(--main-width);
-		margin: 0 auto;
+		padding-inline: var(--side-nav);
+		padding-block: var(--top-offset) 6rem;
+		max-inline-size: var(--main-width);
+		margin-inline: auto;
+		margin-block: 0;
 	}
 
 	header {
-		margin: 0 0 1em 0;
+		margin: 0;
+		margin-block-end: 1em;
 	}
 
 	h1 {
@@ -159,18 +162,18 @@
 
 	.user {
 		display: flex;
-		padding: 0 0 0 3.2rem;
+		padding-inline-start: 3.2rem;
 		position: relative;
-		margin: 1rem 0;
+		margin-block: 1rem;
 		color: var(--text);
 	}
 
 	.avatar {
 		position: absolute;
-		left: 0;
-		top: 0.1rem;
-		width: 2.4rem;
-		height: 2.4rem;
+		inset-inline-start: 0;
+		inset-block-start: 0.1rem;
+		inline-size: 2.4rem;
+		block-size: 2.4rem;
 		border: 1px solid rgba(0, 0, 0, 0.3);
 		border-radius: 0.2rem;
 	}
@@ -178,12 +181,12 @@
 	.controls {
 		position: sticky;
 		background: white;
-		top: 1rem;
+		inset-block-start: 1rem;
 		display: flex;
 		align-items: center;
-		width: 100%;
-		height: 4rem;
-		margin: 0 0 2rem 0;
+		inline-size: 100%;
+		block-size: 4rem;
+		margin-block-end: 2rem;
 		font-size: 1.6rem;
 		z-index: 2;
 		justify-content: space-between;
@@ -193,15 +196,15 @@
 	.controls::after {
 		content: '';
 		position: absolute;
-		width: 100%;
-		bottom: -2rem;
-		height: 2rem;
+		inline-size: 100%;
+		inset-block-end: -2rem;
+		block-size: 2rem;
 		background: linear-gradient(to bottom, white 0%, white 50%, transparent);
 	}
 
 	.controls form {
-		width: 100%;
-		height: 100%;
+		inline-size: 100%;
+		block-size: 100%;
 	}
 
 	.controls input, .controls button {
@@ -211,9 +214,10 @@
 
 	.controls input[type=search] {
 		position: relative;
-		width: 100%;
-		height: 100%;
-		padding: 0.5rem 1rem;
+		inline-size: 100%;
+		block-size: 100%;
+		padding-inline: 1rem;
+		padding-block: 0.5rem;
 		line-height: 1;
 		display: flex;
 		border: 1px solid #eee;
@@ -224,8 +228,9 @@
 	.controls button {
 		display: flex;
 		gap: 1rem;
-		padding: 0 1rem;
-		height: 100%;
+		padding-inline: 1rem;
+		padding-block: 0;
+		block-size: 100%;
 		border-radius: var(--border-r);
 		align-items: center;
 	}
@@ -254,8 +259,9 @@
 	li a {
 		display: block;
 		background: var(--back-light);
-		padding: 1rem 3rem 1rem 1rem;
-		height: 100%;
+		padding-inline: 1rem 3rem;
+		padding-block: 1rem;
+		block-size: 100%;
 		line-height: 1;
 		border-radius: var(--border-r);
 		text-decoration: none;
@@ -268,8 +274,8 @@
 
 	li label {
 		position: absolute;
-		right: 0;
-		top: 0;
+		inset-inline-end: 0;
+		inset-block-start: 0;
 		padding: 1rem;
 	}
 
@@ -310,7 +316,7 @@
 	}
 
 	.pagination {
-		height: 4rem;
+		block-size: 4rem;
 	}
 
 	@media (min-width: 540px) {

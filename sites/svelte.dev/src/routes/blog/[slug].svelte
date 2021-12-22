@@ -41,9 +41,11 @@
 
 <style>
 	.post {
-		padding: var(--top-offset) var(--side-nav) 6rem var(--side-nav);
-		max-width: var(--main-width);
-		margin: 0 auto;
+		padding-inline: var(--side-nav);
+		padding-block: var(--top-offset) 6rem;
+		max-inline-size: var(--main-width);
+		margin-inline: auto;
+		margin-block: 0;
 	}
 
 	h1 {
@@ -54,34 +56,37 @@
 	.standfirst {
 		font-size: var(--h4);
 		color: var(--second);
-		margin: 0 0 1em 0;
+		margin: 0;
+		margin-block-end: 1em;
 	}
 
 	.byline {
-		margin: 0 0 6rem 0;
-		padding: 1.6rem 0 0 0;
-		border-top: var(--border-w) solid #6767785b;
+		margin: 0;
+		margin-block-end: 6rem;
+		padding-block-start: 1.6rem;
+		border-block-start: var(--border-w) solid #6767785b;
 		font-size: var(--h6);
 		text-transform: uppercase;
 	}
 
 	.byline a {
-		/* border-bottom: none; */
+		/* border-block-end: none; */
 		/* font-weight: 600; */
 	}
 
 	.byline a:hover {
-		/* border-bottom: 2px solid var(--prime); */
+		/* border-block-end: 2px solid var(--prime); */
 	}
 
 	.post h1 {
 		color: var(--second);
-		max-width: 20em;
-		margin: 0 0 0.8rem 0;
+		max-inline-size: 20em;
+		margin: 0;
+		margin-block-end: 0.8rem;
 	}
 
 	.post :global(h2) {
-		margin: 2em 0 0.5em 0;
+		margin-block: 2em 0.5em;
 		/* color: var(--second); */
 		color: var(--text);
 		font-size: var(--h3);
@@ -89,11 +94,11 @@
 	}
 
 	.post :global(figure) {
-		margin: 1.6rem 0 3.2rem 0;
+		margin-block: 1.6rem 3.2rem;
 	}
 
 	.post :global(figure) :global(img) {
-		max-width: 100%;
+		max-inline-size: 100%;
 	}
 
 	.post :global(figcaption) {
@@ -102,52 +107,54 @@
 	}
 
 	.post :global(video) {
-		width: 100%;
+		inline-size: 100%;
 	}
 
 	.post :global(blockquote) {
-		max-width: none;
-		border-left: 4px solid #eee;
+		max-inline-size: none;
+		border-inline-start: 4px solid #eee;
 		background: #f9f9f9;
 		border-radius: 0 var(--border-r) var(--border-r) 0;
 	}
 
 	.post :global(code) {
 		padding: 0.3rem 0.8rem 0.3rem;
-		margin: 0 0.2rem;
-		top: -0.1rem;
+		margin-inline: 0.2rem;
+		margin-block: 0;
+		inset-block-start: -0.1rem;
 		background: var(--back-api);
 	}
 
 	.post :global(pre) :global(code) {
 		padding: 0;
 		margin: 0;
-		top: 0;
+		inset-block-start: 0;
 		background: transparent;
 	}
 
 	.post :global(aside) {
-		float: right;
-		margin: 0 0 1em 1em;
-		width: 16rem;
+		float: inline-end;
+		margin-inline: 1em 0;
+		margin-block: 0 1em;
+		inline-size: 16rem;
 		color: var(--second);
 		z-index: 2;
 	}
 
 	.post :global(.max) {
-		width: 100%;
+		inline-size: 100%;
 	}
 
 	.post :global(iframe) {
-		width: 100%;
-		height: 420px;
-		margin: 2em 0;
+		inline-size: 100%;
+		block-size: 420px;
+		margin-block: 2em;
 		border-radius: var(--border-r);
 		border: 0.8rem solid var(--second);
 	}
 
 	.post :global(.anchor) {
-		top: calc((var(--h3) - 24px) / 2);
+		inset-block-start: calc((var(--h3) - 24px) / 2);
 	}
 
 	.post :global(a) {
@@ -163,26 +170,27 @@
 		.post :global(.anchor) {
 			transform: scale(0.6);
 			opacity: 1;
-			left: -1em;
+			inset-inline-start: -1em;
 		}
 	}
 
 	@media (min-width: 910px) {
 		.post :global(.max) {
-			width: calc(100vw - 2 * var(--side-nav));
-			margin: 0 calc(var(--main-width) / 2 - 50vw);
+			inline-size: calc(100vw - 2 * var(--side-nav));
+			margin-inline: calc(var(--main-width) / 2 - 50vw);
 			text-align: center;
 		}
 
 		.post :global(.max) > :global(*) {
-			width: 100%;
-			max-width: 1200px;
+			inline-size: 100%;
+			max-inline-size: 1200px;
 		}
 
 		.post :global(iframe) {
-			width: 100%;
-			max-width: 1100px;
-			margin: 2em auto;
+			inline-size: 100%;
+			max-inline-size: 1100px;
+			margin-inline: auto;
+			margin-block: 2em;
 		}
 	}
 </style>

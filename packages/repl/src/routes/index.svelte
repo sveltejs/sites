@@ -34,6 +34,6 @@
 	}
 
 	main {
-		height: 100vh;
+		block-size: 100vh;
 	}
 </style>

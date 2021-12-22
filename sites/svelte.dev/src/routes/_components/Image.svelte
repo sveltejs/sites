@@ -37,9 +37,9 @@
 <style>
 	img {
 		display: block;
-		width: 100%;
-		height: auto;
-		max-height: var(--max-height, 100%);
+		inline-size: 100%;
+		block-size: auto;
+		max-block-size: var(--max-height, 100%);
 		object-fit: cover;
 	}
 </style>

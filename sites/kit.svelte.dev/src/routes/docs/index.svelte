@@ -45,7 +45,7 @@
 	{#each sections as section}
 		<Section
 			{section}
-			edit="https://github.com/sveltejs/kit/edit/master/site/content/docs/{section.file}"
+			edit="https://github.com/sveltejs/kit/edit/master/documentation/docs/{section.file}"
 			base="/docs"
 		/>
 	{/each}

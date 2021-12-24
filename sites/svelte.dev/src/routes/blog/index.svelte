@@ -36,7 +36,7 @@
 				<a
 					class="no-underline"
 					sveltekit:prefetch
-					href="blog/{post.slug}"
+					href="/blog/{post.slug}"
 					title="Read the article »"
 				>
 					<h2>{post.title}</h2>

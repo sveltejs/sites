@@ -1,6 +1,7 @@
 <script>
 	import { getContext } from 'svelte';
 	import { parse } from 'marked';
+	import JSONNode from 'svelte-json-tree';
 	import Viewer from './Viewer.svelte';
 	import PaneWithPanel from './PaneWithPanel.svelte';
 	import CompilerOptions from './CompilerOptions.svelte';
@@ -19,6 +20,7 @@
 	export let injectedJS;
 	export let injectedCSS;
 	export let theme;
+	export let showAst;
 
 	register_output({
 		set: async (selected, options) => {
@@ -40,6 +42,7 @@
 
 			js_editor.set(compiled.js, 'js');
 			css_editor.set(compiled.css, 'css');
+			ast = compiled.ast;
 		},
 
 		update: async (selected, options) => {
@@ -55,6 +58,7 @@
 
 			js_editor.update(compiled.js);
 			css_editor.update(compiled.css);
+			ast = compiled.ast;
 		}
 	});
 
@@ -67,6 +71,7 @@
 	let view = 'result';
 	let selected_type = '';
 	let markdown = '';
+	let ast;
 </script>
 
 <div class="view-toggle">
@@ -76,18 +81,15 @@
 		<button class:active={view === 'result'} on:click={() => (view = 'result')}>Result</button>
 		<button class:active={view === 'js'} on:click={() => (view = 'js')}>JS output</button>
 		<button class:active={view === 'css'} on:click={() => (view = 'css')}>CSS output</button>
+		{#if showAst}
+			<button class:active={view === 'ast'} on:click={() => (view = 'ast')}>AST output</button>
+		{/if}
 	{/if}
 </div>
 
 <!-- component viewer -->
 <div class="tab-content" class:visible={selected_type !== 'md' && view === 'result'}>
-	<Viewer
-		bind:error={runtimeError}
-		{status}
-		{relaxed}
-		{injectedJS}
-		{injectedCSS}
-	/>
+	<Viewer bind:error={runtimeError} {status} {relaxed} {injectedJS} {injectedCSS} />
 </div>
 
 <!-- js output -->
@@ -111,6 +113,17 @@
 <div class="tab-content" class:visible={selected_type !== 'md' && view === 'css'}>
 	<CodeMirror bind:this={css_editor} errorLoc={sourceErrorLoc} {theme} readonly />
 </div>
+
+<!-- ast output -->
+{#if showAst}
+	<div class="tab-content" class:visible={selected_type !== 'md' && view === 'ast'}>
+		{#if typeof ast === 'object'}
+			<JSONNode value={ast} />
+		{:else}
+			<p>No AST available</p>
+		{/if}
+	</div>
+{/if}
 
 <!-- markdown output -->
 <div class="tab-content" class:visible={selected_type === 'md'}>

@@ -1,8 +1,8 @@
 <script>
 	import Repl from '@sveltejs/repl';
 	import { onMount } from 'svelte';
-	import '../../../site-kit/base.css';
-	import '../../../site-kit/code.css';
+	import '../../../site-kit/src/lib/base.css';
+	import '../../../site-kit/src/lib/code.css';
 
 	let repl;
 
@@ -24,7 +24,7 @@
 </script>
 
 <main>
-	<Repl bind:this={repl}/>
+	<Repl bind:this={repl} showAst />
 </main>
 
 <style>

@@ -31,13 +31,14 @@ const common_options = {
 
 function compile({ id, source, options }) {
 	try {
-		const { js, css } = svelte.compile(source, Object.assign({}, common_options, options));
+		const { js, css, ast } = svelte.compile(source, Object.assign({}, common_options, options));
 
 		return {
 			id,
 			result: {
 				js: js.code,
-				css: css.code || `/* Add a <sty` + `le> tag to see compiled CSS */`
+				css: css.code || `/* Add a <sty` + `le> tag to see compiled CSS */`,
+				ast
 			}
 		};
 	} catch (err) {

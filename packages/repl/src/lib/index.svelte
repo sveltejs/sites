@@ -20,6 +20,7 @@
 	export let injectedCSS = '';
 	export let theme = 'svelte';
 	export let showModified = false;
+	export let showAst = false;
 
 	const historyMap = new Map();
 
@@ -265,7 +266,7 @@
 			</section>
 
 			<section slot="b" style="height: 100%;">
-				<Output {svelteUrl} status={status_visible && status} {embedded} {relaxed} {injectedJS} {injectedCSS} {theme} />
+				<Output {svelteUrl} status={status_visible && status} {embedded} {relaxed} {injectedJS} {injectedCSS} {theme} {showAst} />
 			</section>
 		</SplitPane>
 	</div>

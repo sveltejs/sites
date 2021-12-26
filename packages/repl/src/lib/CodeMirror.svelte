@@ -64,6 +64,14 @@
 		if (editor) editor.setCursor(pos);
 	}
 
+	export function markText({ from, to }) {
+		if (editor) editor.markText(editor.posFromIndex(from), editor.posFromIndex(to), { className: 'mark-text' });
+	}
+
+	export function unmarkText() {
+		if (editor) editor.getAllMarks().forEach(m => m.clear());
+	}
+
 	const modes = {
 		js: {
 			name: 'javascript',
@@ -230,6 +238,10 @@
 
 	.codemirror-container :global(.error-line) {
 		background-color: rgba(200, 0, 0, .05);
+	}
+
+	.codemirror-container :global(.mark-text) {
+		background-color: rgba(255, 255, 0, 0.5);
 	}
 
 	textarea {

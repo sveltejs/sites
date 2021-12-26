@@ -186,6 +186,15 @@
 
 		request_focus() {
 			module_editor.focus();
+		},
+
+		mark_text({ from, to }) {
+			module_editor.unmarkText();
+			module_editor.markText({ from, to });
+		},
+
+		unmark_text() {
+			module_editor.unmarkText();
 		}
 	});
 

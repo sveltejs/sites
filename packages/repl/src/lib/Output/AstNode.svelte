@@ -6,6 +6,8 @@
 	export let collapsed = true;
 
 	$: is_ast_array = Array.isArray(value);
+	$: is_collapsable = value && typeof value === 'object';
+	$: key_text = key ? `${key}:` : '';
 
 	const { mark_text, unmark_text } = getContext('REPL');
 
@@ -53,12 +55,16 @@
 </script>
 
 <li use:highlight={value}>
-	{#if key}
-		<span>{key}:</span>
+	{#if is_collapsable}
+		<button class="toggle" class:open={!collapsed} on:click={() => (collapsed = !collapsed)}>
+			{key_text}
+		</button>
+	{:else if key_text}
+		<span>{key_text}</span>
 	{/if}
-	{#if value && typeof value === 'object'}
+	{#if is_collapsable}
 		{#if collapsed}
-			<button class="preview" on:click={() => (collapsed = false)}>
+			<button class="preview" on:click={() => (collapsed = !collapsed)}>
 				{make_preview(value)}
 			</button>
 		{:else}
@@ -87,5 +93,25 @@
 	.preview {
 		opacity: 0.8;
 		font-style: italic;
+	}
+
+	button:hover {
+		text-decoration: underline;
+	}
+
+	.toggle {
+		position: relative;
+	}
+
+	.toggle::before {
+		content: '\25B6';
+		position: absolute;
+		bottom: 0;
+		left: -1.3rem;
+		opacity: 0.7;
+	}
+
+	.toggle.open::before {
+		content: '\25BC';
 	}
 </style>

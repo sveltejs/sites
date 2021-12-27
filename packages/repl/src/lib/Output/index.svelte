@@ -6,7 +6,7 @@
 	import CompilerOptions from './CompilerOptions.svelte';
 	import Compiler from './Compiler.js';
 	import CodeMirror from '../CodeMirror.svelte';
-	import AstNode from './AstNode.svelte';
+	import AstView from './AstView.svelte';
 	import { is_browser } from '../env.js';
 
 	const { register_output } = getContext('REPL');
@@ -117,11 +117,7 @@
 <!-- ast output -->
 {#if showAst}
 	<div class="tab-content" class:visible={selected_type !== 'md' && view === 'ast'}>
-		{#if typeof ast === 'object'}
-			<AstNode {ast} collapsed={false} />
-		{:else}
-			<p>No AST available</p>
-		{/if}
+		<AstView {ast} />
 	</div>
 {/if}
 

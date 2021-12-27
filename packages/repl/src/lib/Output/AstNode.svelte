@@ -43,19 +43,23 @@
 		<li>
 			{#if !is_ast_array}
 				<button class="node" use:highlight={v}>
-					{k}:
+					{k}: 
 				</button>
 			{/if}
-			{#if typeof v === 'object'}
+			{#if v && typeof v === 'object'}
 				{#if collapsed}
 					<button class="node preview" use:highlight={v} on:click={() => (collapsed = false)}>
 						{make_preview(v)}
 					</button>
 				{:else}
+					<span>{Array.isArray(v) ? '[' : '{'}</span>
 					<svelte:self ast={v} />
+					<span>{Array.isArray(v) ? ']' : '}'}</span>
 				{/if}
 			{:else}
-				{JSON.stringify(v)}
+				<span class="token string">
+					{JSON.stringify(v)}
+				</span>
 			{/if}
 		</li>
 	{/each}
@@ -63,7 +67,8 @@
 
 <style>
 	ul {
-		padding-left: 2rem;
+		padding: 0 0 0 2ch;
+		margin: 0;
 		list-style-type: none;
 	}
 

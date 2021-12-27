@@ -9,7 +9,7 @@
 			{#if typeof ast === 'object'}
 				<ul>
 					
-					<AstNode value={ast} collapsed={false} />
+					<AstNode value={ast} root collapsed={false} />
 				</ul>
 			{:else}
 				<p>No AST available</p>

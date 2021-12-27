@@ -4,58 +4,41 @@
 	export let key = '';
 	export let value = undefined;
 	export let collapsed = true;
-
-	$: is_ast_array = Array.isArray(value);
-	$: is_collapsable = value && typeof value === 'object';
-	$: key_text = key ? `${key}:` : '';
+	export let root = false;
 
 	const { mark_text, unmark_text } = getContext('REPL');
 
-	function make_preview(sub_ast) {
-		if (Array.isArray(sub_ast)) {
-			return `[ ${sub_ast.length} element${sub_ast.length === 1 ? '' : 's'} ]`;
+	$: is_ast_array = Array.isArray(value);
+	$: is_collapsable = value && typeof value === 'object';
+	$: is_markable = value && typeof value.start === 'number' && typeof value.end === 'number';
+	$: key_text = key ? `${key}:` : '';
+
+	let preview_text;
+	$: if (is_collapsable && collapsed) {
+		if (is_ast_array) {
+			preview_text = `[ ${value.length} element${value.length === 1 ? '' : 's'} ]`;
 		} else {
-			return `{ ${Object.keys(sub_ast).join(', ')} }`;
+			preview_text = `{ ${Object.keys(value).join(', ')} }`;
 		}
 	}
 
-	function highlight(node, sub_ast) {
-		let can_highlight =
-			sub_ast && typeof sub_ast.start === 'number' && typeof sub_ast.end === 'number';
-
-		function handle_mark_text(e) {
-			if (can_highlight) {
-				e.stopPropagation();
-				mark_text({ from: sub_ast.start, to: sub_ast.end });
-			}
+	function handle_mark_text(e) {
+		if (is_markable) {
+			e.stopPropagation();
+			mark_text({ from: value.start, to: value.end });
 		}
+	}
 
-		function handle_unmark_text(e) {
-			if (can_highlight) {
-				e.stopPropagation();
-				unmark_text();
-			}
+	function handle_unmark_text(e) {
+		if (is_markable) {
+			e.stopPropagation();
+			unmark_text();
 		}
-
-		node.addEventListener('mouseover', handle_mark_text);
-		node.addEventListener('mouseleave', handle_unmark_text);
-
-		return {
-			update(new_sub_ast) {
-				sub_ast = new_sub_ast;
-				can_highlight =
-					sub_ast && typeof sub_ast.start === 'number' && typeof sub_ast.end === 'number';
-			},
-			destroy() {
-				node.removeEventListener('mouseover', handle_mark_text);
-				node.removeEventListener('mouseleave', handle_unmark_text);
-			}
-		};
 	}
 </script>
 
-<li use:highlight={value}>
-	{#if is_collapsable}
+<li on:mouseover={handle_mark_text} on:focus={handle_mark_text} on:mouseleave={handle_unmark_text}>
+	{#if !root && is_collapsable}
 		<button class="toggle" class:open={!collapsed} on:click={() => (collapsed = !collapsed)}>
 			{key_text}
 		</button>
@@ -65,7 +48,7 @@
 	{#if is_collapsable}
 		{#if collapsed}
 			<button class="preview" on:click={() => (collapsed = !collapsed)}>
-				{make_preview(value)}
+				{preview_text}
 			</button>
 		{:else}
 			<span>{is_ast_array ? '[' : '{'}</span>

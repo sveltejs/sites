@@ -10,29 +10,42 @@
 
 	function make_preview(sub_ast) {
 		if (Array.isArray(sub_ast)) {
-			return `[ ${sub_ast.length} elements ]`;
+			return `[ ${sub_ast.length} element${sub_ast.length === 1 ? '' : 's'} ]`;
 		} else {
 			return `{ ${Object.keys(sub_ast).join(', ')} }`;
 		}
 	}
 
 	function highlight(node, sub_ast) {
-		function handle_mark_text() {
-			if (sub_ast && typeof sub_ast.start === 'number' && typeof sub_ast.end === 'number') {
+		let can_highlight =
+			sub_ast && typeof sub_ast.start === 'number' && typeof sub_ast.end === 'number';
+
+		function handle_mark_text(e) {
+			if (can_highlight) {
+				e.stopPropagation();
 				mark_text({ from: sub_ast.start, to: sub_ast.end });
 			}
 		}
 
-		node.addEventListener('mouseenter', handle_mark_text);
-		node.addEventListener('mouseleave', unmark_text);
+		function handle_unmark_text(e) {
+			if (can_highlight) {
+				e.stopPropagation();
+				unmark_text();
+			}
+		}
+
+		node.addEventListener('mouseover', handle_mark_text);
+		node.addEventListener('mouseleave', handle_unmark_text);
 
 		return {
 			update(new_sub_ast) {
 				sub_ast = new_sub_ast;
+				can_highlight =
+					sub_ast && typeof sub_ast.start === 'number' && typeof sub_ast.end === 'number';
 			},
 			destroy() {
-				node.removeEventListener('mouseenter', handle_mark_text);
-				node.removeEventListener('mouseleave', unmark_text);
+				node.removeEventListener('mouseover', handle_mark_text);
+				node.removeEventListener('mouseleave', handle_unmark_text);
 			}
 		};
 	}
@@ -40,15 +53,13 @@
 
 <ul>
 	{#each Object.entries(ast) as [k, v]}
-		<li>
+		<li use:highlight={v}>
 			{#if !is_ast_array}
-				<button class="node" use:highlight={v}>
-					{k}: 
-				</button>
+				<span>{k}:</span>
 			{/if}
 			{#if v && typeof v === 'object'}
 				{#if collapsed}
-					<button class="node preview" use:highlight={v} on:click={() => (collapsed = false)}>
+					<button class="preview" on:click={() => (collapsed = false)}>
 						{make_preview(v)}
 					</button>
 				{:else}
@@ -57,7 +68,7 @@
 					<span>{Array.isArray(v) ? ']' : '}'}</span>
 				{/if}
 			{:else}
-				<span class="token string">
+				<span class="token {typeof v}">
 					{JSON.stringify(v)}
 				</span>
 			{/if}

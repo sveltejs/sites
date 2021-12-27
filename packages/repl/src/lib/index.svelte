@@ -86,6 +86,7 @@
 	const components = writable([]);
 	const selected = writable(null);
 	const bundle = writable(null);
+	const cursor_index = {}
 
 	const compile_options = writable({
 		generate: 'dom',
@@ -121,6 +122,7 @@
 		components,
 		selected,
 		bundle,
+		cursor_index,
 		compile_options,
 
 		rebundle,
@@ -176,6 +178,7 @@
 
 		register_module_editor(editor) {
 			module_editor = editor;
+			Object.assign(cursor_index, module_editor.cursorIndex);
 			fulfil_module_editor_ready();
 		},
 
@@ -195,7 +198,7 @@
 
 		unmark_text() {
 			module_editor.unmarkText();
-		}
+		},
 	});
 
 	function handle_select(component) {

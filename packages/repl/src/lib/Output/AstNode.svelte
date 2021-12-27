@@ -6,11 +6,12 @@
 	export let collapsed = true;
 	export let root = false;
 
-	const { mark_text, unmark_text } = getContext('REPL');
+	const { mark_text, unmark_text, cursor_index } = getContext('REPL');
 
 	$: is_ast_array = Array.isArray(value);
 	$: is_collapsable = value && typeof value === 'object';
 	$: is_markable = value && typeof value.start === 'number' && typeof value.end === 'number';
+	$: is_cursor_in_node = is_markable && value.start <= $cursor_index && $cursor_index <= value.end;
 	$: key_text = key ? `${key}:` : '';
 
 	let preview_text;
@@ -37,7 +38,12 @@
 	}
 </script>
 
-<li on:mouseover={handle_mark_text} on:focus={handle_mark_text} on:mouseleave={handle_unmark_text}>
+<li
+	class:marked={is_cursor_in_node}
+	on:mouseover={handle_mark_text}
+	on:focus={handle_mark_text}
+	on:mouseleave={handle_unmark_text}
+>
 	{#if !root && is_collapsable}
 		<button class="toggle" class:open={!collapsed} on:click={() => (collapsed = !collapsed)}>
 			{key_text}
@@ -71,6 +77,10 @@
 		padding: 0 0 0 2ch;
 		margin: 0;
 		list-style-type: none;
+	}
+
+	.marked {
+		background-color: rgba(255, 255, 0, 0.5);
 	}
 
 	.preview {

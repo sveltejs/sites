@@ -1,5 +1,6 @@
 <script>
 	import { onMount, createEventDispatcher } from 'svelte';
+	import { readable } from 'svelte/store';
 	import Message from './Message.svelte';
 
 	const dispatch = createEventDispatcher();
@@ -63,6 +64,14 @@
 	export function setCursor(pos) {
 		if (editor) editor.setCursor(pos);
 	}
+
+	export const cursorIndex = readable(0, (set) => {
+		if (editor) {
+			const handle = () => set(editor.indexFromPos(editor.getCursor()));
+			editor.on('cursorActivity', handle);
+			return () => editor.off('cursorActivity', handle);
+		}
+	});
 
 	export function markText({ from, to }) {
 		if (editor) editor.markText(editor.posFromIndex(from), editor.posFromIndex(to), { className: 'mark-text' });

@@ -1,10 +1,11 @@
 <script>
 	import { getContext } from 'svelte';
 
-	export let ast;
+	export let key = '';
+	export let value = undefined;
 	export let collapsed = true;
 
-	$: is_ast_array = Array.isArray(ast);
+	$: is_ast_array = Array.isArray(value);
 
 	const { mark_text, unmark_text } = getContext('REPL');
 
@@ -51,30 +52,30 @@
 	}
 </script>
 
-<ul>
-	{#each Object.entries(ast) as [k, v]}
-		<li use:highlight={v}>
-			{#if !is_ast_array}
-				<span>{k}:</span>
-			{/if}
-			{#if v && typeof v === 'object'}
-				{#if collapsed}
-					<button class="preview" on:click={() => (collapsed = false)}>
-						{make_preview(v)}
-					</button>
-				{:else}
-					<span>{Array.isArray(v) ? '[' : '{'}</span>
-					<svelte:self ast={v} />
-					<span>{Array.isArray(v) ? ']' : '}'}</span>
-				{/if}
-			{:else}
-				<span class="token {typeof v}">
-					{JSON.stringify(v)}
-				</span>
-			{/if}
-		</li>
-	{/each}
-</ul>
+<li use:highlight={value}>
+	{#if key}
+		<span>{key}:</span>
+	{/if}
+	{#if value && typeof value === 'object'}
+		{#if collapsed}
+			<button class="preview" on:click={() => (collapsed = false)}>
+				{make_preview(value)}
+			</button>
+		{:else}
+			<span>{is_ast_array ? '[' : '{'}</span>
+			<ul>
+				{#each Object.entries(value) as [k, v]}
+					<svelte:self key={is_ast_array ? '' : k} value={v} />
+				{/each}
+			</ul>
+			<span>{is_ast_array ? ']' : '}'}</span>
+		{/if}
+	{:else}
+		<span class="token {typeof value}">
+			{JSON.stringify(value)}
+		</span>
+	{/if}
+</li>
 
 <style>
 	ul {

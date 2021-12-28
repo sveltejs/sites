@@ -9,7 +9,7 @@
 	import AstView from './AstView.svelte';
 	import { is_browser } from '../env.js';
 
-	const { register_output } = getContext('REPL');
+	const { register_output, module_editor_ready } = getContext('REPL');
 
 	export let svelteUrl;
 	export let status;
@@ -117,7 +117,10 @@
 <!-- ast output -->
 {#if showAst}
 	<div class="tab-content" class:visible={selected_type !== 'md' && view === 'ast'}>
-		<AstView {ast} />
+		<!-- ast view interacts with the module editor, wait for it first -->
+		{#await module_editor_ready then}
+			<AstView {ast} />
+		{/await}
 	</div>
 {/if}
 

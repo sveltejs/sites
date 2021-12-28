@@ -124,6 +124,7 @@
 		bundle,
 		cursor_index,
 		compile_options,
+		module_editor_ready,
 
 		rebundle,
 

@@ -201,7 +201,7 @@
 
 		unmark_text() {
 			module_editor.unmarkText();
-		},
+		}
 	});
 
 	function handle_select(component) {

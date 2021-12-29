@@ -7,14 +7,14 @@
 	const { cursor_index } = getContext('REPL');
 	let path_nodes;
 
-	$: path_nodes = find_deepest(ast, $cursor_index);
+	$: path_nodes = ast ? find_deepest($cursor_index, [ast]) : [];
 
-	function find_deepest(value, index, paths = [value]) {
-		if (!value) return;
+	function find_deepest(cursor, paths) {
+		const value = paths[paths.length - 1];
 
 		for (const v of Object.values(value)) {
 			if (typeof v === 'object') {
-				const result = find_deepest(v, index, paths.concat([v]));
+				const result = find_deepest(cursor, paths.concat([v]));
 				if (result) return result;
 			}
 		}
@@ -22,10 +22,10 @@
 		if (
 			typeof value.start === 'number' &&
 			typeof value.end === 'number' &&
-			value.start <= index &&
-			index <= value.end
+			value.start <= cursor &&
+			cursor <= value.end
 		) {
-			return paths
+			return paths;
 		}
 	}
 </script>

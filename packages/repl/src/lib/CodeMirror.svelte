@@ -199,7 +199,6 @@
 
 		if (destroyed) return;
 
-		console.log('codemirror')
 		editor = CodeMirror.fromTextArea(refs.editor, opts);
 
 		editor.on('change', instance => {
@@ -249,7 +248,7 @@
 	}
 
 	.codemirror-container :global(.mark-text) {
-		background-color: rgba(255, 255, 0, 0.5);
+		background-color: var(--highlight);
 	}
 
 	textarea {

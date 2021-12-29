@@ -5,12 +5,13 @@
 	export let ast;
 
 	const { cursor_index } = getContext('REPL');
-	let path_nodes;
 
-	$: path_nodes = ast ? find_deepest($cursor_index, [ast]) : [];
+	$: path_nodes = find_deepest($cursor_index, [ast]) || [ast];
 
 	function find_deepest(cursor, paths) {
 		const value = paths[paths.length - 1];
+
+		if (!value) return;
 
 		for (const v of Object.values(value)) {
 			if (typeof v === 'object') {

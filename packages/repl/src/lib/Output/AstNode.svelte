@@ -29,6 +29,7 @@
 	$: collapsed = !path_nodes.includes(value);
 
 	$: if (is_leaf) {
+		// wait for all nodes to render before scroll
 		tick().then(() => {
 			if (list_item) {
 				list_item.scrollIntoView();
@@ -53,7 +54,7 @@
 
 <li
 	bind:this={list_item}
-	class:marked={is_leaf}
+	class:marked={!is_root && is_leaf}
 	on:mouseover={handle_mark_text}
 	on:focus={handle_mark_text}
 	on:mouseleave={handle_unmark_text}
@@ -94,7 +95,7 @@
 	}
 
 	.marked {
-		background-color: rgba(255, 255, 0, 0.5);
+		background-color: var(--highlight);
 	}
 
 	.preview {

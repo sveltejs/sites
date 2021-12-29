@@ -1,6 +1,33 @@
 <script>
+	import { getContext } from 'svelte';
 	import AstNode from './AstNode.svelte';
+
 	export let ast;
+
+	const { cursor_index } = getContext('REPL');
+	let path_nodes;
+
+	$: path_nodes = find_deepest(ast, $cursor_index);
+
+	function find_deepest(value, index, paths = [value]) {
+		if (!value) return;
+
+		for (const v of Object.values(value)) {
+			if (typeof v === 'object') {
+				const result = find_deepest(v, index, paths.concat([v]));
+				if (result) return result;
+			}
+		}
+
+		if (
+			typeof value.start === 'number' &&
+			typeof value.end === 'number' &&
+			value.start <= index &&
+			index <= value.end
+		) {
+			return paths
+		}
+	}
 </script>
 
 <div class="code-block">
@@ -8,8 +35,7 @@
 		<code>
 			{#if typeof ast === 'object'}
 				<ul>
-					
-					<AstNode value={ast} root collapsed={false} />
+					<AstNode value={ast} {path_nodes} collapsed={false} />
 				</ul>
 			{:else}
 				<p>No AST available</p>

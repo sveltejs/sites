@@ -1,17 +1,20 @@
 <script>
-	import { getContext } from 'svelte';
+	import { getContext, tick } from 'svelte';
 
 	export let key = '';
 	export let value = undefined;
 	export let collapsed = true;
-	export let root = false;
+	export let path_nodes = [];
 
-	const { mark_text, unmark_text, cursor_index } = getContext('REPL');
+	const { mark_text, unmark_text } = getContext('REPL');
 
+	let list_item;
+
+	$: is_root = path_nodes[0] === value;
+	$: is_leaf = path_nodes[path_nodes.length - 1] === value;
 	$: is_ast_array = Array.isArray(value);
 	$: is_collapsable = value && typeof value === 'object';
 	$: is_markable = value && typeof value.start === 'number' && typeof value.end === 'number';
-	$: is_cursor_in_node = is_markable && value.start <= $cursor_index && $cursor_index <= value.end;
 	$: key_text = key ? `${key}:` : '';
 
 	let preview_text;
@@ -21,6 +24,16 @@
 		} else {
 			preview_text = `{ ${Object.keys(value).join(', ')} }`;
 		}
+	}
+
+	$: collapsed = !path_nodes.includes(value);
+
+	$: if (is_leaf) {
+		tick().then(() => {
+			if (list_item) {
+				list_item.scrollIntoView();
+			}
+		});
 	}
 
 	function handle_mark_text(e) {
@@ -39,12 +52,13 @@
 </script>
 
 <li
-	class:marked={is_cursor_in_node}
+	bind:this={list_item}
+	class:marked={is_leaf}
 	on:mouseover={handle_mark_text}
 	on:focus={handle_mark_text}
 	on:mouseleave={handle_unmark_text}
 >
-	{#if !root && is_collapsable}
+	{#if !is_root && is_collapsable}
 		<button class="toggle" class:open={!collapsed} on:click={() => (collapsed = !collapsed)}>
 			{key_text}
 		</button>
@@ -52,7 +66,7 @@
 		<span>{key_text}</span>
 	{/if}
 	{#if is_collapsable}
-		{#if collapsed}
+		{#if collapsed && !is_root}
 			<button class="preview" on:click={() => (collapsed = !collapsed)}>
 				{preview_text}
 			</button>
@@ -60,7 +74,7 @@
 			<span>{is_ast_array ? '[' : '{'}</span>
 			<ul>
 				{#each Object.entries(value) as [k, v]}
-					<svelte:self key={is_ast_array ? '' : k} value={v} />
+					<svelte:self key={is_ast_array ? '' : k} value={v} {path_nodes} />
 				{/each}
 			</ul>
 			<span>{is_ast_array ? ']' : '}'}</span>

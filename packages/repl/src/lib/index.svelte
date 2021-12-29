@@ -86,7 +86,7 @@
 	const components = writable([]);
 	const selected = writable(null);
 	const bundle = writable(null);
-	const cursor_index = {}
+	const cursor_index = writable(0);
 
 	const compile_options = writable({
 		generate: 'dom',
@@ -179,7 +179,9 @@
 
 		register_module_editor(editor) {
 			module_editor = editor;
-			Object.assign(cursor_index, module_editor.cursorIndex);
+			module_editor.cursorIndex.subscribe((index) => {
+				cursor_index.set(index);
+			});
 			fulfil_module_editor_ready();
 		},
 

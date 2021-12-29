@@ -10,7 +10,7 @@
 	// clamping this helps prevent the collapse view flashing
 	$: max_cursor_index = !ast ? $cursor_index : Math.min($cursor_index, get_ast_max_end(ast));
 
-	$: path_nodes = ast ? find_deepest_path(max_cursor_index, [ast]) : [];
+	$: path_nodes = find_deepest_path(max_cursor_index, [ast]) || [];
 
 	function find_deepest_path(cursor, paths) {
 		const value = paths[paths.length - 1];
@@ -66,6 +66,8 @@
 	pre,
 	code {
 		height: 100%;
+		block-size: 100%;
+		font: 400 var(--code-fs)/1.7 var(--font-mono);
 	}
 
 	pre {

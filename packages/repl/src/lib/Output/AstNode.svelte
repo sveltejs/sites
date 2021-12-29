@@ -81,6 +81,7 @@
 			<span>{is_ast_array ? ']' : '}'}</span>
 		{/if}
 	{:else}
+		<!-- lend prism highlight classes -->
 		<span class="token {typeof value}">
 			{JSON.stringify(value)}
 		</span>

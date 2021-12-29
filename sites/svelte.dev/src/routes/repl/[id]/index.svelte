@@ -21,6 +21,7 @@
 
 <script>
 	import Repl from '@sveltejs/repl';
+	import '@sveltejs/site-kit/code.css';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/env';
 	import { goto } from '$app/navigation';
@@ -98,6 +99,7 @@
 			{relaxed}
 			injectedJS={mapbox_setup}
 			showModified
+			showAst
 			on:change={handle_change}
 			on:add={handle_change}
 			on:remove={handle_change}

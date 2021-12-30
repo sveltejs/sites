@@ -6,7 +6,7 @@
 	export let collapsed = true;
 	export let path_nodes = [];
 
-	const { mark_text, unmark_text } = getContext('REPL');
+	const { toggleable, mark_text, unmark_text } = getContext('REPL');
 
 	let list_item;
 
@@ -28,7 +28,7 @@
 
 	$: collapsed = !path_nodes.includes(value);
 
-	$: if (is_leaf) {
+	$: if (is_leaf && !$toggleable) {
 		// wait for all nodes to render before scroll
 		tick().then(() => {
 			if (list_item) {

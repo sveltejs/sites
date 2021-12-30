@@ -87,6 +87,7 @@
 	const selected = writable(null);
 	const bundle = writable(null);
 	const cursor_index = writable(0);
+	const toggleable = writable(false);
 
 	const compile_options = writable({
 		generate: 'dom',
@@ -122,8 +123,10 @@
 		components,
 		selected,
 		bundle,
-		cursor_index,
 		compile_options,
+
+		cursor_index,
+		toggleable,
 		module_editor_ready,
 
 		rebundle,
@@ -263,12 +266,12 @@
 
 	$: mobile = width < 540;
 
-	$: toggleable = mobile && orientation === 'columns';
+	$: $toggleable = mobile && orientation === 'columns';
 </script>
 
 <svelte:window on:beforeunload={beforeUnload} />
 
-<div class="container" class:toggleable bind:clientWidth={width}>
+<div class="container" class:toggleable={$toggleable} bind:clientWidth={width}>
 	<div class="viewport" class:output={show_output}>
 		<SplitPane
 			type={orientation === 'rows' ? 'vertical' : 'horizontal'}
@@ -285,8 +288,7 @@
 			</section>
 		</SplitPane>
 	</div>
-
-	{#if toggleable}
+	{#if $toggleable}
 		<InputOutputToggle bind:checked={show_output}/>
 	{/if}
 </div>

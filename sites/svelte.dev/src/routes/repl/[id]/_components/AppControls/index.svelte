@@ -88,6 +88,10 @@
 	}
 
 	async function save() {
+		if (!$session.user) {
+			alert('Looks like you are not logged in! Log in and try saving again');
+			return;
+		}
 		if (saving) return;
 
 		if (!canSave) {

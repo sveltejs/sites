@@ -3,6 +3,7 @@
 	import AstNode from './AstNode.svelte';
 
 	export let ast;
+	export let autoscroll = true;
 
 	const { cursor_index } = getContext('REPL');
 
@@ -52,7 +53,7 @@
 		<code>
 			{#if typeof ast === 'object'}
 				<ul>
-					<AstNode value={ast} {path_nodes} collapsed={false} />
+					<AstNode value={ast} {path_nodes} {autoscroll} collapsed={false} />
 				</ul>
 			{:else}
 				<p>No AST available</p>
@@ -67,7 +68,7 @@
 	code {
 		height: 100%;
 		block-size: 100%;
-		font: 400 var(--code-fs)/1.7 var(--font-mono);
+		font: 400 var(--code-fs) / 1.7 var(--font-mono);
 	}
 
 	pre {

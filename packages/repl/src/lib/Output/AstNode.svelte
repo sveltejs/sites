@@ -5,6 +5,7 @@
 	export let value = undefined;
 	export let collapsed = true;
 	export let path_nodes = [];
+	export let autoscroll = true;
 
 	const { toggleable, mark_text, unmark_text } = getContext('REPL');
 
@@ -28,7 +29,7 @@
 
 	$: collapsed = !path_nodes.includes(value);
 
-	$: if (is_leaf && !$toggleable) {
+	$: if (autoscroll && is_leaf && !$toggleable) {
 		// wait for all nodes to render before scroll
 		tick().then(() => {
 			if (list_item) {
@@ -75,7 +76,7 @@
 			<span>{is_ast_array ? '[' : '{'}</span>
 			<ul>
 				{#each Object.entries(value) as [k, v]}
-					<svelte:self key={is_ast_array ? '' : k} value={v} {path_nodes} />
+					<svelte:self key={is_ast_array ? '' : k} value={v} {path_nodes} {autoscroll} />
 				{/each}
 			</ul>
 			<span>{is_ast_array ? ']' : '}'}</span>

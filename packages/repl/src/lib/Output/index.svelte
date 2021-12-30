@@ -119,7 +119,7 @@
 	<div class="tab-content" class:visible={selected_type !== 'md' && view === 'ast'}>
 		<!-- ast view interacts with the module editor, wait for it first -->
 		{#await module_editor_ready then}
-			<AstView {ast} />
+			<AstView {ast} autoscroll={selected_type !== 'md' && view === 'ast'} />
 		{/await}
 	</div>
 {/if}

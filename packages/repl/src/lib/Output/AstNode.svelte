@@ -82,7 +82,6 @@
 			<span>{is_ast_array ? ']' : '}'}</span>
 		{/if}
 	{:else}
-		<!-- lend prism highlight classes -->
 		<span class="token {typeof value}">
 			{JSON.stringify(value)}
 		</span>
@@ -123,5 +122,17 @@
 
 	.toggle.open::before {
 		content: '\25BC';
+	}
+
+	.token {
+		color: var(--base);
+	}
+
+	.token.string {
+		color: var(--string);
+	}
+
+	.token.number {
+		color: var(--number);
 	}
 </style>

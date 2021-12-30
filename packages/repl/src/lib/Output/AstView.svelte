@@ -48,7 +48,7 @@
 	}
 </script>
 
-<div class="code-block">
+<div class="ast-view">
 	<pre>
 		<code>
 			{#if typeof ast === 'object'}
@@ -63,7 +63,15 @@
 </div>
 
 <style>
-	.code-block,
+	.ast-view {
+		--base: hsl(45, 7%, 45%);
+		--string: hsl(41, 37%, 45%);
+		--number: hsl(102, 27%, 50%);
+		background: var(--back-light);
+		color: var(--base);
+	}
+	
+	.ast-view,
 	pre,
 	code {
 		height: 100%;
@@ -74,6 +82,8 @@
 	pre {
 		white-space: normal;
 		padding: 1rem;
+		tab-size: 2;
+		-moz-tab-size: 2;
 	}
 
 	ul {

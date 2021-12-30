@@ -21,7 +21,6 @@
 
 <script>
 	import Repl from '@sveltejs/repl';
-	import '@sveltejs/site-kit/code.css';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/env';
 	import { goto } from '$app/navigation';

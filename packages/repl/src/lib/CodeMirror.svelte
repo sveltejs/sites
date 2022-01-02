@@ -89,6 +89,7 @@
 	let error_line;
 	let destroyed = false;
 	let CodeMirror;
+	let emmet;
 
 	$: if (editor && w && h) {
 		editor.refresh();
@@ -127,9 +128,11 @@
 		(async () => {
 			if (!CodeMirror) {
 				let mod = await import('./codemirror.js');
-				CodeMirror = mod.default;
+        CodeMirror = mod.default;
+        emmet = (await import('@emmetio/codemirror-plugin')).default;
 			}
-			await createEditor(mode || 'svelte');
+      await createEditor(mode || 'svelte');
+      emmet(CodeMirror);
 			if (editor) editor.setValue(code || '');
 		})();
 
@@ -170,7 +173,7 @@
 					cm.foldCode(cm.getCursor());
 				},
 				// allow escaping the CodeMirror with Esc Tab
-				'Esc Tab': false
+				'Tab': 'emmetExpandAbbreviation'
 			}),
 			foldGutter: true,
 			gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],

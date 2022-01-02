@@ -23,6 +23,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@emmetio/codemirror-plugin": "^1.2.4",
 		"@sveltejs/site-kit": "workspace:*",
 		"acorn": "^8.6.0",
 		"codemirror": "5",

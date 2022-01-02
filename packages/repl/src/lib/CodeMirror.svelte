@@ -131,7 +131,7 @@
         CodeMirror = mod.default;
         emmet = (await import('@emmetio/codemirror-plugin')).default;
 			}
-      emmet(CodeMirror);
+      await emmet(CodeMirror);
       await createEditor(mode || 'svelte');
 			if (editor) editor.setValue(code || '');
 		})();

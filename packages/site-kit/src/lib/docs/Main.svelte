@@ -17,8 +17,8 @@
 				a.className = 'anchor';
 				a.href = `${$page.path}#${heading.id}`;
 				const span = document.createElement('span');
-				span.className = 'visually-hidden';
-				span.innerHTML = 'permalink';
+				span.className = "visually-hidden";
+				span.innerHTML = "permalink";
 				a.appendChild(span);
 				heading.appendChild(a);
 			}

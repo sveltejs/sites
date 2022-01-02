@@ -17,8 +17,8 @@
 				a.className = 'anchor';
 				a.href = `${$page.path}#${heading.id}`;
 				const span = document.createElement('span');
-				span.className = "visually-hidden";
-				span.innerHTML = "permalink";
+				span.className = 'visually-hidden';
+				span.innerHTML = 'permalink';
 				a.appendChild(span);
 				heading.appendChild(a);
 			}
@@ -206,6 +206,13 @@
 		line-height: 1;
 		padding-block-start: 0;
 		inset-block-start: 0;
+	}
+
+	.content :global(h4::before) {
+		display: block;
+		content: ' ';
+		block-size: var(--nav-h);
+		margin-block-start: calc(-1 * var(--nav-h));
 	}
 
 	.content :global(h4 > em) {

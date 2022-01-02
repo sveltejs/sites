@@ -219,10 +219,6 @@
 		opacity: 0.7;
 	}
 
-	.content :global(h4 > .anchor) {
-		inset-block-start: 0.05em;
-	}
-
 	.content :global(h5) {
 		font-size: 2.4rem;
 		margin-block: 2em 0.5em;

@@ -200,11 +200,11 @@
 		font-size: 2.4rem;
 		color: var(--second);
 		margin-inline: 0;
-		margin-block: -5.5rem 1.6rem;
+		margin-block: 6.4rem 1.6rem;
 		padding-inline-start: 0;
 		background: transparent;
 		line-height: 1;
-		padding-block-start: 10rem;
+		padding-block-start: 0;
 		inset-block-start: 0;
 	}
 

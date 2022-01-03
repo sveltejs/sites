@@ -117,8 +117,8 @@
 	<title>{selected.section.name} / {selected.chapter.name} • Svelte Tutorial</title>
 
 	<meta name="twitter:title" content="Svelte tutorial" />
-	<meta name="twitter:description" content="{selected.section.title} / {selected.chapter.title}" />
-	<meta name="Description" content="{selected.section.title} / {selected.chapter.title}" />
+	<meta name="twitter:description" content="{selected.section.name} / {selected.chapter.name}" />
+	<meta name="Description" content="{selected.section.name} / {selected.chapter.name}" />
 </svelte:head>
 
 <svelte:window bind:innerWidth={width} />

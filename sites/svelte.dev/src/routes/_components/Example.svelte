@@ -1,6 +1,6 @@
 <script>
-	import IntersectionObserver from '../../components/IntersectionObserver.svelte';
-	import ReplWidget from '../../components/Repl/ReplWidget.svelte';
+	import IntersectionObserver from '$lib/components/IntersectionObserver.svelte';
+	import ReplWidget from '$lib/components/ReplWidget.svelte';
 
 	export let id;
 </script>

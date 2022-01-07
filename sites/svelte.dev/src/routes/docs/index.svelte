@@ -1,5 +1,5 @@
 <script context="module">
-	import { API_BASE } from '../../_env';
+	import { API_BASE } from '$lib/env';
 
 	export async function load({ fetch }) {
 		const sections = await fetch(`${API_BASE}/docs/svelte/docs?content`).then(r => r.json());

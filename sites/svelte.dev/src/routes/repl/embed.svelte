@@ -12,12 +12,26 @@
 
 <script>
 	import { browser } from '$app/env';
-	import ReplWidget from '../../components/Repl/ReplWidget.svelte';
+	import ReplWidget from '$lib/components/ReplWidget.svelte';
 
 	export let version;
 	export let gist;
 	export let example;
 </script>
+
+<svelte:head>
+	<title>REPL • Svelte</title>
+
+	<meta name="twitter:title" content="Svelte REPL" />
+	<meta name="twitter:description" content="Cybernetically enhanced web apps" />
+	<meta name="Description" content="Interactive Svelte playground" />
+</svelte:head>
+
+<div class="repl-outer">
+	{#if browser}
+		<ReplWidget {version} {gist} {example} embedded={true} />
+	{/if}
+</div>
 
 <style>
 	.repl-outer {
@@ -34,17 +48,3 @@
 		flex-direction: column;
 	}
 </style>
-
-<svelte:head>
-	<title>REPL • Svelte</title>
-
-	<meta name="twitter:title" content="Svelte REPL">
-	<meta name="twitter:description" content="Cybernetically enhanced web apps">
-	<meta name="Description" content="Interactive Svelte playground">
-</svelte:head>
-
-<div class="repl-outer">
-	{#if browser}
-		<ReplWidget {version} {gist} {example} embedded={true}/>
-	{/if}
-</div>

@@ -1,6 +1,6 @@
 <script>
 	import { afterUpdate } from 'svelte';
-	import Icon from '../Icon.svelte';
+	import Icon from '../components/Icon.svelte';
 
 	export let contents = [];
 	export let path = null;

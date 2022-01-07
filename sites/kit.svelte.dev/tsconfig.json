@@ -18,7 +18,8 @@
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": ".",
 		"paths": {
-			"$components/*": ["./src/components/*"]
+			"@sveltejs/site-kit": ["../../packages/site-kit/src/lib"],
+			"@sveltejs/site-kit/*": ["../../packages/site-kit/src/lib/*"]
 		}
 	},
 	"include": ["src/**/*"],

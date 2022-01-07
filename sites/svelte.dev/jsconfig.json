@@ -3,7 +3,10 @@
 		"baseUrl": ".",
 		"paths": {
 			"$lib": ["src/lib"],
-			"$lib/*": ["src/lib/*"]
+			"$lib/*": ["src/lib/*"],
+			"@sveltejs/repl": ["../../packages/repl/src/lib"],
+			"@sveltejs/site-kit": ["../../packages/site-kit/src/lib"],
+			"@sveltejs/site-kit/*": ["../../packages/site-kit/src/lib/*"]
 		}
 	},
 	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.svelte"]

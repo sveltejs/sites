@@ -16,7 +16,7 @@ const config = {
 		vite: {
 			resolve: {
 				alias: {
-					'@sveltejs/repl': path.resolve('./src/lib'),
+					'@sveltejs/repl': path.resolve('src/lib'),
 					'@sveltejs/site-kit': path.resolve('../site-kit/src/lib')
 				}
 			},

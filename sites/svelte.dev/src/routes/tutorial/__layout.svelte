@@ -1,14 +1,14 @@
 <script context="module">
-	import {API_BASE} from '../../_env';
+	import { API_BASE } from '$lib/env';
 
 	export async function load() {
 		const tutorials = await fetch(`${API_BASE}/docs/svelte/tutorial`).then(r => r.json());
 
-		return { 
+		return {
 			props: {
 				tutorials
 			},
-			maxage: 60 
+			maxage: 60
 		};
 	}
 </script>

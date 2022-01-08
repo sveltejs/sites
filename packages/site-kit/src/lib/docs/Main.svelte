@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
-	import { getFragment, onNavigate } from '../../utils/navigation';
-	import '../../code.css';
+	import { getFragment, onNavigate } from '../utils/navigation';
+	import '../code.css';
 
 	export let path;
 

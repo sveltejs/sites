@@ -1,6 +1,6 @@
 <!-- FIXME sometimes it adds a trailing slash when landing -->
 <script context="module">
-	import { API_BASE } from '../../../_env';
+	import { API_BASE } from '$lib/env';
 
 	export async function load({ page }) {
 		const example = await fetch(`${API_BASE}/docs/svelte/examples/${page.params.slug}`, {
@@ -21,7 +21,7 @@
 	import { getContext } from 'svelte';
 	import { navigating } from '$app/stores';
 	import Repl from '@sveltejs/repl';
-	import ScreenToggle from '../../../components/ScreenToggle.svelte';
+	import ScreenToggle from '$lib/components/ScreenToggle.svelte';
 	import {
 		mapbox_setup, // see site/content/examples/15-context/00-context-api
 		rollupUrl,

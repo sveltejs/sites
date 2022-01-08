@@ -1,5 +1,5 @@
 <script context="module">
-	import { API_BASE } from '../../_env';
+	import { API_BASE } from '$lib/env';
 
 	export async function load({ fetch, page: { params } }) {
 		const res = await fetch(`${API_BASE}/docs/svelte/blog/${params.slug}`);
@@ -67,15 +67,6 @@
 		border-block-start: var(--border-w) solid #6767785b;
 		font-size: var(--h6);
 		text-transform: uppercase;
-	}
-
-	.byline a {
-		/* border-block-end: none; */
-		/* font-weight: 600; */
-	}
-
-	.byline a:hover {
-		/* border-block-end: 2px solid var(--prime); */
 	}
 
 	.post h1 {

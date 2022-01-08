@@ -1,8 +1,8 @@
 <script>
 	import Repl from '@sveltejs/repl';
 	import { onMount } from 'svelte';
-	import '../../../site-kit/base.css';
-	import '../../../site-kit/code.css';
+	import '@sveltejs/site-kit/base.css';
+	import '@sveltejs/site-kit/code.css';
 
 	let repl;
 
@@ -12,9 +12,12 @@
 				{
 					name: 'App',
 					type: 'svelte',
-					source: `<scr` + `ipt>
+					source:
+						`<scr` +
+						`ipt>
 	let name = 'world';
-</scr` + `ipt>
+</scr` +
+						`ipt>
 
 <h1>Hello {name}!</h1>`
 				}
@@ -24,7 +27,7 @@
 </script>
 
 <main>
-	<Repl bind:this={repl}/>
+	<Repl bind:this={repl} />
 </main>
 
 <style>

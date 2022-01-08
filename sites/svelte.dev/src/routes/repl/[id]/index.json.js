@@ -1,5 +1,5 @@
 import * as gist from '$lib/db/gist';
-import { API_BASE } from '../../../_env';
+import { API_BASE } from '$lib/env';
 
 /** @type {Set<string>} */
 let examples;

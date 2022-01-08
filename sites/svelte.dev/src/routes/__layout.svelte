@@ -3,7 +3,7 @@
 	import { setContext } from 'svelte';
 	import { page, navigating, session } from '$app/stores';
 	import { Icon, Icons, Nav, NavItem } from '@sveltejs/site-kit';
-	import PreloadingIndicator from '../components/PreloadingIndicator.svelte';
+	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 
 	setContext('app', {
 		login: () => {

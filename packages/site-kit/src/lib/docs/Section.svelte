@@ -1,6 +1,6 @@
 <script>
-	import Permalink from '../Permalink.svelte';
-	import Icon from '../Icon.svelte';
+	import Permalink from '../components/Permalink.svelte';
+	import Icon from '../components/Icon.svelte';
 
 	export let section;
 	export let base;

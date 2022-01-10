@@ -130,7 +130,7 @@
 	.content :global(.anchor) {
 		position: absolute;
 		display: block;
-		background: url(../../icons/link.svg) 0 50% no-repeat;
+		background: url(../icons/link.svg) 0 50% no-repeat;
 		background-size: 1em 1em;
 		inline-size: 1.4em;
 		block-size: 1em;

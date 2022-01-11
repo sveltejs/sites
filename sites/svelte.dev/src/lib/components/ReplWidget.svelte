@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/env';
 	import { process_example } from '../../utils/examples';
-	import { API_BASE } from '../../_env';
+	import { API_BASE } from '../env';
 
 	export let version = '3';
 	export let gist = null;

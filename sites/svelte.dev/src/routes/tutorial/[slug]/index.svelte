@@ -1,5 +1,5 @@
 <script context="module">
-	import { API_BASE } from '../../../_env';
+	import { API_BASE } from '$lib/env';
 
 	export async function load({ page }) {
 		const tutorial = await fetch(`${API_BASE}/docs/svelte/tutorial/${page.params.slug}`);
@@ -21,10 +21,10 @@
 <script>
 	import '@sveltejs/site-kit/code.css';
 	import { browser } from '$app/env';
-	import Repl from '@sveltejs/repl';
 	import { getContext } from 'svelte';
 
-	import ScreenToggle from '../../../components/ScreenToggle.svelte';
+	import Repl from '@sveltejs/repl';
+	import ScreenToggle from '$lib/components/ScreenToggle.svelte';
 	import TableOfContents from './_TableOfContents.svelte';
 
 	import {
@@ -117,8 +117,8 @@
 	<title>{selected.section.name} / {selected.chapter.name} • Svelte Tutorial</title>
 
 	<meta name="twitter:title" content="Svelte tutorial" />
-	<meta name="twitter:description" content="{selected.section.title} / {selected.chapter.title}" />
-	<meta name="Description" content="{selected.section.title} / {selected.chapter.title}" />
+	<meta name="twitter:description" content="{selected.section.name} / {selected.chapter.name}" />
+	<meta name="Description" content="{selected.section.name} / {selected.chapter.name}" />
 </svelte:head>
 
 <svelte:window bind:innerWidth={width} />

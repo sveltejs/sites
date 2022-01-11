@@ -4,7 +4,9 @@
 		"paths": {
 			"$lib": ["src/lib"],
 			"$lib/*": ["src/lib/*"],
-			"@sveltejs/repl": ["src/lib/index.svelte"]
+			"@sveltejs/repl": ["src/lib"],
+			"@sveltejs/site-kit": ["../../packages/site-kit/src/lib"],
+			"@sveltejs/site-kit/*": ["../../packages/site-kit/src/lib/*"]
 		}
 	},
 	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.svelte"]

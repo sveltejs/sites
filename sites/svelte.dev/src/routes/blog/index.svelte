@@ -1,5 +1,5 @@
 <script context="module">
-	import { API_BASE } from '../../_env';
+	import { API_BASE } from '$lib/env';
 
 	export async function load({ fetch }) {
 		const res = await fetch(`${API_BASE}/docs/svelte/blog`);
@@ -36,7 +36,7 @@
 				<a
 					class="no-underline"
 					sveltekit:prefetch
-					href="blog/{post.slug}"
+					href="/blog/{post.slug}"
 					title="Read the article »"
 				>
 					<h2>{post.title}</h2>

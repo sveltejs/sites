@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
-	import { getFragment, onNavigate } from '../../utils/navigation';
-	import '../../code.css';
+	import { getFragment, onNavigate } from '../utils/navigation';
+	import '../code.css';
 
 	export let path;
 
@@ -130,7 +130,7 @@
 	.content :global(.anchor) {
 		position: absolute;
 		display: block;
-		background: url(../../icons/link.svg) 0 50% no-repeat;
+		background: url(../icons/link.svg) 0 50% no-repeat;
 		background-size: 1em 1em;
 		inline-size: 1.4em;
 		block-size: 1em;
@@ -200,20 +200,23 @@
 		font-size: 2.4rem;
 		color: var(--second);
 		margin-inline: 0;
-		margin-block: -5.5rem 1.6rem;
+		margin-block: 6.4rem 1.6rem;
 		padding-inline-start: 0;
 		background: transparent;
 		line-height: 1;
-		padding-block-start: 10rem;
+		padding-block-start: 0;
 		inset-block-start: 0;
+	}
+
+	.content :global(h4::before) {
+		display: block;
+		content: ' ';
+		block-size: var(--nav-h);
+		margin-block-start: calc(-1 * var(--nav-h));
 	}
 
 	.content :global(h4 > em) {
 		opacity: 0.7;
-	}
-
-	.content :global(h4 > .anchor) {
-		inset-block-start: 0.05em;
 	}
 
 	.content :global(h5) {

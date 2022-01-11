@@ -11,7 +11,7 @@
 </script>
 
 <script>
-	import { Contents, Main, Section } from '@sveltejs/site-kit/components/docs';
+	import { Contents, Main, Section } from '@sveltejs/site-kit/docs';
 
 	export let sections;
 

@@ -3,7 +3,7 @@
 	import { setContext } from 'svelte';
 	import { page, navigating, session } from '$app/stores';
 	import { Icon, Icons, Nav, NavItem } from '@sveltejs/site-kit';
-	import PreloadingIndicator from '../components/PreloadingIndicator.svelte';
+	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 
 	setContext('app', {
 		login: () => {
@@ -50,7 +50,7 @@
 		<svelte:fragment slot="nav-right">
 			<NavItem external="https://kit.svelte.dev">SvelteKit</NavItem>
 
-			<NavItem external="chat" title="Discord Chat">
+			<NavItem external="/chat" title="Discord Chat">
 				<span class="small">Discord</span>
 				<span class="large"><Icon name="message-square" /></span>
 			</NavItem>

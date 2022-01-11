@@ -1,4 +1,5 @@
 <script>
+	import Message from '../Message.svelte';
 	import { getContext } from 'svelte';
 	import AstNode from './AstNode.svelte';
 
@@ -60,6 +61,7 @@
 			{/if}
 		</code>
 	</pre>
+	<Message kind="info">The AST is not public API and may break at any point in time</Message>
 </div>
 
 <style>
@@ -69,8 +71,10 @@
 		--number: hsl(102, 27%, 50%);
 		background: var(--back-light);
 		color: var(--base);
+		display: flex;
+		flex-direction: column;
 	}
-	
+
 	.ast-view,
 	pre,
 	code {

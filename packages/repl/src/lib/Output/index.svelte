@@ -37,7 +37,7 @@
 				return;
 			}
 
-			const compiled = await compiler.compile(selected, options);
+			const compiled = await compiler.compile(selected, options, showAst);
 			if (!js_editor) return; // unmounted
 
 			js_editor.set(compiled.js, 'js');
@@ -53,7 +53,7 @@
 				return;
 			}
 
-			const compiled = await compiler.compile(selected, options);
+			const compiled = await compiler.compile(selected, options, showAst);
 			if (!js_editor) return; // unmounted
 
 			js_editor.update(compiled.js);

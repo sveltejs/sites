@@ -27,7 +27,7 @@ export default class Compiler {
 		});
 	}
 
-	compile(component, options) {
+	compile(component, options, return_ast) {
 		return new Promise((fulfil) => {
 			const id = uid++;
 
@@ -44,7 +44,8 @@ export default class Compiler {
 					},
 					options
 				),
-				entry: component.name === 'App'
+				entry: component.name === 'App',
+				return_ast
 			});
 		});
 	}

@@ -1,5 +1,6 @@
 <script>
 	import { onMount, createEventDispatcher } from 'svelte';
+	import { writable } from 'svelte/store';
 	import Message from './Message.svelte';
 
 	const dispatch = createEventDispatcher();
@@ -62,6 +63,16 @@
 
 	export function setCursor(pos) {
 		if (editor) editor.setCursor(pos);
+	}
+
+	export const cursorIndex = writable(0);
+
+	export function markText({ from, to }) {
+		if (editor) editor.markText(editor.posFromIndex(from), editor.posFromIndex(to), { className: 'mark-text' });
+	}
+
+	export function unmarkText() {
+		if (editor) editor.getAllMarks().forEach(m => m.clear());
 	}
 
 	const modes = {
@@ -197,6 +208,10 @@
 			}
 		});
 
+		editor.on('cursorActivity', instance => {
+			cursorIndex.set(instance.indexFromPos(instance.getCursor()));
+		});
+
 		if (first) await sleep(50);
 		editor.refresh();
 
@@ -230,6 +245,10 @@
 
 	.codemirror-container :global(.error-line) {
 		background-color: rgba(200, 0, 0, .05);
+	}
+
+	.codemirror-container :global(.mark-text) {
+		background-color: var(--highlight);
 	}
 
 	textarea {

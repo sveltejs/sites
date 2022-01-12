@@ -6,9 +6,10 @@
 	import CompilerOptions from './CompilerOptions.svelte';
 	import Compiler from './Compiler.js';
 	import CodeMirror from '../CodeMirror.svelte';
+	import AstView from './AstView.svelte';
 	import { is_browser } from '../env.js';
 
-	const { register_output } = getContext('REPL');
+	const { register_output, module_editor_ready } = getContext('REPL');
 
 	export let svelteUrl;
 	export let status;
@@ -19,6 +20,7 @@
 	export let injectedJS;
 	export let injectedCSS;
 	export let theme;
+	export let showAst;
 
 	register_output({
 		set: async (selected, options) => {
@@ -35,11 +37,12 @@
 				return;
 			}
 
-			const compiled = await compiler.compile(selected, options);
+			const compiled = await compiler.compile(selected, options, showAst);
 			if (!js_editor) return; // unmounted
 
 			js_editor.set(compiled.js, 'js');
 			css_editor.set(compiled.css, 'css');
+			ast = compiled.ast;
 		},
 
 		update: async (selected, options) => {
@@ -50,11 +53,12 @@
 				return;
 			}
 
-			const compiled = await compiler.compile(selected, options);
+			const compiled = await compiler.compile(selected, options, showAst);
 			if (!js_editor) return; // unmounted
 
 			js_editor.update(compiled.js);
 			css_editor.update(compiled.css);
+			ast = compiled.ast;
 		}
 	});
 
@@ -67,6 +71,7 @@
 	let view = 'result';
 	let selected_type = '';
 	let markdown = '';
+	let ast;
 </script>
 
 <div class="view-toggle">
@@ -76,18 +81,15 @@
 		<button class:active={view === 'result'} on:click={() => (view = 'result')}>Result</button>
 		<button class:active={view === 'js'} on:click={() => (view = 'js')}>JS output</button>
 		<button class:active={view === 'css'} on:click={() => (view = 'css')}>CSS output</button>
+		{#if showAst}
+			<button class:active={view === 'ast'} on:click={() => (view = 'ast')}>AST output</button>
+		{/if}
 	{/if}
 </div>
 
 <!-- component viewer -->
 <div class="tab-content" class:visible={selected_type !== 'md' && view === 'result'}>
-	<Viewer
-		bind:error={runtimeError}
-		{status}
-		{relaxed}
-		{injectedJS}
-		{injectedCSS}
-	/>
+	<Viewer bind:error={runtimeError} {status} {relaxed} {injectedJS} {injectedCSS} />
 </div>
 
 <!-- js output -->
@@ -111,6 +113,16 @@
 <div class="tab-content" class:visible={selected_type !== 'md' && view === 'css'}>
 	<CodeMirror bind:this={css_editor} errorLoc={sourceErrorLoc} {theme} readonly />
 </div>
+
+<!-- ast output -->
+{#if showAst}
+	<div class="tab-content" class:visible={selected_type !== 'md' && view === 'ast'}>
+		<!-- ast view interacts with the module editor, wait for it first -->
+		{#await module_editor_ready then}
+			<AstView {ast} autoscroll={selected_type !== 'md' && view === 'ast'} />
+		{/await}
+	</div>
+{/if}
 
 <!-- markdown output -->
 <div class="tab-content" class:visible={selected_type === 'md'}>

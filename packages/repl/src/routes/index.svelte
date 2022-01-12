@@ -27,7 +27,7 @@
 </script>
 
 <main>
-	<Repl bind:this={repl} />
+	<Repl bind:this={repl} showAst />
 </main>
 
 <style>

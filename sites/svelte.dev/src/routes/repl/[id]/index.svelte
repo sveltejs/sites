@@ -98,6 +98,7 @@
 			{relaxed}
 			injectedJS={mapbox_setup}
 			showModified
+			showAst
 			on:change={handle_change}
 			on:add={handle_change}
 			on:remove={handle_change}

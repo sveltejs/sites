@@ -291,6 +291,7 @@
 		border-block-start: 1px solid rgba(255, 255, 255, 0.15);
 		padding-block-start: 1em;
 		display: flex;
+		align-items: center;
 	}
 
 	.show {

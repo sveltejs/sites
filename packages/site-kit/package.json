@@ -20,7 +20,7 @@
 	},
 	"homepage": "https://github.com/sveltejs/site-kit#readme",
 	"devDependencies": {
-		"@sveltejs/kit": "^1.0.0-next.225",
+		"@sveltejs/kit": "next",
 		"svelte": "^3.43.0",
 		"svelte2tsx": "^0.4.11",
 		"typescript": "^4.5.3"

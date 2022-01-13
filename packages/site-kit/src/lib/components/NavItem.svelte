@@ -11,7 +11,7 @@
 {:else}
 	<li>
 		<a
-			aria-current={$page.path.startsWith(href) ? true : undefined}
+			aria-current={$page.url.pathname.startsWith(href) ? true : undefined}
 			sveltekit:prefetch
 			{href}
 			{title}

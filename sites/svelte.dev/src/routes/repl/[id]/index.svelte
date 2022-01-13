@@ -1,6 +1,6 @@
 <script context="module">
-	export async function load({ page, fetch }) {
-		const res = await fetch(`/repl/${page.params.id}.json`);
+	export async function load({ params, fetch, url }) {
+		const res = await fetch(`/repl/${params.id}.json`);
 
 		if (!res.ok) {
 			return {
@@ -13,7 +13,7 @@
 		return {
 			props: {
 				gist,
-				version: page.query.get('version') || '3'
+				version: url.searchParams.get('version') || '3'
 			}
 		};
 	}

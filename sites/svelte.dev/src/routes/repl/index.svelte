@@ -1,5 +1,6 @@
 <script context="module">
-	export function load({ page: { query } }) {
+	export function load({ url }) {
+		const query = url.searchParams;
 		const gist = query.get('gist');
 		const example = query.get('example');
 		const version = query.get('version');

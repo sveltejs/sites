@@ -1,5 +1,7 @@
 export async function get(req) {
-	let { min = '0', max = '100' } = req.query;
+	const query = req.url.searchParams;
+	let min = query.get('min') || '0';
+	let max = query.get('max') || '100';
 	min = +min;
 	max = +max;
 

@@ -6,8 +6,11 @@
 
 {#if !comment.deleted}
 	<article class="comment" class:hidden>
-		<div class="meta-bar" on:click="{() => hidden = !hidden}">
-			<span class="meta"><a sveltekit:prefetch href="/user/{comment.user}">{comment.user}</a> {comment.time_ago}</span>
+		<div class="meta-bar" on:click={() => (hidden = !hidden)}>
+			<span class="meta">
+				<a sveltekit:prefetch href="/user/{comment.user}">{comment.user}</a>
+				{comment.time_ago}
+			</span>
 		</div>
 
 		<div class="body">
@@ -17,7 +20,7 @@
 		{#if comment.comments.length > 0}
 			<ul class="children">
 				{#each comment.comments as child}
-					<li><svelte:self comment='{child}'/></li>
+					<li><svelte:self comment={child} /></li>
 				{/each}
 			</ul>
 		{/if}
@@ -26,11 +29,11 @@
 
 <style>
 	.comment {
-		border-top: 1px solid rgba(0,0,0,0.1);
+		border-top: 1px solid rgba(0, 0, 0, 0.1);
 	}
 
-	:global(html).dark .comment {
-		border-top: 1px solid rgba(255,255,255,0.1);;
+	:global(html.dark) .comment {
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
 	}
 
 	.meta-bar {
@@ -49,7 +52,8 @@
 		margin: 0;
 	}
 
-	.hidden .body, .hidden .children {
+	.hidden .body,
+	.hidden .children {
 		display: none;
 	}
 

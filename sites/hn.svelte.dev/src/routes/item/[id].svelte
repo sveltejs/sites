@@ -53,7 +53,7 @@
 		padding: 0 2em 2em 2em;
 	}
 
-	:global(html).dark .item {
+	:global(html.dark) .item {
 		border-bottom: 1em solid rgba(255, 255, 255, 0.1);
 	}
 

@@ -21,7 +21,7 @@ pnpm update
 
 By default, the REPL will fetch the most recent version of Svelte from https://unpkg.com/svelte. When running the site locally, you can also use your local copy of Svelte.
 
-To produce the proper browser-compatible UMD build of the compiler, you will need to run `npm run build` (or `npm run dev`) in the root of this repository with the `PUBLISH` environment variable set to any non-empty string:
+To produce the proper browser-compatible UMD build of the compiler, you will need to run `npm run build` (or `npm run dev`) in the `svelte` repository with the `PUBLISH` environment variable set to any non-empty string:
 
 ```bash
 git clone https://github.com/sveltejs/svelte.git
@@ -30,7 +30,7 @@ npm ci
 PUBLISH=1 npm run build
 ```
 
-You'll then need to update the project to use that version of Svelte. Please update these docs with instructions on how to do that
+The default configuration assumes that the `sites` repository and the `svelte` repository are in the same directory. If not, you can set `LOCAL_SVELTE_PATH` in `sites/svelte.dev/.env` to a different path to the local copy of Svelte.
 
 Then visit the REPL at [localhost:3000/repl?version=local](http://localhost:3000/repl?version=local). Please note that the local REPL only works with `pnpm dev` and not when building the site for production usage.
 

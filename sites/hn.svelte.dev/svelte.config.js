@@ -5,6 +5,8 @@ const config = {
 	kit: {
 		adapter: adapter(),
 
+		inlineStyleThreshold: 5000,
+
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte'
 	}

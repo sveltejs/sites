@@ -36,8 +36,8 @@ importers:
       svelte-json-tree: 0.1.0
       yootils: 0.3.1
     devDependencies:
-      '@sveltejs/adapter-auto': 1.0.0-next.4
-      '@sveltejs/kit': 1.0.0-next.202_svelte@3.44.2
+      '@sveltejs/adapter-auto': 1.0.0-next.11
+      '@sveltejs/kit': 1.0.0-next.232_svelte@3.44.2
       eslint: 7.32.0
       eslint-config-prettier: 8.3.0_eslint@7.32.0
       eslint-plugin-svelte3: 3.2.1_eslint@7.32.0+svelte@3.44.2
@@ -57,10 +57,24 @@ importers:
     dependencies:
       golden-fleece: 1.0.9
     devDependencies:
-      '@sveltejs/kit': 1.0.0-next.202_svelte@3.44.2
+      '@sveltejs/kit': 1.0.0-next.232_svelte@3.44.2
       svelte: 3.44.2
       svelte2tsx: 0.4.11_svelte@3.44.2+typescript@4.5.3
       typescript: 4.5.3
+
+  sites/hn.svelte.dev:
+    specifiers:
+      '@sveltejs/adapter-auto': next
+      '@sveltejs/kit': next
+      prettier: ^2.4.1
+      prettier-plugin-svelte: ^2.4.0
+      svelte: ^3.44.0
+    devDependencies:
+      '@sveltejs/adapter-auto': 1.0.0-next.11
+      '@sveltejs/kit': 1.0.0-next.232_svelte@3.44.2
+      prettier: 2.5.1
+      prettier-plugin-svelte: 2.5.0_prettier@2.5.1+svelte@3.44.2
+      svelte: 3.44.2
 
   sites/kit.svelte.dev:
     specifiers:
@@ -71,8 +85,8 @@ importers:
       svelte: ^3.43.0
       vite-imagetools: ^4.0.3
     devDependencies:
-      '@sveltejs/adapter-netlify': 1.0.0-next.36
-      '@sveltejs/kit': 1.0.0-next.202_svelte@3.44.2
+      '@sveltejs/adapter-netlify': 1.0.0-next.39
+      '@sveltejs/kit': 1.0.0-next.232_svelte@3.44.2
       '@sveltejs/site-kit': link:../../packages/site-kit
       '@types/node': 16.11.12
       svelte: 3.44.2
@@ -114,7 +128,7 @@ importers:
     devDependencies:
       '@sindresorhus/slugify': 0.9.1
       '@sveltejs/adapter-auto': 1.0.0-next.3
-      '@sveltejs/kit': 1.0.0-next.202_svelte@3.44.2
+      '@sveltejs/kit': 1.0.0-next.232_svelte@3.44.2
       '@sveltejs/site-kit': link:../../packages/site-kit
       degit: 2.8.4
       dotenv: 10.0.0
@@ -779,6 +793,14 @@ packages:
       '@supabase/storage-js': 1.5.0
     dev: false
 
+  /@sveltejs/adapter-auto/1.0.0-next.11:
+    resolution: {integrity: sha512-VvFB5E/5y2aKr/XBS6fghT7aZF/D/Tm9/muscGIGtZK0mojL6SDdAhI3hqoWuHfBKz0D7YzLh4mlWEmERdmt/w==}
+    dependencies:
+      '@sveltejs/adapter-cloudflare': 1.0.0-next.7
+      '@sveltejs/adapter-netlify': 1.0.0-next.39
+      '@sveltejs/adapter-vercel': 1.0.0-next.37
+    dev: true
+
   /@sveltejs/adapter-auto/1.0.0-next.3:
     resolution: {integrity: sha512-FVNLtr0bj/slQqA0TuoylnVsGrvBYdYL+hpp2Qy5Kg3q1m8i9bJ0aifKnaGn7m01II2KUSnpnhuRbX/HwKVDcA==}
     dependencies:
@@ -787,22 +809,14 @@ packages:
       '@sveltejs/adapter-vercel': 1.0.0-next.31
     dev: true
 
-  /@sveltejs/adapter-auto/1.0.0-next.4:
-    resolution: {integrity: sha512-kfygrjF2uIgVVDsySl7I9oWSekU6adJCr/3qzLQDLM4FJ98FWmfhj4OOWsmF9X4JRPSm97t3RPugYsN3NLwKMQ==}
-    dependencies:
-      '@sveltejs/adapter-cloudflare': 1.0.0-next.3
-      '@sveltejs/adapter-netlify': 1.0.0-next.36
-      '@sveltejs/adapter-vercel': 1.0.0-next.32
-    dev: true
-
   /@sveltejs/adapter-cloudflare/1.0.0-next.2:
     resolution: {integrity: sha512-4Q7ZuoMck7wwzIO7gd8gqnm7gWflztTDHU/C1DzLr8V2UprQFQwsUE/padtQhFPXkgAiXJ8AwLksey4A8qjOsA==}
     dependencies:
       esbuild: 0.13.15
     dev: true
 
-  /@sveltejs/adapter-cloudflare/1.0.0-next.3:
-    resolution: {integrity: sha512-LauvvkBFCE8myGMLWOncv97/xU8JJn9OMl1miy8f/q8qs0CrduvR1sv2uCM9AylqT/FNPy3mony5wpe3w1v7sg==}
+  /@sveltejs/adapter-cloudflare/1.0.0-next.7:
+    resolution: {integrity: sha512-P2rq+Tdvv9IKX4SVrIRqgZ2DnjmpPjp/bhAISs6cgbMzc2AmLMCeN++DXAZAVWugIjF1freLmtXcCl3/0HByNg==}
     dependencies:
       esbuild: 0.13.15
     dev: true
@@ -814,11 +828,12 @@ packages:
       esbuild: 0.13.15
     dev: true
 
-  /@sveltejs/adapter-netlify/1.0.0-next.36:
-    resolution: {integrity: sha512-LdrIXCTBnIubtt/lthcnyt5VljuHpZlVzUqpWXk9Eu6bpNKblqQLMHkTBQfIbPfanmNSDZXJQVsdcFLqF2/+Cw==}
+  /@sveltejs/adapter-netlify/1.0.0-next.39:
+    resolution: {integrity: sha512-uBRscFmse2PkRZzIbRkG2sUNSIUveliiWFWUkIvxClfsT9x7JxVHgr1zsBwbIdrWs4EE7PvTAlUnv2wlEBEijQ==}
     dependencies:
       '@iarna/toml': 2.2.5
       esbuild: 0.13.15
+      tiny-glob: 0.2.9
     dev: true
 
   /@sveltejs/adapter-vercel/1.0.0-next.31:
@@ -827,21 +842,20 @@ packages:
       esbuild: 0.13.15
     dev: true
 
-  /@sveltejs/adapter-vercel/1.0.0-next.32:
-    resolution: {integrity: sha512-ZcltaS5bAobGD5P0z7xJIjPHSlGpF7padMIkqTzJxwMEb/acGgdO5yzDS8XUEaSNgj+prpD2oG8+gm33ds8x0A==}
+  /@sveltejs/adapter-vercel/1.0.0-next.37:
+    resolution: {integrity: sha512-SfaaakXjk6sBmSGozdrUQIsB3cFdo47ZFFEHMlPOScvXuAY8VPc1jCbGEQPadKW9Txf9xDuu6trm41OYztC+RA==}
     dependencies:
       esbuild: 0.13.15
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.202_svelte@3.44.2:
-    resolution: {integrity: sha512-rXmJ0FplkWvD1CaeCfejRYhOJYrlmeUm5Fkw7gIKDdWPQev5rqOhd9B9ZvRpq35oMqCAwaOfK+e5S6k+83feEQ==}
+  /@sveltejs/kit/1.0.0-next.232_svelte@3.44.2:
+    resolution: {integrity: sha512-STQ0hnJozIop8k9I313nwVasBIQ45Z2K1pUOkDVjCSOGijgsj+De5q0prQBtL1ZlqqisfkYlOf8W9gvDSyTLEA==}
     engines: {node: '>=14.13'}
     hasBin: true
     peerDependencies:
       svelte: ^3.44.0
     dependencies:
-      '@sveltejs/vite-plugin-svelte': 1.0.0-next.31_svelte@3.44.2+vite@2.7.2
-      cheap-watch: 1.0.4
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.34_svelte@3.44.2+vite@2.7.2
       sade: 1.7.4
       svelte: 3.44.2
       vite: 2.7.2
@@ -853,13 +867,13 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/vite-plugin-svelte/1.0.0-next.31_svelte@3.44.2+vite@2.7.2:
-    resolution: {integrity: sha512-8K3DcGP1V+XBv389u32S6wt8xiun6hHd5wn28AKLSoNTIhOmJOA2RJUJzp0seTRI86Shme4lzHI2Fgq4qz1wXQ==}
+  /@sveltejs/vite-plugin-svelte/1.0.0-next.34_svelte@3.44.2+vite@2.7.2:
+    resolution: {integrity: sha512-qZH2jndijrdkvevgbO7OH3iQsviM5Kz7h5APiNP4yEMZTrwq9bifzYvco6BprwtPvLb5wYlRVFZUOdusY6AovQ==}
     engines: {node: ^14.13.1 || >= 16}
     peerDependencies:
       diff-match-patch: ^1.0.5
       svelte: ^3.44.0
-      vite: ^2.6.0
+      vite: ^2.7.0
     peerDependenciesMeta:
       diff-match-patch:
         optional: true
@@ -870,7 +884,7 @@ packages:
       magic-string: 0.25.7
       require-relative: 0.8.7
       svelte: 3.44.2
-      svelte-hmr: 0.14.7_svelte@3.44.2
+      svelte-hmr: 0.14.9_svelte@3.44.2
       vite: 2.7.2
     transitivePeerDependencies:
       - supports-color
@@ -1146,11 +1160,6 @@ packages:
 
   /chardet/0.7.0:
     resolution: {integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==}
-    dev: true
-
-  /cheap-watch/1.0.4:
-    resolution: {integrity: sha512-QR/9FrtRL5fjfUJBhAKCdi0lSRQ3rVRRum3GF9wDKp2TJbEIMGhUEr2yU8lORzm9Isdjx7/k9S0DFDx+z5VGtw==}
-    engines: {node: '>=8'}
     dev: true
 
   /chownr/1.1.4:
@@ -2008,6 +2017,10 @@ packages:
       type-fest: 0.20.2
     dev: true
 
+  /globalyzer/0.1.0:
+    resolution: {integrity: sha512-40oNTM9UfG6aBmuKxk/giHn5nQ8RVz/SS4Ir6zgzOv9/qC3kKZ9v4etGTcJbEl/NyVQH7FGU7d+X1egr57Md2Q==}
+    dev: true
+
   /globby/11.0.4:
     resolution: {integrity: sha512-9O4MVG9ioZJ08ffbcyVYyLOJLk5JQ688pJ4eMGLpdWLHq/Wr1D9BlriLQyL0E+jbkuePVZXYFj47QM/v093wHg==}
     engines: {node: '>=10'}
@@ -2018,6 +2031,10 @@ packages:
       ignore: 5.1.9
       merge2: 1.4.1
       slash: 3.0.0
+    dev: true
+
+  /globrex/0.1.2:
+    resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
     dev: true
 
   /golden-fleece/1.0.9:
@@ -3319,8 +3336,8 @@ packages:
       has-flag: 4.0.0
     dev: true
 
-  /svelte-hmr/0.14.7_svelte@3.44.2:
-    resolution: {integrity: sha512-pDrzgcWSoMaK6AJkBWkmgIsecW0GChxYZSZieIYfCP0v2oPyx2CYU/zm7TBIcjLVUPP714WxmViE9Thht4etog==}
+  /svelte-hmr/0.14.9_svelte@3.44.2:
+    resolution: {integrity: sha512-bKE9+4qb4sAnA+TKHiYurUl970rjA0XmlP9TEP7K/ncyWz3m81kA4HOgmlZK/7irGK7gzZlaPDI3cmf8fp/+tg==}
     peerDependencies:
       svelte: '>=3.19.0'
     dependencies:
@@ -3397,6 +3414,13 @@ packages:
 
   /timm/1.7.1:
     resolution: {integrity: sha512-IjZc9KIotudix8bMaBW6QvMuq64BrJWFs1+4V0lXwWGQZwH+LnX87doAYhem4caOEusRP9/g6jVDQmZ8XOk1nw==}
+    dev: true
+
+  /tiny-glob/0.2.9:
+    resolution: {integrity: sha512-g/55ssRPUjShh+xkfx9UPDXqhckHEsHr4Vd9zX55oSdGZc/MD0m3sferOkwWtp98bv+kcVfEHtRJgBVJzelrzg==}
+    dependencies:
+      globalyzer: 0.1.0
+      globrex: 0.1.2
     dev: true
 
   /tinycolor2/1.4.2:

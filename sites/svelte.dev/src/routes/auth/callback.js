@@ -44,7 +44,7 @@ export async function get({ url }) {
 					expires: new Date(expires),
 					path: '/',
 					httpOnly: true,
-					secure: !url.host.startsWith('localhost:')
+					secure: url.protocol === 'https'
 				}),
 				'Content-Type': 'text/html; charset=utf-8'
 			},

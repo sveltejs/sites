@@ -3,14 +3,12 @@ import { oauth, client_id } from './_config.js';
 
 export const get = client_id
 	? ({ url }) => {
-			const protocol = url.host.startsWith('localhost:') ? 'http' : 'https';
-
 			const Location =
 				`${oauth}/authorize?` +
 				stringify({
 					scope: 'read:user',
 					client_id,
-					redirect_uri: `${protocol}://${url.host}/auth/callback`
+					redirect_uri: `${url.origin}/auth/callback`
 				});
 
 			return {

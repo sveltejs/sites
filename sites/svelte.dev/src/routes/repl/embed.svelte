@@ -1,5 +1,6 @@
 <script context="module">
-	export function load({ page: { query }}) {
+	export function load({ url }) {
+		const query = url.searchParams;
 		return {
 			props: {
 				version: query.get('version') || '3',

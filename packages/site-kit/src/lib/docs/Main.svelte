@@ -15,7 +15,7 @@
 			if (heading.nodeName.startsWith('H') && !heading.querySelector('a')) {
 				const a = document.createElement('a');
 				a.className = 'anchor';
-				a.href = `${$page.path}#${heading.id}`;
+				a.href = `${$page.url.pathname}#${heading.id}`;
 				const span = document.createElement('span');
 				span.className = "visually-hidden";
 				span.innerHTML = "permalink";
@@ -45,7 +45,7 @@
 					const { id } = heading;
 
 					if (id !== last_id) {
-						path = `${$page.path}#${id}`;
+						path = `${$page.url.pathname}#${id}`;
 						last_id = id;
 					}
 
@@ -53,7 +53,7 @@
 				}
 			}
 
-			path = $page.path;
+			path = $page.url.pathname;
 		};
 
 		window.addEventListener('scroll', onscroll, true);

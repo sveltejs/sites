@@ -1,10 +1,11 @@
 import * as gist from '$lib/db/gist';
 
-export async function post({ locals, body }) {
+export async function post({ locals, request }) {
 	const { user } = locals;
 	if (!user) return; // response already sent
 
 	try {
+		const body = await request.json();
 		const result = await gist.create(user, body);
 
 		// normalize id

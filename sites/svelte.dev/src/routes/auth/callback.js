@@ -4,13 +4,13 @@ import { stringify } from 'querystring';
 import * as session from '$lib/db/session';
 import { oauth, client_id, client_secret } from './_config.js';
 
-export async function get({ host, query }) {
+export async function get({ url }) {
 	try {
 		// Trade "code" for "access_token"
 		const r1 = await fetch(
 			`${oauth}/access_token?` +
 				stringify({
-					code: query.get('code'),
+					code: url.searchParams.get('code'),
 					client_id,
 					client_secret
 				})
@@ -44,7 +44,7 @@ export async function get({ host, query }) {
 					expires: new Date(expires),
 					path: '/',
 					httpOnly: true,
-					secure: !host.startsWith('localhost:')
+					secure: url.protocol === 'https'
 				}),
 				'Content-Type': 'text/html; charset=utf-8'
 			},

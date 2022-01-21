@@ -2,15 +2,15 @@
 <script context="module">
 	import { API_BASE } from '$lib/env';
 
-	export async function load({ page }) {
-		const example = await fetch(`${API_BASE}/docs/svelte/examples/${page.params.slug}`, {
+	export async function load({ params }) {
+		const example = await fetch(`${API_BASE}/docs/svelte/examples/${params.slug}`, {
 			credentials: 'omit'
 		});
 
 		return {
 			props: {
 				example: await example.json(),
-				slug: page.params.slug
+				slug: params.slug
 			},
 			maxage: 60
 		};

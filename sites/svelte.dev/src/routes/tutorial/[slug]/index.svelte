@@ -1,8 +1,8 @@
 <script context="module">
 	import { API_BASE } from '$lib/env';
 
-	export async function load({ page }) {
-		const tutorial = await fetch(`${API_BASE}/docs/svelte/tutorial/${page.params.slug}`);
+	export async function load({ params }) {
+		const tutorial = await fetch(`${API_BASE}/docs/svelte/tutorial/${params.slug}`);
 
 		if (!tutorial.ok) {
 			return {
@@ -12,7 +12,7 @@
 		}
 
 		return {
-			props: { tutorial: await tutorial.json(), slug: page.params.slug },
+			props: { tutorial: await tutorial.json(), slug: params.slug },
 			maxage: 60
 		};
 	}

@@ -6,16 +6,16 @@ import * as cookie from 'cookie';
 import * as session from '$lib/db/session';
 
 /** @type {import('@sveltejs/kit').Handle} */
-export async function handle({ request, resolve }) {
-	request.locals.cookies = cookie.parse(request.headers.cookie || '');
-	request.locals.user = await session.read(request.locals.cookies.sid);
+export async function handle({ event, resolve }) {
+	event.locals.cookies = cookie.parse(event.request.headers.get('cookie') || '');
+	event.locals.user = await session.read(event.locals.cookies.sid);
 
-	return resolve(request);
+	return await resolve(event);
 }
 
 /** @type {import('@sveltejs/kit').GetSession} */
-export function getSession(request) {
+export function getSession(event) {
 	return {
-		user: request.locals.user
+		user: event.locals.user
 	};
 }

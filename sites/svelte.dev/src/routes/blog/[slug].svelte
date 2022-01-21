@@ -1,7 +1,7 @@
 <script context="module">
 	import { API_BASE } from '$lib/env';
 
-	export async function load({ fetch, page: { params } }) {
+	export async function load({ fetch, params }) {
 		const res = await fetch(`${API_BASE}/docs/svelte/blog/${params.slug}`);
 
 		if (!res.ok) return { status: 404, error: 'That post could not be found' };

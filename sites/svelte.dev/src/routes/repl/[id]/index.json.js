@@ -78,7 +78,7 @@ export async function get({ params }) {
 	};
 }
 
-export async function put({ locals, params, body }) {
+export async function put({ locals, params, request }) {
 	if (!locals.user) {
 		return {
 			status: 401,
@@ -86,6 +86,7 @@ export async function put({ locals, params, body }) {
 		};
 	}
 
+	const body = await request.json();
 	await gist.update(locals.user, params.id, body);
 
 	return {

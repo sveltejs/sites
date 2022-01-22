@@ -6,7 +6,7 @@ let examples;
 
 function munge(files) {
 	return files
-		.map((file) => {
+		.map(file => {
 			const dot = file.name.lastIndexOf('.');
 			let name = file.name.slice(0, dot);
 			let type = file.name.slice(dot + 1);
@@ -29,9 +29,9 @@ export async function get({ params }) {
 		const res = await fetch(`${API_BASE}/docs/svelte/examples`);
 		examples = new Set(
 			(await res.json())
-				.map((category) => category.examples)
+				.map(category => category.examples)
 				.flat()
-				.map((example) => example.slug)
+				.map(example => example.slug)
 		);
 	}
 

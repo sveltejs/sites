@@ -3,7 +3,7 @@
 	import { setContext } from 'svelte';
 	import { page, navigating, session } from '$app/stores';
 	import { Icon, Icons, Nav, NavItem, SkipLink } from '@sveltejs/site-kit';
-	import PreloadingIndicator from '../components/PreloadingIndicator.svelte';
+	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 
 	setContext('app', {
 		login: () => {
@@ -36,7 +36,7 @@
 	<PreloadingIndicator />
 {/if}
 
-{#if $page.path !== '/repl/embed'}
+{#if $page.url.pathname !== '/repl/embed'}
 	<SkipLink href="#main" />
 	<Nav {page} logo="/svelte-logo-horizontal.svg">
 		<svelte:fragment slot="nav-center">
@@ -51,7 +51,7 @@
 		<svelte:fragment slot="nav-right">
 			<NavItem external="https://kit.svelte.dev">SvelteKit</NavItem>
 
-			<NavItem external="chat" title="Discord Chat">
+			<NavItem external="/chat" title="Discord Chat">
 				<span class="small">Discord</span>
 				<span class="large"><Icon name="message-square" /></span>
 			</NavItem>

@@ -11,7 +11,7 @@
 </script>
 
 <script>
-	import { Contents, Main, Section } from '@sveltejs/site-kit/components/docs';
+	import { Contents, Main, Section } from '@sveltejs/site-kit/docs';
 
 	export let sections;
 
@@ -45,7 +45,7 @@
 	{#each sections as section}
 		<Section
 			{section}
-			edit="https://github.com/sveltejs/kit/edit/master/site/content/migrating/{section.file}"
+			edit="https://github.com/sveltejs/kit/edit/master/documentation/migrating/{section.file}"
 			base="/docs"
 		/>
 	{/each}

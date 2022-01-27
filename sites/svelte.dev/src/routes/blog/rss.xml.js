@@ -1,4 +1,4 @@
-import { API_BASE } from '../../_env';
+import { API_BASE } from '$lib/env';
 
 const months = ',Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',');
 

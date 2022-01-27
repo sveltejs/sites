@@ -20,6 +20,7 @@
 	export let injectedCSS = '';
 	export let theme = 'svelte';
 	export let showModified = false;
+	export let showAst = false;
 
 	const historyMap = new Map();
 
@@ -85,6 +86,8 @@
 	const components = writable([]);
 	const selected = writable(null);
 	const bundle = writable(null);
+	const cursor_index = writable(0);
+	const toggleable = writable(false);
 
 	const compile_options = writable({
 		generate: 'dom',
@@ -121,6 +124,10 @@
 		selected,
 		bundle,
 		compile_options,
+
+		cursor_index,
+		toggleable,
+		module_editor_ready,
 
 		rebundle,
 
@@ -175,6 +182,9 @@
 
 		register_module_editor(editor) {
 			module_editor = editor;
+			module_editor.cursorIndex.subscribe((index) => {
+				cursor_index.set(index);
+			});
 			fulfil_module_editor_ready();
 		},
 
@@ -185,6 +195,15 @@
 
 		request_focus() {
 			module_editor.focus();
+		},
+
+		mark_text({ from, to }) {
+			module_editor.unmarkText();
+			module_editor.markText({ from, to });
+		},
+
+		unmark_text() {
+			module_editor.unmarkText();
 		}
 	});
 
@@ -247,12 +266,12 @@
 
 	$: mobile = width < 540;
 
-	$: toggleable = mobile && orientation === 'columns';
+	$: $toggleable = mobile && orientation === 'columns';
 </script>
 
 <svelte:window on:beforeunload={beforeUnload} />
 
-<div class="container" class:toggleable bind:clientWidth={width}>
+<div class="container" class:toggleable={$toggleable} bind:clientWidth={width}>
 	<div class="viewport" class:output={show_output}>
 		<SplitPane
 			type={orientation === 'rows' ? 'vertical' : 'horizontal'}
@@ -265,12 +284,11 @@
 			</section>
 
 			<section slot="b" style="height: 100%;">
-				<Output {svelteUrl} status={status_visible && status} {embedded} {relaxed} {injectedJS} {injectedCSS} {theme} />
+				<Output {svelteUrl} status={status_visible && status} {embedded} {relaxed} {injectedJS} {injectedCSS} {theme} {showAst} />
 			</section>
 		</SplitPane>
 	</div>
-
-	{#if toggleable}
+	{#if $toggleable}
 		<InputOutputToggle bind:checked={show_output}/>
 	{/if}
 </div>

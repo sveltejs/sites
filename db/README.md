@@ -1,7 +1,8 @@
 # Database setup
 
-Create a database on Supabase (using the `svelte` organisation), then run setup (you will need to make a note of the database password when you create it):
+Login to [Supabase](https://supabase.com) and create a database. Once done, you should be on your database's dashboard. Duplicate the `.env.example` file and rename it to `.env`, and set these environment variables:
 
-```
-psql -U postgres -h db.[id].supabase.co -f db/setup.sql
-```
+- `SUPABASE_URL`: The config URL
+- `SUPABASE_KEY`: The public API key
+
+Then, navigate to your database's "SQL editor", click on "New query", and paste in [setup.sql](./setup.sql). Run this SQL to seed the database and you're good to go.

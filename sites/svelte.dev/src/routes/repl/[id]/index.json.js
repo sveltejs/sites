@@ -1,3 +1,5 @@
+import { dev } from '$app/env';
+import { client } from '$lib/db/client';
 import * as gist from '$lib/db/gist';
 import { API_BASE } from '$lib/env';
 
@@ -56,6 +58,12 @@ export async function get({ params }) {
 				components: munge(example.files)
 			}
 		};
+	}
+
+	if (dev && !client) {
+		// in dev with no local Supabase configured, proxy to production
+		// this lets us at least load saved REPLs
+		return fetch(`https://svelte.dev/repl/${params.id}.json`);
 	}
 
 	const app = await gist.read(params.id);

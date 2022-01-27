@@ -2,7 +2,7 @@
 	export let href;
 </script>
 
-<a rel="external" {href}>Skip to main content</a>
+<a {href}>Skip to main content</a>
 
 <style>
 	a {

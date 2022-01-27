@@ -1,6 +1,10 @@
 ## Running locally
 
-Setup a database on [Supabase](https://supabase.com) with the instructions [here](../../db) and set the corresponding environment variables.
+A local database is only required in dev mode if you want to test reading and writing saved REPLs on it. Without a local database in dev mode, the REPL will be able to load saved REPLs from the production database, but not save them.
+
+Note also that in dev mode, the REPL will currently only work in Chrome, as noted in the Vite documentation [here](https://vitejs.dev/guide/features.html#web-workers), pending support in Firefox for `import` statements in web workers.
+
+If you do want to use a database, set it up on [Supabase](https://supabase.com) with the instructions [here](../../db) and set the corresponding environment variables.
 
 Run the site sub-project:
 

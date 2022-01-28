@@ -2,7 +2,7 @@
 	import '@sveltejs/site-kit/base.css';
 	import { setContext } from 'svelte';
 	import { page, navigating, session } from '$app/stores';
-	import { Icon, Icons, Nav, NavItem } from '@sveltejs/site-kit';
+	import { Icon, Icons, Nav, NavItem, SkipLink } from '@sveltejs/site-kit';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 
 	setContext('app', {
@@ -37,6 +37,7 @@
 {/if}
 
 {#if $page.url.pathname !== '/repl/embed'}
+	<SkipLink href="#main" />
 	<Nav {page} logo="/svelte-logo-horizontal.svg">
 		<svelte:fragment slot="nav-center">
 			<NavItem href="/tutorial">Tutorial</NavItem>
@@ -63,7 +64,7 @@
 	</Nav>
 {/if}
 
-<main>
+<main id="main">
 	<slot />
 </main>
 

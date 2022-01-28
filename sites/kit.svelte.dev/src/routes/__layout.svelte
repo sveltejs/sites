@@ -1,7 +1,7 @@
 <script>
 	import '@sveltejs/site-kit/base.css';
 	import { page, navigating } from '$app/stores';
-	import { Icon, Icons, Nav, NavItem, PreloadingIndicator } from '@sveltejs/site-kit';
+	import { Icon, Icons, Nav, NavItem, PreloadingIndicator, SkipLink } from '@sveltejs/site-kit';
 </script>
 
 <Icons />
@@ -10,6 +10,7 @@
 	<PreloadingIndicator />
 {/if}
 
+<SkipLink href="#main" />
 <Nav {page} logo="/images/svelte-kit-horizontal.svg">
 	<svelte:fragment slot="nav-center">
 		<NavItem href="/docs">Docs</NavItem>
@@ -32,7 +33,7 @@
 	</svelte:fragment>
 </Nav>
 
-<main>
+<main id="main">
 	<slot />
 </main>
 

@@ -9,6 +9,8 @@
 		"update": "node scripts/update.js --force=true",
 		"preview": "svelte-kit preview",
 		"start": "node build",
+		"format": "npm run check:format -- --write",
+		"check:format": "prettier --check . --ignore-path .gitignore",
 		"test": "uvu test"
 	},
 	"dependencies": {
@@ -31,6 +33,8 @@
 		"dotenv": "^10.0.0",
 		"jimp": "^0.8.5",
 		"node-fetch": "^2.6.7",
+		"prettier": "^2.5.1",
+		"prettier-plugin-svelte": "^2.4.0",
 		"shelljs": "^0.8.5",
 		"svelte": "^3.46.2",
 		"uvu": "^0.5.3",

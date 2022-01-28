@@ -1,12 +1,12 @@
 import * as path from 'path';
-import netlify from '@sveltejs/adapter-netlify';
+import adapter from '@sveltejs/adapter-auto';
 import { imagetools } from 'vite-imagetools';
 
 const API_BASE = process.env.DOCS_PREVIEW ? 'http://localhost:3456' : 'https://api.svelte.dev';
 
 export default {
 	kit: {
-		adapter: netlify(),
+		adapter: adapter(),
 		target: '#svelte',
 		vite: () => ({
 			define: {

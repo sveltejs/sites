@@ -16,7 +16,8 @@
 		"cookie": "^0.4.1",
 		"devalue": "^2.0.1",
 		"do-not-zip": "^1.0.0",
-		"flru": "^1.0.2"
+		"flru": "^1.0.2",
+		"marked": "^4.0.12"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",

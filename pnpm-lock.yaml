@@ -106,10 +106,7 @@ importers:
       dotenv: ^10.0.0
       flru: ^1.0.2
       jimp: ^0.8.5
-      marked: ^4.0.10
       node-fetch: ^2.6.7
-      prism-svelte: ^0.4.7
-      prismjs: ^1.26.0
       shelljs: ^0.8.5
       svelte: ^3.46.2
       vite-imagetools: ^4.0.3
@@ -120,9 +117,6 @@ importers:
       devalue: 2.0.1
       do-not-zip: 1.0.0
       flru: 1.0.2
-      marked: 4.0.10
-      prism-svelte: 0.4.7
-      prismjs: 1.26.0
     devDependencies:
       '@sveltejs/adapter-auto': 1.0.0-next.17
       '@sveltejs/kit': 1.0.0-next.247_svelte@3.46.2
@@ -2397,12 +2391,6 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /marked/4.0.10:
-    resolution: {integrity: sha512-+QvuFj0nGgO970fySghXGmuw+Fd0gD2x3+MqCWLIPf5oxdv1Ka6b2q+z9RP01P/IaKPMEramy+7cNy/Lw8c3hw==}
-    engines: {node: '>= 12'}
-    hasBin: true
-    dev: false
-
   /meow/6.1.1:
     resolution: {integrity: sha512-3YffViIt2QWgTy6Pale5QpopX/IvU3LPL03jOTqp6pGj3VjesdO/U8CuHMKpnQr4shCNCM5fd5XFFvIIl6JBHg==}
     engines: {node: '>=8'}
@@ -2860,15 +2848,6 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
-
-  /prism-svelte/0.4.7:
-    resolution: {integrity: sha512-yABh19CYbM24V7aS7TuPYRNMqthxwbvx6FF/Rw920YbyBWO3tnyPIqRMgHuSVsLmuHkkBS1Akyof463FVdkeDQ==}
-    dev: false
-
-  /prismjs/1.26.0:
-    resolution: {integrity: sha512-HUoH9C5Z3jKkl3UunCyiD5jwk0+Hz0fIgQ2nbwU2Oo/ceuTAQAg+pPVnfdt2TJWRVLcxKh9iuoYDUSc8clb5UQ==}
-    engines: {node: '>=6'}
-    dev: false
 
   /process-nextick-args/2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}

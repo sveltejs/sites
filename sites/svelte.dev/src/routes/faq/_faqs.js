@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { extract_frontmatter, link_renderer } from '@sveltejs/site-kit/utils/markdown.js';
 import { marked } from 'marked';
-import { makeSlugProcessor } from '../../utils/slug';
-import { highlight } from '../../utils/highlight';
+import { makeSlugProcessor } from '$lib/utils/slug';
+import { highlight } from '$lib/utils/highlight';
 import { SLUG_PRESERVE_UNICODE } from '../../../config';
 
 const makeSlug = makeSlugProcessor(SLUG_PRESERVE_UNICODE);
@@ -11,7 +11,7 @@ const makeSlug = makeSlugProcessor(SLUG_PRESERVE_UNICODE);
 export default function get_faqs() {
 	return fs
 		.readdirSync('content/faq')
-		.map(file => {
+		.map((file) => {
 			if (path.extname(file) !== '.md') return;
 
 			const match = /^([0-9]+)-(.+)\.md$/.exec(file);
@@ -41,7 +41,7 @@ export default function get_faqs() {
 			};
 
 			const answer = marked(
-				content.replace(/^\t+/gm, match => match.split('\t').join('  ')),
+				content.replace(/^\t+/gm, (match) => match.split('\t').join('  ')),
 				{ renderer }
 			);
 

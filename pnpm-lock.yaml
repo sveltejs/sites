@@ -94,7 +94,6 @@ importers:
 
   sites/svelte.dev:
     specifiers:
-      '@sindresorhus/slugify': ^0.9.1
       '@supabase/supabase-js': ^1.29.2
       '@sveltejs/adapter-auto': next
       '@sveltejs/kit': next
@@ -113,7 +112,6 @@ importers:
       prismjs: ^1.26.0
       shelljs: ^0.8.5
       svelte: ^3.46.2
-      uvu: ^0.5.3
       vite-imagetools: ^4.0.3
     dependencies:
       '@supabase/supabase-js': 1.29.2
@@ -126,7 +124,6 @@ importers:
       prism-svelte: 0.4.7
       prismjs: 1.26.0
     devDependencies:
-      '@sindresorhus/slugify': 0.9.1
       '@sveltejs/adapter-auto': 1.0.0-next.17
       '@sveltejs/kit': 1.0.0-next.247_svelte@3.46.2
       '@sveltejs/site-kit': link:../../packages/site-kit
@@ -136,7 +133,6 @@ importers:
       node-fetch: 2.6.7
       shelljs: 0.8.5
       svelte: 3.46.2
-      uvu: 0.5.3
       vite-imagetools: 4.0.3
 
 packages:
@@ -750,14 +746,6 @@ packages:
     dependencies:
       estree-walker: 2.0.2
       picomatch: 2.3.1
-    dev: true
-
-  /@sindresorhus/slugify/0.9.1:
-    resolution: {integrity: sha512-b6heYM9dzZD13t2GOiEQTDE0qX+I1GyOotMwKh9VQqzuNiVdPVT8dM43fe9HNb/3ul+Qwd5oKSEDrDIfhq3bnQ==}
-    engines: {node: '>=8'}
-    dependencies:
-      escape-string-regexp: 1.0.5
-      lodash.deburr: 4.1.0
     dev: true
 
   /@supabase/gotrue-js/1.21.7:
@@ -1396,11 +1384,6 @@ packages:
     resolution: {integrity: sha1-hMbhWbgZBP3KWaDvRM2HDTElD5o=}
     dev: true
 
-  /dequal/2.0.2:
-    resolution: {integrity: sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==}
-    engines: {node: '>=6'}
-    dev: true
-
   /detect-indent/6.1.0:
     resolution: {integrity: sha512-reYkTUJAZb9gUuZ2RvVCNhVHdg62RHnJ7WJl8ftMi4diZ6NWlciOzQN88pUhSELEwflJht4oQDv0F0BMlwaYtA==}
     engines: {node: '>=8'}
@@ -1415,11 +1398,6 @@ packages:
   /devalue/2.0.1:
     resolution: {integrity: sha512-I2TiqT5iWBEyB8GRfTDP0hiLZ0YeDJZ+upDxjBfOC2lebO5LezQMv7QvIUTzdb64jQyAKLf1AHADtGN+jw6v8Q==}
     dev: false
-
-  /diff/5.0.0:
-    resolution: {integrity: sha512-/VTCrvm5Z0JGty/BWHljh+BAiw3IK+2j87NGMu8Nwc/f48WoDAC395uomO9ZD117ZOBaHmkX1oyLvkVM/aIT3w==}
-    engines: {node: '>=0.3.1'}
-    dev: true
 
   /dir-glob/3.0.1:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
@@ -2369,10 +2347,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       p-locate: 5.0.0
-    dev: true
-
-  /lodash.deburr/4.1.0:
-    resolution: {integrity: sha1-3bG7s+8HRYwBd7oH3hRCLLAz/5s=}
     dev: true
 
   /lodash.merge/4.6.2:
@@ -3604,17 +3578,6 @@ packages:
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
-    dev: true
-
-  /uvu/0.5.3:
-    resolution: {integrity: sha512-brFwqA3FXzilmtnIyJ+CxdkInkY/i4ErvP7uV0DnUVxQcQ55reuHphorpF+tZoVHK2MniZ/VJzI7zJQoc9T9Yw==}
-    engines: {node: '>=8'}
-    hasBin: true
-    dependencies:
-      dequal: 2.0.2
-      diff: 5.0.0
-      kleur: 4.1.4
-      sade: 1.8.1
     dev: true
 
   /v8-compile-cache/2.3.0:

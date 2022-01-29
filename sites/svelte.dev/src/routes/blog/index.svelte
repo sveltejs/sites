@@ -5,7 +5,7 @@
 		const res = await fetch(`${API_BASE}/docs/svelte/blog`);
 
 		if (res.ok) {
-			return { props: { posts: await res.json() }};
+			return { props: { posts: await res.json() } };
 		}
 	}
 </script>

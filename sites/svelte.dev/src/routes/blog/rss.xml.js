@@ -16,10 +16,10 @@ function escapeHTML(html) {
 		'>': 'gt'
 	};
 
-	return html.replace(/["'&<>]/g, c => `&${chars[c]};`);
+	return html.replace(/["'&<>]/g, (c) => `&${chars[c]};`);
 }
 
-const get_rss = posts =>
+const get_rss = (posts) =>
 	`
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
@@ -34,9 +34,9 @@ const get_rss = posts =>
 		<link>https://svelte.dev/blog</link>
 	</image>
 	${posts
-		.filter(post => !post.draft)
+		.filter((post) => !post.draft)
 		.map(
-			post => `
+			(post) => `
 		<item>
 			<title>${escapeHTML(post.title)}</title>
 			<link>https://svelte.dev/blog/${post.slug}</link>

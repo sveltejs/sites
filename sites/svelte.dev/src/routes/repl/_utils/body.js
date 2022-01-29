@@ -4,7 +4,7 @@ export default function body(req) {
 
 		req.on('error', reject);
 
-		req.on('data', chunk => {
+		req.on('data', (chunk) => {
 			str += chunk;
 		});
 

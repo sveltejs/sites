@@ -63,7 +63,7 @@ async function main() {
 		'remember to additionally optimize the resulting /static/contributors.jpg image file via e.g. https://squoosh.app '
 	);
 
-	const str = `[\n\t${authors.map(a => `'${a.login}'`).join(',\n\t')}\n]`;
+	const str = `[\n\t${authors.map((a) => `'${a.login}'`).join(',\n\t')}\n]`;
 
 	fs.writeFileSync(outputFile, `export default ${str};`);
 }

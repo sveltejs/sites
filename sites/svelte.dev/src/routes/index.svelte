@@ -77,14 +77,17 @@
 					>most satisfied developers</a
 				>
 				in a pair of industry surveys. We think you'll love it too.
-				<a href="/blog/svelte-3-rethinking-reactivity" class="cta">Read the introductory blog post</a
+				<a href="/blog/svelte-3-rethinking-reactivity" class="cta"
+					>Read the introductory blog post</a
 				> to learn more.
 			</p>
 		</div>
 
 		<div slot="how">
 			<pre><code>
-npx degit <a href="https://github.com/sveltejs/template" style="user-select: initial;">sveltejs/template</a> my-svelte-project
+npx degit <a href="https://github.com/sveltejs/template" style="user-select: initial;"
+						>sveltejs/template</a
+					> my-svelte-project
 cd my-svelte-project
 npm install
 npm run dev

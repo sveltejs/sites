@@ -34,7 +34,7 @@
 		left: max(var(--side-nav), 10%);
 		inset-block-start: 25%;
 	}
-	
+
 	@media (min-width: 580px) {
 		strong {
 			max-inline-size: 12em;

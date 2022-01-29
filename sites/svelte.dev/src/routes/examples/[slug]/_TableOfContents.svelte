@@ -8,8 +8,8 @@
 	let active_el;
 
 	onMount(() => {
-		active_el.scrollIntoView({block: 'center'});
-	})
+		active_el.scrollIntoView({ block: 'center' });
+	});
 </script>
 
 <ul class="examples-toc">

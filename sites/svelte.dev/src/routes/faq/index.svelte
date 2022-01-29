@@ -2,7 +2,7 @@
 	import { API_BASE } from '$lib/env';
 
 	export async function load({ fetch }) {
-		const faqs = await fetch(`${API_BASE}/docs/svelte/faq?content`).then(r => r.json());
+		const faqs = await fetch(`${API_BASE}/docs/svelte/faq?content`).then((r) => r.json());
 
 		return {
 			props: { faqs },
@@ -12,7 +12,7 @@
 </script>
 
 <script>
-	import { Permalink } from "@sveltejs/site-kit";
+	import { Permalink } from '@sveltejs/site-kit';
 
 	export let faqs;
 </script>

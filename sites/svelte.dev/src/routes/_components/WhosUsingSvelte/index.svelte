@@ -1,7 +1,7 @@
 <script>
 	import { companies } from './companies.js';
 
-	const sorted = companies.sort((a, b) => a.alt < b.alt ? -1 : 1);
+	const sorted = companies.sort((a, b) => (a.alt < b.alt ? -1 : 1));
 </script>
 
 <div class="logos">

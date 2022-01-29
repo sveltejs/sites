@@ -8,4 +8,4 @@
 	});
 </script>
 
-<svelte:component this={constructor} {...$$props}/>
+<svelte:component this={constructor} {...$$props} />

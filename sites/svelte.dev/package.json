@@ -10,8 +10,7 @@
 		"preview": "svelte-kit preview",
 		"start": "node build",
 		"format": "npm run check:format -- --write",
-		"check:format": "prettier --check . --ignore-path .gitignore",
-		"test": "uvu test"
+		"check:format": "prettier --check . --ignore-path .gitignore"
 	},
 	"dependencies": {
 		"@supabase/supabase-js": "^1.29.2",
@@ -20,12 +19,9 @@
 		"devalue": "^2.0.1",
 		"do-not-zip": "^1.0.0",
 		"flru": "^1.0.2",
-		"marked": "^4.0.10",
-		"prism-svelte": "^0.4.7",
-		"prismjs": "^1.26.0"
+		"marked": "^4.0.12"
 	},
 	"devDependencies": {
-		"@sindresorhus/slugify": "^0.9.1",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"@sveltejs/site-kit": "workspace:*",
@@ -37,7 +33,6 @@
 		"prettier-plugin-svelte": "^2.4.0",
 		"shelljs": "^0.8.5",
 		"svelte": "^3.46.2",
-		"uvu": "^0.5.3",
 		"vite-imagetools": "^4.0.3"
 	}
 }

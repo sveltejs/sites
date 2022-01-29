@@ -2,7 +2,7 @@
 	import Repl from '@sveltejs/repl';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/env';
-	import { process_example } from '../../utils/examples';
+	import { process_example } from '$lib/utils/examples';
 	import { API_BASE } from '../env';
 
 	export let version = '3';

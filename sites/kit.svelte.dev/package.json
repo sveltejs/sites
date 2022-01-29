@@ -9,7 +9,7 @@
 		"preview": "svelte-kit preview"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-netlify": "next",
+		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"@sveltejs/site-kit": "workspace:*",
 		"@types/node": "^16.6.1",

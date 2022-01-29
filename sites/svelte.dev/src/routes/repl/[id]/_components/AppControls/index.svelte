@@ -5,8 +5,8 @@
 	import { Icon } from '@sveltejs/site-kit';
 	import * as doNotZip from 'do-not-zip';
 	import downloadBlob from '../../../_utils/downloadBlob.js';
-	import { enter } from '../../../../../utils/events.js';
-	import { isMac } from '../../../../../utils/compat.js';
+	import { enter } from '$lib/utils/events.js';
+	import { isMac } from '$lib/utils/compat.js';
 
 	const dispatch = createEventDispatcher();
 	const { login } = getContext('app');
@@ -183,7 +183,7 @@ export default app;`
 <svelte:window on:keydown={handleKeydown} />
 
 <div class="app-controls">
-	<input bind:value={name} on:focus={e => e.target.select()} use:enter={e => e.target.blur()} />
+	<input bind:value={name} on:focus={(e) => e.target.select()} use:enter={(e) => e.target.blur()} />
 
 	<div style="text-align: right; margin-inline-end: .4rem">
 		<button class="icon" on:click={() => (zen_mode = !zen_mode)} title="fullscreen editor">

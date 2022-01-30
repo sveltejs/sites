@@ -250,7 +250,7 @@
 
 	.chapter-markup :global(a) {
 		transition: color 0.2s;
-        text-decoration: underline;
+		text-decoration: underline;
 		color: var(--sidebar-text);
 	}
 

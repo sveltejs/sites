@@ -3,6 +3,14 @@
 	export let offset = 0;
 </script>
 
+<div class="toggle">
+	{#each labels as label, index}
+		<button class:selected={offset === index} on:click={() => (offset = index)}>
+			{label}
+		</button>
+	{/each}
+</div>
+
 <style>
 	.toggle {
 		position: fixed;
@@ -18,11 +26,11 @@
 
 	button {
 		margin-block: 0;
-		margin-inline: .15em;
+		margin-inline: 0.15em;
 		inline-size: 4em;
 		block-size: 1em;
-		padding-inline: .4rem;
-		padding-block: .3rem;
+		padding-inline: 0.4rem;
+		padding-block: 0.3rem;
 		border-radius: var(--border-r);
 		line-height: 1em;
 		box-sizing: content-box;
@@ -35,14 +43,3 @@
 		color: white;
 	}
 </style>
-
-<div class="toggle">
-	{#each labels as label, index}
-		<button
-			class:selected={offset === index}
-			on:click={() => offset = index}
-		>
-			{label}
-		</button>
-	{/each}
-</div>

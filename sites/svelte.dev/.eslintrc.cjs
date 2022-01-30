@@ -29,11 +29,7 @@ module.exports = {
 		node: true,
 		mocha: true
 	},
-	extends: [
-		'eslint:recommended',
-		'plugin:import/errors',
-		'plugin:import/warnings'
-	],
+	extends: ['eslint:recommended', 'plugin:import/errors', 'plugin:import/warnings'],
 	plugins: ['svelte3'],
 	overrides: [
 		{

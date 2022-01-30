@@ -3,6 +3,6 @@
 		return {
 			status: 301,
 			redirect: 'examples/hello-world'
-		}
+		};
 	}
 </script>

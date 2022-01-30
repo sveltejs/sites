@@ -1,6 +1,6 @@
 export function process_example(files) {
 	return files
-		.map(file => {
+		.map((file) => {
 			const [name, type] = file.name.split('.');
 			return { name, type, source: file.source || file.content };
 		})

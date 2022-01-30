@@ -16,7 +16,7 @@ export async function list(user, { offset, search }) {
 	if (error) throw new Error(error.message);
 
 	// normalize IDs
-	data.forEach(gist => {
+	data.forEach((gist) => {
 		gist.id = gist.id.replace(/-/g, '');
 	});
 

@@ -37,7 +37,11 @@
 	let destroying = false;
 
 	async function destroy(selected) {
-		const confirmed = confirm(`Are you sure you want to delete ${selected.length} ${selected.length === 1 ? 'app' : 'apps'}?`);
+		const confirmed = confirm(
+			`Are you sure you want to delete ${selected.length} ${
+				selected.length === 1 ? 'app' : 'apps'
+			}?`
+		);
 		if (!confirmed) return;
 
 		destroying = true;
@@ -94,17 +98,26 @@
 		<div class="controls">
 			{#if selected.length > 0}
 				<button class="delete" on:click={() => destroy(selected)} disabled={destroying}>
-					<Icon name="delete"/>
-					Delete {selected.length} {selected.length === 1 ? 'app' : 'apps'}
+					<Icon name="delete" />
+					Delete {selected.length}
+					{selected.length === 1 ? 'app' : 'apps'}
 				</button>
 
-				<button on:click={() => selected = []}>Clear selection</button>
+				<button on:click={() => (selected = [])}>Clear selection</button>
 			{:else}
-				<form on:submit|preventDefault={e => {
-					const search = new FormData(e.target).get('search');
-					goto(search ? `/apps?search=${encodeURIComponent(search)}` : '/apps');
-				}}>
-					<input type="search" placeholder="Search" aria-label="Search" name="search" value={search}>
+				<form
+					on:submit|preventDefault={(e) => {
+						const search = new FormData(e.target).get('search');
+						goto(search ? `/apps?search=${encodeURIComponent(search)}` : '/apps');
+					}}
+				>
+					<input
+						type="search"
+						placeholder="Search"
+						aria-label="Search"
+						name="search"
+						value={search}
+					/>
 				</form>
 			{/if}
 		</div>
@@ -119,7 +132,12 @@
 						</a>
 
 						<label>
-							<input aria-label="Select for delection" type="checkbox" bind:group={selected} value={gist.id}>
+							<input
+								aria-label="Select for delection"
+								type="checkbox"
+								bind:group={selected}
+								value={gist.id}
+							/>
 						</label>
 					</li>
 				{/each}
@@ -128,7 +146,9 @@
 			<div class="pagination">
 				<!-- TODO more sophisticated pagination -->
 				{#if next !== null && !selecting}
-					<a href="/apps?offset={next}{search ? `&search=${encodeURIComponent(search)}` : ''}">Next page...</a>
+					<a href="/apps?offset={next}{search ? `&search=${encodeURIComponent(search)}` : ''}"
+						>Next page...</a
+					>
 				{/if}
 			</div>
 		{:else}
@@ -207,12 +227,13 @@
 		block-size: 100%;
 	}
 
-	.controls input, .controls button {
+	.controls input,
+	.controls button {
 		font-family: inherit;
 		font-size: inherit;
 	}
 
-	.controls input[type=search] {
+	.controls input[type='search'] {
 		position: relative;
 		inline-size: 100%;
 		block-size: 100%;
@@ -269,7 +290,7 @@
 
 	li span {
 		font-size: 12px;
-		color: rgba(0,0,0,0.6);
+		color: rgba(0, 0, 0, 0.6);
 	}
 
 	li label {

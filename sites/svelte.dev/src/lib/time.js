@@ -13,7 +13,7 @@ const o = {
 export const ago = (nd, s) => {
 	var r = Math.round,
 		dir = ' ago',
-		pl = function(v, n) {
+		pl = function (v, n) {
 			return s === undefined ? n + ' ' + v + (n > 1 ? 's' : '') + dir : n + v.substring(0, 1);
 		},
 		ts = Date.now() - new Date(nd).getTime(),

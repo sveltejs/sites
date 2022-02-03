@@ -13,9 +13,9 @@
 		"check:format": "prettier --check . --ignore-path .gitignore --plugin-search-dir=."
 	},
 	"dependencies": {
-		"@supabase/supabase-js": "^1.29.2",
+		"@supabase/supabase-js": "^1.29.4",
 		"@sveltejs/repl": "workspace:*",
-		"cookie": "^0.4.1",
+		"cookie": "^0.4.2",
 		"devalue": "^2.0.1",
 		"do-not-zip": "^1.0.0",
 		"flru": "^1.0.2",
@@ -30,9 +30,9 @@
 		"jimp": "^0.8.5",
 		"node-fetch": "^2.6.7",
 		"prettier": "^2.5.1",
-		"prettier-plugin-svelte": "^2.4.0",
+		"prettier-plugin-svelte": "^2.6.0",
 		"shelljs": "^0.8.5",
-		"svelte": "^3.46.2",
+		"svelte": "^3.46.3",
 		"vite-imagetools": "^4.0.3"
 	}
 }

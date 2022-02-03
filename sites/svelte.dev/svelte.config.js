@@ -10,7 +10,7 @@ process.env.VITE_API_BASE = process.env.DOCS_PREVIEW
 export default {
 	kit: {
 		adapter: adapter(),
-		target: '#svelte',
+
 		vite: {
 			// https://github.com/sveltejs/kit/issues/1632#issuecomment-854056053
 			build: {

@@ -12,9 +12,9 @@
   "devDependencies": {
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
-    "prettier": "^2.4.1",
-    "prettier-plugin-svelte": "^2.4.0",
-    "svelte": "^3.44.0"
+    "prettier": "^2.5.1",
+    "prettier-plugin-svelte": "^2.6.0",
+    "svelte": "^3.46.3"
   },
   "type": "module"
 }

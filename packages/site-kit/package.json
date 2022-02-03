@@ -1,13 +1,13 @@
 {
 	"name": "@sveltejs/site-kit",
-	"version": "2.0.0-next.6",
+	"version": "2.0.0",
 	"description": "Styles and components for use in *.svelte.dev websites",
 	"type": "module",
 	"svelte": "index.js",
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"package": "svelte-kit package",
-		"prepublishOnly": "npm run package"
+		"release": "npm run package && cd package && npm publish"
 	},
 	"repository": {
 		"type": "git",

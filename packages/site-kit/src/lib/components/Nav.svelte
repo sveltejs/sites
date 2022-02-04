@@ -131,7 +131,6 @@
 		padding: 0;
 		margin: 0;
 		list-style: none;
-		z-index: 101;
 	}
 
 	ul :global(a) {

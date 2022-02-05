@@ -12,13 +12,13 @@
 		const headings = container.querySelectorAll('[id]:not([data-scrollignore])');
 
 		for (const heading of headings) {
-			if (heading.nodeName.startsWith('H') && !heading.querySelector('a')) {
+			if (heading.nodeName.startsWith('H') && !heading.querySelector('a.anchor')) {
 				const a = document.createElement('a');
 				a.className = 'anchor';
 				a.href = `${$page.url.pathname}#${heading.id}`;
 				const span = document.createElement('span');
-				span.className = "visually-hidden";
-				span.innerHTML = "permalink";
+				span.className = 'visually-hidden';
+				span.innerHTML = 'permalink';
 				a.appendChild(span);
 				heading.appendChild(a);
 			}

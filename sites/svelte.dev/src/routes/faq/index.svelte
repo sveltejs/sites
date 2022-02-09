@@ -13,6 +13,7 @@
 
 <script>
 	import { Permalink } from '@sveltejs/site-kit';
+	import '@sveltejs/site-kit/code.css';
 
 	export let faqs;
 </script>

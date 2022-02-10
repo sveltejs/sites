@@ -16,5 +16,11 @@
     "prettier-plugin-svelte": "^2.6.0",
     "svelte": "^3.46.3"
   },
-  "type": "module"
+  "type": "module",
+  "//": "For local testing with pnpm. Assumes SvelteKit is checked out as a sibling of this repo",
+  "pnpm": {
+    "overrides": {
+      "@sveltejs/kit": "../../../kit/packages/kit"
+    }
+  }
 }

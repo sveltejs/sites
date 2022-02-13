@@ -10,9 +10,6 @@ const config = {
 			exports: (file) => file === 'index.js'
 		},
 
-		// hydrate the <div id="svelte"> element in src/app.html
-		target: '#svelte',
-
 		vite: {
 			resolve: {
 				alias: {

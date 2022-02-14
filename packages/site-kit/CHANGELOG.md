@@ -1,5 +1,9 @@
 # @sveltejs/site-kit changelog
 
+## 2.0.3
+
+- Revert CSS logical properties change, which breaks in some browsers ([#303](https://github.com/sveltejs/sites/pull/303))
+
 ## 2.0.2
 
 - Add `id` attributes to `<h2>` elements, instead of using offset anchors

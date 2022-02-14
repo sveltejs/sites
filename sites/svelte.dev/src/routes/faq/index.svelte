@@ -13,6 +13,7 @@
 
 <script>
 	import { Permalink } from '@sveltejs/site-kit';
+	import '@sveltejs/site-kit/code.css';
 
 	export let faqs;
 </script>
@@ -61,7 +62,6 @@
 		margin: 0;
 		inset-block-start: 0;
 		background: transparent;
-		color: white;
 	}
 
 	.faqs :global(pre) {
@@ -71,7 +71,6 @@
 		max-inline-size: var(--linemax);
 		padding-inline: 2.5rem;
 		padding-block: 1.5rem;
-		background: #333;
 		border-radius: 0.5rem;
 		font-size: 0.8rem;
 	}

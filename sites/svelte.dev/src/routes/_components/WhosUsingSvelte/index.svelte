@@ -17,7 +17,7 @@
 <style>
 	.logos {
 		display: flex;
-		margin-block-start: 6rem;
+		margin: 6rem 0 0 0;
 		flex-wrap: wrap;
 		row-gap: 1em;
 		justify-content: center;
@@ -25,12 +25,12 @@
 	}
 
 	.spacer {
-		inline-size: calc(100% / calc(2 * var(--row-size) - 1));
+		width: calc(100% / calc(2 * var(--row-size) - 1));
 	}
 
 	a {
-		inline-size: calc(100% / calc(2 * var(--row-size) - 1));
-		block-size: auto;
+		width: calc(100% / calc(2 * var(--row-size) - 1));
+		height: auto;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -50,12 +50,11 @@
 	}
 
 	img {
-		padding-inline: 10px;
-		padding-block: 5px;
+		padding: 5px 10px;
 		transition: transform 0.2s;
-		min-inline-size: 0; /* Avoid image overflow in Safari */
-		inline-size: 100%;
-		block-size: auto;
+		min-width: 0; /* Avoid image overflow in Safari */
+		width: 100%;
+		height: auto;
 	}
 
 	@media (min-width: 640px) {

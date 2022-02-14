@@ -45,24 +45,22 @@
 <style>
 	.examples-toc {
 		overflow-y: auto;
-		block-size: 100%;
-		border-inline-end: 1px solid var(--second);
+		height: 100%;
+		border-right: 1px solid var(--second);
 		background-color: var(--second);
 		color: white;
-		padding-inline: 3rem;
-		padding-block: 3rem 0;
+		padding: 3rem 3rem 0 3rem;
 	}
 
 	.examples-toc li {
 		display: block;
 		line-height: 1.2;
-		margin: 0;
-		margin-block-end: 4.8rem;
+		margin: 0 0 4.8rem 0;
 	}
 
 	.section-title {
 		display: block;
-		padding-block-end: 0.8rem;
+		padding: 0 0 0.8rem 0;
 		font: 400 var(--h6) var(--font);
 		text-transform: uppercase;
 		letter-spacing: 0.12em;
@@ -72,9 +70,8 @@
 	div {
 		display: flex;
 		flex-direction: row;
-		padding-inline: 3rem;
-		padding-block: 0.2rem;
-		margin-inline: -3rem;
+		padding: 0.2rem 3rem;
+		margin: 0 -3rem;
 	}
 
 	div.active {
@@ -92,7 +89,7 @@
 		flex: 1 1 auto;
 		position: relative;
 		color: var(--sidebar-text);
-		border-block-end: none;
+		border-bottom: none;
 		font-size: 1.6rem;
 		align-items: center;
 		justify-content: start;
@@ -107,17 +104,16 @@
 		flex: 0 1 auto;
 		font-size: 1.2rem;
 		font-weight: 700;
-		margin-inline-end: 2.5rem;
+		margin-right: 2.5rem;
 	}
 
 	.thumbnail {
 		background-color: white;
 		object-fit: contain;
-		inline-size: 5rem;
-		block-size: 5rem;
+		width: 5rem;
+		height: 5rem;
 		border-radius: 2px;
 		box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.13);
-		margin-inline: 0 0.5em;
-		margin-block: 0.2em;
+		margin: 0.2em 0.5em 0.2em 0;
 	}
 </style>

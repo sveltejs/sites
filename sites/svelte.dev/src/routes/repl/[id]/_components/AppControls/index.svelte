@@ -185,7 +185,7 @@ export default app;`
 <div class="app-controls">
 	<input bind:value={name} on:focus={(e) => e.target.select()} use:enter={(e) => e.target.blur()} />
 
-	<div style="text-align: right; margin-inline-end: .4rem">
+	<div style="text-align: right; margin-right:.4rem">
 		<button class="icon" on:click={() => (zen_mode = !zen_mode)} title="fullscreen editor">
 			{#if zen_mode}
 				<Icon name="close" />
@@ -236,15 +236,14 @@ export default app;`
 <style>
 	.app-controls {
 		position: absolute;
-		inset-block-start: 0;
-		inset-inline-start: 0;
-		inline-size: 100%;
-		block-size: var(--app-controls-h);
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: var(--app-controls-h);
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		padding-inline: var(--side-nav);
-		padding-block: 0.6rem;
+		padding: 0.6rem var(--side-nav);
 		background-color: var(--second);
 		color: white;
 		white-space: nowrap;
@@ -253,7 +252,7 @@ export default app;`
 
 	.icon {
 		position: relative;
-		inset-block-start: -0.1rem;
+		top: -0.1rem;
 		display: inline-block;
 		padding: 0.2em;
 		opacity: 0.7;
@@ -262,9 +261,9 @@ export default app;`
 		font-size: 1.6rem;
 		color: white;
 		/* width: 1.6em;
-		block-size: 1.6em; */
+		height: 1.6em; */
 		line-height: 1;
-		margin-inline-start: 0.2em;
+		margin: 0 0 0 0.2em;
 	}
 
 	.icon:hover {
@@ -287,17 +286,17 @@ export default app;`
 		opacity: 0.7;
 		outline: none;
 		flex: 1;
-		margin-inline: 0.4em 0.2em;
-		padding-block-start: 0.2em;
-		border-block-end: 1px solid transparent;
+		margin: 0 0.2em 0 0.4rem;
+		padding-top: 0.2em;
+		border-bottom: 1px solid transparent;
 	}
 
 	input:hover {
-		border-block-end: 1px solid currentColor;
+		border-bottom: 1px solid currentColor;
 		opacity: 1;
 	}
 	input:focus {
-		border-block-end: 1px solid currentColor;
+		border-bottom: 1px solid currentColor;
 		opacity: 1;
 	}
 
@@ -310,12 +309,12 @@ export default app;`
 		border-radius: 100%;
 		font-size: 10px;
 		padding: 0;
-		inline-size: 15px;
-		block-size: 15px;
+		width: 15px;
+		height: 15px;
 		line-height: 15px;
 		position: absolute;
-		inset-block-start: 10px;
-		inset-inline-end: 0px;
+		top: 10px;
+		right: 0px;
 	}
 
 	@media (min-width: 600px) {

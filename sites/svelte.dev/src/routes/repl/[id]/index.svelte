@@ -109,14 +109,13 @@
 <style>
 	.repl-outer {
 		position: relative;
-		block-size: calc(100vh - var(--nav-h));
+		height: calc(100vh - var(--nav-h));
 		--app-controls-h: 5.6rem;
 		--pane-controls-h: 4.2rem;
 		overflow: hidden;
 		background-color: var(--back);
-		padding-block-start: var(--app-controls-h);
-		/* margin-inline: calc(var(--side-nav) * -1);
-		margin-block: 0; */
+		padding: var(--app-controls-h) 0 0 0;
+		/* margin: 0 calc(var(--side-nav) * -1); */
 		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
@@ -138,9 +137,9 @@
 
 	.zen-mode {
 		position: fixed;
-		inline-size: 100%;
-		block-size: 100%;
-		inset-block-start: 0;
+		width: 100%;
+		height: 100%;
+		top: 0;
 		z-index: 111;
 	}
 

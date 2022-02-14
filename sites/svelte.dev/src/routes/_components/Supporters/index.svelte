@@ -54,9 +54,8 @@
 	}
 
 	.intro {
-		max-inline-size: 25em; /* text balancing */
-		margin: 0;
-		margin-block-end: 3.2rem;
+		max-width: 25em; /* text balancing */
+		margin: 0 0 3.2rem 0;
 	}
 
 	.grid {
@@ -67,12 +66,11 @@
 	}
 
 	.contributors.grid {
-		margin: 0;
-		margin-block-end: 2em;
+		margin: 0 0 2em 0;
 	}
 
 	.supporter {
-		inline-size: 100%;
+		width: 100%;
 		aspect-ratio: 1;
 		border-radius: 50%;
 		text-indent: -9999px;
@@ -118,7 +116,7 @@
 		}
 
 		h3 {
-			margin-block-start: 0.5rem;
+			margin-top: 0.5rem;
 		}
 
 		p {
@@ -147,7 +145,7 @@
 
 	@media (min-width: 1200px) {
 		.intro {
-			max-inline-size: none;
+			max-width: none;
 		}
 	}
 </style>

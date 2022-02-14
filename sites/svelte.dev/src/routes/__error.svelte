@@ -54,33 +54,28 @@
 
 <style>
 	.container {
-		padding-inline: var(--side-nav);
-		padding-block: var(--top-offset) 6rem;
+		padding: var(--top-offset) var(--side-nav) 6rem var(--side-nav);
 	}
 
 	h1,
 	p {
-		margin-inline: auto;
-		margin-block: 0;
+		margin: 0 auto;
 	}
 
 	h1 {
 		font-size: 2.8em;
 		font-weight: 300;
-		margin: 0;
-		margin-block-end: 0.5em;
+		margin: 0 0 0.5em 0;
 	}
 
 	p {
-		margin-inline: auto;
-		margin-block: 1em;
+		margin: 1em auto;
 	}
 
 	.error {
 		background-color: var(--second);
 		color: white;
-		padding-inline: 16px;
-		padding-block: 12px;
+		padding: 12px 16px;
 		font: 600 16px/1.7 var(--font);
 		border-radius: 2px;
 	}

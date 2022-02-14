@@ -48,29 +48,26 @@
 	.faqs {
 		grid-template-columns: 1fr 1fr;
 		grid-gap: 1em;
-		min-block-size: calc(100vh - var(--nav-h));
-		padding-inline: var(--side-nav);
-		padding-block: var(--top-offset) 6rem;
-		max-inline-size: var(--main-width);
-		margin-inline: auto;
-		margin-block: 0;
+		min-height: calc(100vh - var(--nav-h));
+		padding: var(--top-offset) var(--side-nav) 6rem var(--side-nav);
+		max-width: var(--main-width);
+		margin: 0 auto;
 		tab-size: 2;
 	}
 
 	.faqs :global(pre) :global(code) {
 		padding: 0;
 		margin: 0;
-		inset-block-start: 0;
+		top: 0;
 		background: transparent;
 	}
 
 	.faqs :global(pre) {
-		margin: 0;
-		margin-block-end: 2rem;
-		inline-size: 100%;
-		max-inline-size: var(--linemax);
-		padding-inline: 2.5rem;
-		padding-block: 1.5rem;
+		margin: 0 0 2rem 0;
+		width: 100%;
+		max-width: var(--linemax);
+		padding: 1.5rem 2.5rem;
+		background: #333;
 		border-radius: 0.5rem;
 		font-size: 0.8rem;
 	}
@@ -78,9 +75,9 @@
 	.faqs :global(.offset-anchor) {
 		position: relative;
 		display: block;
-		inset-block-start: calc(-1 * var(--top-offset));
-		inline-size: 0;
-		block-size: 0;
+		top: calc(-1 * var(--top-offset));
+		width: 0;
+		height: 0;
 	}
 
 	.faqs :global(.anchor) {
@@ -88,16 +85,16 @@
 		display: block;
 		background: url(/icons/link.svg) 0 50% no-repeat;
 		background-size: 1em 1em;
-		inline-size: 1.4em;
-		block-size: 1em;
-		inset-inline-start: -1.3em;
+		width: 1.4em;
+		height: 1em;
+		left: -1.3em;
 		opacity: 0;
 		transition: opacity 0.2s;
 	}
 
 	.faqs :global(h2 > .anchor),
 	.faqs :global(h3 > .anchor) {
-		inset-block-start: 0.2em;
+		top: 0.2em;
 	}
 
 	@media (min-width: 768px) {
@@ -112,19 +109,18 @@
 
 		.faqs :global(h5) :global(.anchor),
 		.faqs :global(h6) :global(.anchor) {
-			inset-block-start: 0.25em;
+			top: 0.25em;
 		}
 	}
 
 	h2 {
-		margin-block: 3.5rem 1rem;
-		padding: 0;
-		padding-block-end: 0.2rem;
+		margin: 3.5rem 0 1rem 0;
+		padding: 0 0 0.2em 0;
 		color: var(--text);
-		/* max-inline-size: 24em; */
+		/* max-width: 24em; */
 		font-size: var(--h3);
 		font-weight: 400;
-		border-block-end: 1px solid #ddd;
+		border-bottom: 1px solid #ddd;
 	}
 
 	.faqs :global(h3) {
@@ -132,19 +128,18 @@
 		font-weight: 600;
 		font-size: 2rem;
 		color: var(--second);
-		margin-block: 2rem 1.6rem;
-		padding-inline-start: 0;
+		margin: 2rem 0 1.6rem 0;
+		padding-left: 0;
 		background: transparent;
 		line-height: 1.3;
 		padding: 0;
-		inset-block-start: 0;
+		top: 0;
 	}
 
 	.faq:first-child {
-		margin: 0;
-		margin-block-end: 2rem;
-		padding-block-end: 4rem;
-		border-block-end: var(--border-w) solid #6767785b; /* based on --second */
+		margin: 0 0 2rem 0;
+		padding: 0 0 4rem 0;
+		border-bottom: var(--border-w) solid #6767785b; /* based on --second */
 	}
 	.faq:first-child h2 {
 		font-size: 4rem;
@@ -153,18 +148,18 @@
 	}
 
 	:global(.faqs .faq ul) {
-		margin-inline-start: 3.2rem;
+		margin-left: 3.2rem;
 	}
 
 	.faqs :global(.anchor) {
-		inset-block-start: calc((var(--h3) - 24px) / 2);
+		top: calc((var(--h3) - 24px) / 2);
 	}
 
 	@media (max-width: 768px) {
 		.faqs :global(.anchor) {
 			transform: scale(0.6);
 			opacity: 1;
-			inset-inline-start: -1em;
+			left: -1em;
 		}
 	}
 </style>

@@ -226,21 +226,21 @@
 <style>
 	.codemirror-container {
 		position: relative;
-		inline-size: 100%;
-		block-size: 100%;
+		width: 100%;
+		height: 100%;
 		border: none;
 		line-height: 1.5;
 		overflow: hidden;
 	}
 
 	.codemirror-container :global(.CodeMirror) {
-		block-size: 100%;
+		height: 100%;
 		font: 400 var(--code-fs)/1.7 var(--font-mono);
 	}
 
 	.codemirror-container :global(.error-loc) {
 		position: relative;
-		border-block-end: 2px solid #da106e;
+		border-bottom: 2px solid #da106e;
 	}
 
 	.codemirror-container :global(.error-line) {
@@ -257,13 +257,12 @@
 
 	pre {
 		position: absolute;
-		inline-size: 100%;
-		block-size: 100%;
-		inset-block-start: 0;
-		inset-inline-start: 0;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
 		border: none;
-		padding: 4px;
-		padding-inline-start: 60px;
+		padding: 4px 4px 4px 60px;
 		resize: none;
 		font-family: var(--font-mono);
 		font-size: 13px;
@@ -284,10 +283,10 @@
 	></textarea>
 
 	{#if !CodeMirror}
-		<pre style="position: absolute; inset-inline-start: 0; inset-block-start: 0"
+		<pre style="position: absolute; left: 0; top: 0"
 		>{code}</pre>
 
-		<div style="position: absolute; inline-size: 100%; inset-block-end: 0">
+		<div style="position: absolute; width: 100%; bottom: 0">
 			<Message kind='info'>loading editor...</Message>
 		</div>
 	{/if}

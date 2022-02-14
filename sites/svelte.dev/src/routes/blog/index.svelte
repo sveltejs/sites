@@ -51,27 +51,25 @@
 	.posts {
 		grid-template-columns: 1fr 1fr;
 		grid-gap: 1em;
-		min-block-size: calc(100vh - var(--nav-h));
-		padding-inline: var(--side-nav);
-		padding-block: var(--top-offset) 6rem;
-		max-inline-size: var(--main-width);
-		margin-inline: auto;
-		margin-block: 0;
+		min-height: calc(100vh - var(--nav-h));
+		padding: var(--top-offset) var(--side-nav) 6rem var(--side-nav);
+		max-width: var(--main-width);
+		margin: 0 auto;
 	}
 
 	h2 {
 		display: inline-block;
-		margin-block: 3.2rem 0.4rem;
+		margin: 3.2rem 0 0.4rem 0;
 		color: var(--text);
-		max-inline-size: 18em;
+		max-width: 18em;
 		font-size: var(--h3);
 		font-weight: 400;
 	}
 
 	.post:first-child {
-		margin-block-end: 2rem;
-		padding-block-end: 4rem;
-		border-block-end: var(--border-w) solid #6767785b; /* based on --second */
+		margin: 0 0 2rem 0;
+		padding: 0 0 4rem 0;
+		border-bottom: var(--border-w) solid #6767785b; /* based on --second */
 	}
 
 	.post:first-child h2 {
@@ -96,7 +94,7 @@
 
 	.post p {
 		font-size: var(--h5);
-		max-inline-size: 30em;
+		max-width: 30em;
 		color: var(--second);
 	}
 

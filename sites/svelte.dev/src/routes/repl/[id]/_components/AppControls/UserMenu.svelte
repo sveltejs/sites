@@ -26,9 +26,8 @@
 	.user {
 		position: relative;
 		display: inline-block;
-		padding-inline: 1.6rem 1.2rem;
-		padding-block: 0;
-		block-size: 0.8em;
+		padding: 0em 1.2rem 0 1.6rem;
+		height: 0.8em;
 		line-height: 1;
 		z-index: 99;
 	}
@@ -37,14 +36,14 @@
 		/* embiggen hit zone, so log out menu doesn't disappear */
 		position: absolute;
 		content: '';
-		inline-size: 100%;
-		block-size: 3.2rem;
-		inset-inline-start: 0;
-		inset-block-start: 0;
+		width: 100%;
+		height: 3.2rem;
+		left: 0;
+		top: 0;
 	}
 
 	span {
-		/* position: relative; padding-inline-end: 2em; */
+		/* position: relative; padding: 0 2em 0 0; */
 		line-height: 1;
 		display: none;
 		font-family: var(--font);
@@ -58,23 +57,22 @@
 
 	img {
 		position: absolute;
-		inset-block-start: -0.05em;
-		inset-inline-end: 0;
-		inline-size: 2.1rem;
-		block-size: 2.1rem;
+		top: -0.05em;
+		right: 0;
+		width: 2.1rem;
+		height: 2.1rem;
 		border: 1px solid rgba(255, 255, 255, 0.3);
 		border-radius: 0.2rem;
 	}
 
 	.menu {
 		position: absolute;
-		inline-size: calc(100% + 1.6rem);
+		width: calc(100% + 1.6rem);
 		min-width: 10em;
-		inset-block-start: 3rem;
-		inset-inline-end: -1.6rem;
+		top: 3rem;
+		right: -1.6rem;
 		background-color: var(--second);
-		padding-inline: 1.6rem;
-		padding-block: 0.8rem;
+		padding: 0.8rem 1.6rem;
 		z-index: 99;
 		text-align: left;
 		border-radius: 0.4rem;
@@ -88,8 +86,7 @@
 		font-family: var(--font);
 		font-size: 1.6rem;
 		opacity: 0.7;
-		padding-inline: 0;
-		padding-block: 0.4rem;
+		padding: 0.4rem 0;
 		text-decoration: none;
 		text-align: left;
 		border: none;
@@ -104,13 +101,12 @@
 
 	@media (min-width: 600px) {
 		.user {
-			padding-inline: 1.6rem 3.2rem;
-			padding-block: 0;
+			padding: 0em 3.2rem 0 1.6rem;
 		}
 
 		img {
-			inline-size: 2.4rem;
-			block-size: 2.4rem;
+			width: 2.4rem;
+			height: 2.4rem;
 		}
 
 		span {

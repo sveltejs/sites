@@ -26,27 +26,24 @@
 	function setPos(event) {
 		const { top, left } = refs.container.getBoundingClientRect();
 
-		const px = type === 'vertical'
-			? (event.clientY - top)
-			: (event.clientX - left);
+		const px = type === 'vertical' ? event.clientY - top : event.clientX - left;
 
-		pos = 100 * px / size;
+		pos = (100 * px) / size;
 		dispatch('change');
 	}
 
 	function setTouchPos(event) {
 		const { top, left } = refs.container.getBoundingClientRect();
 
-		const px = type === 'vertical'
-			? (event.touches[0].clientY - top)
-			: (event.touches[0].clientX - left);
+		const px =
+			type === 'vertical' ? event.touches[0].clientY - top : event.touches[0].clientX - left;
 
-		pos = 100 * px / size;
+		pos = (100 * px) / size;
 		dispatch('change');
 	}
 
 	function drag(node, callback) {
-		const mousedown = event => {
+		const mousedown = (event) => {
 			if (event.which !== 1) return;
 
 			event.preventDefault();
@@ -62,7 +59,7 @@
 
 			window.addEventListener('mousemove', callback, false);
 			window.addEventListener('mouseup', onmouseup, false);
-		}
+		};
 
 		node.addEventListener('mousedown', mousedown, false);
 
@@ -74,7 +71,7 @@
 	}
 
 	function touchDrag(node, callback) {
-		const touchdown = event => {
+		const touchdown = (event) => {
 			if (event.targetTouches.length > 1) return;
 
 			event.preventDefault();
@@ -90,7 +87,7 @@
 
 			window.addEventListener('touchmove', callback, false);
 			window.addEventListener('touchend', ontouchend, false);
-		}
+		};
 
 		node.addEventListener('touchstart', touchdown, false);
 
@@ -105,28 +102,51 @@
 	$: dimension = type === 'horizontal' ? 'width' : 'height';
 </script>
 
+<div class="container" bind:this={refs.container} bind:clientWidth={w} bind:clientHeight={h}>
+	<div class="pane" style="{dimension}: {pos}%;">
+		<slot name="a" />
+	</div>
+
+	<div class="pane" style="{dimension}: {100 - pos}%;">
+		<slot name="b" />
+	</div>
+
+	{#if !fixed}
+		<div
+			class="{type} divider"
+			style="{side}: calc({pos}% - 8px)"
+			use:drag={setPos}
+			use:touchDrag={setTouchPos}
+		/>
+	{/if}
+</div>
+
+{#if dragging}
+	<div class="mousecatcher" />
+{/if}
+
 <style>
 	.container {
 		position: relative;
-		inline-size: 100%;
-		block-size: 100%;
+		width: 100%;
+		height: 100%;
 	}
 
 	.pane {
 		position: relative;
 		float: left;
-		inline-size: 100%;
-		block-size: 100%;
+		width: 100%;
+		height: 100%;
 		overflow: auto;
 	}
 
 	.mousecatcher {
 		position: absolute;
-		inset-inline-start: 0;
-		inset-block-start: 0;
-		inline-size: 100%;
-		block-size: 100%;
-		background: rgba(255,255,255,.01);
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(255, 255, 255, 0.01);
 	}
 
 	.divider {
@@ -143,65 +163,55 @@
 	}
 
 	.horizontal {
-		padding-inline: 8px;
-		inline-size: 0;
-		block-size: 100%;
+		padding: 0 8px;
+		width: 0;
+		height: 100%;
 		cursor: ew-resize;
 	}
 
 	.horizontal::after {
-		inset-inline-start: 8px;
-		inset-block-start: 0;
-		inline-size: 1px;
-		block-size: 100%;
+		left: 8px;
+		top: 0;
+		width: 1px;
+		height: 100%;
 	}
 
 	.vertical {
-		padding-block: 8px;
-		inline-size: 100%;
-		block-size: 0;
+		padding: 8px 0;
+		width: 100%;
+		height: 0;
 		cursor: ns-resize;
 	}
 
 	.vertical::after {
-		inset-block-start: 8px;
-		inset-inline-start: 0;
-		inline-size: 100%;
-		block-size: 1px;
+		top: 8px;
+		left: 0;
+		width: 100%;
+		height: 1px;
 	}
 
-	.left, .right, .divider {
+	.left,
+	.right,
+	.divider {
 		display: block;
 	}
 
-	.left, .right {
-		block-size: 100%;
+	.left,
+	.right {
+		height: 100%;
 		float: left;
 	}
 
-	.top, .bottom {
+	.top,
+	.bottom {
 		position: absolute;
-		inline-size: 100%;
+		width: 100%;
 	}
 
-	.top { inset-block-start: 0; }
-	.bottom { inset-block-end: 0; }
+	.top {
+		top: 0;
+	}
+	.bottom {
+		bottom: 0;
+	}
 </style>
-
-<div class="container" bind:this={refs.container} bind:clientWidth={w} bind:clientHeight={h}>
-	<div class="pane" style="{dimension}: {pos}%;">
-		<slot name="a"></slot>
-	</div>
-
-	<div class="pane" style="{dimension}: {100 - (pos)}%;">
-		<slot name="b"></slot>
-	</div>
-
-	{#if !fixed}
-		<div class="{type} divider" style="{side}: calc({pos}% - 8px)" use:drag={setPos} use:touchDrag={setTouchPos}></div>
-	{/if}
-</div>
-
-{#if dragging}
-	<div class="mousecatcher"></div>
-{/if}

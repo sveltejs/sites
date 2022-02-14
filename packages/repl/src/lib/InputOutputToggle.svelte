@@ -12,9 +12,9 @@
 		grid-template-columns: 1fr 40px 1fr;
 		grid-gap: 0.5em;
 		align-items: center;
-		inline-size: 100%;
-		block-size: 42px;
-		border-block-start: 1px solid var(--second);
+		width: 100%;
+		height: 42px;
+		border-top: 1px solid var(--second);
 		z-index: 2;
 	}
 

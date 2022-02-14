@@ -61,20 +61,20 @@
 
 	.description {
 		color: white;
-		block-size: 12rem; /* prevent layout popping when tab changes */
+		height: 12rem; /* prevent layout popping when tab changes */
 	}
 
 	.container {
 		filter: drop-shadow(6px 10px 20px rgba(0, 0, 0, 0.2));
-		margin-block: 4rem;
+		margin: 4rem 0;
 	}
 
 	.controls {
 		position: relative;
-		inset-block-start: 4px;
+		top: 4px;
 		display: grid;
-		inline-size: 100%;
-		block-size: 5rem;
+		width: 100%;
+		height: 5rem;
 		grid-template-columns: 4fr 1fr;
 		color: white;
 		align-items: center;
@@ -84,7 +84,7 @@
 	.tabs {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
-		block-size: 100%;
+		height: 100%;
 		border-radius: var(--border-r) var(--border-r) 0 0;
 		background-color: rgba(255, 255, 255, 0.1);
 	}
@@ -93,7 +93,7 @@
 	a {
 		display: flex;
 		text-align: center;
-		block-size: 100%;
+		height: 100%;
 		align-items: center;
 		justify-content: center;
 		border-radius: var(--border-r) var(--border-r) 0 0;

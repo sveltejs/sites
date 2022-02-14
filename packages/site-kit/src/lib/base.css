@@ -110,8 +110,8 @@ html {
 
 html,
 body {
-	inline-size: 100%;
-	block-size: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 * {
@@ -199,8 +199,7 @@ h3 {
 p,
 ol,
 ul {
-	margin: 0;
-	margin-block-end: 1em;
+	margin: 0 0 1em 0;
 }
 
 .b,
@@ -223,8 +222,8 @@ code {
 	color: #444;
 	-webkit-font-smoothing: initial;
 	padding: 0.4rem;
-	margin-inline: 0.2rem;
-	inset-block-start: -0.1rem;
+	margin: 0 0.2rem;
+	top: -0.1rem;
 	background: var(--back-api);
 }
 
@@ -233,12 +232,12 @@ pre {
 }
 
 pre code {
-	inset-block-start: 0;
+	top: 0;
 	white-space: inherit;
 	background-color: transparent;
 	padding: 0;
 	margin: 0;
-	inset-block-start: 0;
+	top: 0;
 	background: transparent;
 }
 
@@ -256,11 +255,9 @@ li > h2 {
 
 blockquote {
 	position: relative;
-	margin-inline: 0;
-	margin-block: 1.6rem 2.4rem;
-	padding-inline: 2.4rem;
-	padding-block: 2rem 1.8rem;
-	max-inline-size: var(--linemax);
+	margin: 1.6rem 0 2.4rem;
+	padding: 2rem 2.4rem 1.8rem 2.4rem;
+	max-width: var(--linemax);
 }
 
 blockquote p,
@@ -292,9 +289,9 @@ button[disabled],
 button > svg,
 .btn > svg {
 	position: relative;
-	inset-block-start: -0.1rem;
-	inline-size: 2rem !important;
-	block-size: 2rem !important;
+	top: -0.1rem;
+	width: 2rem !important;
+	height: 2rem !important;
 	stroke: currentColor !important;
 }
 
@@ -307,8 +304,7 @@ button > svg,
 	--btn-hover: linear-gradient(to top, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07));
 
 	position: relative;
-	margin-inline: 0 0.8rem;
-	margin-block: 0 0.8rem;
+	margin: 0 0.8rem 0.8rem 0;
 	vertical-align: middle;
 	white-space: nowrap;
 	display: inline-block;
@@ -323,8 +319,8 @@ button > svg,
 /*  default */
 .btn {
 	line-height: var(--btn-h);
-	block-size: var(--btn-h);
-	padding-inline: 1.6rem;
+	height: var(--btn-h);
+	padding: 0 1.6rem;
 	transition: all 0.1s;
 }
 
@@ -337,7 +333,7 @@ button > svg,
 /*  optional */
 .btn[outline] {
 	line-height: var(--btn-calc-h);
-	block-size: var(--btn-calc-h);
+	height: var(--btn-calc-h);
 	border: var(--btn-outline) solid currentColor;
 	background-color: white;
 	color: currentColor;
@@ -346,8 +342,8 @@ button > svg,
 /*  links ------------------------------------- */
 a {
 	position: relative;
-	padding-block-end: 1px;
-	/* border-block-end: 1px solid currentColor; */
+	padding: 0 0 1px 0;
+	/* border-bottom: 1px solid currentColor; */
 	color: var(--prime);
 	/* transition: color .2s, border .2s, padding .2s; */
 }
@@ -358,11 +354,11 @@ a {
 
 a:hover {
 	/* padding: 0; */
-	/* border-block-end: 2px solid currentColor; */
+	/* border-bottom: 2px solid currentColor; */
 }
 
 a.no-underline {
-	border-block-end: none;
+	border-bottom: none;
 	padding: 0;
 }
 
@@ -375,25 +371,24 @@ a.no-underline {
 
 	list-style: none;
 	color: currentColor;
-	margin-inline-start: var(--list-padding);
+	margin-left: var(--list-padding);
 }
 
 .listify ol > li,
 .listify ul > li {
-	max-inline-size: calc(var(--linemax) - var(--list-padding));
+	max-width: calc(var(--linemax) - var(--list-padding));
 	line-height: 1.5;
-	margin: 0;
-	margin-block-end: 0.5em;
+	margin: 0 0 0.5em 0;
 }
 
 .listify ul > li:before {
 	content: '';
 	position: absolute;
-	margin-block-start: 1.1rem;
-	margin-inline-start: -1.8rem;
+	margin-top: 1.1rem;
+	margin-left: -1.8rem;
 	background-color: var(--second);
-	inline-size: 0.6rem;
-	block-size: 0.6rem;
+	width: 0.6rem;
+	height: 0.6rem;
 	border-radius: 2px;
 	opacity: 0.7;
 }
@@ -404,16 +399,15 @@ a.no-underline {
 
 /*  tables --------------------------------- */
 table {
-	inline-size: 100%;
+	width: 100%;
 	font-size: var(--h5);
 }
 
 td,
 th {
 	text-align: left;
-	border-block-end: 1px solid #eee;
-	padding-inline: 0 0.8rem;
-	padding-block: 0.4rem;
+	border-bottom: 1px solid #eee;
+	padding: 0.4rem 0.8rem 0.4rem 0;
 }
 
 table code,
@@ -427,18 +421,16 @@ table span {
 }
 
 .py0 {
-	padding-block-start: 0 !important;
-	padding-block-end: 0 !important;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
 }
 
 .legend,
 figcaption,
 .post aside {
-	max-inline-size: none;
-	margin-inline: auto;
-	margin-block: 0;
-	padding-inline-start: 0.8rem;
-	padding-block-start: 1.6rem;
+	max-width: none;
+	margin: 0 auto;
+	padding: 1.6rem 0 0 0.8rem;
 	font: 1.2rem/1.6 var(--font-mono);
 }
 
@@ -446,11 +438,11 @@ figcaption,
 .visually-hidden {
 	border: 0;
 	clip: rect(0 0 0 0);
-	block-size: auto;
+	height: auto;
 	margin: 0;
 	overflow: hidden;
 	padding: 0;
 	position: absolute;
-	inline-size: 1px;
+	width: 1px;
 	white-space: nowrap;
 }

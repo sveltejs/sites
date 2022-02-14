@@ -80,10 +80,9 @@
 
 <style>
 	.content {
-		inline-size: 100%;
+		width: 100%;
 		margin: 0;
-		padding-inline: var(--side-nav);
-		padding-block: var(--top-offset);
+		padding: var(--top-offset) var(--side-nav);
 		tab-size: 2;
 		-moz-tab-size: 2;
 	}
@@ -91,20 +90,19 @@
 	@media (min-width: 832px) {
 		/* can't use vars in @media :( */
 		.content {
-			padding-inline-start: calc(var(--sidebar-w) + var(--side-nav));
+			padding-left: calc(var(--sidebar-w) + var(--side-nav));
 		}
 	}
 
 	.content :global(h1) {
 		font-size: 3.2rem;
-		margin-block-end: 0.5em;
+		margin: 0 0 0.5em 0;
 	}
 
 	.content :global(h2) {
-		margin-block-start: 8rem;
-		padding-inline: 0.2rem 1.6rem;
-		padding-block: 2rem 4rem;
-		border-block-start: 2px solid #ddd;
+		margin-top: 8rem;
+		padding: 2rem 1.6rem 4rem 0.2rem;
+		border-top: 2px solid #ddd;
 		line-height: 1;
 		font-size: var(--h3);
 		letter-spacing: 0.05em;
@@ -112,19 +110,19 @@
 	}
 
 	.content :global(section):first-of-type > :global(h2) {
-		margin-block-start: 0;
+		margin-top: 0;
 	}
 
 	.content :global(h4) {
-		margin-block: 2em 1em;
+		margin: 2em 0 1em 0;
 	}
 
 	.content :global(.offset-anchor) {
 		position: relative;
 		display: block;
-		inset-block-start: calc(-1 * var(--top-offset));
-		inline-size: 0;
-		block-size: 0;
+		top: calc(-1 * var(--top-offset));
+		width: 0;
+		height: 0;
 	}
 
 	.content :global(.anchor) {
@@ -132,20 +130,20 @@
 		display: block;
 		background: url(../icons/link.svg) 0 50% no-repeat;
 		background-size: 1em 1em;
-		inline-size: 1.4em;
-		block-size: 1em;
-		inset-inline-start: -1.3em;
-		inset-block-end: 0.3rem;
+		width: 1.4em;
+		height: 1em;
+		left: -1.3em;
+		bottom: 0.3rem;
 		opacity: 0;
 		transition: opacity 0.2s;
 	}
 
 	.content :global(h2) :global(.anchor) {
-		inset-block-end: 4rem;
+		bottom: 4rem;
 	}
 
 	.content :global(h3) :global(.anchor) {
-		inset-block-end: 1rem;
+		bottom: 1rem;
 	}
 
 	@media (min-width: 400px) {
@@ -171,12 +169,11 @@
 
 	.content :global(h3),
 	.content :global(h3 > code) {
-		margin-inline: 0;
-		margin-block: 6.4rem 1rem;
-		padding-block-end: 1rem;
+		margin: 6.4rem 0 1rem 0;
+		padding: 0 0 1rem 0;
 		color: var(--text);
-		max-inline-size: var(--linemax);
-		border-block-end: 1px solid #ddd;
+		max-width: var(--linemax);
+		border-bottom: 1px solid #ddd;
 		background: transparent;
 		line-height: 1;
 	}
@@ -199,13 +196,12 @@
 		font-weight: 600;
 		font-size: 2.4rem;
 		color: var(--second);
-		margin-inline: 0;
-		margin-block: 6.4rem 1.6rem;
-		padding-inline-start: 0;
+		margin: 6.4rem 0 1.6rem 0;
+		padding-left: 0;
 		background: transparent;
 		line-height: 1;
-		padding-block-start: 0;
-		inset-block-start: 0;
+		padding-top: 0;
+		top: 0;
 	}
 
 	.content :global(h4::before) {
@@ -219,38 +215,40 @@
 		opacity: 0.7;
 	}
 
+	.content :global(h4 > .anchor) {
+		top: 0.05em;
+	}
+
 	.content :global(h5) {
 		font-size: 2.4rem;
-		margin-block: 2em 0.5em;
+		margin: 2em 0 0.5em 0;
 	}
 
 	.content :global(code) {
 		padding: 0.4rem;
-		margin-inline: 0.2rem;
-		margin-block: 0;
-		inset-block-start: -0.1rem;
+		margin: 0 0.2rem;
+		top: -0.1rem;
 		background: var(--back-api);
 	}
 
 	.content :global(pre) :global(code) {
 		padding: 0;
 		margin: 0;
-		inset-block-start: 0;
+		top: 0;
 		background: transparent;
 	}
 
 	.content :global(pre) {
-		margin: 0;
-		margin-block-end: 2rem;
-		inline-size: 100%;
-		max-inline-size: var(--linemax);
-		padding: 1rem;
+		margin: 0 0 2rem 0;
+		width: 100%;
+		max-width: var(--linemax);
+		padding: 1rem 1rem;
 		box-shadow: inset 1px 1px 6px hsla(205.7, 63.6%, 30.8%, 0.06);
 	}
 
 	.content :global(.icon) {
-		inline-size: 2rem;
-		block-size: 2rem;
+		width: 2rem;
+		height: 2rem;
 		stroke: currentColor;
 		stroke-width: 2;
 		stroke-linecap: round;
@@ -259,18 +257,17 @@
 	}
 
 	.content :global(table) {
-		margin: 0;
-		margin-block-end: 2em;
+		margin: 0 0 2em 0;
 	}
 
 	.content :global(section) :global(p) {
-		max-inline-size: var(--linemax);
-		margin-block: 1em;
+		max-width: var(--linemax);
+		margin: 1em 0;
 	}
 
 	.content :global(small) {
 		font-size: var(--h5);
-		float: inline-end;
+		float: right;
 		pointer-events: all;
 		color: var(--prime);
 		cursor: pointer;
@@ -279,16 +276,16 @@
 	.content :global(blockquote) {
 		color: rgba(0, 0, 0, 0.7);
 		background-color: rgba(255, 62, 0, 0.1);
-		border-inline-start: 4px solid #ff3e00;
+		border-left: 4px solid #ff3e00;
 		padding: 1rem;
 	}
 
 	.content :global(blockquote) :global(:first-child) {
-		margin-block-start: 0;
+		margin-top: 0;
 	}
 
 	.content :global(blockquote) :global(:last-child) {
-		margin-block-end: 0;
+		margin-bottom: 0;
 	}
 
 	.content :global(blockquote) :global(code) {
@@ -308,18 +305,18 @@
 	   once https://github.com/sveltejs/action-deploy-docs/issues/1 is closed */
 	.content :global(h2[id]),
 	.content :global(h3[id]) {
-		padding-block-start: 10rem;
-		margin-block-start: -2rem;
-		border-block-start: none;
+		padding-top: 10rem;
+		margin-top: -2rem;
+		border-top: none;
 	}
 
 	.content :global(h2[id])::after {
 		content: '';
 		position: absolute;
-		inline-size: 100%;
-		inset-inline-start: 0;
-		inset-block-start: 8rem;
-		block-size: 2px;
+		width: 100%;
+		left: 0;
+		top: 8rem;
+		height: 2px;
 		background: #ddd;
 	}
 </style>

@@ -71,11 +71,9 @@
 <style>
 	main {
 		position: relative;
-		margin-inline: auto;
-		margin-block: 0;
-		/* padding-inline: var(--side-nav);
-		padding-block: var(--nav-h) 0; */
-		padding-block-start: var(--nav-h);
+		margin: 0 auto;
+		/* padding: var(--nav-h) var(--side-nav) 0 var(--side-nav); */
+		padding: var(--nav-h) 0 0 0;
 	}
 
 	.small {

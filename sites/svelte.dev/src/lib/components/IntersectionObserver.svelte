@@ -53,7 +53,7 @@
 
 <style>
 	div {
-		inline-size: 100%;
-		block-size: 100%;
+		width: 100%;
+		height: 100%;
 	}
 </style>

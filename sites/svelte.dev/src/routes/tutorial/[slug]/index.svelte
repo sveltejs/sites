@@ -177,16 +177,16 @@
 <style>
 	.tutorial-outer {
 		position: relative;
-		block-size: calc(100vh - var(--nav-h));
+		height: calc(100vh - var(--nav-h));
 		overflow: hidden;
-		padding-block-end: 42px;
+		padding: 0 0 42px 0;
 		box-sizing: border-box;
 	}
 
 	.viewport {
 		display: grid;
-		inline-size: 300%;
-		block-size: 100%;
+		width: 300%;
+		height: 100%;
 		grid-template-columns: 33.333% 66.666%;
 		transition: transform 0.3s;
 		grid-auto-rows: 100%;
@@ -205,8 +205,8 @@
 		}
 
 		.viewport {
-			inline-size: 100%;
-			block-size: 100%;
+			width: 100%;
+			height: 100%;
 			display: grid;
 			grid-template-columns: minmax(33.333%, var(--sidebar-large-w)) auto;
 			grid-auto-rows: 100%;
@@ -222,22 +222,21 @@
 	.tutorial-text {
 		display: flex;
 		flex-direction: column;
-		block-size: 100%;
-		border-inline-end: 1px solid var(--second);
+		height: 100%;
+		border-right: 1px solid var(--second);
 		background-color: var(--second);
 		color: var(--sidebar-text);
 	}
 
 	.chapter-markup {
-		padding-inline: 4rem;
-		padding-block: 3.2rem;
+		padding: 3.2rem 4rem;
 		overflow: auto;
 		flex: 1;
-		block-size: 0;
+		height: 0;
 	}
 
 	.chapter-markup :global(h2) {
-		margin-block: 4rem 1.6rem;
+		margin: 4rem 0 1.6rem 0;
 		font-size: var(--h3);
 		line-height: 1;
 		font-weight: 400;
@@ -245,7 +244,7 @@
 	}
 
 	.chapter-markup :global(h2:first-child) {
-		margin-block-start: 0.4rem;
+		margin-top: 0.4rem;
 	}
 
 	.chapter-markup :global(a) {
@@ -259,8 +258,7 @@
 	}
 
 	.chapter-markup :global(ul) {
-		padding: 0;
-		padding-inline-start: 2em;
+		padding: 0 0 0 2em;
 	}
 
 	.chapter-markup :global(blockquote) {
@@ -270,7 +268,7 @@
 
 	.chapter-markup::-webkit-scrollbar {
 		background-color: var(--second);
-		inline-size: 8px;
+		width: 8px;
 	}
 
 	.chapter-markup::-webkit-scrollbar-thumb {
@@ -282,26 +280,24 @@
 	.chapter-markup :global(ul) :global(code) {
 		color: var(--sidebar-text);
 		background: rgba(0, 0, 0, 0.12);
-		padding-inline: 0.4em;
-		padding-block: 0.2em 0.3em;
+		padding: 0.2em 0.4em 0.3em;
 		white-space: nowrap;
 		position: relative;
-		inset-block-start: -0.1em;
+		top: -0.1em;
 	}
 
 	.controls {
-		border-block-start: 1px solid rgba(255, 255, 255, 0.15);
-		padding-block-start: 1em;
+		border-top: 1px solid rgba(255, 255, 255, 0.15);
+		padding: 1em 0 0 0;
 		display: flex;
 		align-items: center;
 	}
 
 	.show {
 		background: var(--prime);
-		padding-inline: 0.7em;
-		padding-block: 0.3em;
+		padding: 0.3em 0.7em;
 		border-radius: var(--border-r);
-		inset-block-start: 0.1em;
+		top: 0.1em;
 		position: relative;
 		font-size: var(--h5);
 		font-weight: 300;
@@ -313,23 +309,21 @@
 	}
 
 	a.next {
-		padding-inline-end: 1.2em;
+		padding-right: 1.2em;
 		background: no-repeat 100% 50% url(@sveltejs/site-kit/icons/arrow-right.svg);
 		background-size: 1em 1em;
-		margin-inline-start: auto;
+		margin-left: auto;
 	}
 
 	.improve-chapter {
-		padding-inline: 0;
-		padding-block: 1em 0.5em;
+		padding: 1em 0 0.5em 0;
 	}
 
 	.improve-chapter a {
 		font-size: 14px;
 		text-decoration: none;
 		opacity: 0.3;
-		padding-inline: 1.2em 0.1em;
-		padding-block: 0;
+		padding: 0 0.1em 0 1.2em;
 		background: no-repeat 0 50% url(/icons/edit.svg);
 		background-size: 1em 1em;
 	}

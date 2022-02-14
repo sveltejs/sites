@@ -81,16 +81,16 @@
 <style>
 	.examples-container {
 		position: relative;
-		block-size: calc(100vh - var(--nav-h));
+		height: calc(100vh - var(--nav-h));
 		overflow: hidden;
-		padding-block-end: 42px;
+		padding: 0 0 42px 0;
 		box-sizing: border-box;
 	}
 
 	.viewport {
 		display: grid;
-		inline-size: 300%;
-		block-size: 100%;
+		width: 300%;
+		height: 100%;
 		grid-template-columns: 33.333% 66.666%;
 		transition: transform 0.3s;
 		grid-auto-rows: 100%;
@@ -127,8 +127,8 @@
 		}
 
 		.viewport {
-			inline-size: 100%;
-			block-size: 100%;
+			width: 100%;
+			height: 100%;
 			display: grid;
 			grid-template-columns: var(--sidebar-mid-w) auto;
 			grid-auto-rows: 100%;

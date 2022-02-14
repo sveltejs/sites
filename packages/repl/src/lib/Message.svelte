@@ -40,11 +40,10 @@
 	.message {
 		position: relative;
 		color: white;
-		padding-inline: 44px 16px;
-		padding-block: 12px;
+		padding: 12px 16px 12px 44px;
 		font: 400 12px/1.7 var(--font);
 		margin: 0;
-		border-block-start: 1px solid white;
+		border-top: 1px solid white;
 	}
 
 	.navigable {
@@ -54,8 +53,8 @@
 	.message::before {
 		content: '!';
 		position: absolute;
-		inset-inline-start: 12px;
-		inset-block-start: 10px;
+		left: 12px;
+		top: 10px;
 		text-align: center;
 		line-height: 1;
 		padding: 4px;
@@ -63,8 +62,8 @@
 		color: white;
 		border: 2px solid white;
 		box-sizing: content-box;
-		inline-size: 10px;
-		block-size: 10px;
+		width: 10px;
+		height: 10px;
 		font-size: 11px;
 		font-weight: 700;
 	}

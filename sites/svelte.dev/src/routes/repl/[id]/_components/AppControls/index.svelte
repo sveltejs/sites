@@ -88,6 +88,10 @@
 	}
 
 	async function save() {
+		if (!$session.user) {
+			alert('Please log in before saving your app');
+			return;
+		}
 		if (saving) return;
 
 		if (!canSave) {

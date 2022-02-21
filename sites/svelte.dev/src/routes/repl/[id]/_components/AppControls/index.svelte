@@ -89,7 +89,7 @@
 
 	async function save() {
 		if (!$session.user) {
-			alert('Looks like you are not logged in! Log in and try saving again');
+			alert('Please log in before saving your app');
 			return;
 		}
 		if (saving) return;

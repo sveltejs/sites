@@ -136,6 +136,7 @@
 		bottom: 0.3rem;
 		opacity: 0;
 		transition: opacity 0.2s;
+		user-select: none;
 	}
 
 	.content :global(h2) :global(.anchor) {

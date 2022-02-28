@@ -2,6 +2,7 @@
 	import '@sveltejs/site-kit/base.css';
 	import { setContext } from 'svelte';
 	import { page, navigating, session } from '$app/stores';
+	import { browser } from '$app/env';
 	import { Icon, Icons, Nav, NavItem, SkipLink } from '@sveltejs/site-kit';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 
@@ -28,6 +29,10 @@
 			if (r.ok) $session.user = null;
 		}
 	});
+
+	let h = 0;
+	let w = 0;
+	$: browser && document.documentElement.style.setProperty('--ukr-footer-height', `${h}px`);
 </script>
 
 <Icons />
@@ -38,7 +43,7 @@
 
 {#if $page.url.pathname !== '/repl/embed'}
 	<SkipLink href="#main" />
-	<Nav {page} logo="/svelte-logo-horizontal.svg">
+	<Nav {page} logo="/stopwar.svg">
 		<svelte:fragment slot="nav-center">
 			<NavItem href="/tutorial">Tutorial</NavItem>
 			<NavItem href="/docs">Docs</NavItem>
@@ -62,18 +67,59 @@
 			</NavItem>
 		</svelte:fragment>
 	</Nav>
+
+	<a target="_blank" rel="noopener noreferrer" href="https://www.stopputin.net/"
+		><div class="ukr" bind:clientHeight={h} bind:clientWidth={w}>
+			{#if w < 830}
+				<strong>We stand with Ukraine.</strong>
+				Donate →
+			{:else}
+				<strong>We stand with Ukraine.</strong>
+				Petition your leaders. Show your support.
+			{/if}
+		</div></a
+	>
 {/if}
 
-<main id="main">
+<main id="main" style="padding-bottom: {h}px;">
 	<slot />
 </main>
 
 <style>
+	.ukr {
+		background-color: #0066cc;
+		color: white;
+		position: fixed;
+		bottom: 0;
+		width: 100vw;
+		text-align: center;
+		padding: 0.75em;
+		z-index: 999;
+	}
+
+	:global(.examples-container, .repl-outer, .tutorial-outer) {
+		height: calc(100vh - var(--nav-h) - var(--ukr-footer-height)) !important;
+	}
+	:global(.toggle) {
+		bottom: var(--ukr-footer-height) !important;
+	}
+
+	@media (max-width: 830px) {
+		:global(aside) {
+			z-index: 9999 !important;
+		}
+	}
+
+	.ukr strong {
+		color: #ffcc00;
+	}
+
 	main {
 		position: relative;
 		margin: 0 auto;
 		/* padding: var(--nav-h) var(--side-nav) 0 var(--side-nav); */
 		padding: var(--nav-h) 0 0 0;
+		overflow: scroll;
 	}
 
 	.small {

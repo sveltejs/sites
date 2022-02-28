@@ -2,6 +2,7 @@
 	import '@sveltejs/site-kit/base.css';
 	import { setContext } from 'svelte';
 	import { page, navigating, session } from '$app/stores';
+	import { browser } from '$app/env';
 	import { Icon, Icons, Nav, NavItem, SkipLink } from '@sveltejs/site-kit';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 
@@ -28,6 +29,10 @@
 			if (r.ok) $session.user = null;
 		}
 	});
+
+	let h = 0;
+	$: console.log($page.url.pathname);
+	$: browser && document.documentElement.style.setProperty('--ukr-footer-height', `${h}px`);
 </script>
 
 <Icons />
@@ -62,13 +67,45 @@
 			</NavItem>
 		</svelte:fragment>
 	</Nav>
+	<!-- {#if !$page.url.pathname.startsWith('/repl/')} -->
+	<div class="ukr" bind:clientHeight={h}>
+		<strong>We stand with Ukraine.</strong>
+		Petition your leaders.
+		<a target="_blank" rel="noopener noreferrer" href="https://ukrainewar.carrd.co/"
+			>Donate to show support.</a
+		>
+	</div>
+	<!-- {/if} -->
 {/if}
 
-<main id="main">
+<main id="main" style="padding-bottom: {h}px">
 	<slot />
 </main>
 
 <style>
+	.ukr {
+		background-color: #0154b1;
+		color: white;
+		position: fixed;
+		bottom: 0;
+		width: 100vw;
+		text-align: center;
+		padding: 1em;
+		z-index: 999;
+	}
+
+	:global(.examples-container, .repl-outer) {
+		height: calc(100vh - var(--nav-h) - var(--ukr-footer-height)) !important;
+	}
+	:global(.toggle) {
+		bottom: var(--ukr-footer-height) !important;
+	}
+
+	.ukr strong,
+	.ukr a {
+		color: #f7cf03;
+	}
+
 	main {
 		position: relative;
 		margin: 0 auto;

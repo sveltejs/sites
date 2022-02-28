@@ -42,7 +42,7 @@
 
 {#if $page.url.pathname !== '/repl/embed'}
 	<SkipLink href="#main" />
-	<Nav {page} logo="/svelte-logo-horizontal.svg">
+	<Nav {page} logo="/stopwar.svg">
 		<svelte:fragment slot="nav-center">
 			<NavItem href="/tutorial">Tutorial</NavItem>
 			<NavItem href="/docs">Docs</NavItem>
@@ -66,7 +66,7 @@
 			</NavItem>
 		</svelte:fragment>
 	</Nav>
-	<!-- {#if !$page.url.pathname.startsWith('/repl/')} -->
+
 	<div class="ukr" bind:clientHeight={h}>
 		<strong>We stand with Ukraine.</strong>
 		Petition your leaders.
@@ -74,7 +74,6 @@
 			>Donate to show support.</a
 		>
 	</div>
-	<!-- {/if} -->
 {/if}
 
 <main id="main" style="padding-bottom: {h}px;">

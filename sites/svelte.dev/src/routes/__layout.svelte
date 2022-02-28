@@ -31,7 +31,6 @@
 	});
 
 	let h = 0;
-	$: console.log($page.url.pathname);
 	$: browser && document.documentElement.style.setProperty('--ukr-footer-height', `${h}px`);
 </script>
 
@@ -78,13 +77,13 @@
 	<!-- {/if} -->
 {/if}
 
-<main id="main" style="padding-bottom: {h}px">
+<main id="main" style="padding-bottom: {h}px;">
 	<slot />
 </main>
 
 <style>
 	.ukr {
-		background-color: #0154b1;
+		background-color: #0066cc;
 		color: white;
 		position: fixed;
 		bottom: 0;
@@ -94,7 +93,7 @@
 		z-index: 999;
 	}
 
-	:global(.examples-container, .repl-outer) {
+	:global(.examples-container, .repl-outer, .tutorial-outer) {
 		height: calc(100vh - var(--nav-h) - var(--ukr-footer-height)) !important;
 	}
 	:global(.toggle) {
@@ -103,7 +102,7 @@
 
 	.ukr strong,
 	.ukr a {
-		color: #f7cf03;
+		color: #ffcc00;
 	}
 
 	main {

@@ -70,7 +70,7 @@
 	<div class="ukr" bind:clientHeight={h}>
 		<strong>We stand with Ukraine.</strong>
 		Petition your leaders.
-		<a target="_blank" rel="noopener noreferrer" href="https://ukrainewar.carrd.co/"
+		<a target="_blank" rel="noopener noreferrer" href="https://www.stopputin.net/"
 			>Donate to show support.</a
 		>
 	</div>

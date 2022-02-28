@@ -99,6 +99,12 @@
 		bottom: var(--ukr-footer-height) !important;
 	}
 
+	@media (max-width: 830px) {
+		:global(aside) {
+			z-index: 9999 !important;
+		}
+	}
+
 	.ukr strong,
 	.ukr a {
 		color: #ffcc00;

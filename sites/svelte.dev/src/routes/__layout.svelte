@@ -110,8 +110,7 @@
 		}
 	}
 
-	.ukr strong,
-	.ukr a {
+	.ukr strong {
 		color: #ffcc00;
 	}
 

@@ -31,6 +31,7 @@
 	});
 
 	let h = 0;
+	let w = 0;
 	$: browser && document.documentElement.style.setProperty('--ukr-footer-height', `${h}px`);
 </script>
 
@@ -67,13 +68,17 @@
 		</svelte:fragment>
 	</Nav>
 
-	<div class="ukr" bind:clientHeight={h}>
-		<strong>We stand with Ukraine.</strong>
-		Petition your leaders.
-		<a target="_blank" rel="noopener noreferrer" href="https://www.stopputin.net/"
-			>Donate to show support.</a
-		>
-	</div>
+	<a target="_blank" rel="noopener noreferrer" href="https://www.stopputin.net/"
+		><div class="ukr" bind:clientHeight={h} bind:clientWidth={w}>
+			{#if w < 830}
+				<strong>We stand with Ukraine.</strong>
+				Donate →
+			{:else}
+				<strong>We stand with Ukraine.</strong>
+				Petition your leaders. Show your support.
+			{/if}
+		</div></a
+	>
 {/if}
 
 <main id="main" style="padding-bottom: {h}px;">
@@ -88,7 +93,7 @@
 		bottom: 0;
 		width: 100vw;
 		text-align: center;
-		padding: 1em;
+		padding: 0.75em;
 		z-index: 999;
 	}
 

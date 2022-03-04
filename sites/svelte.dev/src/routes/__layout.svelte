@@ -2,7 +2,6 @@
 	import '@sveltejs/site-kit/base.css';
 	import { setContext } from 'svelte';
 	import { page, navigating, session } from '$app/stores';
-	import { browser } from '$app/env';
 	import { Icon, Icons, Nav, NavItem, SkipLink } from '@sveltejs/site-kit';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 
@@ -29,10 +28,6 @@
 			if (r.ok) $session.user = null;
 		}
 	});
-
-	let h = 0;
-	let w = 0;
-	$: browser && document.documentElement.style.setProperty('--ukr-footer-height', `${h}px`);
 </script>
 
 <Icons />
@@ -67,23 +62,22 @@
 			</NavItem>
 		</svelte:fragment>
 	</Nav>
-
-	<a target="_blank" rel="noopener noreferrer" href="https://www.stopputin.net/"
-		><div class="ukr" bind:clientHeight={h} bind:clientWidth={w}>
-			{#if w < 830}
-				<strong>We stand with Ukraine.</strong>
-				Donate →
-			{:else}
-				<strong>We stand with Ukraine.</strong>
-				Petition your leaders. Show your support.
-			{/if}
-		</div></a
-	>
 {/if}
 
-<main id="main" style="padding-bottom: {h}px;">
+<main id="main">
 	<slot />
 </main>
+
+<a target="_blank" rel="noopener noreferrer" href="https://www.stopputin.net/">
+	<div class="ukr">
+		<span class="small">
+			<strong>We stand with Ukraine.</strong> Donate →
+		</span>
+		<span class="large">
+			<strong>We stand with Ukraine.</strong> Petition your leaders. Show your support.
+		</span>
+	</div>
+</a>
 
 <style>
 	.ukr {
@@ -97,21 +91,10 @@
 		z-index: 999;
 	}
 
-	:global(.examples-container, .repl-outer, .tutorial-outer) {
-		height: calc(100vh - var(--nav-h) - var(--ukr-footer-height)) !important;
-	}
-	:global(.toggle) {
-		bottom: var(--ukr-footer-height) !important;
-	}
-
 	@media (max-width: 830px) {
 		:global(aside) {
 			z-index: 9999 !important;
 		}
-	}
-
-	.ukr strong {
-		color: #ffcc00;
 	}
 
 	main {
@@ -138,5 +121,44 @@
 		.large {
 			display: inline;
 		}
+	}
+
+	/** Ukraine banner */
+	:root {
+		--ukr-footer-height: 48px;
+	}
+
+	main {
+		padding-bottom: var(--ukr-footer-height);
+	}
+
+	.ukr {
+		background-color: #0066cc;
+		color: white;
+		position: fixed;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		bottom: 0;
+		width: 100vw;
+		height: var(--ukr-footer-height);
+		z-index: 999;
+	}
+
+	:global(.examples-container, .repl-outer, .tutorial-outer) {
+		height: calc(100vh - var(--nav-h) - var(--ukr-footer-height)) !important;
+	}
+
+	:global(.toggle) {
+		bottom: var(--ukr-footer-height) !important;
+	}
+
+	@media (max-width: 830px) {
+		:global(aside) {
+			z-index: 9999 !important;
+		}
+	}
+	.ukr strong {
+		color: #ffcc00;
 	}
 </style>

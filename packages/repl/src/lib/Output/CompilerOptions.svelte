@@ -133,7 +133,6 @@
 		height: 15px;
 		margin-left: -21px;
 		margin-top: 4px;
-		vertical-align: top;
 		cursor: pointer;
 		text-align: center;
 		transition: box-shadow 0.1s ease-out;

@@ -61,7 +61,7 @@
 	on:mouseleave={handle_unmark_text}
 >
 	{#if !is_root && is_collapsable}
-		<button class="toggle" class:open={!collapsed} on:click={() => (collapsed = !collapsed)}>
+		<button class="ast-toggle" class:open={!collapsed} on:click={() => (collapsed = !collapsed)}>
 			{key_text}
 		</button>
 	{:else if key_text}
@@ -108,11 +108,11 @@
 		text-decoration: underline;
 	}
 
-	.toggle {
+	.ast-toggle {
 		position: relative;
 	}
 
-	.toggle::before {
+	.ast-toggle::before {
 		content: '\25B6';
 		position: absolute;
 		bottom: 0;
@@ -120,7 +120,7 @@
 		opacity: 0.7;
 	}
 
-	.toggle.open::before {
+	.ast-toggle.open::before {
 		content: '\25BC';
 	}
 

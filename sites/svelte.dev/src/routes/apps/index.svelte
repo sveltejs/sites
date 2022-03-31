@@ -264,12 +264,15 @@
 
 	li {
 		position: relative;
+		overflow: hidden;
 	}
 
 	h2 {
 		color: var(--text);
 		font-size: var(--h5);
 		font-weight: 400;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	li a {

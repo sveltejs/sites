@@ -28,7 +28,7 @@
 		"codemirror": "^5.65.1",
 		"estree-walker": "^3.0.1",
 		"rollup": "^2.67.0",
-		"svelte-json-tree": "^0.1.0",
+		"svelte-json-tree": "^1.0.0",
 		"yootils": "^0.3.1"
 	},
 	"license": "MIT"

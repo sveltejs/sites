@@ -153,6 +153,10 @@
 		bottom: var(--ukr-footer-height) !important;
 	}
 
+	:global(.zen-mode) {
+		height: calc(100vh - var(--ukr-footer-height)) !important;
+	}
+
 	@media (max-width: 830px) {
 		:global(aside) {
 			z-index: 9999 !important;

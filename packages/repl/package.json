@@ -22,6 +22,7 @@
 		"typescript": "^4.5.5"
 	},
 	"type": "module",
+	"svelte": "./src/lib/index.js",
 	"dependencies": {
 		"@sveltejs/site-kit": "workspace:*",
 		"acorn": "^8.7.0",

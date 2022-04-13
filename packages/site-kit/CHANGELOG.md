@@ -1,5 +1,9 @@
 # @sveltejs/site-kit changelog
 
+## 2.1.0
+
+- Tweak sidebar styles
+
 ## 2.0.3
 
 - Revert CSS logical properties change, which breaks in some browsers ([#303](https://github.com/sveltejs/sites/pull/303))

@@ -196,6 +196,10 @@
 		color: var(--flash);
 	}
 
+	.active {
+		font-weight: 700;
+	}
+
 	.active::after {
 		content: '';
 		position: absolute;

@@ -231,12 +231,12 @@
 			};
 
 			const original_assert = console.assert;
-			console.assert = (condition, ...args) => {
-				if (condition) {
+			console.assert = (assertion, ...args) => {
+				if (!assertion) {
 					const stack = new Error().stack;
 					parent.postMessage({ action: 'console', level: 'assert', args, stack }, '*');
 				}
-				original_assert(condition, ...args);
+				original_assert(assertion, ...args);
 			};
 
 			const counter = new Map();

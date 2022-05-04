@@ -399,7 +399,9 @@ a.no-underline {
 
 /*  tables --------------------------------- */
 table {
+	display: block;
 	width: 100%;
+	overflow-x: auto;
 	font-size: var(--h5);
 }
 

@@ -9,6 +9,6 @@
 	},
 	"packageManager": "pnpm@7.1.0",
 	"engines": {
-		"pnpm": "^7.1.0"
+		"pnpm": "^7.0.0"
 	}
 }

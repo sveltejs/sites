@@ -8,7 +8,9 @@
 			props: {
 				examples
 			},
-			maxage: 60
+			cache: {
+				maxage: 60
+			}
 		};
 	}
 </script>

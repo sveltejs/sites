@@ -12,7 +12,9 @@
 				example: await example.json(),
 				slug: params.slug
 			},
-			maxage: 60
+			cache: {
+				maxage: 60
+			}
 		};
 	}
 </script>

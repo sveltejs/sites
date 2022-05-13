@@ -5,6 +5,10 @@
 		"@changesets/cli": "^2.20.0"
 	},
 	"scripts": {
-		"release": "pnpm publish --tag=next --filter=\"@sveltejs/*\""
+		"release": "pnpm --filter=\"@sveltejs/*\" publish --tag=next"
+	},
+	"packageManager": "pnpm@7.1.0",
+	"engines": {
+		"pnpm": "^7.0.0"
 	}
 }

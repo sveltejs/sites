@@ -5,7 +5,9 @@
 		const sections = await fetch(`${API_BASE}/docs/svelte/docs?content`).then((r) => r.json());
 		return {
 			props: { sections },
-			maxage: 60
+			cache: {
+				maxage: 60
+			}
 		};
 	}
 </script>

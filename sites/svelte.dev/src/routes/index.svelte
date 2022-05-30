@@ -84,18 +84,15 @@
 		</div>
 
 		<div slot="how">
-			<pre><code>
-npx degit <a href="https://github.com/sveltejs/template" style="user-select: initial;"
-						>sveltejs/template</a
-					> my-svelte-project
-cd my-svelte-project
+			<pre><code>npm init vite my-app -- <a href="https://github.com/vitejs/vite/tree/main/packages/create-vite/template-svelte" style="user-select: initial;"
+					>--template svelte</a>
+cd my-app
 npm install
 npm run dev
 			</code></pre>
 
 			<p style="flex: 1">
-				See the <a href="/blog/the-easiest-way-to-get-started">quickstart guide</a> for TypeScript support
-				and more details.
+				Or use <a href="https://kit.svelte.dev">SvelteKit</a>, the official application framework from the Svelte team (currently in beta).
 			</p>
 
 			<a sveltekit:prefetch href="/tutorial" class="cta">Learn Svelte</a>

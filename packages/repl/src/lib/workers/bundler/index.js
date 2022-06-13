@@ -22,20 +22,9 @@ self.addEventListener('message', async (event) => {
 			packagesUrl = event.data.packagesUrl;
 			svelteUrl = event.data.svelteUrl;
 
-			try {
-				importScripts(`${svelteUrl}/compiler.js`);
-			} catch (e) {
-				console.error('error in importScripts', e);
-
-				try {
-					await import(/* @vite-ignore */ `${svelteUrl}/compiler.js`);
-				} catch (e) {
-					console.error('error in await import', e);
-					const res = await fetch(`${svelteUrl}/compiler.js`);
-					const fn = new Function(await res.text());
-					fn();
-				}
-			}
+			const res = await fetch(`${svelteUrl}/compiler.js`);
+			const fn = new Function(await res.text());
+			fn();
 
 			fulfil_ready();
 			break;

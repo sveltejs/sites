@@ -8,20 +8,9 @@ const ready = new Promise((f) => {
 self.addEventListener('message', async (event) => {
 	switch (event.data.type) {
 		case 'init':
-			try {
-				importScripts(`${event.data.svelteUrl}/compiler.js`);
-			} catch (e) {
-				console.error('error in importScripts', e);
-
-				try {
-					await import(/* @vite-ignore */ `${event.data.svelteUrl}/compiler.js`);
-				} catch (e) {
-					console.error('error in await import', e);
-					const res = await fetch(`${event.data.svelteUrl}/compiler.js`);
-					const fn = new Function(await res.text());
-					fn();
-				}
-			}
+			const res = await fetch(`${event.data.svelteUrl}/compiler.js`);
+			const fn = new Function(await res.text());
+			fn();
 
 			fulfil_ready();
 			break;

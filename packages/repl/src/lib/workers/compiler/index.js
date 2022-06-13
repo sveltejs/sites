@@ -10,7 +10,8 @@ self.addEventListener('message', async (event) => {
 		case 'init':
 			try {
 				importScripts(`${event.data.svelteUrl}/compiler.js`);
-			} catch {
+			} catch (e) {
+				console.error('error in importScripts', e);
 				await import(/* @vite-ignore */ `${event.data.svelteUrl}/compiler.js`);
 			}
 

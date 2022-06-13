@@ -24,7 +24,8 @@ self.addEventListener('message', async (event) => {
 
 			try {
 				importScripts(`${svelteUrl}/compiler.js`);
-			} catch {
+			} catch (e) {
+				console.error('error in importScripts', e);
 				await import(/* @vite-ignore */ `${svelteUrl}/compiler.js`);
 			}
 

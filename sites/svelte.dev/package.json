@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "node scripts/update.js && svelte-kit dev",
-		"build": "node scripts/update.js && svelte-kit build",
+		"build": "node scripts/update.js && svelte-kit build && node scripts/create-middleware",
 		"update": "node scripts/update.js --force=true",
 		"preview": "svelte-kit preview",
 		"start": "node build",

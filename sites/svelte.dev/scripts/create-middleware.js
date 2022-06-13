@@ -1,6 +1,6 @@
-// this generates some middleware that will set COOP/COEP headers
-// so that webcontainers work. ideally there'd be a more idiomatic
-// way to do this, but it'll do in the meantime
+// this generates some middleware that will set COEP/CORP headers
+// so that it's possible to embed svelte.dev on a site with
+// cross-origin isolation enabled
 
 import fs from 'fs';
 

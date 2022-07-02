@@ -206,7 +206,7 @@
 	}
 
 	.content :global(h4::before) {
-		display: block;
+		display: inline;
 		content: ' ';
 		block-size: var(--nav-h);
 		margin-block-start: calc(-1 * var(--nav-h));

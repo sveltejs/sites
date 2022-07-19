@@ -1,6 +1,6 @@
 <script>
 	import * as yootils from 'yootils';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -24,7 +24,7 @@
 	let dragging = false;
 
 	function setPos(event) {
-		const { top, left } = refs.container.getBoundingClientRect();
+		const { top, left, width, height } = refs.container.getBoundingClientRect();
 
 		const px = type === 'vertical' ? event.clientY - top : event.clientX - left;
 
@@ -98,6 +98,14 @@
 		};
 	}
 
+	onMount(() => {
+		// fixes a weird firefox bug
+		setTimeout(() => {
+			w = refs.container.clientWidth;
+			h = refs.container.clientHeight;
+		}, 0);
+	});
+
 	$: side = type === 'horizontal' ? 'left' : 'top';
 	$: dimension = type === 'horizontal' ? 'width' : 'height';
 </script>
@@ -147,6 +155,7 @@
 		width: 100%;
 		height: 100%;
 		background: rgba(255, 255, 255, 0.01);
+		z-index: 99999;
 	}
 
 	.divider {

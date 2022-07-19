@@ -24,7 +24,7 @@
 	let dragging = false;
 
 	function setPos(event) {
-		const { top, left, width, height } = refs.container.getBoundingClientRect();
+		const { top, left } = refs.container.getBoundingClientRect();
 
 		const px = type === 'vertical' ? event.clientY - top : event.clientX - left;
 

@@ -7,6 +7,6 @@ A [Hacker News](https://news.ycombinator.com/) clone built with [SvelteKit](http
 ```bash
 git clone git@github.com:sveltejs/sites
 cd sites/sites/hn.svelte.dev
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```

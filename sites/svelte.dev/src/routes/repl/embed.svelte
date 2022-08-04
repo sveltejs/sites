@@ -1,5 +1,6 @@
 <script context="module">
-	export function load({ page: { query }}) {
+	export function load({ url }) {
+		const query = url.searchParams;
 		return {
 			props: {
 				version: query.get('version') || '3',
@@ -36,10 +37,10 @@
 <style>
 	.repl-outer {
 		position: fixed;
-		inset-block-start: 0;
-		inset-inline-start: 0;
-		inline-size: 100%;
-		block-size: 100%;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
 		background-color: var(--back);
 		overflow: hidden;
 		box-sizing: border-box;

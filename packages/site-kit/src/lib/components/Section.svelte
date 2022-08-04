@@ -5,11 +5,9 @@
 <style>
 	section {
 		position: relative;
-		margin-inline: auto;
-		margin-block: 0;
-		padding-inline: var(--side-nav);
-		padding-block: 10rem;
-		max-inline-size: 120rem;
+		margin: 0 auto 0 auto;
+		padding: 10rem var(--side-nav);
+		max-width: 120rem;
 	}
 
 	section :global(h3) {

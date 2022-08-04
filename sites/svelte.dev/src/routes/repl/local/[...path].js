@@ -1,4 +1,7 @@
 import { readFileSync } from 'fs';
+import { join } from 'path';
+
+const local_svelte_path = process.env.LOCAL_SVELTE_PATH || '../../../svelte';
 
 export function get({ params: { path } }) {
 	if (import.meta.env.PROD || ('/' + path).includes('/.')) {
@@ -6,6 +9,6 @@ export function get({ params: { path } }) {
 	}
 	return {
 		headers: { 'Content-Type': 'text/javascript' },
-		body: readFileSync('../' + path)
+		body: readFileSync(join(local_svelte_path, path))
 	};
 }

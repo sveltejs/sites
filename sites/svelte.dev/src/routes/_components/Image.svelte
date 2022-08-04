@@ -10,7 +10,7 @@
 	$: {
 		sources = {};
 
-		data.forEach(img => {
+		data.forEach((img) => {
 			if (!sources[img.format]) {
 				sources[img.format] = {
 					type: `image/${img.format}`,
@@ -18,13 +18,14 @@
 				};
 			}
 
-			sources[img.format].srcset.push(
-				`${img.src} ${img.width}w`
-			);
+			sources[img.format].srcset.push(`${img.src} ${img.width}w`);
 		});
 	}
 
-	$: fallback = data.filter(img => img.format === 'png' || img.format === 'jpg').sort((a, b) => a.width - b.width).pop();
+	$: fallback = data
+		.filter((img) => img.format === 'png' || img.format === 'jpg')
+		.sort((a, b) => a.width - b.width)
+		.pop();
 </script>
 
 <picture>
@@ -37,9 +38,9 @@
 <style>
 	img {
 		display: block;
-		inline-size: 100%;
-		block-size: auto;
-		max-block-size: var(--max-height, 100%);
+		width: 100%;
+		height: auto;
+		max-height: var(--max-height, 100%);
 		object-fit: cover;
 	}
 </style>

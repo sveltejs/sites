@@ -2,7 +2,7 @@
 	import '@sveltejs/site-kit/base.css';
 	import { setContext } from 'svelte';
 	import { page, navigating, session } from '$app/stores';
-	import { Icon, Icons, Nav, NavItem } from '@sveltejs/site-kit';
+	import { Icon, Icons, Nav, NavItem, SkipLink } from '@sveltejs/site-kit';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 
 	setContext('app', {
@@ -36,8 +36,9 @@
 	<PreloadingIndicator />
 {/if}
 
-{#if $page.path !== '/repl/embed'}
-	<Nav {page} logo="/svelte-logo-horizontal.svg">
+{#if $page.url.pathname !== '/repl/embed'}
+	<SkipLink href="#main" />
+	<Nav {page} logo="/stopwar.svg">
 		<svelte:fragment slot="nav-center">
 			<NavItem href="/tutorial">Tutorial</NavItem>
 			<NavItem href="/docs">Docs</NavItem>
@@ -63,18 +64,45 @@
 	</Nav>
 {/if}
 
-<main>
+<main id="main">
 	<slot />
 </main>
 
+<a target="_blank" rel="noopener noreferrer" href="https://www.stopputin.net/">
+	<div class="ukr">
+		<span class="small">
+			<strong>We stand with Ukraine.</strong> Donate →
+		</span>
+		<span class="large">
+			<strong>We stand with Ukraine.</strong> Petition your leaders. Show your support.
+		</span>
+	</div>
+</a>
+
 <style>
+	.ukr {
+		background-color: #0066cc;
+		color: white;
+		position: fixed;
+		bottom: 0;
+		width: 100vw;
+		text-align: center;
+		padding: 0.75em;
+		z-index: 999;
+	}
+
+	@media (max-width: 830px) {
+		:global(aside) {
+			z-index: 9999 !important;
+		}
+	}
+
 	main {
 		position: relative;
-		margin-inline: auto;
-		margin-block: 0;
-		/* padding-inline: var(--side-nav);
-		padding-block: var(--nav-h) 0; */
-		padding-block-start: var(--nav-h);
+		margin: 0 auto;
+		/* padding: var(--nav-h) var(--side-nav) 0 var(--side-nav); */
+		padding: var(--nav-h) 0 0 0;
+		overflow: auto;
 	}
 
 	.small {
@@ -93,5 +121,48 @@
 		.large {
 			display: inline;
 		}
+	}
+
+	/** Ukraine banner */
+	:root {
+		--ukr-footer-height: 48px;
+	}
+
+	main {
+		padding-bottom: var(--ukr-footer-height);
+	}
+
+	.ukr {
+		background-color: #0066cc;
+		color: white;
+		position: fixed;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		bottom: 0;
+		width: 100vw;
+		height: var(--ukr-footer-height);
+		z-index: 999;
+	}
+
+	:global(.examples-container, .repl-outer, .tutorial-outer) {
+		height: calc(100vh - var(--nav-h) - var(--ukr-footer-height)) !important;
+	}
+
+	:global(.toggle) {
+		bottom: var(--ukr-footer-height) !important;
+	}
+
+	:global(.zen-mode) {
+		height: calc(100vh - var(--ukr-footer-height)) !important;
+	}
+
+	@media (max-width: 830px) {
+		:global(aside) {
+			z-index: 9999 !important;
+		}
+	}
+	.ukr strong {
+		color: #ffcc00;
 	}
 </style>

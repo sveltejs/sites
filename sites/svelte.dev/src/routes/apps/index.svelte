@@ -1,12 +1,12 @@
 <script context="module">
-	export async function load({ fetch, page, session: { user } }) {
+	export async function load({ fetch, url, session: { user } }) {
 		let gists = [];
 		let next = null;
 
-		const search = page.query.get('search');
+		const search = url.searchParams.get('search');
 
 		if (user) {
-			const r = await fetch(`/apps.json?${page.query}`, {
+			const r = await fetch(`/apps.json?${url.searchParams}`, {
 				credentials: 'include'
 			});
 
@@ -37,7 +37,11 @@
 	let destroying = false;
 
 	async function destroy(selected) {
-		const confirmed = confirm(`Are you sure you want to delete ${selected.length} ${selected.length === 1 ? 'app' : 'apps'}?`);
+		const confirmed = confirm(
+			`Are you sure you want to delete ${selected.length} ${
+				selected.length === 1 ? 'app' : 'apps'
+			}?`
+		);
 		if (!confirmed) return;
 
 		destroying = true;
@@ -94,17 +98,26 @@
 		<div class="controls">
 			{#if selected.length > 0}
 				<button class="delete" on:click={() => destroy(selected)} disabled={destroying}>
-					<Icon name="delete"/>
-					Delete {selected.length} {selected.length === 1 ? 'app' : 'apps'}
+					<Icon name="delete" />
+					Delete {selected.length}
+					{selected.length === 1 ? 'app' : 'apps'}
 				</button>
 
-				<button on:click={() => selected = []}>Clear selection</button>
+				<button on:click={() => (selected = [])}>Clear selection</button>
 			{:else}
-				<form on:submit|preventDefault={e => {
-					const search = new FormData(e.target).get('search');
-					goto(search ? `/apps?search=${encodeURIComponent(search)}` : '/apps');
-				}}>
-					<input type="search" placeholder="Search" aria-label="Search" name="search" value={search}>
+				<form
+					on:submit|preventDefault={(e) => {
+						const search = new FormData(e.target).get('search');
+						goto(search ? `/apps?search=${encodeURIComponent(search)}` : '/apps');
+					}}
+				>
+					<input
+						type="search"
+						placeholder="Search"
+						aria-label="Search"
+						name="search"
+						value={search}
+					/>
 				</form>
 			{/if}
 		</div>
@@ -119,7 +132,12 @@
 						</a>
 
 						<label>
-							<input aria-label="Select for delection" type="checkbox" bind:group={selected} value={gist.id}>
+							<input
+								aria-label="Select for delection"
+								type="checkbox"
+								bind:group={selected}
+								value={gist.id}
+							/>
 						</label>
 					</li>
 				{/each}
@@ -128,7 +146,9 @@
 			<div class="pagination">
 				<!-- TODO more sophisticated pagination -->
 				{#if next !== null && !selecting}
-					<a href="/apps?offset={next}{search ? `&search=${encodeURIComponent(search)}` : ''}">Next page...</a>
+					<a href="/apps?offset={next}{search ? `&search=${encodeURIComponent(search)}` : ''}"
+						>Next page...</a
+					>
 				{/if}
 			</div>
 		{:else}
@@ -143,16 +163,13 @@
 
 <style>
 	.apps {
-		padding-inline: var(--side-nav);
-		padding-block: var(--top-offset) 6rem;
-		max-inline-size: var(--main-width);
-		margin-inline: auto;
-		margin-block: 0;
+		padding: var(--top-offset) var(--side-nav) 6rem var(--side-nav);
+		max-width: var(--main-width);
+		margin: 0 auto;
 	}
 
 	header {
-		margin: 0;
-		margin-block-end: 1em;
+		margin: 0 0 1em 0;
 	}
 
 	h1 {
@@ -162,18 +179,18 @@
 
 	.user {
 		display: flex;
-		padding-inline-start: 3.2rem;
+		padding: 0 0 0 3.2rem;
 		position: relative;
-		margin-block: 1rem;
+		margin: 1rem 0;
 		color: var(--text);
 	}
 
 	.avatar {
 		position: absolute;
-		inset-inline-start: 0;
-		inset-block-start: 0.1rem;
-		inline-size: 2.4rem;
-		block-size: 2.4rem;
+		left: 0;
+		top: 0.1rem;
+		width: 2.4rem;
+		height: 2.4rem;
 		border: 1px solid rgba(0, 0, 0, 0.3);
 		border-radius: 0.2rem;
 	}
@@ -181,12 +198,12 @@
 	.controls {
 		position: sticky;
 		background: white;
-		inset-block-start: 1rem;
+		top: 1rem;
 		display: flex;
 		align-items: center;
-		inline-size: 100%;
-		block-size: 4rem;
-		margin-block-end: 2rem;
+		width: 100%;
+		height: 4rem;
+		margin: 0 0 2rem 0;
 		font-size: 1.6rem;
 		z-index: 2;
 		justify-content: space-between;
@@ -196,28 +213,28 @@
 	.controls::after {
 		content: '';
 		position: absolute;
-		inline-size: 100%;
-		inset-block-end: -2rem;
-		block-size: 2rem;
+		width: 100%;
+		bottom: -2rem;
+		height: 2rem;
 		background: linear-gradient(to bottom, white 0%, white 50%, transparent);
 	}
 
 	.controls form {
-		inline-size: 100%;
-		block-size: 100%;
+		width: 100%;
+		height: 100%;
 	}
 
-	.controls input, .controls button {
+	.controls input,
+	.controls button {
 		font-family: inherit;
 		font-size: inherit;
 	}
 
-	.controls input[type=search] {
+	.controls input[type='search'] {
 		position: relative;
-		inline-size: 100%;
-		block-size: 100%;
-		padding-inline: 1rem;
-		padding-block: 0.5rem;
+		width: 100%;
+		height: 100%;
+		padding: 0.5rem 1rem;
 		line-height: 1;
 		display: flex;
 		border: 1px solid #eee;
@@ -228,9 +245,8 @@
 	.controls button {
 		display: flex;
 		gap: 1rem;
-		padding-inline: 1rem;
-		padding-block: 0;
-		block-size: 100%;
+		padding: 0 1rem;
+		height: 100%;
 		border-radius: var(--border-r);
 		align-items: center;
 	}
@@ -248,20 +264,22 @@
 
 	li {
 		position: relative;
+		overflow: hidden;
 	}
 
 	h2 {
 		color: var(--text);
 		font-size: var(--h5);
 		font-weight: 400;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	li a {
 		display: block;
 		background: var(--back-light);
-		padding-inline: 1rem 3rem;
-		padding-block: 1rem;
-		block-size: 100%;
+		padding: 1rem 3rem 1rem 1rem;
+		height: 100%;
 		line-height: 1;
 		border-radius: var(--border-r);
 		text-decoration: none;
@@ -269,13 +287,13 @@
 
 	li span {
 		font-size: 12px;
-		color: rgba(0,0,0,0.6);
+		color: rgba(0, 0, 0, 0.6);
 	}
 
 	li label {
 		position: absolute;
-		inset-inline-end: 0;
-		inset-block-start: 0;
+		right: 0;
+		top: 0;
 		padding: 1rem;
 	}
 
@@ -316,7 +334,7 @@
 	}
 
 	.pagination {
-		block-size: 4rem;
+		height: 4rem;
 	}
 
 	@media (min-width: 540px) {

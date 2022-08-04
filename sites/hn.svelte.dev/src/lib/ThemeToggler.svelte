@@ -13,8 +13,12 @@
 
 	const toggle = () => {
 		const { classList } = document.querySelector('html');
-		classList.remove(theme);
-		theme = theme === 'light' ? 'dark' : 'light';
+		if (classList.length === 0) {
+			theme = 'dark';
+		} else {
+			classList.remove(theme);
+			theme = theme === 'light' ? 'dark' : 'light';
+		}
 		classList.add(theme);
 
 		try {

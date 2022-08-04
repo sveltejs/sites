@@ -2,15 +2,13 @@ import { stringify } from 'querystring';
 import { oauth, client_id } from './_config.js';
 
 export const get = client_id
-	? ({ host }) => {
-			const protocol = host.startsWith('localhost:') ? 'http' : 'https';
-
+	? ({ url }) => {
 			const Location =
 				`${oauth}/authorize?` +
 				stringify({
 					scope: 'read:user',
 					client_id,
-					redirect_uri: `${protocol}://${host}/auth/callback`
+					redirect_uri: `${url.origin}/auth/callback`
 				});
 
 			return {

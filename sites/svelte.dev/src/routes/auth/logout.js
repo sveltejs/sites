@@ -10,7 +10,7 @@ export async function get(request) {
 				maxAge: -1,
 				path: '/',
 				httpOnly: true,
-				secure: !request.host.startsWith('localhost:')
+				secure: request.url.protocol === 'https'
 			})
 		}
 	};

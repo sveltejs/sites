@@ -24,7 +24,7 @@ async function main() {
 	const donors = await res.json();
 
 	const unique = new Map();
-	donors.forEach(d => unique.set(d.profile, d));
+	donors.forEach((d) => unique.set(d.profile, d));
 
 	let backers = [...unique.values()]
 		.filter(({ role }) => role === 'BACKER')
@@ -58,7 +58,7 @@ async function main() {
 		'remember to additionally optimize the resulting /static/donors.jpg image file via e.g. https://squoosh.app '
 	);
 
-	const str = `[\n\t${included.map(a => `${JSON.stringify(a.backer.name)}`).join(',\n\t')}\n]`;
+	const str = `[\n\t${included.map((a) => `${JSON.stringify(a.backer.name)}`).join(',\n\t')}\n]`;
 
 	fs.writeFileSync(outputFile, `export default ${str};`);
 }

@@ -1,8 +1,4 @@
 /** @type {import('@sveltejs/kit').Config} */
-const config = {
-	kit: {
-		target: '#svelte'
-	}
-};
+const config = {};
 
 export default config;

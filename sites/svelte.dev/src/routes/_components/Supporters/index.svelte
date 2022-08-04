@@ -54,25 +54,23 @@
 	}
 
 	.intro {
-		max-inline-size: 25em; /* text balancing */
-		margin: 0;
-		margin-block-end: 3.2rem;
+		max-width: 25em; /* text balancing */
+		margin: 0 0 3.2rem 0;
 	}
 
 	.grid {
 		position: relative;
 		display: grid;
-		grid-template-columns: repeat(6, 1fr);
+		grid-template-columns: repeat(6, minmax(0, 1fr));
 		grid-gap: 1em;
 	}
 
 	.contributors.grid {
-		margin: 0;
-		margin-block-end: 2em;
+		margin: 0 0 2em 0;
 	}
 
 	.supporter {
-		inline-size: 100%;
+		width: 100%;
 		aspect-ratio: 1;
 		border-radius: 50%;
 		text-indent: -9999px;
@@ -96,13 +94,13 @@
 
 	@media (min-width: 480px) {
 		.grid {
-			grid-template-columns: repeat(8, 1fr);
+			grid-template-columns: repeat(8, minmax(0, 1fr));
 		}
 	}
 
 	@media (min-width: 720px) {
 		.grid {
-			grid-template-columns: repeat(12, 1fr);
+			grid-template-columns: repeat(12, minmax(0, 1fr));
 		}
 	}
 
@@ -118,7 +116,7 @@
 		}
 
 		h3 {
-			margin-block-start: 0.5rem;
+			margin-top: 0.5rem;
 		}
 
 		p {
@@ -128,26 +126,26 @@
 		.grid {
 			position: relative;
 			display: grid;
-			grid-template-columns: repeat(6, 1fr);
+			grid-template-columns: repeat(6, minmax(0, 1fr));
 			grid-gap: 1em;
 		}
 	}
 
 	@media (min-width: 880px) {
 		.grid {
-			grid-template-columns: repeat(8, 1fr);
+			grid-template-columns: repeat(8, minmax(0, 1fr));
 		}
 	}
 
 	@media (min-width: 1100px) {
 		.grid {
-			grid-template-columns: repeat(12, 1fr);
+			grid-template-columns: repeat(12, minmax(0, 1fr));
 		}
 	}
 
 	@media (min-width: 1200px) {
 		.intro {
-			max-inline-size: none;
+			max-width: none;
 		}
 	}
 </style>

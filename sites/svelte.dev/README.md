@@ -1,6 +1,10 @@
 ## Running locally
 
-Setup a database on [Supabase](https://supabase.com) with the instructions [here](../../db) and set the corresponding environment variables.
+A local database is only required in dev mode if you want to test reading and writing saved REPLs on it. Without a local database in dev mode, the REPL will be able to load saved REPLs from the production database, but not save them.
+
+Note also that in dev mode, the REPL will currently only work in Chrome, [as noted in the Vite documentation](https://vitejs.dev/guide/features.html#web-workers), pending support in Firefox for `import` statements in web workers.
+
+If you do want to use a database, set it up on [Supabase](https://supabase.com) with the instructions [here](../../db) and set the corresponding environment variables.
 
 Run the site sub-project:
 
@@ -21,7 +25,7 @@ pnpm update
 
 By default, the REPL will fetch the most recent version of Svelte from https://unpkg.com/svelte. When running the site locally, you can also use your local copy of Svelte.
 
-To produce the proper browser-compatible UMD build of the compiler, you will need to run `npm run build` (or `npm run dev`) in the root of this repository with the `PUBLISH` environment variable set to any non-empty string:
+To produce the proper browser-compatible UMD build of the compiler, you will need to run `npm run build` (or `npm run dev`) in the `svelte` repository with the `PUBLISH` environment variable set to any non-empty string:
 
 ```bash
 git clone https://github.com/sveltejs/svelte.git
@@ -30,22 +34,23 @@ npm ci
 PUBLISH=1 npm run build
 ```
 
-You'll then need to update the project to use that version of Svelte. Please update these docs with instructions on how to do that
+The default configuration assumes that the `sites` repository and the `svelte` repository are in the same directory. If not, you can set `LOCAL_SVELTE_PATH` in `sites/svelte.dev/.env` to a different path to the local copy of Svelte.
 
 Then visit the REPL at [localhost:3000/repl?version=local](http://localhost:3000/repl?version=local). Please note that the local REPL only works with `pnpm dev` and not when building the site for production usage.
 
 ## REPL GitHub integration
 
 In order for the REPL's GitHub integration to work properly when running locally, you will need to:
+
 - [create a GitHub OAuth app](https://github.com/settings/developers):
-   - set `Authorization callback URL` to `http://localhost:3000/auth/callback`;
-   - set `Application name` as you like, and `Homepage URL` as `http://localhost:3000/`;
-   - create the app and take note of `Client ID` and `Client Secret`
+  - set `Authorization callback URL` to `http://localhost:3000/auth/callback`;
+  - set `Application name` as you like, and `Homepage URL` as `http://localhost:3000/`;
+  - create the app and take note of `Client ID` and `Client Secret`
 - in this directory, create an `.env` file (see `.env.example`) containing:
-   ```
-   GITHUB_CLIENT_ID=[your app's Client ID]
-   GITHUB_CLIENT_SECRET=[your app's Client Secret]
-   ```
+  ```
+  GITHUB_CLIENT_ID=[your app's Client ID]
+  GITHUB_CLIENT_SECRET=[your app's Client Secret]
+  ```
 
 ## Building the site
 

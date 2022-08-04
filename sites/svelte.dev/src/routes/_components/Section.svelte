@@ -4,14 +4,13 @@
 
 <style>
 	section {
-		padding-block: 10rem;
+		padding: 10rem 0;
 		background: var(--background, white);
 	}
 
 	.inner {
-		max-inline-size: 120rem;
-		padding-inline: var(--side-nav);
-		margin-inline: auto;
-		margin-block: 0;
+		max-width: 120rem;
+		padding: 0 var(--side-nav);
+		margin: 0 auto;
 	}
 </style>

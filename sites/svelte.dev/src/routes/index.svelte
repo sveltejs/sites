@@ -77,22 +77,22 @@
 					>most satisfied developers</a
 				>
 				in a pair of industry surveys. We think you'll love it too.
-				<a href="/blog/svelte-3-rethinking-reactivity" class="cta">Read the introductory blog post</a
+				<a href="/blog/svelte-3-rethinking-reactivity" class="cta"
+					>Read the introductory blog post</a
 				> to learn more.
 			</p>
 		</div>
 
 		<div slot="how">
-			<pre><code>
-npx degit <a href="https://github.com/sveltejs/template" style="user-select: initial;">sveltejs/template</a> my-svelte-project
-cd my-svelte-project
+			<pre><code>npm create vite@latest my-app -- <a href="https://github.com/vitejs/vite/tree/main/packages/create-vite/template-svelte" style="user-select: initial;"
+					>--template svelte</a>
+cd my-app
 npm install
 npm run dev
 			</code></pre>
 
 			<p style="flex: 1">
-				See the <a href="/blog/the-easiest-way-to-get-started">quickstart guide</a> for TypeScript support
-				and more details.
+				Or use <a href="https://kit.svelte.dev">SvelteKit</a>, the official application framework from the Svelte team (currently in beta).
 			</p>
 
 			<a sveltekit:prefetch href="/tutorial" class="cta">Learn Svelte</a>
@@ -124,14 +124,13 @@ npm run dev
 <style>
 	section {
 		position: relative;
-		margin-inline: auto;
-		margin-block: 10rem;
-		padding-inline: var(--side-nav);
-		max-inline-size: 120rem;
+		margin: 10rem auto;
+		padding: 0 var(--side-nav);
+		max-width: 120rem;
 	}
 
 	.blurb-shifter {
-		margin-block-start: calc(-10rem + var(--side-nav));
+		margin-top: calc(-10rem + var(--side-nav));
 	}
 
 	footer {
@@ -143,14 +142,13 @@ npm run dev
 
 	footer a {
 		color: var(--text);
-		padding-inline: 1rem;
-		padding-block: 0.5rem;
+		padding: 0.5rem 1rem;
 		display: block;
 	}
 
 	@media (min-width: 900px) {
 		.blurb-shifter {
-			margin-block-start: -12em;
+			margin-top: -12em;
 		}
 	}
 </style>

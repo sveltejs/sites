@@ -1,8 +1,0 @@
-[build]
-  command = "npm run build"
-  publish = ".netlify/build/"
-  functions = ".netlify/functions/"
-
-[build.environment]
-  NPM_FLAGS="--prefix=/dev/null"
-  NODE_VERSION="14.16"

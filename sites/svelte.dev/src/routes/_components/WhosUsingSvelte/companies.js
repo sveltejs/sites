@@ -107,5 +107,12 @@ export const companies = [
 		alt: 'Transloadit',
 		width: 239,
 		height: 60
+	},
+	{
+		href: 'https://fetchrewards.com',
+		filename: 'fetchrewards.svg',
+		alt: 'Fetch Rewards',
+		width: 291,
+		height: 246
 	}
 ];

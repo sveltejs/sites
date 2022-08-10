@@ -102,10 +102,10 @@ export const companies = [
 		height: 49
 	},
 	{
-		href: 'https://transloadit.com',
-		filename: 'transloadit.svg',
-		alt: 'Transloadit',
-		width: 239,
+		href: 'https://brave.com/',
+		filename: 'brave.svg',
+		alt: 'Brave logo',
+		width: 120,
 		height: 60
 	}
 ];

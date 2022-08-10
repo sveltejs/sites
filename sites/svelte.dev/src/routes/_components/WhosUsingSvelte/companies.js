@@ -112,7 +112,7 @@ export const companies = [
 		href: 'https://fetchrewards.com',
 		filename: 'fetchrewards.svg',
 		alt: 'Fetch Rewards',
-		width: 291,
-		height: 246
+		width: 1004,
+		height: 248
 	}
 ];

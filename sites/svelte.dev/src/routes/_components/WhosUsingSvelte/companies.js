@@ -102,9 +102,9 @@ export const companies = [
 		height: 49
 	},
 	{
-		href: 'https://brave.com/',
-		filename: 'brave.svg',
-		alt: 'Brave logo',
+		href: 'https://ikea.com/',
+		filename: 'ikea.svg',
+		alt: 'Ikea logo',
 		width: 120,
 		height: 60
 	}

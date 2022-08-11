@@ -1,7 +1,7 @@
 import { stringify } from 'querystring';
 import { oauth, client_id } from './_config.js';
 
-export const get = client_id
+export const GET = client_id
 	? ({ url }) => {
 			const Location =
 				`${oauth}/authorize?` +

@@ -4,10 +4,10 @@
 	"description": "Docs and examples for Svelte",
 	"type": "module",
 	"scripts": {
-		"dev": "node scripts/update.js && svelte-kit dev",
-		"build": "node scripts/update.js && svelte-kit build",
+		"dev": "node scripts/update.js && vite dev",
+		"build": "node scripts/update.js && vite build",
 		"update": "node scripts/update.js --force=true",
-		"preview": "svelte-kit preview",
+		"preview": "vite preview",
 		"start": "node build",
 		"format": "npm run check:format -- --write",
 		"check:format": "prettier --check . --ignore-path .gitignore --plugin-search-dir=."
@@ -25,6 +25,7 @@
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"@sveltejs/site-kit": "workspace:*",
+		"@sveltejs/vite-plugin-svelte": "^1.0.1",
 		"degit": "^2.8.4",
 		"dotenv": "^10.0.0",
 		"jimp": "^0.8.5",
@@ -33,6 +34,7 @@
 		"prettier-plugin-svelte": "^2.6.0",
 		"shelljs": "^0.8.5",
 		"svelte": "^3.46.3",
+		"vite": "^3.0.5",
 		"vite-imagetools": "^4.0.3"
 	}
 }

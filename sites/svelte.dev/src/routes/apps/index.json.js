@@ -1,6 +1,6 @@
 import * as gist from '$lib/db/gist';
 
-export async function get({ url, locals }) {
+export async function GET({ url, locals }) {
 	const query = url.searchParams;
 	if (locals.user) {
 		const offset = query.get('offset') ? parseInt(query.get('offset')) : 0;

@@ -4,7 +4,7 @@ import { stringify } from 'querystring';
 import * as session from '$lib/db/session';
 import { oauth, client_id, client_secret } from './_config.js';
 
-export async function get({ url }) {
+export async function GET({ url }) {
 	try {
 		// Trade "code" for "access_token"
 		const r1 = await fetch(

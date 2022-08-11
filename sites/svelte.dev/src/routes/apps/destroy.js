@@ -1,6 +1,6 @@
 import * as gist from '$lib/db/gist';
 
-export async function post({ locals, request }) {
+export async function POST({ locals, request }) {
 	if (!locals.user) return { status: 401 };
 
 	const body = await request.json();

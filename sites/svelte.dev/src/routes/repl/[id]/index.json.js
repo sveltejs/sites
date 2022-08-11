@@ -26,7 +26,7 @@ function munge(files) {
 		});
 }
 
-export async function get({ params }) {
+export async function GET({ params }) {
 	if (!examples) {
 		const res = await fetch(`${API_BASE}/docs/svelte/examples`);
 		examples = new Set(
@@ -86,7 +86,7 @@ export async function get({ params }) {
 	};
 }
 
-export async function put({ locals, params, request }) {
+export async function PUT({ locals, params, request }) {
 	if (!locals.user) {
 		return {
 			status: 401,

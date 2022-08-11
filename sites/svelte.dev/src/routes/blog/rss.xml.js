@@ -54,7 +54,7 @@ const get_rss = (posts) =>
 		.replace(/[^\S]+</gm, '<')
 		.trim();
 
-export async function get() {
+export async function GET() {
 	const posts = await (await fetch(`${API_BASE}/docs/svelte/blog`)).json();
 
 	return {

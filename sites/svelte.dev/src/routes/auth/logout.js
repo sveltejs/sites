@@ -1,7 +1,7 @@
 import * as cookie from 'cookie';
 import * as session from '$lib/db/session';
 
-export async function get(request) {
+export async function GET(request) {
 	await session.destroy(request.locals.cookies.sid);
 
 	return {

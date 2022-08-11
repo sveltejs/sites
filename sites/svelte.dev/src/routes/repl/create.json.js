@@ -1,6 +1,6 @@
 import * as gist from '$lib/db/gist';
 
-export async function post({ locals, request }) {
+export async function POST({ locals, request }) {
 	const { user } = locals;
 	if (!user) return; // response already sent
 

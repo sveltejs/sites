@@ -1,4 +1,4 @@
-export async function get(req) {
+export async function GET(req) {
 	const query = req.url.searchParams;
 	let min = query.get('min') || '0';
 	let max = query.get('max') || '100';

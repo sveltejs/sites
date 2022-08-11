@@ -3,7 +3,7 @@ import { join } from 'path';
 
 const local_svelte_path = process.env.LOCAL_SVELTE_PATH || '../../../svelte';
 
-export function get({ params: { path } }) {
+export function GET({ params: { path } }) {
 	if (import.meta.env.PROD || ('/' + path).includes('/.')) {
 		return { status: 403 };
 	}

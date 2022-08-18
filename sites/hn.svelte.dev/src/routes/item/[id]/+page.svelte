@@ -1,17 +1,10 @@
-<script context="module">
-	/** @type {import('@sveltejs/kit').Load} */
-	export async function load({ params, fetch }) {
-		const res = await fetch(`https://api.hnpwa.com/v0/item/${params.id}.json`);
-		const item = await res.json();
-
-		return { props: { item } };
-	}
-</script>
-
 <script>
-	import Comment from './_Comment.svelte';
+	import Comment from '../_Comment.svelte';
 
-	export let item;
+	/** @type {import('./$types').PageData} */
+	export let data;
+
+	let item = data.item;
 </script>
 
 <svelte:head>

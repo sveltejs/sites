@@ -1,7 +1,3 @@
-<script context="module">
-	export const prerender = true;
-</script>
-
 <script>
 	import { Blurb } from '@sveltejs/site-kit';
 	import Supporters from './_components/Supporters/index.svelte';

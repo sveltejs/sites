@@ -1,17 +1,7 @@
-<script context="module">
-	import { API_BASE } from '$lib/env';
-
-	export async function load({ fetch }) {
-		const res = await fetch(`${API_BASE}/docs/svelte/blog`);
-
-		if (res.ok) {
-			return { props: { posts: await res.json() } };
-		}
-	}
-</script>
-
 <script>
-	export let posts;
+	/** @type {import('./$types').PageData} */
+	export let data;
+	let { posts } = data;
 </script>
 
 <svelte:head>

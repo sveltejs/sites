@@ -1,25 +1,3 @@
-<script context="module">
-	import { API_BASE } from '$lib/env';
-
-	export async function load({ params }) {
-		const tutorial = await fetch(`${API_BASE}/docs/svelte/tutorial/${params.slug}`);
-
-		if (!tutorial.ok) {
-			return {
-				status: 301,
-				redirect: '/tutorial/basics'
-			};
-		}
-
-		return {
-			props: { tutorial: await tutorial.json(), slug: params.slug },
-			cache: {
-				maxage: 60
-			}
-		};
-	}
-</script>
-
 <script>
 	import '@sveltejs/site-kit/code.css';
 	import { browser } from '$app/env';
@@ -35,8 +13,9 @@
 		svelteUrl
 	} from '../../../config.js';
 
-	export let slug;
-	export let tutorial;
+	/** @type {import('./$types').PageData} */
+	export let data;
+	let { slug, tutorial } = data;
 
 	const { sections } = getContext('tutorial');
 

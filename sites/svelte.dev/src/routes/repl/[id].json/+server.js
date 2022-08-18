@@ -1,3 +1,4 @@
+import { json } from '@sveltejs/kit';
 import { dev } from '$app/env';
 import { client } from '$lib/db/client';
 import * as gist from '$lib/db/gist';
@@ -41,63 +42,48 @@ export async function GET({ params }) {
 		const res = await fetch(`${API_BASE}/docs/svelte/examples/${params.id}`);
 
 		if (!res.ok) {
-			return {
-				status: res.status,
-				body: await res.json()
-			};
+			return new Response(await res.json(), { status: res.status });
 		}
 
 		const example = await res.json();
 
-		return {
-			body: {
-				id: params.id,
-				name: example.name,
-				owner: null,
-				relaxed: example.relaxed, // TODO is this right?
-				components: munge(example.files)
-			}
-		};
+		return json({
+			id: params.id,
+			name: example.name,
+			owner: null,
+			relaxed: example.relaxed, // TODO is this right?
+			components: munge(example.files)
+		});
 	}
 
 	if (dev && !client) {
 		// in dev with no local Supabase configured, proxy to production
 		// this lets us at least load saved REPLs
-		return fetch(`https://svelte.dev/repl/${params.id}.json`);
+		return await fetch(`https://svelte.dev/repl/${params.id}.json`);
 	}
 
 	const app = await gist.read(params.id);
 
 	if (!app) {
-		return {
-			status: 404,
-			body: 'not found'
-		};
+		return new Response('not found', { status: 404 });
 	}
 
-	return {
-		body: {
-			id: params.id,
-			name: app.name,
-			owner: app.userid,
-			relaxed: false,
-			components: munge(app.files)
-		}
-	};
+	return json({
+		id: params.id,
+		name: app.name,
+		owner: app.userid,
+		relaxed: false,
+		components: munge(app.files)
+	});
 }
 
 export async function PUT({ locals, params, request }) {
 	if (!locals.user) {
-		return {
-			status: 401,
-			body: 'Unauthorized'
-		};
+		return new Response('Unauthorized', { status: 401 });
 	}
 
 	const body = await request.json();
 	await gist.update(locals.user, params.id, body);
 
-	return {
-		status: 204
-	};
+	return new Response(undefined, { status: 204 });
 }

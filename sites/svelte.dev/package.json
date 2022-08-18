@@ -23,7 +23,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
-		"@sveltejs/kit": "next",
+		"@sveltejs/kit": "1.0.0-next.406",
 		"@sveltejs/site-kit": "workspace:*",
 		"@sveltejs/vite-plugin-svelte": "^1.0.1",
 		"degit": "^2.8.4",

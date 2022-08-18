@@ -1,3 +1,4 @@
+import { json } from '@sveltejs/kit';
 import * as gist from '$lib/db/gist';
 
 export async function POST({ locals, request }) {
@@ -11,16 +12,14 @@ export async function POST({ locals, request }) {
 		// normalize id
 		result.id = result.id.replace(/-/g, '');
 
-		return {
-			status: 201,
-			body: result
-		};
+		return json(result, {
+			status: 201
+		});
 	} catch (err) {
-		return {
-			status: 500,
-			body: {
-				error: err.message
-			}
-		};
+		return json({
+			error: err.message
+		}, {
+			status: 500
+		});
 	}
 }

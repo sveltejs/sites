@@ -1,21 +1,9 @@
-<script context="module">
-	import { API_BASE } from '$lib/env';
-
-	export async function load({ fetch, params }) {
-		const res = await fetch(`${API_BASE}/docs/svelte/blog/${params.slug}`);
-
-		if (!res.ok) return { status: 404, error: 'That post could not be found' };
-
-		const data = await res.json();
-		if (!data.draft) return { props: { post: data } };
-		return { status: 404, error: 'That post could not be found' };
-	}
-</script>
-
 <script>
 	import '@sveltejs/site-kit/code.css';
 
-	export let post;
+	/** @type {import('./$types').PageData} */
+	export let data;
+	let { post } = data;
 </script>
 
 <svelte:head>

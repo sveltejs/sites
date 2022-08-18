@@ -1,23 +1,9 @@
-<script context="module">
-	import { API_BASE } from '$lib/env';
-
-	export async function load({ fetch }) {
-		const faqs = await fetch(`${API_BASE}/docs/svelte/faq?content`).then((r) => r.json());
-
-		return {
-			props: { faqs },
-			cache: {
-				maxage: 60
-			}
-		};
-	}
-</script>
-
 <script>
 	import { Permalink } from '@sveltejs/site-kit';
 	import '@sveltejs/site-kit/code.css';
 
-	export let faqs;
+	/** @type {import('./$types').PageData} */
+	export let data;
 </script>
 
 <svelte:head>
@@ -30,7 +16,7 @@
 
 <div class="faqs stretch">
 	<h1>Frequently Asked Questions</h1>
-	{#each faqs as faq}
+	{#each data.faqs as faq}
 		<article class="faq">
 			<h2>
 				<span id={faq.slug} class="offset-anchor" />

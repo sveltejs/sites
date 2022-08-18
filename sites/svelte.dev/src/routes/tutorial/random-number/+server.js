@@ -10,16 +10,9 @@ export async function GET(req) {
 
 	// fail sometimes
 	if (Math.random() < 0.333) {
-		return {
-			status: 400,
-			headers: { 'Access-Control-Allow-Origin': '*' },
-			body: `Failed to generate random number. Please try again`
-		};
+		return new Response(`Failed to generate random number. Please try again`, { status: 400, headers: { 'Access-Control-Allow-Origin': '*' } });
 	}
 
 	const num = min + Math.round(Math.random() * (max - min));
-	return {
-		headers: { 'Access-Control-Allow-Origin': '*' },
-		body: String(num)
-	};
+	return new Response(String(num), { headers: { 'Access-Control-Allow-Origin': '*' } });
 }

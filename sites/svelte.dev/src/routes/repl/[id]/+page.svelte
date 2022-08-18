@@ -1,24 +1,3 @@
-<script context="module">
-	export async function load({ params, fetch, url }) {
-		const res = await fetch(`/repl/${params.id}.json`);
-
-		if (!res.ok) {
-			return {
-				status: res.status
-			};
-		}
-
-		const gist = await res.json();
-
-		return {
-			props: {
-				gist,
-				version: url.searchParams.get('version') || '3'
-			}
-		};
-	}
-</script>
-
 <script>
 	import Repl from '@sveltejs/repl';
 	import { onMount } from 'svelte';
@@ -28,8 +7,9 @@
 	import { mapbox_setup } from '../../../config';
 	import AppControls from './_components/AppControls/index.svelte';
 
-	export let version;
-	export let gist;
+	/** @type {import('./$types').PageData} */
+	export let data;
+	let { version, gist } = data;
 
 	let repl;
 	let name = gist.name;

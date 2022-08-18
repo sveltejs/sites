@@ -1,15 +1,5 @@
-<script context="module">
-	/** @type {import('@sveltejs/kit').ErrorLoad} */
-	export function load({ error, status }) {
-		return {
-			props: { error, status }
-		};
-	}
-</script>
-
 <script>
-	export let status;
-	export let error;
+  import { page } from '$app/stores';
 
 	// we don't want to use <svelte:window bind:online> here,
 	// because we only care about the online state when
@@ -18,23 +8,23 @@
 </script>
 
 <svelte:head>
-	<title>{status}</title>
+	<title>{$page.status}</title>
 </svelte:head>
 
 <div class="container">
 	{#if online}
 		<h1>Yikes!</h1>
 
-		{#if error.message}
-			<p class="error">{status}: {error.message}</p>
+		{#if $page.error.message}
+			<p class="error">{$page.status}: {$page.error.message}</p>
 		{:else}
-			<p class="error">Encountered a {status} error</p>
+			<p class="error">Encountered a {$page.status} error</p>
 		{/if}
 
-		{#if import.meta.env.DEV && error.stack}
-			<pre>{error.stack}</pre>
+		{#if import.meta.env.DEV && $page.error.stack}
+			<pre>{$page.error.stack}</pre>
 		{:else}
-			{#if status >= 500}
+			{#if $page.status >= 500}
 				<p>Please try reloading the page.</p>
 			{/if}
 

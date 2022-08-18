@@ -1,34 +1,12 @@
-<script context="module">
-	export async function load({ fetch, url, session: { user } }) {
-		let gists = [];
-		let next = null;
-
-		const search = url.searchParams.get('search');
-
-		if (user) {
-			const r = await fetch(`/apps.json?${url.searchParams}`, {
-				credentials: 'include'
-			});
-
-			if (!r.ok) return { status: r.status, body: await r.text() };
-
-			({ gists, next } = await r.json());
-		}
-
-		return { props: { user, gists, next, search } };
-	}
-</script>
-
 <script>
 	import { getContext } from 'svelte';
 	import { Icon } from '@sveltejs/site-kit';
 	import { ago } from '$lib/time';
 	import { goto, invalidate } from '$app/navigation';
 
-	export let user;
-	export let gists;
-	export let next;
-	export let search;
+	/** @type {import('./$types').PageData} */
+	export let data;
+	let { user, gists, next, search } = data;
 
 	const { login, logout } = getContext('app');
 

@@ -4,7 +4,7 @@ import * as session from '$lib/db/session';
 export async function GET(request) {
 	await session.destroy(request.locals.cookies.sid);
 
-	return {
+	return new Response(undefined, {
 		headers: {
 			'Set-Cookie': cookie.serialize('sid', '', {
 				maxAge: -1,
@@ -13,5 +13,5 @@ export async function GET(request) {
 				secure: request.url.protocol === 'https'
 			})
 		}
-	};
+	});
 }

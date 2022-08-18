@@ -6,10 +6,8 @@ export async function GET({ url, locals }) {
 		const offset = query.get('offset') ? parseInt(query.get('offset')) : 0;
 		const search = query.get('search');
 
-		return {
-			body: await gist.list(locals.user, { offset, search })
-		};
+		return new Response(await gist.list(locals.user, { offset, search }));
 	} else {
-		return { status: 401 };
+		return new Response(undefined, { status: 401 });
 	}
 }

@@ -1,23 +1,10 @@
-<script context="module">
-	export function load({ url }) {
-		const query = url.searchParams;
-		return {
-			props: {
-				version: query.get('version') || '3',
-				gist: query.get('gist'),
-				example: query.get('example')
-			}
-		};
-	}
-</script>
-
 <script>
 	import { browser } from '$app/env';
 	import ReplWidget from '$lib/components/ReplWidget.svelte';
 
-	export let version;
-	export let gist;
-	export let example;
+	/** @type {import('./$types').PageData} */
+	export let data;
+	let { version, gist, example } = data;
 </script>
 
 <svelte:head>

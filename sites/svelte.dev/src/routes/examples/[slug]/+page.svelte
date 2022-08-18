@@ -1,24 +1,4 @@
 <!-- FIXME sometimes it adds a trailing slash when landing -->
-<script context="module">
-	import { API_BASE } from '$lib/env';
-
-	export async function load({ params }) {
-		const example = await fetch(`${API_BASE}/docs/svelte/examples/${params.slug}`, {
-			credentials: 'omit'
-		});
-
-		return {
-			props: {
-				example: await example.json(),
-				slug: params.slug
-			},
-			cache: {
-				maxage: 60
-			}
-		};
-	}
-</script>
-
 <script>
 	import { getContext } from 'svelte';
 	import { navigating } from '$app/stores';
@@ -31,7 +11,8 @@
 	} from '../../../config';
 	import TableOfContents from './_TableOfContents.svelte';
 
-	export let example;
+	/** @type {import('./$types').PageData} */
+	export let data;
 
 	let width;
 	let offset = 1;
@@ -52,7 +33,7 @@
 </script>
 
 <svelte:head>
-	<title>{example.name} {example.name ? '•' : ''} Svelte Examples</title>
+	<title>{data.example.name} {data.example.name ? '•' : ''} Svelte Examples</title>
 
 	<meta name="twitter:title" content="Svelte examples" />
 	<meta name="twitter:description" content="Cybernetically enhanced web apps" />
@@ -62,7 +43,7 @@
 <h1 class="visually-hidden">Examples</h1>
 <div class="examples-container" bind:clientWidth={width}>
 	<div class="viewport offset-{offset}">
-		<TableOfContents {sections} active_section={example.slug} isLoading={$navigating} />
+		<TableOfContents {sections} active_section={data.example.slug} isLoading={$navigating} />
 		<div class="repl-container" class:loading={$navigating}>
 			<Repl
 				bind:this={repl}

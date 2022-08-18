@@ -1,8 +1,9 @@
 import devalue from 'devalue';
 import * as cookie from 'cookie';
 import { stringify } from 'querystring';
+import { json } from '@sveltejs/kit';
 import * as session from '$lib/db/session';
-import { oauth, client_id, client_secret } from './_config.js';
+import { oauth, client_id, client_secret } from '../_config.js';
 
 export async function GET({ url }) {
 	try {
@@ -38,7 +39,13 @@ export async function GET({ url }) {
 
 		const { sessionid, expires } = await session.create(user, access_token);
 
-		return {
+		return json(`
+			<script>
+				window.opener.postMessage({
+					user: ${devalue(user)}
+				}, window.location.origin);
+			</script>
+		`, {
 			headers: {
 				'Set-Cookie': cookie.serialize('sid', sessionid, {
 					expires: new Date(expires),
@@ -47,20 +54,10 @@ export async function GET({ url }) {
 					secure: url.protocol === 'https'
 				}),
 				'Content-Type': 'text/html; charset=utf-8'
-			},
-			body: `
-			<script>
-				window.opener.postMessage({
-					user: ${devalue(user)}
-				}, window.location.origin);
-			</script>
-			`
-		};
+			}
+		});
 	} catch (err) {
 		console.error('GET /auth/callback', err);
-		return {
-			status: 500,
-			body: err.data
-		};
+		return new Response(err.data, { status: 500 });
 	}
 }

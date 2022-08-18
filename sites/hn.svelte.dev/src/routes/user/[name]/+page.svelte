@@ -1,25 +1,10 @@
-<script context="module">
-	export const hydrate = false;
-
-	/** @type {import('@sveltejs/kit').Load} */
-	export async function load({ params, fetch }) {
-		const res = await fetch(`https://api.hnpwa.com/v0/user/${params.name}.json`);
-		const user = await res.json();
-
-		return {
-			props: {
-				name: params.name,
-				user
-			}
-		};
-	}
-</script>
-
 <script>
 	const d = new Date();
 
-	export let name;
-	export let user;
+	/** @type {import('./$types').PageData} */
+	export let data;
+
+	export let { name, user } = data;
 </script>
 
 <svelte:head>

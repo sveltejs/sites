@@ -57,11 +57,10 @@ const get_rss = (posts) =>
 export async function GET() {
 	const posts = await (await fetch(`${API_BASE}/docs/svelte/blog`)).json();
 
-	return {
-		body: get_rss(posts),
+	return new Response(get_rss(posts), {
 		headers: {
 			'Cache-Control': `max-age=${30 * 60 * 1e3}`,
 			'Content-Type': 'application/rss+xml'
 		}
-	};
+	});
 }

@@ -7,7 +7,7 @@
 	const PAGE_SIZE = 30;
 
 	$: start = 1 + (data.page - 1) * PAGE_SIZE;
-	$: next = `/${list}/${+data.page + 1}`;
+	$: next = `/${data.list}/${+data.page + 1}`;
 </script>
 
 <svelte:head>

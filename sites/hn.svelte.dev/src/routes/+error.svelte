@@ -4,8 +4,8 @@
 
 	const offline = typeof navigator !== 'undefined' && navigator.onLine === false;
 
-	const title = offline ? 'Offline' : page.status;
-	const message = offline ? 'Find the internet and try again' : page.error.message;
+	const title = offline ? 'Offline' : $page.status;
+	const message = offline ? 'Find the internet and try again' : $page.error.message;
 </script>
 
 <svelte:head>
@@ -16,11 +16,11 @@
 
 <pre>{message}</pre>
 
-{#if dev && page.error.frame}
-	<pre>{page.error.frame}</pre>
+{#if dev && $page.error.frame}
+	<pre>{$page.error.frame}</pre>
 {/if}
-{#if dev && page.error.stack}
-	<pre>{page.error.stack}</pre>
+{#if dev && $page.error.stack}
+	<pre>{$page.error.stack}</pre>
 {/if}
 
 <style>

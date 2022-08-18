@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
 
-export async function load({ params, fetch, url }) {
+export async function load({ fetch, params, url }) {
 	const res = await fetch(`/repl/${params.id}.json`);
 
 	if (!res.ok) {

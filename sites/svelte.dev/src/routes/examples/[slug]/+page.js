@@ -1,18 +1,17 @@
-import { json } from '@sveltejs/kit';
 import { API_BASE } from '$lib/env';
 
-export async function load({ params }) {
+/** @type {import('./$types').PageLoad} */
+export async function load({ fetch, params, setHeaders }) {
 	const example = await fetch(`${API_BASE}/docs/svelte/examples/${params.slug}`, {
 		credentials: 'omit'
 	});
 
-	return json({
-			example: await example.json(),
-			slug: params.slug
-		}, {
-			cache: {
-				maxage: 60
-			}
-		}
-	);
+	setHeaders({
+		'cache-control': 'public, max-age=60'
+	});
+
+	return {
+		example: await example.json(),
+		slug: params.slug
+	};
 }

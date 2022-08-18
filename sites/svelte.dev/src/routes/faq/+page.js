@@ -1,12 +1,12 @@
-import { json } from '@sveltejs/kit';
 import { API_BASE } from '$lib/env';
 
-export async function load({ fetch }) {
+/** @type {import('./$types').PageLoad} */
+export async function load({ fetch, setHeaders }) {
 	const faqs = await fetch(`${API_BASE}/docs/svelte/faq?content`).then((r) => r.json());
 
-	return json(faqs, {
-		cache: {
-			maxage: 60
-		}
+	setHeaders({
+		'cache-control': 'public, max-age=60'
 	});
+
+	return { faqs };
 }

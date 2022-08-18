@@ -3,11 +3,10 @@
 
 	/** @type {import('./$types').PageData} */
 	export let data;
-	let { sections } = data;
 
 	let path;
 
-	$: contents = sections.map((section) => ({
+	$: contents = data.sections.map((section) => ({
 		path: `/docs#${section.slug}`,
 		title: section.title,
 		sections: section.sections.map((subsection) => ({
@@ -32,7 +31,7 @@
 <Main bind:path>
 	<h1>Documentation</h1>
 
-	{#each sections as section}
+	{#each data.sections as section}
 		<Section
 			{section}
 			edit="https://github.com/sveltejs/svelte/edit/master/site/content/docs/{section.file}"

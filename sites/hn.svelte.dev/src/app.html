@@ -5,6 +5,20 @@
 		<meta name="description" content="A Hacker News clone built with SvelteKit" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="manifest" href="/manifest.json" />
+		<script>
+			try {
+				if (!('theme' in localStorage)) {
+					localStorage.theme = window.matchMedia('(prefers-color-scheme: dark)').matches
+						? 'dark'
+						: 'light';
+				}
+
+				document.querySelector('html').classList.add(localStorage.theme);
+			} catch (e) {
+				console.error(e);
+			}
+		</script>
 		%sveltekit.head%
 	</head>
 	<body>

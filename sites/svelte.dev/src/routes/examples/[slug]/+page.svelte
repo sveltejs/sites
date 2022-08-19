@@ -29,7 +29,7 @@
 	$: mobile = width < 768; // note: same as per media query below
 	$: replOrientation = mobile || width > 1080 ? 'columns' : 'rows';
 
-	$: repl && repl.set({ components: example.files.map(clone) });
+	$: repl && repl.set({ components: data.example.files.map(clone) });
 </script>
 
 <svelte:head>

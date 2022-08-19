@@ -1,7 +1,6 @@
-import { json } from '@sveltejs/kit';
 import { API_BASE } from '$lib/env';
 
-export async function load() {
+export async function load({ fetch, setHeaders }) {
 	const examples = await fetch(`${API_BASE}/docs/svelte/examples`).then((r) => r.json());
 
 	setHeaders({

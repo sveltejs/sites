@@ -15,7 +15,6 @@
 
 	/** @type {import('./$types').PageData} */
 	export let data;
-	let { slug, tutorial } = data;
 
 	const { sections } = getContext('tutorial');
 
@@ -47,10 +46,10 @@
 	});
 
 	// TODO is there a non-hacky way to trigger scroll when chapter changes?
-	$: if (scrollable) tutorial, scrollable.scrollTo(0, 0);
+	$: if (scrollable) data.tutorial, scrollable.scrollTo(0, 0);
 
-	$: selected = lookup.get(slug);
-	$: improve_link = `https://github.com/sveltejs/svelte/tree/master/site/content/tutorial/${tutorial.dir}`;
+	$: selected = lookup.get(data.slug);
+	$: improve_link = `https://github.com/sveltejs/svelte/tree/master/site/content/tutorial/${data.tutorial.dir}`;
 
 	const clone = (file) => ({
 		name: file.name.replace(/.\w+$/, ''),
@@ -61,7 +60,7 @@
 	$: if (repl) {
 		completed = false;
 		repl.set({
-			components: tutorial.initial.map(clone)
+			components: data.tutorial.initial.map(clone)
 		});
 	}
 
@@ -69,13 +68,13 @@
 
 	function reset() {
 		repl.update({
-			components: tutorial.initial.map(clone)
+			components: data.tutorial.initial.map(clone)
 		});
 	}
 
 	function complete() {
 		repl.update({
-			components: tutorial.complete.map(clone)
+			components: data.tutorial.complete.map(clone)
 		});
 	}
 
@@ -83,7 +82,7 @@
 
 	function handle_change(event) {
 		completed = event.detail.components.every((file, i) => {
-			const expected = tutorial.complete[i] && clone(tutorial.complete[i]);
+			const expected = data.tutorial.complete[i] && clone(data.tutorial.complete[i]);
 			return (
 				expected &&
 				file.name === expected.name &&
@@ -108,14 +107,14 @@
 	<div class="viewport offset-{offset}">
 		<div class="tutorial-text">
 			<div class="table-of-contents">
-				<TableOfContents {sections} {slug} {selected} />
+				<TableOfContents {sections} slug={data.slug} {selected} />
 			</div>
 
 			<div class="chapter-markup" bind:this={scrollable}>
-				{@html tutorial.content}
+				{@html data.tutorial.content}
 
 				<div class="controls">
-					{#if tutorial.complete.length}
+					{#if data.tutorial.complete.length}
 						<!-- TODO disable this button when the contents of the REPL
 							matches the expected end result -->
 						<button class="show" on:click={() => (completed ? reset() : complete())}>

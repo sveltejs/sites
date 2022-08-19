@@ -1,7 +1,6 @@
 <script>
 	/** @type {import('./$types').PageData} */
 	export let data;
-	let { posts } = data;
 </script>
 
 <svelte:head>
@@ -20,7 +19,7 @@
 
 <h1 class="visually-hidden">Blog</h1>
 <div class="posts stretch">
-	{#each posts as post}
+	{#each data.posts as post}
 		{#if !post.draft}
 			<article class="post" data-pubdate={post.date.numeric}>
 				<a

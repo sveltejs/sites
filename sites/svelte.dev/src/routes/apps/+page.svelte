@@ -6,7 +6,6 @@
 
 	/** @type {import('./$types').PageData} */
 	export let data;
-	let { user, gists, next, search } = data;
 
 	const { login, logout } = getContext('app');
 
@@ -57,17 +56,17 @@
 </svelte:head>
 
 <div class="apps">
-	{#if user}
+	{#if data.user}
 		<header>
 			<h1>Your apps</h1>
 			<div class="user">
 				<img
 					class="avatar"
-					alt="{user.github_name || user.github_login} avatar"
-					src={user.github_avatar_url}
+					alt="{data.user.github_name || data.user.github_login} avatar"
+					src={data.user.github_avatar_url}
 				/>
 				<span>
-					{user.github_name || user.github_login}
+					{data.user.github_name || data.user.github_login}
 					(<a on:click|preventDefault={logout} href="/auth/logout">log out</a>)
 				</span>
 			</div>
@@ -94,15 +93,15 @@
 						placeholder="Search"
 						aria-label="Search"
 						name="search"
-						value={search}
+						value={data.search}
 					/>
 				</form>
 			{/if}
 		</div>
 
-		{#if gists.length > 0}
+		{#if data.gists.length > 0}
 			<ul class:selecting>
-				{#each gists as gist}
+				{#each data.gists as gist}
 					<li class:selected={selected.includes(gist.id)}>
 						<a href={selecting ? undefined : `/repl/${gist.id}`}>
 							<h2>{gist.name}</h2>
@@ -123,8 +122,8 @@
 
 			<div class="pagination">
 				<!-- TODO more sophisticated pagination -->
-				{#if next !== null && !selecting}
-					<a href="/apps?offset={next}{search ? `&search=${encodeURIComponent(search)}` : ''}"
+				{#if data.next !== null && !selecting}
+					<a href="/apps?offset={data.next}{data.search ? `&search=${encodeURIComponent(data.search)}` : ''}"
 						>Next page...</a
 					>
 				{/if}

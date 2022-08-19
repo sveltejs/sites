@@ -4,7 +4,6 @@
 
 	/** @type {import('./$types').PageData} */
 	export let data;
-	let { version, gist, example } = data;
 </script>
 
 <svelte:head>
@@ -17,7 +16,7 @@
 
 <div class="repl-outer">
 	{#if browser}
-		<ReplWidget {version} {gist} {example} embedded={true} />
+		<ReplWidget version={data.version} gist={data.gist} example={data.example} embedded={true} />
 	{/if}
 </div>
 

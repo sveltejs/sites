@@ -3,27 +3,26 @@
 
 	/** @type {import('./$types').PageData} */
 	export let data;
-	let { post } = data;
 </script>
 
 <svelte:head>
-	<title>{post.title}</title>
+	<title>{data.post.title}</title>
 
-	<meta name="twitter:title" content={post.title} />
-	<meta name="twitter:description" content={post.description} />
-	<meta name="Description" content={post.description} />
+	<meta name="twitter:title" content={data.post.title} />
+	<meta name="twitter:description" content={data.post.description} />
+	<meta name="Description" content={data.post.description} />
 </svelte:head>
 
 <article class="post listify">
-	<h1>{post.title}</h1>
-	<p class="standfirst">{post.description}</p>
+	<h1>{data.post.title}</h1>
+	<p class="standfirst">{data.post.description}</p>
 
 	<p class="byline">
-		<a href={post.author.url}>{post.author.name}</a>
-		<time datetime={post.date.numeric}>{post.date.pretty}</time>
+		<a href={data.post.author.url}>{data.post.author.name}</a>
+		<time datetime={data.post.date.numeric}>{data.post.date.pretty}</time>
 	</p>
 
-	{@html post.content}
+	{@html data.post.content}
 </article>
 
 <style>

@@ -9,7 +9,7 @@
 
 	/** @type {import('./$types').PageData} */
 	export let data;
-	let { version, gist } = data;
+	$: ({ version, gist } = data);
 
 	let repl;
 	let name = gist.name;
@@ -57,7 +57,7 @@
 			? `${location.origin}/repl/local`
 			: `https://unpkg.com/svelte@${version}`;
 
-	$: relaxed = gist.relaxed || ($session.user && $session.user.id === gist.owner);
+	$: relaxed = data.gist.relaxed || ($session.user && $session.user.id === data.gist.owner);
 </script>
 
 <svelte:head>

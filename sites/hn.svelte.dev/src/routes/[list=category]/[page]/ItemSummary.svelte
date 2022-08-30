@@ -16,10 +16,10 @@
 	{:else}
 		<p>
 			{item.points} points by
-			<a sveltekit:prefetch href="/user/{item.user}">{item.user}</a>
+			<a href="/user/{item.user}">{item.user}</a>
 			{item.time_ago}
 			|
-			<a sveltekit:prefetch href="/item/{item.id}">
+			<a href="/item/{item.id}">
 				{item.comments_count}
 				{item.comments_count === 1 ? 'comment' : 'comments'}
 			</a>

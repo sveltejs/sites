@@ -8,7 +8,7 @@
 	<article class="comment" class:hidden>
 		<div class="meta-bar" on:click={() => (hidden = !hidden)}>
 			<span class="meta">
-				<a sveltekit:prefetch href="/user/{comment.user}">{comment.user}</a>
+				<a href="/user/{comment.user}">{comment.user}</a>
 				{comment.time_ago}
 			</span>
 		</div>

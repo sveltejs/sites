@@ -1,4 +1,4 @@
-import { dev } from '$app/env';
+import { dev } from '$app/environment';
 import { redirect } from '@sveltejs/kit';
 
 /** @type {import('@sveltejs/kit').RequestHandler} */

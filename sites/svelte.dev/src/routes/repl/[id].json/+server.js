@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import { dev } from '$app/env';
+import { dev } from '$app/environment';
 import { client } from '$lib/db/client';
 import * as gist from '$lib/db/gist';
 import { API_BASE } from '$lib/env';

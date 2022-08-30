@@ -1,7 +1,7 @@
 <script>
 	import Repl from '@sveltejs/repl';
 	import { onMount } from 'svelte';
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { session } from '$app/stores';
 	import { mapbox_setup } from '../../../config';

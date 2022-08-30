@@ -1,6 +1,6 @@
 <script>
 	import '@sveltejs/site-kit/code.css';
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 	import { getContext } from 'svelte';
 
 	import Repl from '@sveltejs/repl';

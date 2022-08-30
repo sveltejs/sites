@@ -1,7 +1,7 @@
 <script>
 	import Repl from '@sveltejs/repl';
 	import { onMount } from 'svelte';
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 	import { process_example } from '$lib/utils/examples';
 	import { API_BASE } from '../env';
 

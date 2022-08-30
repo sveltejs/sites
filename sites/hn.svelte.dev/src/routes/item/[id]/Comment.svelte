@@ -39,12 +39,12 @@
 	.meta-bar {
 		padding: 1em 0;
 		cursor: pointer;
-		background: 100% 50% no-repeat url(./_icons/fold.svg);
+		background: 100% 50% no-repeat url(./fold.svg);
 		background-size: 1em 1em;
 	}
 
 	.hidden .meta-bar {
-		background-image: url(./_icons/unfold.svg);
+		background-image: url(./unfold.svg);
 	}
 
 	.comment .children {

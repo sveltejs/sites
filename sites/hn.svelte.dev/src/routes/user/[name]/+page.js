@@ -1,4 +1,4 @@
-export const hydrate = false;
+export const csr = false;
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ params, fetch }) {

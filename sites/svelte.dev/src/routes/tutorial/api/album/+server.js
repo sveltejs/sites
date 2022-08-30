@@ -1,5 +1,7 @@
+import { json } from '@sveltejs/kit';
+
 export async function GET() {
-	return new Response([
+	return json([
 		{
 			title: 'accusamus beatae ad facilis cum similique qui sunt',
 			thumbnailUrl: 'https://via.placeholder.com/150/92c952'

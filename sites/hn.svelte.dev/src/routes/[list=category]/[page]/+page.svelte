@@ -1,5 +1,5 @@
 <script>
-	import ItemSummary from '../_ItemSummary.svelte';
+	import ItemSummary from './ItemSummary.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;

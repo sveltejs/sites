@@ -1,15 +1,6 @@
-import { error } from '@sveltejs/kit';
-
-const valid_lists = new Set(['news', 'newest', 'show', 'ask', 'jobs']);
-
 /** @type {import('./$types').PageLoad} */
 export async function load({ params, fetch }) {
 	const list = params.list === 'top' ? 'news' : params.list === 'new' ? 'newest' : params.list;
-
-	if (!valid_lists.has(list)) {
-		console.log(`invalid list parameter ${list}`);
-		throw error(404, 'Not found');
-	}
 
 	const page = +params.page;
 

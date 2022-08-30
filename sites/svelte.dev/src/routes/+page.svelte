@@ -5,7 +5,7 @@
 	import Image from './_components/Image.svelte';
 	import Demo from './_components/Demo.svelte';
 	import WhosUsingSvelte from './_components/WhosUsingSvelte/index.svelte';
-	import Balls from '$img/svelte-balls.png?w=640;1280;2560;3840&format=avif;webp;png&meta';
+	import Balls from '$img/svelte-balls.png?w=640;1280;2560;3840&format=avif;webp;png&picture';
 </script>
 
 <svelte:head>
@@ -106,7 +106,7 @@ npm run dev
 
 <Supporters />
 
-<Image data={Balls} alt="The Svelte logo in a ball pit" />
+<Image src={Balls} alt="The Svelte logo in a ball pit" />
 
 <footer>
 	<a href="/tutorial">Tutorial</a>

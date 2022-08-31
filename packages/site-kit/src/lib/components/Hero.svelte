@@ -16,10 +16,10 @@
 
 		<div class="hero-image">
 			<picture>
-				{#each Object.entries(src.sources) as [format, images]}
+				{#each Object.entries(background.sources) as [format, images]}
 					<source srcset={images.map((i) => `${i.src}`).join(', ')} type={'image/' + format} /> 
 				{/each}
-				<img src={src.fallback} {alt} />
+				<img src={background.fallback} {alt} />
 			</picture>
 		</div>
 	</div>

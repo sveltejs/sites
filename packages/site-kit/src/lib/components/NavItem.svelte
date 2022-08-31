@@ -10,12 +10,9 @@
 	<li><a href={external} {title} rel="external"><slot /></a></li>
 {:else}
 	<li>
-		<a
-			aria-current={$page.url.pathname.startsWith(href) ? true : undefined}
-			sveltekit:prefetch
-			{href}
-			{title}
-		><slot /></a>
+		<a aria-current={$page.url.pathname.startsWith(href) ? true : undefined} {href} {title}>
+			<slot />
+		</a>
 	</li>
 {/if}
 

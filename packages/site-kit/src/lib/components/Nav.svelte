@@ -50,13 +50,7 @@
 {/if}
 
 <nav class:visible={visible || open} class:open bind:this={nav}>
-	<a
-		sveltekit:prefetch
-		href="/"
-		class="nav-spot home"
-		title={home_title}
-		style="background-image: url({logo})"
-	>
+	<a href="/" class="nav-spot home" title={home_title} style="background-image: url({logo})">
 		{home}
 	</a>
 

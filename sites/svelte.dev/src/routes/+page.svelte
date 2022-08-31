@@ -29,7 +29,7 @@
 				JavaScript
 			</p>
 
-			<a sveltekit:prefetch href="/blog/write-less-code" class="cta">learn more</a>
+			<a href="/blog/write-less-code" class="cta">learn more</a>
 		</div>
 
 		<div slot="two">
@@ -39,7 +39,7 @@
 				stays fast
 			</p>
 
-			<a sveltekit:prefetch href="/blog/virtual-dom-is-pure-overhead" class="cta">learn more</a>
+			<a href="/blog/virtual-dom-is-pure-overhead" class="cta">learn more</a>
 		</div>
 
 		<div slot="three">
@@ -48,7 +48,7 @@
 				No more complex state management libraries — Svelte brings reactivity to JavaScript itself
 			</p>
 
-			<a sveltekit:prefetch href="/blog/svelte-3-rethinking-reactivity" class="cta">learn more</a>
+			<a href="/blog/svelte-3-rethinking-reactivity" class="cta">learn more</a>
 		</div>
 
 		<div class="description" slot="what">
@@ -80,18 +80,22 @@
 		</div>
 
 		<div slot="how">
-			<pre><code>npm create vite@latest myapp -- <a href="https://github.com/vitejs/vite/tree/main/packages/create-vite/template-svelte" style="user-select: initial;"
-					>--template svelte</a>
+			<pre><code
+					>npm create vite@latest myapp -- <a
+						href="https://github.com/vitejs/vite/tree/main/packages/create-vite/template-svelte"
+						style="user-select: initial;">--template svelte</a
+					>
 cd myapp
 npm install
 npm run dev
 			</code></pre>
 
 			<p style="flex: 1">
-				Or use <a href="https://kit.svelte.dev">SvelteKit</a>, the official application framework from the Svelte team (currently in beta).
+				Or use <a href="https://kit.svelte.dev">SvelteKit</a>, the official application framework
+				from the Svelte team (currently in beta).
 			</p>
 
-			<a sveltekit:prefetch href="/tutorial" class="cta">Learn Svelte</a>
+			<a href="/tutorial" class="cta">Learn Svelte</a>
 		</div>
 	</Blurb>
 </div>

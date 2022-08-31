@@ -1,33 +1,8 @@
 <script>
 	import '@sveltejs/site-kit/base.css';
-	import { setContext } from 'svelte';
-	import { page, navigating, session } from '$app/stores';
+	import { page, navigating } from '$app/stores';
 	import { Icon, Icons, Nav, NavItem, SkipLink } from '@sveltejs/site-kit';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
-
-	setContext('app', {
-		login: () => {
-			const login_window = window.open(
-				`${window.location.origin}/auth/login`,
-				'login',
-				'width=600,height=400'
-			);
-
-			window.addEventListener('message', function handler(event) {
-				login_window.close();
-				window.removeEventListener('message', handler);
-				$session.user = event.data.user;
-			});
-		},
-
-		logout: async () => {
-			const r = await fetch(`/auth/logout`, {
-				credentials: 'include'
-			});
-
-			if (r.ok) $session.user = null;
-		}
-	});
 </script>
 
 <Icons />

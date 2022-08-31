@@ -1,16 +1,16 @@
 <script>
 	import { createEventDispatcher, getContext } from 'svelte';
-	import { session } from '$app/stores';
 	import UserMenu from './UserMenu.svelte';
 	import { Icon } from '@sveltejs/site-kit';
 	import * as doNotZip from 'do-not-zip';
-	import downloadBlob from '../../../_utils/downloadBlob.js';
+	import downloadBlob from './downloadBlob.js';
 	import { enter } from '$lib/utils/events.js';
 	import { isMac } from '$lib/utils/compat.js';
 
 	const dispatch = createEventDispatcher();
 	const { login } = getContext('app');
 
+	export let user;
 	export let repl;
 	export let gist;
 	export let name;
@@ -26,7 +26,7 @@
 		return new Promise((f) => setTimeout(f, ms));
 	}
 
-	$: canSave = $session.user && gist && gist.owner === $session.user.id;
+	$: canSave = user && gist && gist.owner === user.id;
 
 	function handleKeydown(event) {
 		if (event.key === 's' && (isMac ? event.metaKey : event.ctrlKey)) {
@@ -88,7 +88,7 @@
 	}
 
 	async function save() {
-		if (!$session.user) {
+		if (!user) {
 			alert('Please log in before saving your app');
 			return;
 		}
@@ -202,12 +202,7 @@ export default app;`
 			<Icon name="download" />
 		</button>
 
-		<button
-			class="icon"
-			disabled={saving || !$session.user}
-			on:click={() => fork(false)}
-			title="fork"
-		>
+		<button class="icon" disabled={saving || !user} on:click={() => fork(false)} title="fork">
 			{#if justForked}
 				<Icon name="check" />
 			{:else}
@@ -215,7 +210,7 @@ export default app;`
 			{/if}
 		</button>
 
-		<button class="icon" disabled={saving || !$session.user} on:click={save} title="save">
+		<button class="icon" disabled={saving || !user} on:click={save} title="save">
 			{#if justSaved}
 				<Icon name="check" />
 			{:else}
@@ -226,8 +221,8 @@ export default app;`
 			{/if}
 		</button>
 
-		{#if $session.user}
-			<UserMenu />
+		{#if user}
+			<UserMenu {user} />
 		{:else}
 			<button class="icon" on:click|preventDefault={login}>
 				<Icon name="log-in" />

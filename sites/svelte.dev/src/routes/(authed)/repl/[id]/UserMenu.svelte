@@ -1,18 +1,19 @@
 <script>
 	import { getContext } from 'svelte';
-	import { session } from '$app/stores';
 
 	const { logout } = getContext('app');
+
+	export let user;
 
 	let showMenu = false;
 	let name;
 
-	$: name = $session.user.github_name || $session.user.github_login;
+	$: name = user.github_name || user.github_login;
 </script>
 
 <div class="user" on:mouseenter={() => (showMenu = true)} on:mouseleave={() => (showMenu = false)}>
 	<span>{name}</span>
-	<img alt="{name} avatar" src={$session.user.github_avatar_url} />
+	<img alt="{name} avatar" src={user.github_avatar_url} />
 
 	{#if showMenu}
 		<div class="menu">

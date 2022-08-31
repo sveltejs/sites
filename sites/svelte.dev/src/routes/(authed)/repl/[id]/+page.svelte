@@ -2,17 +2,17 @@
 	import Repl from '@sveltejs/repl';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	import { goto } from '$app/navigation';
-	import { session } from '$app/stores';
-	import { mapbox_setup } from '../../../config';
-	import AppControls from './_components/AppControls/index.svelte';
+	import { afterNavigate, goto } from '$app/navigation';
+	import { mapbox_setup } from '../../../../config.js';
+	import AppControls from './AppControls.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
-	$: ({ version, gist } = data);
+
+	let version = data.version;
 
 	let repl;
-	let name = gist.name;
+	let name = data.gist.name;
 	let zen_mode = false;
 	let modified_count = 0;
 
@@ -21,7 +21,8 @@
 
 		if (version !== 'latest') params.push(`version=${version}`);
 
-		const url = params.length > 0 ? `/repl/${gist.id}?${params.join('&')}` : `/repl/${gist.id}`;
+		const url =
+			params.length > 0 ? `/repl/${data.gist.id}?${params.join('&')}` : `/repl/${data.gist.id}`;
 
 		history.replaceState({}, 'x', url);
 	}
@@ -29,22 +30,23 @@
 	$: if (typeof history !== 'undefined') update_query_string(version);
 
 	onMount(() => {
-		if (version !== 'local') {
-			fetch(`https://unpkg.com/svelte@${version || '3'}/package.json`)
+		if (data.version !== 'local') {
+			fetch(`https://unpkg.com/svelte@${data.version || '3'}/package.json`)
 				.then((r) => r.json())
 				.then((pkg) => {
 					version = pkg.version;
 				});
 		}
+	});
 
+	afterNavigate(() => {
 		repl.set({
-			components: gist.components
+			components: data.gist.components
 		});
 	});
 
 	function handle_fork(event) {
 		console.log('> handle_fork', event);
-		gist = event.detail.gist;
 		goto(`/repl/${gist.id}?version=${version}`);
 	}
 
@@ -57,19 +59,27 @@
 			? `${location.origin}/repl/local`
 			: `https://unpkg.com/svelte@${version}`;
 
-	$: relaxed = data.gist.relaxed || ($session.user && $session.user.id === data.gist.owner);
+	$: relaxed = data.gist.relaxed || (data.user && data.user.id === data.gist.owner);
 </script>
 
 <svelte:head>
 	<title>{name} • REPL • Svelte</title>
 
-	<meta name="twitter:title" content="{gist.name} • REPL • Svelte" />
+	<meta name="twitter:title" content="{data.gist.name} • REPL • Svelte" />
 	<meta name="twitter:description" content="Cybernetically enhanced web apps" />
 	<meta name="Description" content="Interactive Svelte playground" />
 </svelte:head>
 
 <div class="repl-outer {zen_mode ? 'zen-mode' : ''}">
-	<AppControls {gist} {repl} bind:name bind:zen_mode bind:modified_count on:forked={handle_fork} />
+	<AppControls
+		user={data.user}
+		gist={data.gist}
+		{repl}
+		bind:name
+		bind:zen_mode
+		bind:modified_count
+		on:forked={handle_fork}
+	/>
 
 	{#if browser}
 		<Repl

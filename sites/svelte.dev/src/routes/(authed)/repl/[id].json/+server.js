@@ -1,5 +1,6 @@
 import { json } from '@sveltejs/kit';
 import { dev } from '$app/environment';
+import * as session from '$lib/db/session';
 import { client } from '$lib/db/client';
 import * as gist from '$lib/db/gist';
 import { API_BASE } from '$lib/env';
@@ -77,13 +78,13 @@ export async function GET({ params }) {
 	});
 }
 
-export async function PUT({ locals, params, request }) {
-	if (!locals.user) {
-		return new Response('Unauthorized', { status: 401 });
-	}
+// TODO reimplement as an action
+export async function PUT({ params, request }) {
+	const user = await session.from_cookie(request.headers.get('cookie'));
+	if (!user) return new Response('Unauthorized', { status: 401 });
 
 	const body = await request.json();
-	await gist.update(locals.user, params.id, body);
+	await gist.update(user, params.id, body);
 
 	return new Response(undefined, { status: 204 });
 }

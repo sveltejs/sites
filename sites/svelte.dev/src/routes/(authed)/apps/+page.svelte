@@ -13,7 +13,7 @@
 
 	let destroying = false;
 
-	async function destroy(selected) {
+	async function destroy_selected() {
 		const confirmed = confirm(
 			`Are you sure you want to delete ${selected.length} ${
 				selected.length === 1 ? 'app' : 'apps'
@@ -34,12 +34,12 @@
 		});
 
 		if (res.ok) {
-			// await invalidate('/apps.json');
-			// selected = [];
+			selected = [];
+			await invalidate();
 
 			// this is a temporary fix because invalidation only works once
 			// TODO raise an issue
-			location.reload();
+			// location.reload();
 		} else {
 			alert('Deletion failed');
 		}
@@ -74,7 +74,7 @@
 
 		<div class="controls">
 			{#if selected.length > 0}
-				<button class="delete" on:click={() => destroy(selected)} disabled={destroying}>
+				<button class="delete" on:click={() => destroy_selected()} disabled={destroying}>
 					<Icon name="delete" />
 					Delete {selected.length}
 					{selected.length === 1 ? 'app' : 'apps'}
@@ -123,8 +123,10 @@
 			<div class="pagination">
 				<!-- TODO more sophisticated pagination -->
 				{#if data.next !== null && !selecting}
-					<a href="/apps?offset={data.next}{data.search ? `&search=${encodeURIComponent(data.search)}` : ''}"
-						>Next page...</a
+					<a
+						href="/apps?offset={data.next}{data.search
+							? `&search=${encodeURIComponent(data.search)}`
+							: ''}">Next page...</a
 					>
 				{/if}
 			</div>

@@ -1,25 +1,19 @@
 import { json } from '@sveltejs/kit';
+import * as session from '$lib/db/session';
 import * as gist from '$lib/db/gist';
+import { error } from '@sveltejs/kit';
 
-export async function POST({ locals, request }) {
-	const { user } = locals;
-	if (!user) return; // response already sent
+export async function POST({ request }) {
+	const user = await session.from_cookie(request.headers.get('cookie'));
+	if (!user) throw error(401);
 
-	try {
-		const body = await request.json();
-		const result = await gist.create(user, body);
+	const body = await request.json();
+	const result = await gist.create(user, body);
 
-		// normalize id
-		result.id = result.id.replace(/-/g, '');
+	// normalize id
+	result.id = result.id.replace(/-/g, '');
 
-		return json(result, {
-			status: 201
-		});
-	} catch (err) {
-		return json({
-			error: err.message
-		}, {
-			status: 500
-		});
-	}
+	return json(result, {
+		status: 201
+	});
 }

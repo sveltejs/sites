@@ -47,7 +47,7 @@
 
 	function handle_fork(event) {
 		console.log('> handle_fork', event);
-		goto(`/repl/${gist.id}?version=${version}`);
+		goto(`/repl/${event.detail.gist.id}?version=${version}`);
 	}
 
 	function handle_change(event) {

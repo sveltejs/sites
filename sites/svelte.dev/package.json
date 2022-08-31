@@ -16,14 +16,14 @@
 		"@supabase/supabase-js": "^1.29.4",
 		"@sveltejs/repl": "workspace:*",
 		"cookie": "^0.4.2",
-		"devalue": "^2.0.1",
+		"devalue": "^3.1.2",
 		"do-not-zip": "^1.0.0",
 		"flru": "^1.0.2",
 		"marked": "^4.0.12"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
-		"@sveltejs/kit": "next",
+		"@sveltejs/kit": "1.0.0-next.456",
 		"@sveltejs/site-kit": "workspace:*",
 		"@sveltejs/vite-plugin-svelte": "^1.0.1",
 		"degit": "^2.8.4",
@@ -34,7 +34,7 @@
 		"prettier-plugin-svelte": "^2.6.0",
 		"shelljs": "^0.8.5",
 		"svelte": "^3.46.3",
-		"vite": "^3.0.5",
-		"vite-imagetools": "^4.0.3"
+		"vite": "^3.1.0-beta.1",
+		"vite-imagetools": "^4.0.7"
 	}
 }

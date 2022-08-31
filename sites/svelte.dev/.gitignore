@@ -1,4 +1,4 @@
-/.env
+/.env.local
 /.svelte-kit/
 /build/
 /functions/

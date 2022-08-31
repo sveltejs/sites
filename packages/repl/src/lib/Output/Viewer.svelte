@@ -6,7 +6,7 @@
 	import Console from './Console.svelte';
 	import Message from '../Message.svelte';
 	import srcdoc from './srcdoc/index.html?raw';
-	import { browser } from '$app/env';
+	import { browser } from '$app/environment';
 
 	const { bundle } = getContext('REPL');
 

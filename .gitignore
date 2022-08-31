@@ -3,5 +3,5 @@
 .pnpm-debug.log
 node_modules/
 .vercel
-.env
+.env.local
 /db/data

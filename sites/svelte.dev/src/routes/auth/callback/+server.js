@@ -1,7 +1,6 @@
-import devalue from 'devalue';
+import { devalue } from 'devalue';
 import * as cookie from 'cookie';
 import { stringify } from 'querystring';
-import { json } from '@sveltejs/kit';
 import * as session from '$lib/db/session';
 import { oauth, client_id, client_secret } from '../_config.js';
 

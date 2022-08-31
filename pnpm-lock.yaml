@@ -94,7 +94,7 @@ importers:
       '@sveltejs/vite-plugin-svelte': ^1.0.1
       cookie: ^0.4.2
       degit: ^2.8.4
-      devalue: ^2.0.1
+      devalue: ^3.1.2
       do-not-zip: ^1.0.0
       dotenv: ^10.0.0
       flru: ^1.0.2
@@ -111,7 +111,7 @@ importers:
       '@supabase/supabase-js': 1.35.6
       '@sveltejs/repl': link:../../packages/repl
       cookie: 0.4.2
-      devalue: 2.0.1
+      devalue: 3.1.2
       do-not-zip: 1.0.0
       flru: 1.0.2
       marked: 4.1.0
@@ -1482,13 +1482,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /devalue/2.0.1:
-    resolution: {integrity: sha512-I2TiqT5iWBEyB8GRfTDP0hiLZ0YeDJZ+upDxjBfOC2lebO5LezQMv7QvIUTzdb64jQyAKLf1AHADtGN+jw6v8Q==}
-    dev: false
-
   /devalue/3.1.2:
     resolution: {integrity: sha512-wUXbMGPAsBx79UF14nsWSsJlC7RcwPlf2w3bGheODWxKx57e9n68ceoijbqCJCEbjyo0S79nqfPwQgyijwLaqw==}
-    dev: true
 
   /dir-glob/3.0.1:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}

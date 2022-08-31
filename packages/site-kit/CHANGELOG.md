@@ -1,5 +1,10 @@
 # @sveltejs/site-kit changelog
 
+## 2.1.1
+
+- Update `<Hero>` component
+- Remove `sveltekit:prefetch`
+
 ## 2.1.0
 
 - Tweak sidebar styles

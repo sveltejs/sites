@@ -1,3 +1,4 @@
+import * as cookie from 'cookie';
 import flru from 'flru';
 import { client } from './client.js';
 
@@ -71,4 +72,10 @@ export async function destroy(sessionid) {
 	}
 
 	session_cache.set(sessionid, null);
+}
+
+/** @type {string | null} str */
+export function from_cookie(str) {
+	if (!str) return null;
+	return read(cookie.parse(str).sid);
 }

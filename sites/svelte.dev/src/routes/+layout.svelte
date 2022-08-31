@@ -3,6 +3,7 @@
 	import { page, navigating } from '$app/stores';
 	import { Icon, Icons, Nav, NavItem, SkipLink } from '@sveltejs/site-kit';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
+	import StopWar from './stopwar.svg';
 </script>
 
 <Icons />
@@ -13,7 +14,7 @@
 
 {#if $page.url.pathname !== '/repl/embed'}
 	<SkipLink href="#main" />
-	<Nav {page} logo="/stopwar.svg">
+	<Nav {page} logo={StopWar}>
 		<svelte:fragment slot="nav-center">
 			<NavItem href="/tutorial">Tutorial</NavItem>
 			<NavItem href="/docs">Docs</NavItem>

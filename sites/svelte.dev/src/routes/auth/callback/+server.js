@@ -39,23 +39,26 @@ export async function GET({ url }) {
 
 		const { sessionid, expires } = await session.create(user, access_token);
 
-		return json(`
+		return new Response(
+			`
 			<script>
 				window.opener.postMessage({
 					user: ${devalue(user)}
 				}, window.location.origin);
 			</script>
-		`, {
-			headers: {
-				'Set-Cookie': cookie.serialize('sid', sessionid, {
-					expires: new Date(expires),
-					path: '/',
-					httpOnly: true,
-					secure: url.protocol === 'https'
-				}),
-				'Content-Type': 'text/html; charset=utf-8'
+		`,
+			{
+				headers: {
+					'Set-Cookie': cookie.serialize('sid', sessionid, {
+						expires: new Date(expires),
+						path: '/',
+						httpOnly: true,
+						secure: url.protocol === 'https'
+					}),
+					'Content-Type': 'text/html; charset=utf-8'
+				}
 			}
-		});
+		);
 	} catch (err) {
 		console.error('GET /auth/callback', err);
 		return new Response(err.data, { status: 500 });

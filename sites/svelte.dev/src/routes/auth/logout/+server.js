@@ -1,8 +1,9 @@
 import * as cookie from 'cookie';
 import * as session from '$lib/db/session';
 
-export async function GET(request) {
-	await session.destroy(request.locals.cookies.sid);
+export async function GET({ request }) {
+	const cookies = cookie.parse(request.headers.get('cookie') || '');
+	await session.destroy(cookies.sid);
 
 	return new Response(undefined, {
 		headers: {

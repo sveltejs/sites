@@ -5,7 +5,7 @@
 	import Image from './_components/Image.svelte';
 	import Demo from './_components/Demo.svelte';
 	import WhosUsingSvelte from './_components/WhosUsingSvelte/index.svelte';
-	import Balls from '$img/svelte-balls.png?w=640;1280;2560;3840&format=avif;webp;png&picture';
+	import Balls from './svelte-balls.png?w=640;1280;2560;3840&format=avif;webp;png&picture';
 </script>
 
 <svelte:head>

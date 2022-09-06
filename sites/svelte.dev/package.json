@@ -25,7 +25,7 @@
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "1.0.0-next.456",
 		"@sveltejs/site-kit": "workspace:*",
-		"@sveltejs/vite-plugin-svelte": "^1.0.1",
+		"@sveltejs/vite-plugin-svelte": "^1.0.5",
 		"degit": "^2.8.4",
 		"dotenv": "^10.0.0",
 		"jimp": "^0.8.5",
@@ -34,7 +34,7 @@
 		"prettier-plugin-svelte": "^2.6.0",
 		"shelljs": "^0.8.5",
 		"svelte": "^3.46.3",
-		"vite": "^3.1.0-beta.1",
-		"vite-imagetools": "^4.0.7"
+		"vite": "^3.1.0",
+		"vite-imagetools": "^4.0.9"
 	}
 }

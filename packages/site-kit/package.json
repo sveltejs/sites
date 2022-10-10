@@ -29,5 +29,8 @@
 	},
 	"dependencies": {
 		"golden-fleece": "^1.0.9"
+	},
+	"publishConfig": {
+		"access": "public"
 	}
 }

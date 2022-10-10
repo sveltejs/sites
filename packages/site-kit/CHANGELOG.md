@@ -1,5 +1,11 @@
 # @sveltejs/site-kit changelog
 
+## 2.1.3
+
+- Remove `<Hero>` component
+- Improve image caching
+- Update dependencies
+
 ## 2.1.2
 
 - Fix `<Hero>` component

@@ -42,7 +42,7 @@ export async function GET({ url }) {
 			`
 			<script>
 				window.opener.postMessage({
-					user: ${devalue(user)}
+					user: ${uneval(user)}
 				}, window.location.origin);
 			</script>
 		`,

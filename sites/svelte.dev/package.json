@@ -9,6 +9,8 @@
 		"update": "node scripts/update.js --force=true",
 		"preview": "vite preview",
 		"start": "node build",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
 		"format": "npm run check:format -- --write",
 		"check:format": "prettier --check . --ignore-path .gitignore --plugin-search-dir=."
 	},
@@ -34,6 +36,7 @@
 		"prettier-plugin-svelte": "^2.6.0",
 		"shelljs": "^0.8.5",
 		"svelte": "^3.46.3",
+		"svelte-check": "^2.7.1",
 		"vite": "^3.1.8",
 		"vite-imagetools": "^4.0.11"
 	}

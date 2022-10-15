@@ -1,4 +1,4 @@
-import { devalue } from 'devalue';
+import { uneval } from 'devalue';
 import * as cookie from 'cookie';
 import { stringify } from 'querystring';
 import * as session from '$lib/db/session';

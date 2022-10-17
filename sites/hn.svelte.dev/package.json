@@ -10,12 +10,12 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
-		"@sveltejs/kit": "1.0.0-next.456",
-		"@sveltejs/vite-plugin-svelte": "^1.0.5",
+		"@sveltejs/kit": "next",
+		"@sveltejs/vite-plugin-svelte": "^1.0.9",
 		"prettier": "^2.7.1",
 		"prettier-plugin-svelte": "^2.7.0",
 		"svelte": "^3.49.0",
-		"vite": "^3.1.0"
+		"vite": "^3.1.8"
 	},
 	"type": "module"
 }

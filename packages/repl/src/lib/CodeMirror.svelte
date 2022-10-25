@@ -27,7 +27,11 @@
 
 		code = new_code;
 		updating_externally = true;
-		if (editor) editor.setValue(code);
+		if (editor) {
+			editor.dispatch({
+  				changes: { from: 0, to: editor.state.doc.length, insert: code }
+			})
+		}
 		updating_externally = false;
 	}
 
@@ -35,14 +39,17 @@
 		code = new_code;
 
 		if (editor) {
-			const { left, top } = editor.getScrollInfo();
-			editor.setValue(code = new_code);
-			editor.scrollTo(left, top);
+//			const { left, top } = editor.getScrollInfo();
+			code = new_code;
+			editor.dispatch({
+  				changes: { from: 0, to: editor.state.doc.length, insert: code }
+			})
+//			editor.scrollTo(left, top);
 		}
 	}
 
 	export function resize() {
-		editor.refresh();
+//		editor.refresh();
 	}
 
 	export function focus() {
@@ -58,7 +65,7 @@
 	}
 
 	export function clearHistory() {
-		if (editor) editor.clearHistory();
+//		if (editor) editor.clearHistory();
 	}
 
 	export function setCursor(pos) {
@@ -99,10 +106,9 @@
 	let marker;
 	let error_line;
 	let destroyed = false;
-	let CodeMirror;
 
 	$: if (editor && w && h) {
-		editor.refresh();
+//		editor.refresh();
 	}
 
 	$: {
@@ -136,26 +142,26 @@
 
 	onMount(() => {
 		(async () => {
-			if (!CodeMirror) {
-				let mod = await import('./codemirror.js');
-				CodeMirror = mod.default;
-			}
 			await createEditor(mode || 'svelte');
-			if (editor) editor.setValue(code || '');
+			if (editor) {
+				editor.dispatch({
+  					changes: { from: 0, to: editor.state.doc.length, insert: code || '' }
+				})
+			}
 		})();
 
 		return () => {
 			destroyed = true;
-			if (editor) editor.toTextArea();
+//			if (editor) editor.toTextArea();
 		}
 	});
 
 	let first = true;
 
 	async function createEditor(mode) {
-		if (destroyed || !CodeMirror) return;
+		if (destroyed) return;
 
-		if (editor) editor.toTextArea();
+//		if (editor) editor.toTextArea();
 
 		const opts = {
 			lineNumbers,
@@ -170,21 +176,23 @@
 			readOnly: readonly,
 			autoCloseBrackets: true,
 			autoCloseTags: true,
+			/*
 			extraKeys: CodeMirror.normalizeKeyMap({
 				'Enter': 'newlineAndIndentContinueMarkdownList',
 				'Ctrl-/': 'toggleComment',
 				'Cmd-/': 'toggleComment',
 				'Ctrl-Q': function (cm) {
-					cm.foldCode(cm.getCursor());
+					cm.foldCode(cm.state.selection.main.head);
 				},
 				'Cmd-Q': function (cm) {
-					cm.foldCode(cm.getCursor());
+					cm.foldCode(cm.state.selection.main.head);
 				},
 				// allow escaping the CodeMirror with Esc Tab
 				'Esc Tab': false
 			}),
+			*/
 			foldGutter: true,
-			gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+			gutters: ['cm-linenumbers', 'cm-foldgutter'],
 			theme
 		};
 
@@ -199,22 +207,41 @@
 
 		if (destroyed) return;
 
-		editor = CodeMirror.fromTextArea(refs.editor, opts);
+		const { keymap, EditorView } = await import('@codemirror/view');
+		const { defaultKeymap, history, historyKeymap } = await import('@codemirror/commands');
+		const { html } = await import('@codemirror/lang-html');
+		const { javascript } = await import('@codemirror/lang-javascript');
+		const { markdown } = await import('@codemirror/lang-markdown');
+		const { xml } = await import('@codemirror/lang-xml');
+		const { syntaxHighlighting, defaultHighlightStyle } = await import('@codemirror/language');
 
-		editor.on('change', instance => {
-			if (!updating_externally) {
-				const value = instance.getValue();
-				dispatch('change', { value });
-			}
+		editor = new EditorView({
+			...opts,
+			extensions: [
+				history(),
+				keymap.of([...defaultKeymap, ...historyKeymap]),
+				javascript(),
+				syntaxHighlighting(defaultHighlightStyle),
+				EditorView.updateListener.of(update => {
+					if (update.docChanged && !updating_externally) {
+						const value = update.state.doc.toString();
+						dispatch('change', { value });
+					}
+				})
+			],
+			doc: refs.editor.value
 		});
+		refs.editor.parentNode.insertBefore(editor.dom, refs.editor);
+		refs.editor.style.display = 'none';
 
+/*
 		editor.on('cursorActivity', instance => {
-			cursorIndex.set(instance.indexFromPos(instance.getCursor()));
+			cursorIndex.set(instance.indexFromPos(instance.state.selection.main.head));
 		});
 
 		if (first) await sleep(50);
 		editor.refresh();
-
+*/
 		first = false;
 	}
 
@@ -233,7 +260,7 @@
 		overflow: hidden;
 	}
 
-	.codemirror-container :global(.CodeMirror) {
+	.codemirror-container :global(.cm-editor) {
 		height: 100%;
 		font: 400 var(--code-fs)/1.7 var(--font-mono);
 	}
@@ -282,7 +309,7 @@
 		value={code}
 	></textarea>
 
-	{#if !CodeMirror}
+	{#if !editor}
 		<pre style="position: absolute; left: 0; top: 0"
 		>{code}</pre>
 

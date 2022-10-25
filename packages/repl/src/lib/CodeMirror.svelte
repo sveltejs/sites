@@ -220,7 +220,10 @@
 			extensions: [
 				history(),
 				keymap.of([...defaultKeymap, ...historyKeymap]),
+				html(),
+				markdown(),
 				javascript(),
+				xml(),
 				syntaxHighlighting(defaultHighlightStyle),
 				EditorView.updateListener.of(update => {
 					if (update.docChanged && !updating_externally) {

@@ -1,16 +1,15 @@
 <script>
-	import { page } from '$app/stores';
-
 	export let href = null;
 	export let external = null;
 	export let title = null;
+	export let selected = undefined;
 </script>
 
 {#if external}
 	<li><a href={external} {title} rel="external"><slot /></a></li>
 {:else}
 	<li>
-		<a aria-current={$page.url.pathname.startsWith(href) ? true : undefined} {href} {title}>
+		<a aria-current={selected} {href} {title}>
 			<slot />
 		</a>
 	</li>

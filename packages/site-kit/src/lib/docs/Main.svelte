@@ -1,5 +1,4 @@
 <script>
-	import { page } from '$app/stores';
 	import { getFragment, onNavigate } from '../utils/navigation';
 	import '../code.css';
 
@@ -15,7 +14,7 @@
 			if (heading.nodeName.startsWith('H') && !heading.querySelector('a.anchor')) {
 				const a = document.createElement('a');
 				a.className = 'anchor';
-				a.href = `${$page.url.pathname}#${heading.id}`;
+				a.href = `${window.location.pathname}#${heading.id}`;
 				const span = document.createElement('span');
 				span.className = 'visually-hidden';
 				span.innerHTML = 'permalink';
@@ -45,7 +44,7 @@
 					const { id } = heading;
 
 					if (id !== last_id) {
-						path = `${$page.url.pathname}#${id}`;
+						path = `${window.location.pathname}#${id}`;
 						last_id = id;
 					}
 
@@ -53,7 +52,7 @@
 				}
 			}
 
-			path = $page.url.pathname;
+			path = window.location.pathname;
 		};
 
 		window.addEventListener('scroll', onscroll, true);

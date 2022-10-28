@@ -72,7 +72,10 @@
 				<a href="https://2020.stateofjs.com/en-US/technologies/front-end-frameworks/"
 					>most satisfied developers</a
 				>
-				in a pair of industry surveys. We think you'll love it too.
+				drawing the <a
+					href="https://tsh.io/state-of-frontend/#which-of-the-following-frameworks-would-you-like-to-learn-in-the-future"
+					>most interest in learning it</a>
+				in a trio of industry surveys. We think you'll love it too.
 				<a href="/blog/svelte-3-rethinking-reactivity" class="cta"
 					>Read the introductory blog post</a
 				> to learn more.

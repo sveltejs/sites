@@ -5,7 +5,7 @@ export default {
 	kit: {
 		adapter: adapter()
 	},
-    package: {
-        exports: (file) => file === 'index.js'
-    }
+	package: {
+		exports: (file) => file === 'index.js'
+	}
 };

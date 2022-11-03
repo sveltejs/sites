@@ -3,7 +3,6 @@
 	import { onMount } from 'svelte';
 	import '@sveltejs/site-kit/base.css';
 	import '@sveltejs/site-kit/code.css';
-	import { browser } from '$app/environment';
 
 	let repl;
 
@@ -28,9 +27,7 @@
 </script>
 
 <main>
-	{#if browser}
-		<Repl bind:this={repl} showModified showAst />
-	{/if}
+	<Repl bind:this={repl} showAst />
 </main>
 
 <style>

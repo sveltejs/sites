@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "node scripts/update.js && vite dev",
-		"build": "node scripts/update.js && vite build",
+		"build": " vite build",
 		"update": "node scripts/update.js --force=true",
 		"preview": "vite preview",
 		"start": "node build",
@@ -37,7 +37,8 @@
 		"shelljs": "^0.8.5",
 		"svelte": "^3.46.3",
 		"svelte-check": "^2.7.1",
-		"vite": "^3.1.8",
+		"util": "^0.12.5",
+		"vite": "^3.2.3",
 		"vite-imagetools": "^4.0.11"
 	}
 }

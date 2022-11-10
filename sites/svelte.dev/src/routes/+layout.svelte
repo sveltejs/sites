@@ -7,7 +7,7 @@
 	import { inspect } from 'util';
 	import { browser } from '$app/environment';
 	if (browser) {
-		window.util = inspect;
+		window.util = { inspect };
 	}
 </script>
 

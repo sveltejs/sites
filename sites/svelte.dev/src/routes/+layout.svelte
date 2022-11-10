@@ -4,7 +4,11 @@
 	import { Icon, Icons, Nav, NavItem, SkipLink } from '@sveltejs/site-kit';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 	import StopWar from './stopwar.svg';
-	import 'util';
+	import { inspect } from 'util';
+	import { browser } from '$app/environment';
+	if (browser) {
+		window.util = inspect;
+	}
 </script>
 
 <Icons />

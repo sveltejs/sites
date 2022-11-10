@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "node scripts/update.js && vite dev",
-		"build": " vite build",
+		"build": "node scripts/update.js && vite build",
 		"update": "node scripts/update.js --force=true",
 		"preview": "vite preview",
 		"start": "node build",

@@ -1,13 +1,16 @@
 import * as path from 'path';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { defineConfig } from 'vite'
 import { imagetools } from 'vite-imagetools';
 
 process.env.VITE_API_BASE = process.env.DOCS_PREVIEW
 	? 'http://localhost:8787'
 	: 'https://api.svelte.dev';
 
-/** @type {import('vite').UserConfig} */
-const config = {
+export default defineConfig(({ command, mode, ssrBuild }) => ({
+	build: {
+		minify: !ssrBuild
+	},
 	plugins: [imagetools(), sveltekit()],
 		optimizeDeps: {
 			include: [
@@ -42,6 +45,4 @@ const config = {
 				strict: false
 			}
 		}
-};
-
-export default config;
+}));

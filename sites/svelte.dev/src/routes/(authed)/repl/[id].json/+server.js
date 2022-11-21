@@ -1,4 +1,4 @@
-import { error, json } from '@sveltejs/kit';
+import { json } from '@sveltejs/kit';
 import { dev } from '$app/environment';
 import * as session from '$lib/db/session';
 import { client } from '$lib/db/client';
@@ -43,10 +43,7 @@ export async function GET({ params }) {
 		const res = await fetch(`${API_BASE}/docs/svelte/examples/${params.id}`);
 
 		if (!res.ok) {
-			return new Response(await res.json(), {
-				status: res.status,
-				headers: { 'Content-Type': 'application/json' }
-			});
+			return new Response(await res.json(), { status: res.status });
 		}
 
 		const example = await res.json();
@@ -69,7 +66,7 @@ export async function GET({ params }) {
 	const app = await gist.read(params.id);
 
 	if (!app) {
-		throw error(404, 'not found');
+		return new Response('not found', { status: 404 });
 	}
 
 	return json({
@@ -84,10 +81,10 @@ export async function GET({ params }) {
 // TODO reimplement as an action
 export async function PUT({ params, request }) {
 	const user = await session.from_cookie(request.headers.get('cookie'));
-	if (!user) throw error(401, 'Unauthorized');
+	if (!user) return new Response('Unauthorized', { status: 401 });
 
 	const body = await request.json();
 	await gist.update(user, params.id, body);
 
-	throw error(204);
+	return new Response(undefined, { status: 204 });
 }

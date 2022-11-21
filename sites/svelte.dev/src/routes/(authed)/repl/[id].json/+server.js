@@ -5,6 +5,8 @@ import { client } from '$lib/db/client';
 import * as gist from '$lib/db/gist';
 import { API_BASE } from '$lib/env';
 
+const UUID_REGEX = /^([a-f]|[0-9]){8}-?([a-f]|[0-9]){4}-?([a-f]|[0-9]){4}-?([a-f]|[0-9]){4}-?([a-f]|[0-9]){12}$/;
+
 /** @type {Set<string>} */
 let examples;
 
@@ -64,6 +66,10 @@ export async function GET({ params }) {
 		// in dev with no local Supabase configured, proxy to production
 		// this lets us at least load saved REPLs
 		return await fetch(`https://svelte.dev/repl/${params.id}.json`);
+	}
+
+	if (!UUID_REGEX.test(params.id)) {
+		throw error(404);
 	}
 
 	const app = await gist.read(params.id);

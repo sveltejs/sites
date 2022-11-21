@@ -15,7 +15,8 @@ export const GET = client_id
 			throw redirect(302, Location);
 	  }
 	: () =>
-		new Response(`
+			new Response(
+				`
 			<body style="font-family: sans-serif; background: rgb(255,215,215); border: 2px solid red; margin: 0; padding: 1em;">
 				<h1>Missing .env file</h1>
 				<p>In order to use GitHub authentication, you will need to <a target="_blank" href="https://github.com/settings/developers">register an OAuth application</a> and create a local .env file:</p>
@@ -23,10 +24,11 @@ export const GET = client_id
 				<p>The <code>BASEURL</code> variable should match the callback URL specified for your app.</p>
 				<p>See also <a target="_blank" href="https://github.com/sveltejs/svelte/tree/master/site#repl-github-integration">here</a></p>
 			</body>
-		`, {
-				status: 500,
-				headers: {
-					'Content-Type': 'text/html; charset=utf-8'
+		`,
+				{
+					status: 500,
+					headers: {
+						'Content-Type': 'text/html; charset=utf-8'
+					}
 				}
-			}
-	  );
+			);

@@ -15,6 +15,11 @@
 	{#if online}
 		{#if $page.status === 404}
 			<h1>Not found!</h1>
+			If you were expecting to find something here, please drop by the<a rel="external" href="/chat"
+				>Discord chatroom</a
+			>
+			and let us know, or raise an issue on
+			<a href="https://github.com/sveltejs/svelte">GitHub</a>. Thanks!
 		{:else}
 			<h1>Yikes!</h1>
 			<p>Something went wrong when we tried to render this page.</p>
@@ -23,29 +28,18 @@
 			{:else}
 				<p class="error">Encountered a {$page.status} error.</p>
 			{/if}
-		{/if}
-
-		{#if import.meta.env.DEV && $page.error.stack}
-			<pre>{$page.error.stack}</pre>
-		{:else if $page.status >= 500}
-			<p>Please try reloading the page.</p>
-		{/if}
-
-		<p>
-			{#if $page.status === 404}
-				If you were expecting to find something here, please drop by the <a
-					rel="external"
-					href="/chat">Discord chatroom</a
-				>
-				and let us know, or raise an issue on
-				<a href="https://github.com/sveltejs/svelte">GitHub</a>. Thanks!
-			{:else}
+			{#if import.meta.env.DEV && $page.error.stack}
+				<pre>{$page.error.stack}</pre>
+			{:else if $page.status >= 500}
+				<p>Please try reloading the page.</p>
+			{/if}
+			<p>
 				If the error persists, please drop by the <a rel="external" href="/chat">Discord chatroom</a
 				>
 				and let us know, or raise an issue on
 				<a href="https://github.com/sveltejs/svelte">GitHub</a>. Thanks!
-			{/if}
-		</p>
+			</p>
+		{/if}
 	{:else}
 		<h1>It looks like you're offline</h1>
 

@@ -27,18 +27,25 @@
 
 		{#if import.meta.env.DEV && $page.error.stack}
 			<pre>{$page.error.stack}</pre>
-		{:else}
-			{#if $page.status >= 500}
-				<p>Please try reloading the page.</p>
-			{/if}
+		{:else if $page.status >= 500}
+			<p>Please try reloading the page.</p>
+		{/if}
 
-			<p>
+		<p>
+			{#if $page.status === 404}
+				If you were expecting to find something here, please drop by the <a
+					rel="external"
+					href="/chat">Discord chatroom</a
+				>
+				and let us know, or raise an issue on
+				<a href="https://github.com/sveltejs/svelte">GitHub</a>. Thanks!
+			{:else}
 				If the error persists, please drop by the <a rel="external" href="/chat">Discord chatroom</a
 				>
 				and let us know, or raise an issue on
 				<a href="https://github.com/sveltejs/svelte">GitHub</a>. Thanks!
-			</p>
-		{/if}
+			{/if}
+		</p>
 	{:else}
 		<h1>It looks like you're offline</h1>
 

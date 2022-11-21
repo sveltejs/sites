@@ -19,7 +19,7 @@
 				>Discord chatroom</a
 			>
 			and let us know, or raise an issue on
-			<a href="https://github.com/sveltejs/svelte">GitHub</a>. Thanks!
+			<a href="https://github.com/sveltejs/sites">GitHub</a>. Thanks!
 		{:else}
 			<h1>Yikes!</h1>
 			<p>Something went wrong when we tried to render this page.</p>
@@ -37,7 +37,7 @@
 				If the error persists, please drop by the <a rel="external" href="/chat">Discord chatroom</a
 				>
 				and let us know, or raise an issue on
-				<a href="https://github.com/sveltejs/svelte">GitHub</a>. Thanks!
+				<a href="https://github.com/sveltejs/sites">GitHub</a>. Thanks!
 			</p>
 		{/if}
 	{:else}

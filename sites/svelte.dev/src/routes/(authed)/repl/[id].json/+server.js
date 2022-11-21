@@ -5,8 +5,7 @@ import { client } from '$lib/db/client';
 import * as gist from '$lib/db/gist';
 import { API_BASE } from '$lib/env';
 
-const UUID_REGEX =
-	/^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$/;
+const UUID_REGEX = /^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$/;
 
 /** @type {Set<string>} */
 let examples;

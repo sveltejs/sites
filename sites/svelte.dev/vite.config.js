@@ -8,6 +8,9 @@ process.env.VITE_API_BASE = process.env.DOCS_PREVIEW
 
 /** @type {import('vite').UserConfig} */
 const config = {
+	build: {
+		minify: false
+	},
 	plugins: [imagetools(), sveltekit()],
 		optimizeDeps: {
 			include: [

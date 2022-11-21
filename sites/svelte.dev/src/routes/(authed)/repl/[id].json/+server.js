@@ -6,7 +6,7 @@ import * as gist from '$lib/db/gist';
 import { API_BASE } from '$lib/env';
 
 const UUID_REGEX =
-	/^([a-f]|[0-9]){8}-?([a-f]|[0-9]){4}-?([a-f]|[0-9]){4}-?([a-f]|[0-9]){4}-?([a-f]|[0-9]){12}$/;
+	/^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f{4}-?[0-9a-f]{12}$/;
 
 /** @type {Set<string>} */
 let examples;

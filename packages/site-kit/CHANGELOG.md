@@ -1,5 +1,9 @@
 # @sveltejs/site-kit changelog
 
+## 2.1.4
+
+- Decouple from SvelteKit ([#390](https://github.com/sveltejs/sites/pull/390))
+
 ## 2.1.3
 
 - Remove `<Hero>` component

@@ -13,12 +13,16 @@
 
 <div class="container">
 	{#if online}
-		<h1>Yikes!</h1>
-
-		{#if $page.error.message}
-			<p class="error">{$page.status}: {$page.error.message}</p>
+		{#if $page.status === 404}
+			<h1>Not found!</h1>
 		{:else}
-			<p class="error">Encountered a {$page.status} error</p>
+			<h1>Yikes!</h1>
+			<p>Something went wrong when we tried to render this page.</p>
+			{#if $page.error.message}
+				<p class="error">{$page.status}: {$page.error.message}</p>
+			{:else}
+				<p class="error">Encountered a {$page.status} error.</p>
+			{/if}
 		{/if}
 
 		{#if import.meta.env.DEV && $page.error.stack}

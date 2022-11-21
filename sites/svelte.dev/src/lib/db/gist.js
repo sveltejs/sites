@@ -83,7 +83,7 @@ export async function update(user, gistid, gist) {
 
 /**
  * @param {number} userid
- * @param {Promise<string[]>} ids
+ * @param {string[]} ids
  */
 export async function destroy(userid, ids) {
 	const { error } = await client.rpc('gist_destroy', {

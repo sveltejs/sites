@@ -15,8 +15,11 @@
 	{#if online}
 		{#if $page.status === 404}
 			<h1>Not found!</h1>
-			If you were expecting to find something here, please drop by the&nbsp;<a rel="external" href="/chat"
-				>Discord chatroom</a
+			If you were expecting to find something here, please drop by the<a
+				rel="external"
+				href="/chat"
+			>
+				Discord chatroom</a
 			>
 			and let us know, or raise an issue on
 			<a href="https://github.com/sveltejs/sites">GitHub</a>. Thanks!

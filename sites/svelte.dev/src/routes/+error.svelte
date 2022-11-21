@@ -15,14 +15,12 @@
 	{#if online}
 		{#if $page.status === 404}
 			<h1>Not found!</h1>
-			If you were expecting to find something here, please drop by the<a
-				rel="external"
-				href="/chat"
-			>
-				Discord chatroom</a
-			>
-			and let us know, or raise an issue on
-			<a href="https://github.com/sveltejs/sites">GitHub</a>. Thanks!
+			<p>
+				If you were expecting to find something here, please drop by the
+				<a href="/chat"> Discord chatroom </a>
+				and let us know, or raise an issue on
+				<a href="https://github.com/sveltejs/sites">GitHub</a>. Thanks!
+			</p>
 		{:else}
 			<h1>Yikes!</h1>
 			<p>Something went wrong when we tried to render this page.</p>
@@ -31,21 +29,16 @@
 			{:else}
 				<p class="error">Encountered a {$page.status} error.</p>
 			{/if}
-			{#if import.meta.env.DEV && $page.error.stack}
-				<pre>{$page.error.stack}</pre>
-			{:else if $page.status >= 500}
-				<p>Please try reloading the page.</p>
-			{/if}
+			<p>Please try reloading the page.</p>
 			<p>
-				If the error persists, please drop by the <a rel="external" href="/chat">Discord chatroom</a
-				>
+				If the error persists, please drop by the
+				<a href="/chat"> Discord chatroom </a>
 				and let us know, or raise an issue on
 				<a href="https://github.com/sveltejs/sites">GitHub</a>. Thanks!
 			</p>
 		{/if}
 	{:else}
 		<h1>It looks like you're offline</h1>
-
 		<p>Reload the page once you've found the internet.</p>
 	{/if}
 </div>
@@ -77,8 +70,4 @@
 		font: 600 16px/1.7 var(--font);
 		border-radius: 2px;
 	}
-
-	/* @media (min-width: 480px) {
-		h1 { font-size: 4em }
-	} */
 </style>

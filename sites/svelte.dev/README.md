@@ -13,7 +13,7 @@ pnpm install
 pnpm dev
 ```
 
-and navigate to [localhost:3000](http://localhost:3000).
+and navigate to [localhost:5173](http://localhost:5173).
 
 The first time you run the site locally, it will update the list of Contributors and REPL dependencies. After this it won't run again unless you force it by running:
 
@@ -36,21 +36,23 @@ PUBLISH=1 npm run build
 
 The default configuration assumes that the `sites` repository and the `svelte` repository are in the same directory. If not, you can set `LOCAL_SVELTE_PATH` in `sites/svelte.dev/.env` to a different path to the local copy of Svelte.
 
-Then visit the REPL at [localhost:3000/repl?version=local](http://localhost:3000/repl?version=local). Please note that the local REPL only works with `pnpm dev` and not when building the site for production usage.
+Then visit the REPL at [localhost:5173/repl?version=local](http://localhost:5173/repl?version=local). Please note that the local REPL only works with `pnpm dev` and not when building the site for production usage.
 
 ## REPL GitHub integration
 
 In order for the REPL's GitHub integration to work properly when running locally, you will need to:
 
 - [create a GitHub OAuth app](https://github.com/settings/developers):
-  - set `Authorization callback URL` to `http://localhost:3000/auth/callback`;
-  - set `Application name` as you like, and `Homepage URL` as `http://localhost:3000/`;
+  - set `Authorization callback URL` to `http://localhost:5173/auth/callback`;
+  - set `Application name` as you like, and `Homepage URL` as `http://localhost:5173/`;
   - create the app and take note of `Client ID` and `Client Secret`
-- in this directory, create an `.env` file (see `.env.example`) containing:
+- in this directory, create an `.env.local` file (see `.env.example`) containing:
   ```
   GITHUB_CLIENT_ID=[your app's Client ID]
   GITHUB_CLIENT_SECRET=[your app's Client Secret]
   ```
+
+The GitHub app requires a specific callback URL, and so cannot be used with the preview deployment in the staging environment.
 
 ## Building the site
 

@@ -52,6 +52,8 @@ In order for the REPL's GitHub integration to work properly when running locally
   GITHUB_CLIENT_SECRET=[your app's Client Secret]
   ```
 
+The GitHub app requires a specific callback URL, and so cannot be used with the preview deployment in the staging environment.
+
 ## Building the site
 
 To build the website, run `pnpm build`. The output can be found in `build`.

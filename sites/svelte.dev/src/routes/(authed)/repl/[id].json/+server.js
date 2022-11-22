@@ -95,5 +95,5 @@ export async function PUT({ params, request }) {
 	const body = await request.json();
 	await gist.update(user, params.id, body);
 
-	throw error(204);
+	return new Response(undefined, { status: 204 });
 }

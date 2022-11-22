@@ -46,7 +46,7 @@ In order for the REPL's GitHub integration to work properly when running locally
   - set `Authorization callback URL` to `http://localhost:5173/auth/callback`;
   - set `Application name` as you like, and `Homepage URL` as `http://localhost:5173/`;
   - create the app and take note of `Client ID` and `Client Secret`
-- in this directory, create an `.env` file (see `.env.example`) containing:
+- in this directory, create an `.env.local` file (see `.env.example`) containing:
   ```
   GITHUB_CLIENT_ID=[your app's Client ID]
   GITHUB_CLIENT_SECRET=[your app's Client Secret]

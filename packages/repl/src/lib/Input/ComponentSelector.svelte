@@ -206,7 +206,6 @@
 		white-space: nowrap;
 		overflow-x: auto;
 		overflow-y: hidden;
-		height: 10em;
 	}
 
 	.file-tabs .button,

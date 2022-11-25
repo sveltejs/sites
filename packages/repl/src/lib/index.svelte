@@ -303,17 +303,14 @@
 
 	.container :global(section) {
 		position: relative;
-		padding: 42px 0 0 0;
+		display: flex;
+		flex-direction: column;
 		height: 100%;
 		box-sizing: border-box;
 	}
 
 	.container :global(section) > :global(*):first-child {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 42px;
+		flex: 1 0 auto;
 		box-sizing: border-box;
 	}
 

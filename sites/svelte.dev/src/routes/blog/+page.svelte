@@ -44,7 +44,7 @@
 	h2 {
 		display: inline-block;
 		margin: 3.2rem 0 0.4rem 0;
-		color: var(--text);
+		color: var(--sk-text-2);
 		max-width: 18em;
 		font-size: var(--h3);
 		font-weight: 400;
@@ -59,7 +59,7 @@
 	.post:first-child h2 {
 		font-size: 4rem;
 		font-weight: 400;
-		color: var(--second);
+		color: var(--sk-text-3);
 	}
 
 	.post:first-child::before,
@@ -79,7 +79,7 @@
 	.post p {
 		font-size: var(--h5);
 		max-width: 30em;
-		color: var(--second);
+		color: var(--sk-text-3);
 	}
 
 	.post > a {

@@ -1,5 +1,7 @@
 <script>
-	import { Contents, Main, Section } from '@sveltejs/site-kit/docs';
+	import Contents from './ContentsOld.svelte';
+	import Main from './Main.svelte';
+	import Section from './Section.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;

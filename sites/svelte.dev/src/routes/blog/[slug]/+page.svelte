@@ -1,6 +1,4 @@
 <script>
-	import '@sveltejs/site-kit/code.css';
-
 	/** @type {import('./$types').PageData} */
 	export let data;
 </script>
@@ -13,7 +11,7 @@
 	<meta name="Description" content={data.post.description} />
 </svelte:head>
 
-<article class="post listify">
+<article class="post listify text">
 	<h1>{data.post.title}</h1>
 	<p class="standfirst">{data.post.description}</p>
 
@@ -39,7 +37,7 @@
 
 	.standfirst {
 		font-size: var(--h4);
-		color: var(--second);
+		color: var(--sk-text-2);
 		margin: 0 0 1em 0;
 	}
 
@@ -52,7 +50,7 @@
 	}
 
 	.post h1 {
-		color: var(--second);
+		color: var(--sk-text-2);
 		max-width: 20em;
 		margin: 0 0 0.8rem 0;
 	}
@@ -74,7 +72,7 @@
 	}
 
 	.post :global(figcaption) {
-		color: var(--second);
+		color: var(--sk-text-2);
 		text-align: left;
 	}
 

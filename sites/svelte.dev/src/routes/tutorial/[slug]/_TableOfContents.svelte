@@ -60,7 +60,8 @@
 		display: grid;
 		align-items: center;
 		grid-template-columns: 2.5em 1fr 2.5em;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		background-color: var(--sk-back-3);
+		border-bottom: 1px solid var(--sk-back-4);
 	}
 
 	div {
@@ -68,7 +69,7 @@
 		padding: 1em 0.5em;
 		font-weight: 300;
 		font-size: var(--h6);
-		color: white;
+		color: var(--sk-text-2);
 	}
 
 	a {
@@ -76,7 +77,7 @@
 		padding: 0.7em 0;
 		text-align: center;
 		opacity: 0.75;
-		color: white;
+		color: var(--sk-text-2);
 	}
 
 	a:hover {
@@ -86,7 +87,7 @@
 	a.disabled,
 	a.disabled:hover,
 	a.disabled:active {
-		color: white;
+		color: var(--sk-text-2);
 		opacity: 0.3;
 	}
 

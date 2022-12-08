@@ -46,9 +46,9 @@
 	.examples-toc {
 		overflow-y: auto;
 		height: 100%;
-		border-right: 1px solid var(--second);
-		background-color: var(--second);
-		color: white;
+		border-right: 1px solid var(--sk-back-2);
+		background-color: var(--sk-back-3);
+		color: var(--sk-text-2);
 		padding: 3rem 3rem 0 3rem;
 	}
 
@@ -75,20 +75,14 @@
 	}
 
 	div.active {
-		color: white;
-	}
-
-	div.active.loading {
-		background: rgba(0, 0, 0, 0.1) calc(100% - 3rem) 47% no-repeat url(/icons/loading.svg);
-		background-size: 1em 1em;
-		color: white;
+		color: var(--sk-text-1);
 	}
 
 	a {
 		display: flex;
 		flex: 1 1 auto;
 		position: relative;
-		color: var(--sidebar-text);
+		color: var(--sk-text-2);
 		border-bottom: none;
 		font-size: 1.6rem;
 		align-items: center;
@@ -97,7 +91,7 @@
 	}
 
 	a:hover {
-		color: white;
+		color: var(--sk-text-1);
 	}
 
 	.repl-link {
@@ -108,7 +102,7 @@
 	}
 
 	.thumbnail {
-		background-color: white;
+		background-color: var(--sk-back-2);
 		object-fit: contain;
 		width: 5rem;
 		height: 5rem;

@@ -1,5 +1,4 @@
 <script>
-	import '@sveltejs/site-kit/code.css';
 	import { browser } from '$app/environment';
 	import { getContext } from 'svelte';
 
@@ -105,7 +104,7 @@
 
 <div class="tutorial-outer">
 	<div class="viewport offset-{offset}">
-		<div class="tutorial-text">
+		<div class="tutorial-text text">
 			<div class="table-of-contents">
 				<TableOfContents {sections} slug={data.slug} {selected} />
 			</div>
@@ -204,8 +203,8 @@
 		flex-direction: column;
 		height: 100%;
 		border-right: 1px solid var(--second);
-		background-color: var(--second);
-		color: var(--sidebar-text);
+		/* background-color: var(--second);
+		color: var(--sidebar-text); */
 	}
 
 	.chapter-markup {
@@ -215,7 +214,7 @@
 		height: 0;
 	}
 
-	.chapter-markup :global(h2) {
+	/* .chapter-markup :global(h2) {
 		margin: 4rem 0 1.6rem 0;
 		font-size: var(--h3);
 		line-height: 1;
@@ -225,38 +224,38 @@
 
 	.chapter-markup :global(h2:first-child) {
 		margin-top: 0.4rem;
-	}
+	} */
 
 	.chapter-markup :global(a) {
 		transition: color 0.2s;
 		text-decoration: underline;
-		color: var(--sidebar-text);
+		color: var(--sk-text-2);
 	}
 
 	.chapter-markup :global(a:hover) {
-		color: white;
+		color: var(--sk-text-1);
 	}
 
 	.chapter-markup :global(ul) {
 		padding: 0 0 0 2em;
 	}
 
-	.chapter-markup :global(blockquote) {
+	/* .chapter-markup :global(blockquote) {
 		background-color: rgba(0, 0, 0, 0.17);
 		color: var(--sidebar-text);
-	}
+	} */
 
 	.chapter-markup::-webkit-scrollbar {
-		background-color: var(--second);
+		background-color: var(--sk-back-5);
 		width: 8px;
 	}
 
 	.chapter-markup::-webkit-scrollbar-thumb {
-		background-color: rgba(255, 255, 255, 0.7);
+		background-color: var(--sk-scrollbar);
 		border-radius: 1em;
 	}
 
-	.chapter-markup :global(p) > :global(code),
+	/* .chapter-markup :global(p) > :global(code),
 	.chapter-markup :global(ul) :global(code) {
 		color: var(--sidebar-text);
 		background: rgba(0, 0, 0, 0.12);
@@ -264,7 +263,7 @@
 		white-space: nowrap;
 		position: relative;
 		top: -0.1em;
-	}
+	} */
 
 	.controls {
 		border-top: 1px solid rgba(255, 255, 255, 0.15);
@@ -274,14 +273,14 @@
 	}
 
 	.show {
-		background: var(--prime);
+		background: var(--sk-theme-1);
 		padding: 0.3em 0.7em;
 		border-radius: var(--border-r);
 		top: 0.1em;
 		position: relative;
 		font-size: var(--h5);
 		font-weight: 300;
-		color: rgba(255, 255, 255, 0.7);
+		color: rgba(255, 255, 255, 0.9);
 	}
 
 	.show:hover {

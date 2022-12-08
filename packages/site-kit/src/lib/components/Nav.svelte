@@ -49,7 +49,7 @@
 	<div class="modal-background hide-if-desktop" on:click={() => (open = false)} />
 {/if}
 
-<nav class:visible={visible || open} class:open bind:this={nav}>
+<nav class:visible={visible || open} class:open bind:this={nav} aria-label="Primary">
 	<a href="/" class="nav-spot home" title={home_title} style="background-image: url({logo})">
 		{home}
 	</a>
@@ -80,7 +80,8 @@
 		height: 100%;
 		top: 0;
 		left: 0;
-		background: rgba(255, 255, 255, 0.8);
+		background: var(--back);
+		opacity: 0.8;
 		z-index: 2;
 		backdrop-filter: grayscale(0.5) blur(2px);
 	}
@@ -95,10 +96,10 @@
 		);
 		position: fixed;
 		width: 100vw;
-		height: var(--nav-h);
+		height: var(--sk-nav-height);
 		margin: 0 auto;
-		background-color: white;
-		font-family: var(--font);
+		background-color: var(--sk-back-2);
+		font-family: var(--sk-font);
 		z-index: 100;
 		user-select: none;
 		transition: transform 0.2s;
@@ -114,8 +115,10 @@
 		background: var(--shadow-gradient);
 	}
 
-	nav:not(.visible):not(:focus-within) {
-		transform: translate(0, calc(-100% - 1rem));
+	@media (max-width: 800px) {
+		nav:not(.visible):not(:focus-within) {
+			transform: translate(0, calc(-100% - 1rem));
+		}
 	}
 
 	ul {
@@ -127,33 +130,33 @@
 	}
 
 	ul :global(a) {
-		color: var(--text);
+		color: var(--sk-text-2);
 	}
 
 	.home {
 		width: 30rem;
-		height: var(--nav-h);
+		height: var(--sk-nav-height);
 		display: flex;
 		text-indent: -9999px;
-		background-position: calc(var(--side-nav) - 1rem) 50%;
+		background-position: calc(var(--sk-page-padding-side) - 1rem) 50%;
 		background-repeat: no-repeat;
 		background-size: auto 70%;
 	}
 
 	button {
 		position: absolute;
-		top: calc(var(--nav-h) / 2 - 1rem);
-		right: var(--side-nav);
+		top: calc(var(--sk-nav-height) / 2 - 1rem);
+		right: var(--sk-page-padding-side);
 		line-height: 1;
 	}
 
-	@media (max-width: 799px) {
+	@media (max-width: 800px) {
 		ul {
 			position: relative;
 			display: none;
 			width: 100%;
-			background: white;
-			padding: 1rem var(--side-nav);
+			background: var(--back);
+			padding: 1rem var(--sk-page-padding-side);
 		}
 
 		.open ul {
@@ -161,15 +164,15 @@
 		}
 
 		ul.external {
-			padding: 1rem var(--side-nav) 1rem;
+			padding: 1rem var(--sk-page-padding-side) 1rem;
 		}
 
 		ul.external::before {
 			content: '';
 			position: absolute;
 			top: 0;
-			left: var(--side-nav);
-			width: calc(100% - 2 * var(--side-nav));
+			left: var(--sk-page-padding-side);
+			width: calc(100% - 2 * var(--sk-page-padding-side));
 			height: 1px;
 			background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
 		}
@@ -215,7 +218,7 @@
 
 		ul.external {
 			width: 30rem;
-			padding: 0 var(--side-nav) 0 0;
+			padding: 0 var(--sk-page-padding-side) 0 0;
 			justify-content: end;
 		}
 

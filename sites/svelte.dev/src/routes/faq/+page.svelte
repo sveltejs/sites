@@ -1,6 +1,4 @@
 <script>
-	import { Permalink } from '@sveltejs/site-kit';
-	
 	/** @type {import('./$types').PageData} */
 	export let data;
 </script>
@@ -16,11 +14,14 @@
 <div class="faqs stretch">
 	<h1>Frequently Asked Questions</h1>
 	{#each data.faqs as faq}
-		<article class="faq">
+		<article class="faq text">
 			<h2>
 				<span id={faq.slug} class="offset-anchor" />
 				{faq.title}
-				<Permalink href="/faq#{faq.slug}" />
+
+				<a href="/faq#{faq.slug}" class="anchor">
+					<span class="visually-hidden">permalink</span>
+				</a>
 			</h2>
 			{@html faq.content}
 		</article>

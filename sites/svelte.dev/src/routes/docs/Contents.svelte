@@ -1,72 +1,169 @@
 <script>
-	import { page } from '$app/stores';
-	import TSToggle from './TSToggle.svelte';
+	import { afterUpdate } from 'svelte';
+	import { Icon } from '@sveltejs/site-kit';
 
 	export let contents = [];
-	// TODO hard coded for now, we need to adjust the API for this, which would break any unofficial sites using it
-	$: sections = [
-		{ title: 'Introduction', pages: contents.slice(0, 2) },
-		{ title: 'Core Concepts', pages: contents.slice(2, 5) },
-		{ title: 'Advanced', pages: contents.slice(5) }
-	];
-	$: console.log(contents, sections);
+	export let path = null;
+	export let prevent_sidebar_scroll = false;
+
+	let show_contents = false;
+	let ul;
+
+	afterUpdate(() => {
+		// bit of a hack — prevent sidebar scrolling if
+		// TOC is open on mobile, or scroll came from within sidebar
+		if (prevent_sidebar_scroll || (show_contents && window.innerWidth < 832)) return;
+
+		const active = ul.querySelector('.active');
+
+		if (active) {
+			const { top, bottom } = active.getBoundingClientRect();
+
+			const min = 200;
+			const max = window.innerHeight - 200;
+
+			if (top > max) {
+				ul.parentNode.scrollBy({
+					top: top - max,
+					left: 0
+				});
+			} else if (bottom < min) {
+				ul.parentNode.scrollBy({
+					top: bottom - min,
+					left: 0
+				});
+			}
+		}
+	});
 </script>
 
-<nav aria-label="Docs">
-	<ul class="sidebar">
-		{#each sections as section}
-			<li>
-				<span class="section">
-					{section.title}
-				</span>
+<aside class="sidebar-container" class:open={show_contents}>
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<div class="sidebar" on:click={() => (show_contents = false)}>
+		<!-- scroll container -->
+		<ul
+			bind:this={ul}
+			class="reference-toc"
+			on:mouseenter={() => (prevent_sidebar_scroll = true)}
+			on:mouseleave={() => (prevent_sidebar_scroll = false)}
+		>
+			{#each contents as section}
+				<li>
+					<a class="section" class:active={section.path === path} href={section.path}>
+						{section.title}
+					</a>
 
-				<ul>
-					{#each section.pages as { title, slug }}
-						<li>
-							<a
-								data-sveltekit-preload-data
-								class="page"
-								class:active={`/docs/${slug}` === $page.url.pathname}
-								href={`/docs/${slug}`}
-							>
-								{title}
-							</a>
-						</li>
-					{/each}
-				</ul>
-			</li>
-		{/each}
-	</ul>
-</nav>
+					<ul>
+						{#each section.sections as subsection}
+							<li>
+								<a
+									class="subsection"
+									class:active={subsection.path === path}
+									href={subsection.path}
+								>
+									{subsection.title}
+								</a>
 
-<!-- <div class="ts-toggle">
-	<TSToggle />
-</div> -->
+								<ul>
+									{#each subsection.sections as subsection}
+										<li>
+											<a
+												class="nested subsection"
+												class:active={subsection.path === path}
+												href={subsection.path}
+											>
+												{subsection.title}
+											</a>
+										</li>
+									{/each}
+								</ul>
+							</li>
+						{/each}
+					</ul>
+				</li>
+			{/each}
+		</ul>
+	</div>
+
+	<button on:click={() => (show_contents = !show_contents)}>
+		<Icon name={show_contents ? 'close' : 'menu'} />
+	</button>
+</aside>
+
 <style>
-	nav {
+	aside {
+		position: fixed;
+		background-color: var(--sk-back-1);
+		left: 0.8rem;
+		bottom: 0.8rem;
+		width: 2em;
+		height: 2em;
+		overflow: hidden;
+		border: 1px solid #eee;
+		box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.1);
+		transition: width 0.2s, height 0.2s;
+	}
+
+	aside button {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 3.4rem;
+		height: 3.4rem;
+	}
+
+	aside.open {
+		width: calc(100vw - 3rem);
+		height: calc(100vh - var(--nav-h));
+	}
+
+	aside.open::before {
+		content: '';
+		position: absolute;
 		top: 0;
 		left: 0;
-		color: var(--sk-text-3);
+		width: calc(100% - 2rem);
+		height: 2em;
+		background: linear-gradient(
+			to top,
+			rgba(255, 255, 255, 0) 0%,
+			rgba(255, 255, 255, 0.7) 50%,
+			rgba(255, 255, 255, 1) 100%
+		);
+		pointer-events: none;
+		z-index: 2;
+	}
+
+	aside::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		bottom: 1.9em;
+		width: calc(100% - 2rem);
+		height: 2em;
+		background: linear-gradient(
+			to bottom,
+			rgba(255, 255, 255, 0) 0%,
+			rgba(255, 255, 255, 0.7) 50%,
+			rgba(255, 255, 255, 1) 100%
+		);
+		pointer-events: none;
 	}
 
 	.sidebar {
-		padding: var(--sk-page-padding-top) 0 var(--sk-page-padding-top) 3.2rem;
-		font-family: var(--sk-font);
-		height: 100%;
-		bottom: auto;
+		position: absolute;
+		font-family: var(--font);
+		overflow-y: auto;
 		width: 100%;
-		columns: 2;
+		height: 100%;
+		padding: 4em 1.6rem 2em 3.2rem;
+		bottom: 2em;
 	}
 
 	li {
 		display: block;
 		line-height: 1.2;
-		margin: 0;
-		margin-bottom: 4rem;
-	}
-
-	li:last-child {
-		margin-bottom: 0;
+		margin: 0 0 4rem 0;
 	}
 
 	a {
@@ -74,29 +171,49 @@
 		transition: color 0.2s;
 		border-bottom: none;
 		padding: 0;
-		color: var(--sk-text-3);
+		color: var(--second);
 		user-select: none;
 	}
 
 	.section {
 		display: block;
-		padding-bottom: 0.8rem;
-		font-size: var(--sk-text-xs);
+		padding: 0 0 0.8rem 0;
+		font-size: var(--h6);
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
 		font-weight: 600;
 	}
 
-	.page {
+	.subsection {
 		display: block;
 		font-size: 1.6rem;
-		font-family: var(--sk-font);
-		padding-bottom: 0.6em;
+		font-family: var(--font);
+		padding: 0 0 0.6em 0;
+	}
+
+	.section:hover,
+	.subsection:hover,
+	.active {
+		color: var(--flash);
 	}
 
 	.active {
 		font-weight: 700;
-		color: var(--sk-text-1);
+	}
+
+	.active::after {
+		content: '';
+		position: absolute;
+		right: 0;
+		top: 2px;
+		width: 0;
+		height: 0;
+		border: 6px solid transparent;
+		border-right-color: white;
+	}
+
+	.nested {
+		padding-left: 1.2rem;
 	}
 
 	ul ul,
@@ -104,78 +221,59 @@
 		margin: 0;
 	}
 
-	.ts-toggle {
-		width: calc(100% - 1px);
-		border-top: 1px solid var(--sk-back-4);
-		background-color: var(--sk-back-3);
-	}
-
-	@media (min-width: 600px) {
-		.sidebar {
-			columns: 2;
-			padding-left: var(--sk-page-padding-side);
-			padding-right: var(--sk-page-padding-side);
-		}
-	}
-
-	@media (min-width: 700px) {
-		.sidebar {
-			columns: 3;
-		}
-	}
-
 	@media (min-width: 832px) {
-		.sidebar {
-			columns: 1;
-			padding-left: 3.2rem;
-			padding-right: 0;
-			width: var(--sidebar-menu-width);
-			margin: 0 0 0 auto;
-		}
-
-		nav {
-			min-height: calc(100vh - var(--ts-toggle-height));
-		}
-
-		nav::after {
-			content: '';
-			position: fixed;
+		aside {
+			display: block;
+			width: var(--sidebar-w);
+			height: 100vh;
+			top: 0;
 			left: 0;
-			bottom: var(--ts-toggle-height);
-			width: calc(var(--sidebar-width) - 1px);
-			height: 2em;
-			pointer-events: none;
+			overflow: hidden;
+			box-shadow: none;
+			border: none;
+			overflow: hidden;
+			background-color: var(--sk-back-3);
+			color: var(--sk-text-3);
+		}
+
+		aside.open::before {
+			display: none;
+		}
+
+		aside::after {
+			content: '';
+			bottom: 0;
+			height: var(--top-offset);
 			background: linear-gradient(
 				to bottom,
-				hsla(var(--sk-back-3-hsl), 0) 0%,
-				hsla(var(--sk-back-3-hsl), 0.7) 50%,
-				hsl(var(--sk-back-3-hsl)) 100%
+				rgba(103, 103, 120, 0) 0%,
+				rgba(103, 103, 120, 0.7) 50%,
+				rgba(103, 103, 120, 1) 100%
 			);
-			background-repeat: no-repeat;
-			background-size: calc(100% - 3rem) 100%; /* cover text but not scrollbar */
 		}
 
-		.active::after {
-			--size: 1rem;
-			content: '';
-			position: absolute;
-			width: var(--size);
-			height: var(--size);
-			top: -0.1rem;
-			right: calc(-0.5 * var(--size));
-			background-color: var(--sk-back-1);
-			border-left: 1px solid var(--sk-back-5);
-			border-bottom: 1px solid var(--sk-back-5);
-			transform: translateY(0.2rem) rotate(45deg);
-			z-index: 2;
+		aside button {
+			display: none;
 		}
 
-		.ts-toggle {
-			position: fixed;
-			width: calc(var(--sidebar-width) - 1px);
-			bottom: 0;
-			z-index: 1;
-			margin-right: 0;
+		.sidebar {
+			padding: var(--top-offset) 0 6.4rem 3.2rem;
+			font-family: var(--font);
+			overflow-y: auto;
+			height: 100%;
+			bottom: auto;
+			width: 100%;
+		}
+
+		a {
+			color: var(--sk-text-3);
+		}
+
+		a:hover,
+		.section:hover,
+		.subsection:hover,
+		.active {
+			color: var(--sk-text-2);
 		}
 	}
 </style>

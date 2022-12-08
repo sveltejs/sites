@@ -1,5 +1,5 @@
 <script>
-	import Contents from './ContentsOld.svelte';
+	import Contents from './Contents.svelte';
 	import Main from './Main.svelte';
 	import Section from './Section.svelte';
 

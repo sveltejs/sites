@@ -14,7 +14,11 @@
 	<ConsoleTable data={log.args[0]} columns={log.args[1]} />
 {/if}
 
-<div class="log console-{log.level}" style="padding-left: {level * 15}px" on:click={log.level === 'group' ? toggleGroupCollapse : undefined}>
+<div
+	class="log console-{log.level}"
+	style="padding-left: {level * 15}px"
+	on:click={log.level === 'group' ? toggleGroupCollapse : undefined}
+>
 	{#if log.count > 1}
 		<span class="count">{log.count}x</span>
 	{/if}
@@ -52,7 +56,7 @@
 
 {#if log.level === 'group' && !log.collapsed}
 	{#each log.logs as childLog}
-		<svelte:self log={childLog} level={level + 1}/>
+		<svelte:self log={childLog} level={level + 1} />
 	{/each}
 {/if}
 
@@ -79,22 +83,26 @@
 		font-family: var(--font-mono);
 	}
 
-	.console-warn, .console-system-warn {
+	.console-warn,
+	.console-system-warn {
 		background: #fffbe6;
 		border-color: #fff4c4;
 	}
 
-	.console-error, .console-assert {
+	.console-error,
+	.console-assert {
 		background: #fff0f0;
 		border-color: #fed6d7;
 	}
 
-	.console-group, .arrow {
+	.console-group,
+	.arrow {
 		cursor: pointer;
 		user-select: none;
 	}
 
-	.console-trace, .console-assert {
+	.console-trace,
+	.console-assert {
 		border-bottom: none;
 	}
 
@@ -115,13 +123,13 @@
 	}
 
 	.count {
-		color: #999;
+		color: var(--sk-text-3, #999);
 		font-size: 12px;
 		line-height: 1.2;
 	}
 
 	.info {
-		color: #666;
+		color: var(--sk-text-2, #666);
 		font-family: var(--font) !important;
 		font-size: 12px;
 	}

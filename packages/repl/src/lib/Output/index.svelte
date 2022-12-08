@@ -140,20 +140,20 @@
 	button {
 		/* width: 50%;
 		height: 100%; */
-		background: white;
+		background: var(--sk-back-1, white);
 		text-align: left;
 		position: relative;
 		font: 400 12px/1.5 var(--font);
 		border: none;
 		border-bottom: 3px solid transparent;
 		padding: 12px 12px 8px 12px;
-		color: #999;
+		color: var(--sk-text-2, #999);
 		border-radius: 0;
 	}
 
 	button.active {
-		border-bottom: 3px solid var(--prime);
-		color: #333;
+		border-bottom: 3px solid var(--sk-theme-1, --prime);
+		color: var(--sk-text-1, #333);
 	}
 
 	div[slot] {

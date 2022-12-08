@@ -214,20 +214,20 @@
 		position: relative;
 		display: inline-block;
 		font: 400 12px/1.5 var(--font);
-		background: white;
+		background: var(--sk-back-1, white);
 		border: none;
 		border-bottom: 3px solid transparent;
 		padding: 12px 14px 8px 16px;
 		margin: 0;
-		color: #999;
+		color: var(--sk-text-3, #999);
 		border-radius: 0;
 		cursor: pointer;
 	}
 
 	.file-tabs .button.active {
 		/* color: var(--second); */
-		color: #333;
-		border-bottom: 3px solid var(--prime);
+		color: var(--sk-text-2, #333);
+		border-bottom: 3px solid var(--sk-theme-1, --prime);
 	}
 
 	.editable,
@@ -240,7 +240,7 @@
 	}
 
 	.input-sizer {
-		color: #ccc;
+		color: var(--sk-text-3, #ccc);
 	}
 
 	input {
@@ -298,7 +298,7 @@
 		padding: 12px 10px 8px 0 !important;
 		height: 40px;
 		text-align: center;
-		background-color: white;
+		background-color: var(--sk-back-1, white);
 	}
 
 	.add-new:hover {
@@ -315,14 +315,14 @@
 		--drag-handle-color: #dedede;
 		background: linear-gradient(
 			to right,
-			var(--drag-handle-color) 1px,
-			white 1px,
-			white 2px,
-			var(--drag-handle-color) 2px,
-			var(--drag-handle-color) 3px,
-			white 3px,
-			white 4px,
-			var(--drag-handle-color) 4px
+			var(--sk-back-4, --drag-handle-color) 1px,
+			var(--sk-back-1, white) 1px,
+			var(--sk-back-1, white) 2px,
+			var(--sk-back-4, --drag-handle-color) 2px,
+			var(--sk-back-4, --drag-handle-color) 3px,
+			var(--sk-back-1, white) 3px,
+			var(--sk-back-1, white) 4px,
+			var(--sk-back-4, --drag-handle-color) 4px
 		);
 	}
 

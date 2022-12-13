@@ -1,4 +1,5 @@
 <script>
+	import { page } from '$app/stores';
 	import '@sveltejs/site-kit/code.css';
 
 	/** @type {import('./$types').PageData} */
@@ -8,9 +9,13 @@
 <svelte:head>
 	<title>{data.post.title}</title>
 
+	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={data.post.title} />
 	<meta name="twitter:description" content={data.post.description} />
 	<meta name="Description" content={data.post.description} />
+
+	<meta name="twitter:image" content="{$page.url.origin}/blog/{$page.params.slug}/card.png" />
+	<meta name="og:image" content="{$page.url.origin}/blog/{$page.params.slug}/card.png" />
 </svelte:head>
 
 <article class="post listify">

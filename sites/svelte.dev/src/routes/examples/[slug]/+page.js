@@ -1,8 +1,8 @@
-import { API_BASE } from '$lib/env';
+import { PUBLIC_API_BASE } from '$env/static/public';
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch, params, setHeaders }) {
-	const example = await fetch(`${API_BASE}/docs/svelte/examples/${params.slug}`, {
+	const example = await fetch(`${PUBLIC_API_BASE}/docs/svelte/examples/${params.slug}`, {
 		credentials: 'omit'
 	});
 

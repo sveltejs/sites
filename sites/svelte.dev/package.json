@@ -24,20 +24,23 @@
 		"marked": "^4.0.12"
 	},
 	"devDependencies": {
+		"@resvg/resvg-js": "^2.2.0",
 		"@sveltejs/adapter-auto": "next",
-		"@sveltejs/kit": "next",
+		"@sveltejs/kit": "1.0.0-next.586",
 		"@sveltejs/site-kit": "workspace:*",
-		"@sveltejs/vite-plugin-svelte": "^1.0.9",
+		"@sveltejs/vite-plugin-svelte": "^2.0.2",
 		"degit": "^2.8.4",
 		"dotenv": "^10.0.0",
 		"jimp": "^0.8.5",
 		"node-fetch": "^2.6.7",
 		"prettier": "^2.5.1",
 		"prettier-plugin-svelte": "^2.6.0",
+		"satori": "^0.0.44",
+		"satori-html": "^0.3.2",
 		"shelljs": "^0.8.5",
-		"svelte": "^3.46.3",
+		"svelte": "^3.55.0",
 		"svelte-check": "^2.7.1",
-		"vite": "^3.1.8",
+		"vite": "4",
 		"vite-imagetools": "^4.0.11"
 	}
 }

@@ -1,8 +1,8 @@
 import { redirect } from '@sveltejs/kit';
-import { API_BASE } from '$lib/env';
+import { PUBLIC_API_BASE } from '$env/static/public';
 
 export async function load({ fetch, params, setHeaders }) {
-	const tutorial = await fetch(`${API_BASE}/docs/svelte/tutorial/${params.slug}`);
+	const tutorial = await fetch(`${PUBLIC_API_BASE}/docs/svelte/tutorial/${params.slug}`);
 
 	if (!tutorial.ok) {
 		throw redirect(301, '/tutorial/basics');

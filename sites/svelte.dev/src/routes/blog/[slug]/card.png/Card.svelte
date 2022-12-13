@@ -1,12 +1,10 @@
 <script>
-	import machine from '../../../_components/svelte-machine.png?raw';
-
 	export let post;
 	export let origin;
 </script>
 
 <div class="card">
-	<img src="{origin}{machine}" alt="Svelte Machine" />
+	<img src="{origin}/images/og/svelte-machine.png" alt="Svelte Machine" />
 
 	<div class="text">
 		<h1>{post.title}</h1>

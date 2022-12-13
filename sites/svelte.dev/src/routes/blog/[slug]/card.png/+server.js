@@ -39,7 +39,8 @@ export const GET = async ({ params, url }) => {
 
 	return new Response(image.asPng(), {
 		headers: {
-			'content-type': 'image/png'
+			'content-type': 'image/png',
+			'cache-control': 'public, max-age=600' // cache for 10 minutes
 		}
 	});
 };

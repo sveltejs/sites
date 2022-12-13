@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { process_example } from '$lib/utils/examples';
-	import { API_BASE } from '../env';
+	import { PUBLIC_API_BASE } from '$env/static/public';
 
 	export let version = '3';
 	export let gist = null;
@@ -58,7 +58,7 @@
 					repl.set({ components });
 				});
 		} else if (example) {
-			fetch(`${API_BASE}/docs/svelte/examples/${example}`).then(async (response) => {
+			fetch(`${PUBLIC_API_BASE}/docs/svelte/examples/${example}`).then(async (response) => {
 				if (response.ok) {
 					const data = await response.json();
 					const components = process_example(data.files);

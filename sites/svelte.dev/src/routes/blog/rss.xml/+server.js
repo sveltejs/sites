@@ -1,4 +1,4 @@
-import { API_BASE } from '$lib/env';
+import { PUBLIC_API_BASE } from '$env/static/public';
 
 const months = ',Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',');
 
@@ -55,7 +55,7 @@ const get_rss = (posts) =>
 		.trim();
 
 export async function GET() {
-	const posts = await (await fetch(`${API_BASE}/docs/svelte/blog`)).json();
+	const posts = await (await fetch(`${PUBLIC_API_BASE}/docs/svelte/blog`)).json();
 
 	return new Response(get_rss(posts), {
 		headers: {

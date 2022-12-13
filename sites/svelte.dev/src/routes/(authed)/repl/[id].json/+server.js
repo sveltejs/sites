@@ -3,7 +3,7 @@ import { dev } from '$app/environment';
 import * as session from '$lib/db/session';
 import { client } from '$lib/db/client';
 import * as gist from '$lib/db/gist';
-import { API_BASE } from '$lib/env';
+import { PUBLIC_API_BASE } from '$env/static/public';
 
 const UUID_REGEX = /^[0-9a-f]{8}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{4}-?[0-9a-f]{12}$/;
 
@@ -32,7 +32,7 @@ function munge(files) {
 
 export async function GET({ params }) {
 	if (!examples) {
-		const res = await fetch(`${API_BASE}/docs/svelte/examples`);
+		const res = await fetch(`${PUBLIC_API_BASE}/docs/svelte/examples`);
 		examples = new Set(
 			(await res.json())
 				.map((category) => category.examples)
@@ -42,7 +42,7 @@ export async function GET({ params }) {
 	}
 
 	if (examples.has(params.id)) {
-		const res = await fetch(`${API_BASE}/docs/svelte/examples/${params.id}`);
+		const res = await fetch(`${PUBLIC_API_BASE}/docs/svelte/examples/${params.id}`);
 
 		if (!res.ok) {
 			return new Response(await res.json(), {

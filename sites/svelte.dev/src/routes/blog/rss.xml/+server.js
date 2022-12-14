@@ -1,5 +1,7 @@
 import { get_index } from '$lib/server/markdown';
 
+export const prerender = true;
+
 const months = ',Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec'.split(',');
 
 function formatPubdate(str) {

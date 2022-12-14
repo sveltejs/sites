@@ -14,8 +14,8 @@
 	<meta name="twitter:description" content={data.post.description} />
 	<meta name="Description" content={data.post.description} />
 
-	<meta name="twitter:image" content="{$page.url.origin}/blog/{$page.params.slug}/card.png" />
-	<meta name="og:image" content="{$page.url.origin}/blog/{$page.params.slug}/card.png" />
+	<meta name="twitter:image" content="/blog/{$page.params.slug}/card.png" />
+	<meta name="og:image" content="/blog/{$page.params.slug}/card.png" />
 </svelte:head>
 
 <article class="post listify">

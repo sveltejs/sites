@@ -1,14 +1,13 @@
 <script>
 	export let post;
-	export let origin;
 </script>
 
 <div class="card">
-	<img src="{origin}/images/og/svelte-machine.png" alt="Svelte Machine" />
+	<img src="https://sveltejs.github.io/assets/artwork/svelte-machine.png" alt="Svelte Machine" />
 
 	<div class="text">
 		<h1>{post.title}</h1>
-		<p class="date">{post.date.pretty}</p>
+		<p class="date">{post.date_formatted}</p>
 	</div>
 </div>
 

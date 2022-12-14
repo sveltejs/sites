@@ -2,17 +2,24 @@ import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
 import OverpassRegular from './Overpass-Regular.ttf';
 import { html as toReactNode } from 'satori-html';
+import { get_post } from '$lib/server/markdown/index.js';
+import { error } from '@sveltejs/kit';
 import Card from './Card.svelte';
-import { get_post } from '../data.js';
 
 const height = 630;
 const width = 1200;
 
+export const prerender = true;
+
 /** @type {import('./$types').RequestHandler} */
 export const GET = async ({ params, url }) => {
-	const post = await get_post(params.slug);
+	const post = get_post(params.slug);
 
-	const result = Card.render({ post, origin: url.origin });
+	if (!post) {
+		throw error(404);
+	}
+
+	const result = Card.render({ post });
 	const element = toReactNode(`${result.html}<style>${result.css.code}</style>`);
 
 	const svg = await satori(element, {

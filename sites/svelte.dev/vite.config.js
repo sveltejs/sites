@@ -21,7 +21,8 @@ function raw(ext) {
 
 /** @type {import('vite').UserConfig} */
 const config = {
-	plugins: [imagetools(), sveltekit(), raw(['.ttf'])],
+	logLevel: 'info',
+	plugins: [raw(['.ttf']), imagetools(), sveltekit()],
 	optimizeDeps: {
 		include: [
 			'codemirror',

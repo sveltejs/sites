@@ -24,11 +24,14 @@
 
 	<p class="byline">
 		<a href={data.post.author.url}>{data.post.author.name}</a>
-		<time datetime={data.post.date.numeric}>{data.post.date.pretty}</time>
+		<time datetime={data.post.date}>{data.post.date_formatted}</time>
 	</p>
 
 	{@html data.post.content}
 </article>
+
+<!-- the crawler doesn't understand twitter:image etc, so we have to add this hack. TODO fix in sveltekit -->
+<img hidden src="/blog/{$page.params.slug}/card.png" alt="Social card for {data.post.title}" />
 
 <style>
 	.post {

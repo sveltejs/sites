@@ -93,7 +93,7 @@ Finally, none of this could have happened without the project’s financial supp
 
 ## Migrating
 
-If you have an app built with pre-release versions of SvelteKit, we recommend upgrading to the final pre-release version — `@sveltejs/kit@1.0.0-next.587` — before upgrading to 1.0, as the stable release removes errors and warnings that were used for migrating between pre-release versions. We also recommend consulting [this migration guide](https://github.com/sveltejs/kit/discussions/5774), especially if you’re currently on an older version than 1.0.0-next-406.
+If you have an app built with pre-release versions of SvelteKit, we recommend upgrading to the final pre-release version — `@sveltejs/kit@1.0.0-next.588` — before upgrading to 1.0, as the stable release removes errors and warnings that were used for migrating between pre-release versions. We also recommend consulting [this migration guide](https://github.com/sveltejs/kit/discussions/5774), especially if you’re currently on an older version than 1.0.0-next-406.
 
 ## What’s next?
 

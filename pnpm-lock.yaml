@@ -147,6 +147,28 @@ importers:
       vite: 4.0.1
       vite-imagetools: 4.0.11
 
+  sites/todomvc:
+    specifiers:
+      '@sveltejs/adapter-auto': ^1.0.0
+      '@sveltejs/kit': ^1.0.0
+      prettier: ^2.8.0
+      prettier-plugin-svelte: ^2.8.1
+      svelte: ^3.54.0
+      svelte-check: ^2.9.2
+      tslib: ^2.4.1
+      typescript: ^4.9.3
+      vite: ^4.0.0
+    devDependencies:
+      '@sveltejs/adapter-auto': 1.0.0_@sveltejs+kit@1.0.0
+      '@sveltejs/kit': 1.0.0_svelte@3.55.0+vite@4.0.1
+      prettier: 2.8.1
+      prettier-plugin-svelte: 2.8.1_ajxj753sv7dbwexjherrch25ta
+      svelte: 3.55.0
+      svelte-check: 2.9.2_svelte@3.55.0
+      tslib: 2.4.1
+      typescript: 4.9.4
+      vite: 4.0.1
+
 packages:
 
   /@babel/code-frame/7.12.11:
@@ -3296,6 +3318,16 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
+  /prettier-plugin-svelte/2.8.1_ajxj753sv7dbwexjherrch25ta:
+    resolution: {integrity: sha512-KA3K1J3/wKDnCxW7ZDRA/QL2Q67N7Xs3gOERqJ5X1qFjq1DdnN3K1R29scSKwh+kA8FF67pXbYytUpvN/i3iQw==}
+    peerDependencies:
+      prettier: ^1.16.4 || ^2.0.0
+      svelte: ^3.2.0
+    dependencies:
+      prettier: 2.8.1
+      svelte: 3.55.0
+    dev: true
+
   /prettier-plugin-svelte/2.8.1_uhw2lhpgcwcu2blwnxkrwkimce:
     resolution: {integrity: sha512-KA3K1J3/wKDnCxW7ZDRA/QL2Q67N7Xs3gOERqJ5X1qFjq1DdnN3K1R29scSKwh+kA8FF67pXbYytUpvN/i3iQw==}
     peerDependencies:
@@ -3308,6 +3340,12 @@ packages:
 
   /prettier/2.7.1:
     resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    dev: true
+
+  /prettier/2.8.1:
+    resolution: {integrity: sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
@@ -3726,6 +3764,7 @@ packages:
 
   /sourcemap-codec/1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
+    deprecated: Please use @jridgewell/sourcemap-codec instead
     dev: true
 
   /spawndamnit/2.0.0:

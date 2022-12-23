@@ -1,61 +1,56 @@
 import type { Actions, PageServerLoad } from './$types';
+import {
+	addTodo,
+	clearCompleted,
+	deleteTodo,
+	editTodo,
+	getTodos,
+	toggleAll,
+	toggleTodo
+} from './db.server';
 
-export interface Todo {
-	id?: string;
-	title: string;
-	completed: boolean;
-}
+const wait = async () => {
+	return new Promise((resolve) => setTimeout(resolve, Math.random() * 1000));
+};
 
-export const load = (async ({ cookies }) => {
-	const todos = JSON.parse(cookies.get('todos') || '[]') as Todo[];
-	return { todos };
+export const load = (() => {
+	return { todos: getTodos() };
 }) satisfies PageServerLoad;
 
-// todos are managed inside a cookie, so we don't need to have a database - don't do this at home
-
 export const actions = {
-	addTodo: async ({ request, cookies }) => {
+	addTodo: async ({ request }) => {
+		await wait();
 		const form = await request.formData();
 		const title = form.get('title') as string;
-		const todos = JSON.parse(cookies.get('todos') || '[]');
-		todos.push({ id: 'id-' + Math.random(), title, completed: false });
-		cookies.set('todos', JSON.stringify(todos));
+		addTodo(title);
 	},
-	deleteTodo: async ({ request, cookies }) => {
+	deleteTodo: async ({ request }) => {
+		await wait();
 		const form = await request.formData();
 		const id = form.get('id') as string;
-		const todos = JSON.parse(cookies.get('todos') || '[]');
-		cookies.set('todos', JSON.stringify(todos.filter((todo: any) => todo.id !== id)));
+		deleteTodo(id);
 	},
-	editTodo: async ({ request, cookies }) => {
+	editTodo: async ({ request }) => {
+		await wait();
 		const form = await request.formData();
 		const id = form.get('id') as string;
 		const title = form.get('title') as string;
-		const todos = JSON.parse(cookies.get('todos') || '[]');
-		cookies.set(
-			'todos',
-			JSON.stringify(todos.map((todo: any) => (todo.id === id ? { ...todo, title } : todo)))
-		);
+		editTodo(id, title);
 	},
-	toggleTodo: async ({ request, cookies }) => {
+	toggleTodo: async ({ request }) => {
+		await wait();
 		const form = await request.formData();
 		const id = form.get('id') as string;
-		const todos = JSON.parse(cookies.get('todos') || '[]');
-		cookies.set(
-			'todos',
-			JSON.stringify(
-				todos.map((todo: any) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo))
-			)
-		);
+		toggleTodo(id);
 	},
-	toggleAll: async ({ request, cookies }) => {
+	toggleAll: async ({ request }) => {
+		await wait();
 		const form = await request.formData();
 		const completed = form.get('completed') === 'true';
-		const todos = JSON.parse(cookies.get('todos') || '[]');
-		cookies.set('todos', JSON.stringify(todos.map((todo: any) => ({ ...todo, completed }))));
+		toggleAll(completed);
 	},
-	clearCompleted: async ({ cookies }) => {
-		const todos = JSON.parse(cookies.get('todos') || '[]');
-		cookies.set('todos', JSON.stringify(todos.filter((todo: any) => !todo.completed)));
+	clearCompleted: async () => {
+		await wait();
+		clearCompleted();
 	}
 } satisfies Actions;

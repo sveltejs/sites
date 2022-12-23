@@ -156,6 +156,10 @@ body {
 	border-bottom: none;
 }
 
+.todo-list li.pending {
+	opacity: 0.5;
+}
+
 .todo-list li .text {
 	height: 58px;
 	flex: 100% 1 1;

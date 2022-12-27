@@ -73,6 +73,7 @@ _From Svelte Society_
 - [Sirens: Form Actions](https://www.youtube.com/watch?v=2OISk5-EHek) - Kev joins the Sirens again to chat about Form actions in SvelteKit and create a new form for speaker submissions on SvelteSirens.dev
 
 _To Watch_
+- [SvelteKit is my mistress](https://www.youtube.com/watch?v=uEJ-Rnm2yOE) by Fireship
 - [Sveltekit 1.0 in under 3 minutes](https://www.youtube.com/watch?v=3KGKDgwIrkE) by Gui Bibeau
 - [What Svelte UI Library Should You Use?](https://www.youtube.com/watch?v=O0mNU0maItY) and [The Best Icon Library For Svelte (Iconify)](https://www.youtube.com/watch?v=iGVhzsTZSa8) by Joy of Code
 

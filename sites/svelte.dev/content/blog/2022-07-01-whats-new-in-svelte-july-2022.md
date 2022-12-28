@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: July 2022"
 description: "Faster SSR, language tools improvements and a new paid contributor!"
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 From faster SSR to support for Vitest and Storybook in SvelteKit, there's a lot to cover in this month's newsletter...

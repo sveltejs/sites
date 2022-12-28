@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: April 2022"
 description: "Goodbye fallthrough routes, hello param validators!"
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 This month, we felt a shift in the way SvelteKit handles page properties. The last holdout of the use-cases that required fallthrough routes, validating parameter properties, has been replaced by a more specific solution.

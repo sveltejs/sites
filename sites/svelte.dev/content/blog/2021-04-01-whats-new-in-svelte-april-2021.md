@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: April 2021"
 description: SvelteKit beta and new way to use slots
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 Two projects that have been months (even years) in the making have made their way out into the world. SvelteKit is now in public beta and slotted components are now available in Svelte!

@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: September 2022"
 description: "Migrating to SvelteKit's new filesystem-based router"
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 Still looking for something to do this month? It's your last chance to get tickets to Svelte Summit, Stockholm! [Join us on Sept 8-9th](https://www.sveltesummit.com/) 🎉

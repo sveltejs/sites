@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: February 2021"
 description: Integrations and improvements at lightning speed...
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 With the shortest month of the year coming up, Svelte maintainers and community members alike have been busy this last month – from big changes in `svelte-loader`, `prettier-plugin-svelte`, `rollup-plugin-svelte`, and `language-tools` to steady progress in Sapper and `svelte-preprocess`. Meanwhile, lots of folks have been busy integrating Svelte with other popular frameworks.

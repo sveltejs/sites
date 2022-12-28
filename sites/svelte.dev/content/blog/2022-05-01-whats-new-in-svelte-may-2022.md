@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: May 2022"
 description: "Dynamically switch between HTML element types with `<svelte:element>`"
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 With yesterday's Svelte Summit behind us, we've got a lot of news to share! Check out all of the recordings on the [Svelte Society YouTube Channel](https://www.youtube.com/sveltesociety) and the rest of this month's updates below...

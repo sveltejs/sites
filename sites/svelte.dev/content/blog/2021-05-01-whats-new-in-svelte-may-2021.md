@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: May 2021"
 description: Working toward SvelteKit 1.0 and a showcase full of SvelteKit sites!
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 Last week, Svelte Summit blew us away with a mountain of content! [Check out the full recording](https://www.youtube.com/watch?v=fnr9XWvjJHw) or an audio-only (p)review [on Svelte Radio](https://www.svelteradio.com/episodes/svelte-summit-party-episode). Now let's get into this month's news...

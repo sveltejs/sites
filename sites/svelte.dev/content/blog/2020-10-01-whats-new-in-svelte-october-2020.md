@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: October 2020"
 description: New object methods, in-depth learning resources and tons of integration examples!
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 Welcome to the first edition of our "What's new in Svelte" series! We'll try to make this a monthly blog post in which you'll find out about new features, bug fixes, and a showcase of Svelte projects from around the community.

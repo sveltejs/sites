@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: October 2022"
 description: "Svelte Summit, `use:enhance`, and a SvelteKit Release Candidate!"
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 There's a bunch of updates this month... from new features in Svelte and SvelteKit to a whole 2-day *summit*! Plus, the Svelte extension gets some helpful new tools, new accessibility (a11y) warnings, and Tan Li Hau teaches us how to build our own Svelte and a Svelte spreadsheet 😎

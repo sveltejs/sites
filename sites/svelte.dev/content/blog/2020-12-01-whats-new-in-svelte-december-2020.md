@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: December 2020"
 description: Better tooling, export maps and improvements to slots and context
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 It's the last "What's new in Svelte" of the year and there's lots to celebrate! This month's coverage includes updates from `rollup-plugin-svelte`, `Sapper` and `SvelteKit` and a bunch of showcases from the Svelte community!

@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: July 2021"
 description: Keeping cool with fixes, TypeScript tooling and tonnes of new features
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 As the northern hemisphere heats up, Svelte has stayed cool with lots of performance and bug fixes, better TypeScript support, and lots of new components & tools from around the ecosystem. Let's take a peek 👀

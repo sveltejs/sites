@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: March 2021"
 description: Call for Svelte Summit Speakers! Improved SSR, non-HTML5 compilation targets, and ESLint TypeScript support
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 Lots to cover this month with releases from across the Svelte ecosystem. Most importantly, Svelte Summit Spring 2021 has an [Open Call for Speakers](https://sessionize.com/svelte-summit-spring-2021). **The deadline is March 14** so if you have an idea for a talk, submit it now!

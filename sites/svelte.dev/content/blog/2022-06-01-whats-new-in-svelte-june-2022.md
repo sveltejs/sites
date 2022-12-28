@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: June 2022"
 description: "Cancellable dispatched events, deeper {@const} declarations and more!"
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 With last month's [Svelte Summit](https://www.youtube.com/watch?v=qqj2cBockqE) behind us, we're ready to apply everything we learned in this new month of June! Also new this month are some quality-of-life changes to `createEventDispatcher`, `@const` declarations and tons of progress toward SvelteKit 1.0.

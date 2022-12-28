@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: December 2022"
 description: "Rounding the corner to SvelteKit 1.0"
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 SvelteKit 1.0 is just around the corner! With [99% of the milestone issues completed](https://github.com/sveltejs/kit/milestone/2), there's a lot of new changes from the last month to cover...

@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: February 2022"
 description: "Rapid-fire releases across Svelte, SvelteKit and the community"
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 Happy February, everyone! Over the last month or so, we've seen Svelte and SvelteKit [develop at rapid speed](accelerating-sveltes-development), new community rules across the [Reddit](https://www.reddit.com/r/sveltejs/comments/s9n8ou/new_rules/), [GitHub](https://github.com/sveltejs/community/blob/main/CODE_OF_CONDUCT.md) and [Discord](https://discord.com/channels/457912077277855764/831611707667382303/935264550436102315), and quite a few amazing apps, tutorials and libraries.

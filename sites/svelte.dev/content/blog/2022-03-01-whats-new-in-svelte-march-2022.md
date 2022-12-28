@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: March 2022"
 description: "Svelte Summit Spring is coming... and page endpoints are here!"
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 Just announced: [Svelte Summit Spring](https://www.sveltesummit.com/) will be taking place on April 30, 2022. The 5th Virtual Svelte Conference is [looking for speakers](https://www.sveltesummit.com/#speakers) and [sponsors](https://www.sveltesummit.com/sponsors)... so it's time to dust off those proposals!

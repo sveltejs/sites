@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: October 2021"
 description: A whole year of "What's new in Svelte"
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 Hey y'all 👋 It's been 1 year since "What's new in Svelte" started being cross-posted to the Svelte blog. I wanted to take this moment at the top to thank all of you for reading and for all the contributors every month. From the maintainers to everyone who posts their work in the Discord and Reddit, it's amazing to witness all the effort that goes into making the Svelte community great.

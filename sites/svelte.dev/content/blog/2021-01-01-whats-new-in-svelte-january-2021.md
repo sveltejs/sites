@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: January 2021"
 description: A Svelte-packed showcase to kick-off the new year!
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 Happy new year from Svelte! In the last month we made progress on Sapper's upcoming release, fine-tuned our `SvelteComponent` typings, and have seen some amazing apps, sites, and libraries coming out in the showcase.

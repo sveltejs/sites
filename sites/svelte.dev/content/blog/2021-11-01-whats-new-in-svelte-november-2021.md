@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: November 2021"
 description: Over 5000 stars to light up the showcase
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 With SvelteKit crossing the [80% complete mark](https://github.com/sveltejs/kit/milestone/2), over [5000 stars](https://github.com/sveltejs/kit) on GitHub, and now having more usage than Sapper, there's never been a better time to try it out! Many in the community have, making for quite a large showcase this month...

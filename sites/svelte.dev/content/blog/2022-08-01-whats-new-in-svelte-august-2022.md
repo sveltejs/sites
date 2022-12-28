@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: August 2022"
 description: "Changes to SvelteKit's `load` before 1.0 plus support for Vite 3 and `vite.config.js`!"
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 There's a lot to cover this month... big changes are coming to SvelteKit's design before 1.0 can be completed. If you haven't already, check out Rich's Discussion, [Fixing `load`, and tightening up SvelteKit's design before 1.0 #5748](https://github.com/sveltejs/kit/discussions/5748).

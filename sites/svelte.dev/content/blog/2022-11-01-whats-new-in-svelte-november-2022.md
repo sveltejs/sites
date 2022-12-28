@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: November 2022"
 description: "Better forms, routes and inline styles across SvelteKit and Svelte"
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 It's been a busy October for the Svelte community. `use:enhance` and Advanced Routes got some great improvements in SvelteKit while the Svelte compiler released a minor version to improve the day-to-day dev experience.

@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: September 2021"
 description: StackOverflow's most loved web framework
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 This month, Svelte was [voted StackOverflow's most loved web framework](https://insights.stackoverflow.com/survey/2021#section-most-loved-dreaded-and-wanted-web-frameworks), Tan Li Hau [talked to Svelte Radio](https://share.transistor.fm/s/84c7521b) about his [Svelte-filled YouTube channel](https://www.youtube.com/channel/UCbmC3HP3FaAFdcZkui8YoMQ), and SvelteKit made even more progress towards its 1.0 release!

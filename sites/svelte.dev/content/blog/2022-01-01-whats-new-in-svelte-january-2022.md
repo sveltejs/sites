@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: January 2022"
 description: "Faster builds with SvelteKit and a much anticipated REPL feature"
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 Happy new year, Svelte Community! Lots to share this month across Svelte, SvelteKit, Language Tools and the Showcase. Thanks to everyone who made 2021 a great year to use Svelte. Looking forward to the next one 🚀

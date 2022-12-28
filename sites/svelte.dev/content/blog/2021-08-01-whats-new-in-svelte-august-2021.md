@@ -1,8 +1,8 @@
 ---
 title: "What's new in Svelte: August 2021"
 description: Shadow DOM, export and await - oh my!
-author: Daniel Sandoval
-authorURL: https://desandoval.net
+author: Dani Sandoval
+authorURL: https://dreamindani.com
 ---
 
 From The Changelog ([JS Party Ep. 182](https://changelog.com/jsparty/182)) to Svelte Radio (Episodes [29](https://share.transistor.fm/s/adc23e84) and [30](https://share.transistor.fm/s/6316622d)), it seems that folks couldn't help but talk about Svelte, this month! Also, shadow DOM support and new export and await functionality are new in Svelte.

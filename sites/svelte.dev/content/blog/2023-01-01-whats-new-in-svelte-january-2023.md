@@ -1,6 +1,6 @@
 ---
 title: "What's new in Svelte: January 2022"
-description: "SvelteKit 1.0 release, directions in custom transitions and new HTML/Svelte typings"
+description: "SvelteKit 1.0, learn.svelte.dev, and type definitions for Svelte elements."
 author: Dani Sandoval
 authorURL: https://dreamindani.com
 ---
@@ -10,26 +10,26 @@ It's been just two weeks since the release of [SvelteKit 1.0](https://svelte.dev
 Or, if you prefer, just [subscribe to this newsletter](https://svelte.substack.com/) 😉 Let's dive into the details...
 
 ## What's new in SvelteKit
-- @sveltejs/kit 1.0 is out! Starting from now all releases follow semver and changes will be listed as Major/Minor/Patch ([CHANGELOG](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md#100))
-- The Vite plugin is now split in two - replacing the need for an unnecessary middleware plugin ([#7990](https://github.com/sveltejs/kit/pull/7990))
-- Kit's custom `svelte-preprocess` has been replaced by `vitePreprocess` ([#8036](https://github.com/sveltejs/kit/pull/8036))
+- `@sveltejs/kit` 1.0 is out! All future releases will follow semver and changes will be listed as major/minor/patch in the [CHANGELOG](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md#100).
+- Improved support for Storybook and Histoire ([#7990](https://github.com/sveltejs/kit/pull/7990)). Work is ongoing to fully support those tools ([storybook#20239](https://github.com/storybookjs/storybook/pull/20239)).
+- `vitePreprocess` is now the default preprocessor. Please see [the docs](https://kit.svelte.dev/docs/integrations#preprocessors) for differences between `vitePreprocess` and `svelte-preprocess` ([#8036](https://github.com/sveltejs/kit/pull/8036)).
 
 **Breaking changes:**
-- Unknown exports (except when starting with an underscore) are no longer allowed from +(layout|page)(.server)?.js and +server.js files ([#7878](https://github.com/sveltejs/kit/pull/7878))
-- `__data.json` is now stripped from url ([#7979](https://github.com/sveltejs/kit/pull/7979))
-- `sveltekit()` will now return a promise of array of Vite plugins ([#7994](https://github.com/sveltejs/kit/pull/7994))
+- Unknown exports (except when starting with an underscore) are no longer allowed from `+(layout|page)(.server)?.js` and `+server.js` files ([#7878](https://github.com/sveltejs/kit/pull/7878))
+- `__data.json` is now stripped from URL ([#7979](https://github.com/sveltejs/kit/pull/7979))
+- `sveltekit()` will now return a promise for an array of Vite plugins ([#7994](https://github.com/sveltejs/kit/pull/7994))
 - A new `embedded` option, turned off by default, helps with link clicks when embedding SvelteKit ([docs](https://kit.svelte.dev/docs/configuration), [#7969](https://github.com/sveltejs/kit/pull/7969))
 - Automatic fallback generation has been replaced with `builder.generateFallback(fallback)` ([#8013](https://github.com/sveltejs/kit/pull/8013))
 - `invalid()` is now `fail()` and `ValidationError` is now `ActionFailure` ([#8012](https://github.com/sveltejs/kit/pull/8012))
-- Kit will now throw an error on invalid load response ([#8003](https://github.com/sveltejs/kit/pull/8003))
-- SvelteKit is now using Vite 4 and requires a Svelte peerDependency of ^3.54.0 ([#7543](https://github.com/sveltejs/kit/pull/7543))
+- SvelteKit will now throw an error on invalid load response ([#8003](https://github.com/sveltejs/kit/pull/8003))
+- SvelteKit is now using Vite 4 and requires a Svelte `peerDependency` of `^3.54.0` ([#7543](https://github.com/sveltejs/kit/pull/7543))
 - Shells are now prerendered when `ssr` is false and `prerender` is not false - ensure prerender is false when ssr is also false ([#8131](https://github.com/sveltejs/kit/pull/8131))
 - Warnings and errors about removed/changed APIs have been removed ([#8019](https://github.com/sveltejs/kit/pull/8019))
 
 ## What's new in Svelte
 - The `options.direction` argument can now be passed to custom transition functions (**3.54.0**, [#3918](https://github.com/sveltejs/svelte/issues/3918))
 - Variables can now be updated from a `@const` declared function (**3.54.0**, [#7843](https://github.com/sveltejs/svelte/issues/7843))
-- `svelte/elements` has been added for HTML/Svelte typings (**3.55.0**, [#7649](https://github.com/sveltejs/svelte/pull/7649))
+- `svelte/elements` has been added for Svelte/HTML type definitions (**3.55.0**, [#7649](https://github.com/sveltejs/svelte/pull/7649))
 
 ## What's new in Language Tools
 The Svelte extension and language tools now have a few new minimum version requirements:
@@ -43,8 +43,8 @@ The following features have also been released:
 - better commit characters handling ([#1742](https://github.com/sveltejs/language-tools/pull/1742))
 - add `--preserveWatchOutput` option ([#1715](https://github.com/sveltejs/language-tools/pull/1715))
 - enhance Quickfixes to include Svelte Stores ([#1789](https://github.com/sveltejs/language-tools/pull/1789))
-- only show SvelteKit files context menu in kit project ([#1771](https://github.com/sveltejs/language-tools/pull/1771))
-- use satisfies operator if possible ([#1770](https://github.com/sveltejs/language-tools/pull/1770))
+- only show SvelteKit files context menu in SvelteKit projects ([#1771](https://github.com/sveltejs/language-tools/pull/1771))
+- use the `satisfies` operator if possible ([#1770](https://github.com/sveltejs/language-tools/pull/1770))
 
 For all the changes to the Svelte compiler, including unreleased changes, check out the [CHANGELOG](https://github.com/sveltejs/svelte/blob/master/CHANGELOG.md).
 
@@ -86,7 +86,7 @@ _To Read_
 - [Creating A Custom Svelte Media Query Store](https://pqina.nl/blog/svelte-media-query-store/) by Rik Schennink
 
 **Libraries, Tools & Components**
-- [Konsta UI](https://konstaui.com/) is pixel perfect mobile UI components built with Tailwind CSS for React, Vue & Svelte
+- [Konsta UI](https://konstaui.com/) is a library of pixel perfect mobile UI components built with Tailwind CSS for React, Vue & Svelte
 - [probablykasper/modal-svelte](https://github.com/probablykasper/modal-svelte) is a modal component for Svelte
 - [deepcrayon/scrolltron](https://spacecruft.org/deepcrayon/scrolltron) is a news ticker overlay for OBS Studio
 - [JetBrains WebStorm 2022.3](https://www.jetbrains.com/webstorm/whatsnew/#:~:text=Update%20about%20Svelte%20support) now has built-in support for Svelte

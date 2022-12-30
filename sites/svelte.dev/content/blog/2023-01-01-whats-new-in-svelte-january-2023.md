@@ -7,7 +7,7 @@ authorURL: https://dreamindani.com
 
 It's been just two weeks since the release of [SvelteKit 1.0](https://svelte.dev/blog/announcing-sveltekit-1.0)! If you haven't yet, check out the [livestream](https://www.youtube.com/watch?v=N4BRVkQVoMc), [new website](https://kit.svelte.dev/) and [learn.svelte.dev](https://learn.svelte.dev/) to learn all the features of SvelteKit step-by-step.
 
-Or, if you prefer, just [subscribe to this newsletter](https://svelte.substack.com/) 😉 Let's dive into the details...
+Let's dive into the details...
 
 ## What's new in SvelteKit
 - `@sveltejs/kit` 1.0 is out! All future releases will follow semver and changes will be listed as major/minor/patch in the [CHANGELOG](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md#100).

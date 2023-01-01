@@ -1,5 +1,5 @@
 ---
-title: "What's new in Svelte: January 2022"
+title: "What's new in Svelte: January 2023"
 description: "SvelteKit 1.0, learn.svelte.dev, and type definitions for Svelte elements."
 author: Dani Sandoval
 authorURL: https://dreamindani.com

@@ -18,7 +18,7 @@ function munge(files) {
 			let type = file.name.slice(dot + 1);
 
 			if (type === 'html') type = 'svelte';
-			return { name, type, source: file.source || file.content };
+			return { name, type, source: file.source ?? file.content ?? '' };
 		})
 		.sort((a, b) => {
 			if (a.name === 'App' && a.type === 'svelte') return -1;

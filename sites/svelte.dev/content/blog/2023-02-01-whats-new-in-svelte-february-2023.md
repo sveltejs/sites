@@ -12,6 +12,7 @@ Svelte, once again, increased in satisfaction and interest, so thanks to everyon
 Let's dive into the updates...
 
 ## What's new in SvelteKit
+Work in the Svelte ecosystem this month has been focused on SvelteKit bug fixes and addressing feedback from the 1.0 launch. One of the more awaited [bug fixes to SvelteKit's base path support](https://github.com/sveltejs/kit/issues/2958) landed, which means that you can now create SvelteKit projects on remote development environments. There have been several [new releases](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md) with these fixes as well as a handful of new features such as:
 - The submitter's value will now be included automatically when progressively enhancing <form method="get"> (**1.0.3**, [#8273](https://github.com/sveltejs/kit/pull/8273))
 - Added an error in dev mode if global fetch is used with relative URL (**1.0.8**, [#8370](https://github.com/sveltejs/kit/pull/8370))
 - A warning will now indicated that hydration may break if comments are removed from HTML (**1.0.11**, [#8423](https://github.com/sveltejs/kit/pull/8423))

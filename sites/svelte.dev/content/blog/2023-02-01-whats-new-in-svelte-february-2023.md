@@ -15,8 +15,8 @@ Let's dive into the updates...
 Work in the Svelte ecosystem this month has been focused on SvelteKit bug fixes and addressing feedback from the 1.0 launch. One of the more awaited [bug fixes to SvelteKit's base path support](https://github.com/sveltejs/kit/issues/2958) landed, which means that you can now create SvelteKit projects on remote development environments. There have been several [new releases](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md) with these fixes as well as a handful of new features such as:
 - The submitter's value will now be included automatically when progressively enhancing <form method="get"> (**1.0.3**, [#8273](https://github.com/sveltejs/kit/pull/8273))
 - Added an error in dev mode if global fetch is used with relative URL (**1.0.8**, [#8370](https://github.com/sveltejs/kit/pull/8370))
-- A warning will now indicated that hydration may break if comments are removed from HTML (**1.0.11**, [#8423](https://github.com/sveltejs/kit/pull/8423))
-- A warning will occur when of page options are used in `.svelte` files or a missing `<slot />` in layout is detected (**1.1.0**, [#8475](https://github.com/sveltejs/kit/pull/8475))
+- A warning will now indicate that hydration may break if comments are removed from HTML (**1.0.11**, [#8423](https://github.com/sveltejs/kit/pull/8423))
+- A warning will occur when page options are used in `.svelte` files or a missing `<slot />` in layout is detected (**1.1.0**, [#8475](https://github.com/sveltejs/kit/pull/8475))
 - The new `text(...)` helper makes it easy to generate text responses (**1.2.0**, [#8371](https://github.com/sveltejs/kit/pull/8371))
 - The public env can now be accessed within app.html (**1.2.0**, [Docs](https://kit.svelte.dev/docs/project-structure#project-files-src), [#8449](https://github.com/sveltejs/kit/pull/8449))
 - An error will now be thrown if cookie exceeds size limit (**1.2.1**, [#8591](https://github.com/sveltejs/kit/pull/8591))

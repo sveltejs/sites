@@ -4,7 +4,7 @@ importers:
 
   .:
     specifiers:
-      '@changesets/cli': ^2.20.0
+      '@changesets/cli': ^2.25.2
     devDependencies:
       '@changesets/cli': 2.25.2
 

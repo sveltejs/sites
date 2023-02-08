@@ -22,7 +22,7 @@
 	// without resetting scroll otherwise
 	export async function set(new_code, new_mode) {
 		if (new_mode !== mode) {
-			await createEditor(mode = new_mode);
+			await createEditor((mode = new_mode));
 		}
 
 		code = new_code;
@@ -36,7 +36,7 @@
 
 		if (editor) {
 			const { left, top } = editor.getScrollInfo();
-			editor.setValue(code = new_code);
+			editor.setValue((code = new_code));
 			editor.scrollTo(left, top);
 		}
 	}
@@ -68,11 +68,14 @@
 	export const cursorIndex = writable(0);
 
 	export function markText({ from, to }) {
-		if (editor) editor.markText(editor.posFromIndex(from), editor.posFromIndex(to), { className: 'mark-text' });
+		if (editor)
+			editor.markText(editor.posFromIndex(from), editor.posFromIndex(to), {
+				className: 'mark-text'
+			});
 	}
 
 	export function unmarkText() {
-		if (editor) editor.getAllMarks().forEach(m => m.clear());
+		if (editor) editor.getAllMarks().forEach((m) => m.clear());
 	}
 
 	const modes = {
@@ -112,9 +115,13 @@
 			const line = errorLoc.line - 1;
 			const ch = errorLoc.column;
 
-			marker = editor.markText({ line, ch }, { line, ch: ch + 1 }, {
-				className: 'error-loc'
-			});
+			marker = editor.markText(
+				{ line, ch },
+				{ line, ch: ch + 1 },
+				{
+					className: 'error-loc'
+				}
+			);
 
 			error_line = line;
 		} else {
@@ -125,10 +132,10 @@
 	let previous_error_line;
 	$: if (editor) {
 		if (previous_error_line != null) {
-			editor.removeLineClass(previous_error_line, 'wrap', 'error-line')
+			editor.removeLineClass(previous_error_line, 'wrap', 'error-line');
 		}
 
-		if (error_line && (error_line !== previous_error_line)) {
+		if (error_line && error_line !== previous_error_line) {
 			editor.addLineClass(error_line, 'wrap', 'error-line');
 			previous_error_line = error_line;
 		}
@@ -147,7 +154,7 @@
 		return () => {
 			destroyed = true;
 			if (editor) editor.toTextArea();
-		}
+		};
 	});
 
 	let first = true;
@@ -171,7 +178,7 @@
 			autoCloseBrackets: true,
 			autoCloseTags: true,
 			extraKeys: CodeMirror.normalizeKeyMap({
-				'Enter': 'newlineAndIndentContinueMarkdownList',
+				Enter: 'newlineAndIndentContinueMarkdownList',
 				'Ctrl-/': 'toggleComment',
 				'Cmd-/': 'toggleComment',
 				'Ctrl-Q': function (cm) {
@@ -201,14 +208,14 @@
 
 		editor = CodeMirror.fromTextArea(refs.editor, opts);
 
-		editor.on('change', instance => {
+		editor.on('change', (instance) => {
 			if (!updating_externally) {
 				const value = instance.getValue();
 				dispatch('change', { value });
 			}
 		});
 
-		editor.on('cursorActivity', instance => {
+		editor.on('cursorActivity', (instance) => {
 			cursorIndex.set(instance.indexFromPos(instance.getCursor()));
 		});
 
@@ -219,9 +226,21 @@
 	}
 
 	function sleep(ms) {
-		return new Promise(fulfil => setTimeout(fulfil, ms));
+		return new Promise((fulfil) => setTimeout(fulfil, ms));
 	}
 </script>
+
+<div class="codemirror-container" bind:offsetWidth={w} bind:offsetHeight={h}>
+	<textarea bind:this={refs.editor} readonly value={code} />
+
+	{#if !CodeMirror}
+		<pre style="position: absolute; left: 0; top: 0">{code}</pre>
+
+		<div style="position: absolute; width: 100%; bottom: 0">
+			<Message kind="info">loading editor...</Message>
+		</div>
+	{/if}
+</div>
 
 <style>
 	.codemirror-container {
@@ -235,7 +254,7 @@
 
 	.codemirror-container :global(.CodeMirror) {
 		height: 100%;
-		font: 400 var(--code-fs)/1.7 var(--font-mono);
+		font: 400 var(--code-fs) / 1.7 var(--font-mono);
 	}
 
 	.codemirror-container :global(.error-loc) {
@@ -244,7 +263,7 @@
 	}
 
 	.codemirror-container :global(.error-line) {
-		background-color: rgba(200, 0, 0, .05);
+		background-color: rgba(200, 0, 0, 0.05);
 	}
 
 	.codemirror-container :global(.mark-text) {
@@ -274,20 +293,3 @@
 		-moz-tab-size: 2;
 	}
 </style>
-
-<div class='codemirror-container' bind:offsetWidth={w} bind:offsetHeight={h}>
-	<textarea
-		bind:this={refs.editor}
-		readonly
-		value={code}
-	></textarea>
-
-	{#if !CodeMirror}
-		<pre style="position: absolute; left: 0; top: 0"
-		>{code}</pre>
-
-		<div style="position: absolute; width: 100%; bottom: 0">
-			<Message kind='info'>loading editor...</Message>
-		</div>
-	{/if}
-</div>

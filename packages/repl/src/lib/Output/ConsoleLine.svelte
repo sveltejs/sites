@@ -131,14 +131,14 @@
 	}
 
 	.count {
-		color: #999;
+		color: var(--sk-text-3, #999);
 		font-size: 12px;
 		line-height: 1.2;
 	}
 
 	.info {
-		color: #666;
-		font-family: var(--font) !important;
+		color: var(--sk-text-2, #666);
+		font-family: var(--sk-font) !important;
 		font-size: 12px;
 	}
 

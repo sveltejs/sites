@@ -58,7 +58,7 @@
 
 	h3 {
 		font: 700 12px/1.5 var(--font);
-		color: #333;
+		color: var(--sk-text-1, #333);
 	}
 
 	section {

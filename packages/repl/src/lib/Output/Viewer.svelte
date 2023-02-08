@@ -229,7 +229,7 @@
 <style>
 	.iframe-container {
 		position: absolute;
-		background-color: white;
+		background-color: var(--sk-back-1, white);
 		border: none;
 		width: 100%;
 		height: 100%;
@@ -249,14 +249,14 @@
 	}
 
 	button {
-		color: #999;
+		color: var(--sk-text-2, #999);
 		font-size: 12px;
 		text-transform: uppercase;
 		display: block;
 	}
 
 	button:hover {
-		color: #333;
+		color: var(--sk-text-1, #333);
 	}
 
 	.overlay {

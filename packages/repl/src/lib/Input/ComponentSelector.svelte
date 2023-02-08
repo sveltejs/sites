@@ -141,6 +141,7 @@
 					class:draggable={component !== editing && index !== 0}
 					class:drag-over={over === component.name}
 					on:click={() => selectComponent(component)}
+					on:keyup={(e) => e.key === ' ' && selectComponent(component)}
 					on:dblclick={(e) => e.stopPropagation()}
 					draggable={component !== editing}
 					on:dragstart={dragStart}
@@ -169,11 +170,20 @@
 							class:duplicate={isComponentNameUsed(editing)}
 						/>
 					{:else}
-						<div class="editable" title="edit component name" on:click={() => editTab(component)}>
+						<div
+							class="editable"
+							title="edit component name"
+							on:click={() => editTab(component)}
+							on:keyup={(e) => e.key === ' ' && editTab(component)}
+						>
 							{component.name}.{component.type}{#if show_modified && component.modified}*{/if}
 						</div>
 
-						<span class="remove" on:click={() => remove(component)}>
+						<span
+							class="remove"
+							on:click={() => remove(component)}
+							on:keyup={(e) => e.key === ' ' && remove(component)}
+						>
 							<svg width="12" height="12" viewBox="0 0 24 24">
 								<line stroke="#999" x1="18" y1="6" x2="6" y2="18" />
 								<line stroke="#999" x1="6" y1="6" x2="18" y2="18" />

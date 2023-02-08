@@ -24,13 +24,15 @@
 	}
 </script>
 
-<div
-	transition:slide={{ duration: 100 }}
-	class="message {kind}"
-	class:truncate
->
+<div transition:slide={{ duration: 100 }} class="message {kind}" class:truncate>
 	{#if details}
-		<p class:navigable={details.filename} on:click={() => navigate(details)}>{message(details)}</p>
+		<p
+			class:navigable={details.filename}
+			on:click={() => navigate(details)}
+			on:keyup={(e) => e.key === ' ' && navigate(details)}
+		>
+			{message(details)}
+		</p>
 	{:else}
 		<slot />
 	{/if}

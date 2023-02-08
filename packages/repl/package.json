@@ -25,7 +25,7 @@
 	"type": "module",
 	"svelte": "./src/lib/index.js",
 	"dependencies": {
-		"@sveltejs/site-kit": "workspace:*",
+		"@sveltejs/site-kit": "3.2.2",
 		"acorn": "^8.7.0",
 		"codemirror": "^5.65.1",
 		"estree-walker": "^3.0.1",

@@ -154,7 +154,8 @@
 		top: 0;
 		width: 100%;
 		height: 100%;
-		background: rgba(255, 255, 255, 0.01);
+		background: var(--sk-back-1, white);
+		opacity: 0.01;
 		z-index: 99999;
 	}
 
@@ -168,7 +169,7 @@
 		content: '';
 		position: absolute;
 		/* background-color: #eee; */
-		background-color: var(--second);
+		background-color: var(--sk-back-3);
 	}
 
 	.horizontal {

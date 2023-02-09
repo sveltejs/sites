@@ -143,7 +143,7 @@
 				module_editor.focus();
 				module_editor.setCursor({
 					line: item.start.line - 1,
-					ch: item.start.column,
+					ch: item.start.column
 				});
 			}, 0);
 		},
@@ -275,8 +275,8 @@
 	<div class="viewport" class:output={show_output}>
 		<SplitPane
 			type={orientation === 'rows' ? 'vertical' : 'horizontal'}
-			pos={(mobile || fixed) ? fixedPos : orientation === 'rows' ? 50 : 60}
-			fixed={fixed}
+			pos={mobile || fixed ? fixedPos : orientation === 'rows' ? 50 : 60}
+			{fixed}
 		>
 			<section slot="a">
 				<ComponentSelector show_modified={showModified} {handle_select} on:add on:remove />
@@ -284,12 +284,21 @@
 			</section>
 
 			<section slot="b" style="height: 100%;">
-				<Output {svelteUrl} status={status_visible && status} {embedded} {relaxed} {injectedJS} {injectedCSS} {theme} {showAst} />
+				<Output
+					{svelteUrl}
+					status={status_visible && status}
+					{embedded}
+					{relaxed}
+					{injectedJS}
+					{injectedCSS}
+					{theme}
+					{showAst}
+				/>
 			</section>
 		</SplitPane>
 	</div>
 	{#if $toggleable}
-		<InputOutputToggle bind:checked={show_output}/>
+		<InputOutputToggle bind:checked={show_output} />
 	{/if}
 </div>
 
@@ -298,7 +307,7 @@
 		position: relative;
 		width: 100%;
 		height: 100%;
-		background: white;
+		background: var(--sk-back-1);
 	}
 
 	.container :global(section) {

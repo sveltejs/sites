@@ -141,6 +141,7 @@
 					class:draggable={component !== editing && index !== 0}
 					class:drag-over={over === component.name}
 					on:click={() => selectComponent(component)}
+					on:keyup={(e) => e.key === ' ' && selectComponent(component)}
 					on:dblclick={(e) => e.stopPropagation()}
 					draggable={component !== editing}
 					on:dragstart={dragStart}
@@ -169,11 +170,20 @@
 							class:duplicate={isComponentNameUsed(editing)}
 						/>
 					{:else}
-						<div class="editable" title="edit component name" on:click={() => editTab(component)}>
+						<div
+							class="editable"
+							title="edit component name"
+							on:click={() => editTab(component)}
+							on:keyup={(e) => e.key === ' ' && editTab(component)}
+						>
 							{component.name}.{component.type}{#if show_modified && component.modified}*{/if}
 						</div>
 
-						<span class="remove" on:click={() => remove(component)}>
+						<span
+							class="remove"
+							on:click={() => remove(component)}
+							on:keyup={(e) => e.key === ' ' && remove(component)}
+						>
 							<svg width="12" height="12" viewBox="0 0 24 24">
 								<line stroke="#999" x1="18" y1="6" x2="6" y2="18" />
 								<line stroke="#999" x1="6" y1="6" x2="18" y2="18" />
@@ -213,21 +223,21 @@
 	.file-tabs button {
 		position: relative;
 		display: inline-block;
-		font: 400 12px/1.5 var(--font);
-		background: white;
+		font: 400 12px/1.5 var(--sk-font);
+		background: var(--sk-back-1);
 		border: none;
 		border-bottom: 3px solid transparent;
 		padding: 12px 14px 8px 16px;
 		margin: 0;
-		color: #999;
+		color: var(--sk-text-3);
 		border-radius: 0;
 		cursor: pointer;
 	}
 
 	.file-tabs .button.active {
 		/* color: var(--second); */
-		color: #333;
-		border-bottom: 3px solid var(--prime);
+		color: var(--sk-text-2, #333);
+		border-bottom: 3px solid var(--sk-theme-1);
 	}
 
 	.editable,
@@ -240,7 +250,7 @@
 	}
 
 	.input-sizer {
-		color: #ccc;
+		color: var(--sk-text-3, #ccc);
 	}
 
 	input {
@@ -248,15 +258,15 @@
 		width: 100%;
 		left: 16px;
 		top: 12px;
-		font: 400 12px/1.5 var(--font);
+		font: 400 12px/1.5 var(--sk-font);
 		border: none;
-		color: var(--flash);
+		color: var(--sk-theme-3);
 		outline: none;
 		background-color: transparent;
 	}
 
 	.duplicate {
-		color: var(--prime);
+		color: var(--sk-theme-1);
 	}
 
 	.remove {
@@ -272,7 +282,7 @@
 	}
 
 	.remove:hover {
-		color: var(--flash);
+		color: var(--sk-theme-3);
 	}
 
 	.file-tabs .button.active .editable {
@@ -302,7 +312,7 @@
 	}
 
 	.add-new:hover {
-		color: var(--flash) !important;
+		color: var(--sk-theme-3) !important;
 	}
 
 	.drag-handle {
@@ -315,14 +325,14 @@
 		--drag-handle-color: #dedede;
 		background: linear-gradient(
 			to right,
-			var(--drag-handle-color) 1px,
-			white 1px,
-			white 2px,
-			var(--drag-handle-color) 2px,
-			var(--drag-handle-color) 3px,
-			white 3px,
-			white 4px,
-			var(--drag-handle-color) 4px
+			var(--sk-back-4, --drag-handle-color) 1px,
+			var(--sk-back-1, white) 1px,
+			var(--sk-back-1, white) 2px,
+			var(--sk-back-4, --drag-handle-color) 2px,
+			var(--sk-back-4, --drag-handle-color) 3px,
+			var(--sk-back-1, white) 3px,
+			var(--sk-back-1, white) 4px,
+			var(--sk-back-4, --drag-handle-color) 4px
 		);
 	}
 

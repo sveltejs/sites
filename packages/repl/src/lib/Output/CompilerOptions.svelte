@@ -59,9 +59,9 @@
 <style>
 	.options {
 		padding: 0 10px;
-		font-family: var(--font-mono);
+		font-family: var(--sk-font-mono);
 		font-size: 13px;
-		color: #999;
+		color: var(--sk-text-2, #999);
 		line-height: 1.8;
 	}
 
@@ -69,7 +69,7 @@
 		display: block;
 		padding: 0 0 0 1.25em;
 		white-space: nowrap;
-		color: #333;
+		color: var(--sk-text-3, #999);
 		user-select: none;
 	}
 
@@ -133,7 +133,7 @@
 		height: 15px;
 		margin-left: -21px;
 		margin-top: 4px;
-		vertical-align: top;
+		/* vertical-align: top; */
 		cursor: pointer;
 		text-align: center;
 		transition: box-shadow 0.1s ease-out;

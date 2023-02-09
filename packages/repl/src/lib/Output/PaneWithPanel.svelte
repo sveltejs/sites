@@ -25,19 +25,19 @@
 	};
 </script>
 
-<SplitPane bind:max type="vertical" bind:pos={pos}>
+<SplitPane bind:max type="vertical" bind:pos>
 	<section slot="a">
-		<slot name="main"></slot>
+		<slot name="main" />
 	</section>
 
 	<section slot="b">
-		<div class="panel-header" on:click={toggle}>
+		<div class="panel-header" on:click={toggle} on:keyup={(e) => e.key === ' ' && toggle()}>
 			<h3>{panel}</h3>
-			<slot name="panel-header"></slot>
+			<slot name="panel-header" />
 		</div>
 
 		<div class="panel-body">
-			<slot name="panel-body"></slot>
+			<slot name="panel-body" />
 		</div>
 	</section>
 </SplitPane>
@@ -58,7 +58,7 @@
 
 	h3 {
 		font: 700 12px/1.5 var(--font);
-		color: #333;
+		color: var(--sk-text-1, #333);
 	}
 
 	section {

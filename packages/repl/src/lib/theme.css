@@ -4,11 +4,13 @@
 }
 
 .cm-s-svelte .CodeMirror-selected {
-	background: #d9d9d9;
+	background: var(--sk-theme-3);
+	opacity: 0.3;
 }
 
 .cm-s-svelte.CodeMirror-focused .CodeMirror-selected {
-	background: #d7d4f0;
+	background: var(--sk-theme-3);
+	opacity: 0.3;
 }
 
 .cm-s-svelte .CodeMirror-gutters {

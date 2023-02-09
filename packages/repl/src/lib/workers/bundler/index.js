@@ -1,4 +1,4 @@
-import * as rollup from 'rollup/dist/es/rollup.browser.js';
+import { rollup } from '@rollup/browser';
 import { sleep } from 'yootils';
 import commonjs from './plugins/commonjs.js';
 import glsl from './plugins/glsl.js';
@@ -232,7 +232,7 @@ async function get_bundle(uid, mode, cache, lookup) {
 	};
 
 	try {
-		bundle = await rollup.rollup({
+		bundle = await rollup({
 			input: './App.svelte',
 			plugins: [
 				repl_plugin,

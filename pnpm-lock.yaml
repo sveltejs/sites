@@ -10,7 +10,7 @@ importers:
 
   packages/repl:
     specifiers:
-      '@rollup/browser': ^3.10.0
+      '@rollup/browser': ^3.15.0
       '@sveltejs/adapter-auto': ^2.0.0
       '@sveltejs/kit': ^1.5.2
       '@sveltejs/site-kit': 3.2.2
@@ -29,7 +29,7 @@ importers:
       vite: ^4.1.1
       yootils: ^0.3.1
     dependencies:
-      '@rollup/browser': 3.14.0
+      '@rollup/browser': 3.15.0
       '@sveltejs/site-kit': 3.2.2
       acorn: 8.8.2
       codemirror: 5.65.1
@@ -48,6 +48,7 @@ importers:
       svelte2tsx: 0.6.1_4x7phaipmicbaooxtnresslofa
       typescript: 4.9.5
       vite: 4.1.1
+    publishDirectory: package
 
   packages/site-kit:
     specifiers:
@@ -1302,8 +1303,8 @@ packages:
       '@resvg/resvg-js-win32-x64-msvc': 2.2.0
     dev: true
 
-  /@rollup/browser/3.14.0:
-    resolution: {integrity: sha512-D/3w26Hwu4LIR2yv7x1olI7gC6pHzzQAK2MqvA4YUCDJwP50PnAyefYyHH1OgBicV840pyARtm+TFdm5sIzZrQ==}
+  /@rollup/browser/3.15.0:
+    resolution: {integrity: sha512-uvteGT8QpNSxwrjFNXd/M1NGdHTqQn6KAK7+dxvelrZb+d3oFej4Fzo1CTkaSysF45J03TSLWMjM6nRzJfFdhA==}
     dev: false
 
   /@rollup/pluginutils/5.0.2:

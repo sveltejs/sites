@@ -25,7 +25,7 @@
 	"type": "module",
 	"svelte": "./src/lib/index.js",
 	"dependencies": {
-		"@rollup/browser": "^3.10.0",
+		"@rollup/browser": "^3.15.0",
 		"@sveltejs/site-kit": "3.2.2",
 		"acorn": "^8.8.2",
 		"codemirror": "5.65.1",
@@ -35,6 +35,7 @@
 	},
 	"license": "MIT",
 	"publishConfig": {
-		"access": "public"
+		"access": "public",
+		"directory": "package"
 	}
 }

@@ -93,8 +93,8 @@ importers:
       '@supabase/supabase-js': ^2.1.0
       '@sveltejs/adapter-auto': ^2.0.0
       '@sveltejs/kit': ^1.5.0
-      '@sveltejs/repl': workspace:*
-      '@sveltejs/site-kit': workspace:*
+      '@sveltejs/repl': 0.0.3
+      '@sveltejs/site-kit': 3.2.2
       '@sveltejs/vite-plugin-svelte': ^2.0.2
       cookie: ^0.4.2
       degit: ^2.8.4
@@ -119,7 +119,7 @@ importers:
       vite-imagetools: ^4.0.11
     dependencies:
       '@supabase/supabase-js': 2.7.1
-      '@sveltejs/repl': link:../../packages/repl
+      '@sveltejs/repl': 0.0.3
       cookie: 0.4.2
       devalue: 4.2.3
       do-not-zip: 1.0.0
@@ -128,7 +128,7 @@ importers:
       '@resvg/resvg-js': 2.4.0
       '@sveltejs/adapter-auto': 2.0.0_@sveltejs+kit@1.5.3
       '@sveltejs/kit': 1.5.3_svelte@3.55.1+vite@4.1.1
-      '@sveltejs/site-kit': link:../../packages/site-kit
+      '@sveltejs/site-kit': 3.2.2
       '@sveltejs/vite-plugin-svelte': 2.0.2_svelte@3.55.1+vite@4.1.1
       degit: 2.8.4
       dotenv: 10.0.0
@@ -1240,9 +1240,26 @@ packages:
       - typescript
     dev: true
 
+  /@sveltejs/repl/0.0.3:
+    resolution: {integrity: sha512-IcJa1SjS6ZopT4hpCA3iGmcQ6fn44M7GPLiSDeWQwVvRc7npyCoNB6G9POwsWxFdsBV1gzCHTmEnmOOpFsRnmQ==}
+    dependencies:
+      '@sveltejs/site-kit': 2.1.4
+      acorn: 8.8.2
+      codemirror: 5.65.1
+      estree-walker: 3.0.3
+      rollup: 2.79.1
+      svelte-json-tree: 1.0.0
+      yootils: 0.3.1
+    dev: false
+
+  /@sveltejs/site-kit/2.1.4:
+    resolution: {integrity: sha512-PxpbiCWYXJ320abc6ucp3AXhh6YCggf6ea+EVA6W+wCBe45UFoChfoeQYeD6sQxPZN25XntoS4clZeYnt9H93Q==}
+    dependencies:
+      golden-fleece: 1.0.9
+    dev: false
+
   /@sveltejs/site-kit/3.2.2:
     resolution: {integrity: sha512-HBLtfNdLr5Ykl8i8CvJcYjib7zMIJupg4T/omplp3ccpgpiUh26tk71vRG1+a6yMkfbfy0ShoPb9uwNril5cnw==}
-    dev: false
 
   /@sveltejs/vite-plugin-svelte/2.0.2_svelte@3.55.1+vite@4.1.1:
     resolution: {integrity: sha512-xCEan0/NNpQuL0l5aS42FjwQ6wwskdxC3pW1OeFtEKNZwRg7Evro9lac9HesGP6TdFsTv2xMes5ASQVKbCacxg==}
@@ -2312,7 +2329,6 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /function-bind/1.1.1:
@@ -3560,6 +3576,14 @@ packages:
     dependencies:
       glob: 7.2.3
     dev: true
+
+  /rollup/2.79.1:
+    resolution: {integrity: sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==}
+    engines: {node: '>=10.0.0'}
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: false
 
   /rollup/3.15.0:
     resolution: {integrity: sha512-F9hrCAhnp5/zx/7HYmftvsNBkMfLfk/dXUh73hPSM2E3CRgap65orDNJbLetoiUFwSAk6iHPLvBrZ5iHYvzqsg==}

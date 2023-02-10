@@ -43,11 +43,17 @@ const config = {
 			'codemirror/addon/fold/indent-fold.js',
 			'codemirror/addon/fold/markdown-fold.js',
 			'codemirror/addon/fold/comment-fold.js'
-		]
+		],
+		// needed when not referenced through alias
+		exclude: ['@sveltejs/repl']
 	},
+	// needed when not referenced through alias
+	ssr: { noExternal: ['@sveltejs/repl'] },
 	resolve: {
 		alias: {
-			'@sveltejs/repl': path.resolve('../../packages/repl/src/lib'),
+			// Temporarly commented out because their current versions only look good with the overhauled site
+			// '@sveltejs/repl': path.resolve('../../packages/repl/src/lib'),
+			// We can keep the local reference to site-kit since it's the outdated v2 version (newer versions are in their own repo)
 			'@sveltejs/site-kit': path.resolve('../../packages/site-kit/src/lib')
 		}
 	},

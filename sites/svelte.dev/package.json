@@ -1,6 +1,6 @@
 {
 	"name": "svelte.dev",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Docs and examples for Svelte",
 	"type": "module",
 	"scripts": {

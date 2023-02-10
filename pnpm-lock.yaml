@@ -48,6 +48,7 @@ importers:
       svelte2tsx: 0.6.1_4x7phaipmicbaooxtnresslofa
       typescript: 4.9.5
       vite: 4.1.1
+    publishDirectory: package
 
   packages/site-kit:
     specifiers:

@@ -1,5 +1,6 @@
 {
 	"name": "svelte.dev",
+	"private": true,
 	"version": "1.0.3",
 	"description": "Docs and examples for Svelte",
 	"type": "module",
@@ -27,7 +28,7 @@
 		"@resvg/resvg-js": "^2.2.0",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
-		"@sveltejs/site-kit": "3.2.2",
+		"@sveltejs/site-kit": "workspace:*",
 		"@sveltejs/vite-plugin-svelte": "^2.0.2",
 		"degit": "^2.8.4",
 		"dotenv": "^10.0.0",

@@ -1,5 +1,11 @@
 # @sveltejs/repl
 
+## 0.1.2
+
+### Patch Changes
+
+- c14b37a: fix svelte field of package.json
+
 ## 0.1.1
 
 ### Patch Changes

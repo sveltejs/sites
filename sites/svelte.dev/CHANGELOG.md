@@ -1,5 +1,12 @@
 # svelte.dev
 
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies [c14b37a]
+  - @sveltejs/repl@0.1.2
+
 ## 1.0.2
 
 ### Patch Changes

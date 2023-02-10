@@ -1,5 +1,11 @@
 # @sveltejs/repl
 
+## 0.1.1
+
+### Patch Changes
+
+- 0bb4140: Fix publishing, update rollup browser
+
 ## 0.1.0
 
 ### Minor Changes

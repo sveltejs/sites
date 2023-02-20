@@ -111,6 +111,10 @@
 		background: transparent;
 	}
 
+	.post :global(.code-block) {
+		margin-bottom: 1em;
+	}
+
 	.post :global(aside) {
 		float: right;
 		margin: 0 0 1em 1em;

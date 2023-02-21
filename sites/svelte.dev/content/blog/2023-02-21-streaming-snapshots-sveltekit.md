@@ -122,6 +122,8 @@ One caveat: this feature needs JavaScript. Because of this, we recommend that yo
 
 For more on this feature, see [the documentation](https://kit.svelte.dev/docs/load#streaming-with-promises). You can see a demo at [sveltekit-on-the-edge.vercel.app](https://sveltekit-on-the-edge.vercel.app/edge) (the location data is artificially delayed and streamed in) or [deploy your own on Vercel](https://vercel.com/templates/svelte/sveltekit-edge-functions), where streaming is supported in both Edge Functions and Serverless Functions.
 
+We're grateful for the inspiration from prior implementations of this idea including Qwik, Remix, Solid, Marko, React and many others.
+
 ## Snapshots
 
 Previously in a SvelteKit app, if you navigated away after starting to fill out a form, going back wouldn’t restore your form state – the form would be recreated with its default values. Depending on the context, this can be frustrating for users. Since SvelteKit 1.5, we have a built-in way to address this: snapshots.

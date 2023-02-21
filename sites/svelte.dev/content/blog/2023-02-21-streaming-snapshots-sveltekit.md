@@ -108,7 +108,7 @@ This code, along with the rest of the server-rendered HTML, is sent to the brows
 </script>
 ```
 
-For client-side navigation, we use a slightly different mechanism — data from the server is serialized as [newline delimited JSON](https://dataprotocols.org/ndjson/), and SvelteKit reconstructs the values — using a similar deferred mechanism — with `devalue.parse`:
+For client-side navigation, we use a slightly different mechanism. Data from the server is serialized as [newline delimited JSON](https://dataprotocols.org/ndjson/), and SvelteKit reconstructs the values — using a similar deferred mechanism — with `devalue.parse`:
 
 ```json
 // this is generated immediately — note the ["Promise",1]...

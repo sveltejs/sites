@@ -54,8 +54,6 @@ SvelteKit will automatically await the `fetchPost` call before it starts renderi
 
 There is nothing unique about the property `streamed` here – all that is needed to trigger the behavior is a promise outside the top level of the returned object.
 
-Here’s [a demo](https://sveltekit-on-the-edge.vercel.app/edge/streaming) of the new feature – the location data is artificially delayed and streamed in after the page first loads.
-
 SvelteKit will only be able to stream responses if your app’s hosting platform supports it. In general, any platform built around AWS Lambda (e.g. serverless functions) will not support streaming, but any traditional Node.js server or edge-based runtime will. Check your provider’s documentation for confirmation.
 
 If your platform does not support streaming, the data will still be available, but the response will be buffered and the page won’t start rendering until all data has been fetched.
@@ -122,7 +120,7 @@ Because promises are natively supported in this way, you can put them anywhere i
 
 One caveat: this feature needs JavaScript. Because of this, we recommend that you only stream in non-essential data so that the core of the experience is available to all users.
 
-For more on this feature, see [the documentation](https://kit.svelte.dev/docs/load#streaming-with-promises).
+For more on this feature, see [the documentation](https://kit.svelte.dev/docs/load#streaming-with-promises). You can see a demo at [sveltekit-on-the-edge.vercel.app](https://sveltekit-on-the-edge.vercel.app/edge) (the location data is artificially delayed and streamed in) or [deploy your own on Vercel](https://vercel.com/templates/svelte/sveltekit-edge-functions), where streaming is supported in both Edge Functions and Serverless Functions.
 
 ## Snapshots
 

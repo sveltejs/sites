@@ -52,29 +52,18 @@
 	<slot />
 </main>
 
-<a target="_blank" rel="noopener noreferrer" href="https://www.stopputin.net/">
-	<div class="ukr">
+<a target="_blank" rel="noopener noreferrer" href="https://hack.sveltesociety.dev/">
+	<div class="banner">
 		<span class="small">
-			<strong>We stand with Ukraine.</strong> Donate →
+			<strong>Announcing SvelteHack</strong> Participate →
 		</span>
 		<span class="large">
-			<strong>We stand with Ukraine.</strong> Petition your leaders. Show your support.
+			<strong>Announcing SvelteHack</strong> Participate in our first hackathon and win →
 		</span>
 	</div>
 </a>
 
 <style>
-	.ukr {
-		background-color: #0066cc;
-		color: white;
-		position: fixed;
-		bottom: 0;
-		width: 100vw;
-		text-align: center;
-		padding: 0.75em;
-		z-index: 999;
-	}
-
 	@media (max-width: 830px) {
 		:global(aside) {
 			z-index: 9999 !important;
@@ -109,44 +98,50 @@
 
 	/** Ukraine banner */
 	:root {
-		--ukr-footer-height: 48px;
+		--banner-footer-height: 48px;
 	}
 
 	main {
-		padding-bottom: var(--ukr-footer-height);
+		padding-bottom: var(--banner-footer-height);
 	}
 
-	.ukr {
-		background-color: #0066cc;
-		color: white;
+	.banner {
+		--banner-bg: #ff4700;
+		--banner-color: white;
+		--banner-strong-color: white;
+
+		background-color: var(--banner-bg);
+		color: var(--banner-color);
 		position: fixed;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		bottom: 0;
 		width: 100vw;
-		height: var(--ukr-footer-height);
+		height: var(--banner-footer-height);
 		z-index: 999;
 	}
 
+	.banner strong {
+		font-weight: bold;
+		color: var(--banner-strong-color);
+	}
+
 	:global(.examples-container, .repl-outer, .tutorial-outer) {
-		height: calc(100vh - var(--nav-h) - var(--ukr-footer-height)) !important;
+		height: calc(100vh - var(--nav-h) - var(--banner-footer-height)) !important;
 	}
 
 	:global(.toggle) {
-		bottom: var(--ukr-footer-height) !important;
+		bottom: var(--banner-footer-height) !important;
 	}
 
 	:global(.zen-mode) {
-		height: calc(100vh - var(--ukr-footer-height)) !important;
+		height: calc(100vh - var(--banner-footer-height)) !important;
 	}
 
 	@media (max-width: 830px) {
 		:global(aside) {
 			z-index: 9999 !important;
 		}
-	}
-	.ukr strong {
-		color: #ffcc00;
 	}
 </style>

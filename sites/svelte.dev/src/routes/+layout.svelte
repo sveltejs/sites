@@ -115,7 +115,6 @@
 		}
 	}
 
-	/** Ukraine banner */
 	:root {
 		--banner-footer-height: 48px;
 	}

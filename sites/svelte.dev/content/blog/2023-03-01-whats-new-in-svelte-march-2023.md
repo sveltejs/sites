@@ -56,6 +56,7 @@ _Featuring Svelte Contributors and Ambassadors_
 
 
 _To Watch or Hear_
+- [Delightful Web Development with SvelteKit](https://workshops.thisdot.co/learn/developing-with-sveltekit) is a workshop from This Dot Labs - taking place on April 13th.
 - [Have More Control Over Layouts With Group Layouts In SvelteKit](https://www.youtube.com/watch?v=9UpaKEVuErs) and [Learn SvelteKit Hooks Through 6 Examples](https://www.youtube.com/watch?v=Kzrz7GZ9pIg) by Joy of Code
 - [Svelte Kit Creating Popup Modals with Tailwind CSS](https://www.youtube.com/watch?v=qI4-q7SA7uM) and [SvelteKit: Creating Dynamic Tables with Tailwind CSS](https://www.youtube.com/watch?v=QqoYrdzoSSk) by Abdul Rehman 2050
 

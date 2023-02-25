@@ -1,4 +1,5 @@
 import { rollup } from '@rollup/browser';
+import { exports as exprotsResolver, legacy as legacyResolver } from 'resolve.exports';
 import { sleep } from 'yootils';
 import commonjs from './plugins/commonjs.js';
 import glsl from './plugins/glsl.js';
@@ -155,22 +156,42 @@ async function get_bundle(uid, mode, cache, lookup) {
 				// fetch from unpkg
 				self.postMessage({ type: 'status', uid, message: `resolving ${importee}` });
 
-				if (importer in lookup) {
-					const match = /^(@[^/]+\/)?[^/]+/.exec(importee);
-					if (match) imports.add(match[0]);
-				}
+				const importee_package_name_match = /^(@[^/]+\/)?[^/]+/.exec(importee);
+				const importee_package_name = importee_package_name_match
+					? importee_package_name_match[0]
+					: null;
 
-				try {
-					const pkg_url = await follow_redirects(`${packagesUrl}/${importee}/package.json`, uid);
-					const pkg_json = (await fetch_if_uncached(pkg_url, uid)).body;
-					const pkg = JSON.parse(pkg_json);
-
-					if (pkg.svelte || pkg.module || pkg.main) {
-						const url = pkg_url.replace(/\/package\.json$/, '');
-						return new URL(pkg.svelte || pkg.module || pkg.main, `${url}/`).href;
+				if (importee_package_name != null) {
+					if (importer in lookup) {
+						imports.add(importee_package_name);
 					}
-				} catch (err) {
-					// ignore
+
+					try {
+						const pkg_url = await follow_redirects(
+							`${packagesUrl}/${importee_package_name}/package.json`,
+							uid
+						);
+						const pkg_json = (await fetch_if_uncached(pkg_url, uid)).body;
+						const pkg = JSON.parse(pkg_json);
+
+						/** @type {string | false | undefined} */
+						const resolvedId =
+							exprotsResolver(pkg, importee, { browser: true, conditions: ['production'] }) ??
+							legacyResolver(pkg, {
+								browser: importee,
+								fields: [['svelte', 'browser', 'module', 'main']]
+							});
+
+						if (resolvedId === false) {
+							// TODO: Output an error to the user that the package author doesn't want the user to import this path
+						} else if (resolvedId != null) {
+							const url = pkg_url.replace(/\/package\.json$/, '');
+							return new URL(resolvedId, `${url}/`).href;
+						}
+					} catch (err) {
+						// ignore
+						// TODO: Don't ignore, handle import errors correctly
+					}
 				}
 
 				return await follow_redirects(`${packagesUrl}/${importee}`, uid);

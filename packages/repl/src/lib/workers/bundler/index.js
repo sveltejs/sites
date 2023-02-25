@@ -176,7 +176,7 @@ async function get_bundle(uid, mode, cache, lookup) {
 
 						/** @type {string | false | undefined} */
 						const resolved_id =
-							exprots_resolver(pkg, importee, { browser: true, conditions: ['production'] }) ??
+							exprots_resolver(pkg, importee, { browser: true, conditions: ['svelte', 'production'] }) ??
 							legacy_resolver(pkg, {
 								browser: importee,
 								fields: ['svelte', 'browser', 'module', 'main']

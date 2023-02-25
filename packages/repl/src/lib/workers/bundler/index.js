@@ -1,5 +1,5 @@
 import { rollup } from '@rollup/browser';
-import { exports as exprotsResolver, legacy as legacyResolver } from 'resolve.exports';
+import { exports as exprots_resolver, legacy as legacy_resolver } from 'resolve.exports';
 import { sleep } from 'yootils';
 import commonjs from './plugins/commonjs.js';
 import glsl from './plugins/glsl.js';
@@ -176,17 +176,17 @@ async function get_bundle(uid, mode, cache, lookup) {
 
 						/** @type {string | false | undefined} */
 						const resolved_id =
-							exprotsResolver(pkg, importee, { browser: true, conditions: ['production'] }) ??
-							legacyResolver(pkg, {
+							exprots_resolver(pkg, importee, { browser: true, conditions: ['production'] }) ??
+							legacy_resolver(pkg, {
 								browser: importee,
 								fields: [['svelte', 'browser', 'module', 'main']]
 							});
 
-						if (resolvedId === false) {
+						if (resolved_id === false) {
 							// TODO: Output an error to the user that the package author doesn't want the user to import this path
-						} else if (resolvedId != null) {
+						} else if (resolved_id != null) {
 							const url = pkg_url.replace(/\/package\.json$/, '');
-							return new URL(resolvedId, `${url}/`).href;
+							return new URL(resolved_id, `${url}/`).href;
 						}
 					} catch (err) {
 						// ignore

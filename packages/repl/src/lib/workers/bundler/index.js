@@ -175,7 +175,7 @@ async function get_bundle(uid, mode, cache, lookup) {
 						const pkg = JSON.parse(pkg_json);
 
 						/** @type {string | false | undefined} */
-						const resolvedId =
+						const resolved_id =
 							exprotsResolver(pkg, importee, { browser: true, conditions: ['production'] }) ??
 							legacyResolver(pkg, {
 								browser: importee,

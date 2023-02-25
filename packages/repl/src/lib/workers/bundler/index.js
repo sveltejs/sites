@@ -179,7 +179,7 @@ async function get_bundle(uid, mode, cache, lookup) {
 							exprots_resolver(pkg, importee, { browser: true, conditions: ['production'] }) ??
 							legacy_resolver(pkg, {
 								browser: importee,
-								fields: [['svelte', 'browser', 'module', 'main']]
+								fields: ['svelte', 'browser', 'module', 'main']
 							});
 
 						if (resolved_id === false) {

@@ -1,5 +1,5 @@
 import { rollup } from '@rollup/browser';
-import { exports as exprots_resolver, legacy as legacy_resolver } from 'resolve.exports';
+import { exports as exports_resolver, legacy as legacy_resolver } from 'resolve.exports';
 import { sleep } from 'yootils';
 import commonjs from './plugins/commonjs.js';
 import glsl from './plugins/glsl.js';
@@ -176,7 +176,7 @@ async function get_bundle(uid, mode, cache, lookup) {
 
 						/** @type {string | false | undefined} */
 						const resolved_id =
-							exprots_resolver(pkg, importee, { browser: true, conditions: ['svelte', 'production'] }) ??
+							exports_resolver(pkg, importee, { browser: true, conditions: ['svelte', 'production'] }) ??
 							legacy_resolver(pkg, {
 								browser: importee,
 								fields: ['svelte', 'browser', 'module', 'main']

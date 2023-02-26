@@ -7,7 +7,7 @@ authorURL: https://dreamindani.com
 
 March is coming in hot with a number of essential features having been added to SvelteKit following its 1.0 launch. Check out [last week's blog post](https://svelte.dev/blog/streaming-snapshots-sveltekit) for more details.
 
-We're also excited to have launched [SvelteHack](https://hack.sveltesociety.dev/) last month with over $12,000 in prizes! Calling all Svelte developers, new and old, to make something awesome before the April 17th deadline.
+Svelte Society also launched [SvelteHack](https://hack.sveltesociety.dev/) last month with over $12,000 in prizes - calling all Svelte developers, new and old, to make something awesome before the April 17th deadline!
 
 Let's jump into all the details...
 

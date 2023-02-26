@@ -7,7 +7,7 @@ authorURL: https://dreamindani.com
 
 March is coming in hot with a number of essential features having been added to SvelteKit following its 1.0 launch. Check out [last week's blog post](https://svelte.dev/blog/streaming-snapshots-sveltekit) for more details.
 
-We're also excited to have launched [SvelteHack](https://hack.sveltesociety.dev/) last month! Calling all Svelte developers, new and old, to make something awesome before the April 17th deadline.
+We're also excited to have launched [SvelteHack](https://hack.sveltesociety.dev/) last month with over $12,000 in prizes! Calling all Svelte developers, new and old, to make something awesome before the April 17th deadline.
 
 Let's jump into all the details...
 
@@ -33,7 +33,7 @@ Let's jump into all the details...
 
 **Apps & Sites built with Svelte**
 - [win32.run](https://github.com/ducbao414/win32.run) is a version of Windows XP in the browser - with a File System, programs, XP-style File Picker and Saver dialogs, 3rd-party programs, and more
-- [Svelte Radial Menu](https://github.com/tglide/svelte-radial-menu) is a radial menu experiment - based on Rauno's Work 
+- [Svelte Radial Menu](https://github.com/tglide/svelte-radial-menu) is a radial menu experiment - based on [Rauno's radial menu](https://rauno.me/craft/radial-menu)
 - [apod color search](https://github.com/brycedorn/apod-color-search) lets you search for astronomy picture of the day (APO) photos by color
 - [SvHighlight](https://www.reddit.com/r/sveltejs/comments/10pvqfm/svhighlight_a_code_highlighter_for_sveltekit_and/) is a code highlighter for SvelteKit and TailwindCSS with blur and focus blocks
 - [Limey](https://limey.io/) lets you create beautiful one-page websites in minutes
@@ -49,7 +49,7 @@ Let's jump into all the details...
 
 _Featuring Svelte Contributors and Ambassadors_
 - [Streaming, snapshots, and other new features since SvelteKit 1.0](https://svelte.dev/blog/streaming-snapshots-sveltekit) by Geoff Rich (on the Svelte Blog)
-- [View Transition Experiments with Svelte](https://geoffrich.net/posts/view-transition-experiments/) [Native Page Transitions in SvelteKit (updated for 2023)](https://geoffrich.net/posts/page-transitions-1/) by Geoff Rich
+- [View Transition Experiments with Svelte](https://geoffrich.net/posts/view-transition-experiments/) and [Native Page Transitions in SvelteKit (updated for 2023)](https://geoffrich.net/posts/page-transitions-1/) by Geoff Rich
 - [Ron Au's story and how to be whimsical!](https://www.svelteradio.com/episodes/ron-aus-story-and-how-to-be-whimsical) by Svelte Radio
 - [SvelteKit 1.0 with Rich Harris](https://podrocket.logrocket.com/sveltekit) by PodRocket
 - [Svelte Society Africa](https://twitter.com/SvelteAfrica/status/1620526757593116672?s=20) has formally launched!
@@ -103,10 +103,10 @@ _Helpers, Stores and Actions_
 - [Houdini](https://github.com/HoudiniGraphQL/houdini) - the "disappearing" GraphQL client for the SvelteKit - is now 1.0
 - [sveltekit-modal-langchain](https://github.com/semicognitive/sveltekit-modal-langchain) is an example SvelteKit project using [sveltekit-modal](https://github.com/semicognitive/sveltekit-modal), showing how easy it is to write Python endpoints in SvelteKit
 - [mdsvex-excerpt](https://www.npmjs.com/package/mdsvex-excerpt) allows you to show only a portion of document in certain layouts
-- [Svelte Action Balancer](https://www.npmjs.com/package/svelte-action-balancer) is a a simple Svelte action that makes titles more readable
-- [svelte-object](https://github.com/Refzlund/svelte-object) helps create and maintain objects using components. Values are stores, and can therefore be intuitively subscribed to, and updated
+- [Svelte Action Balancer](https://www.npmjs.com/package/svelte-action-balancer) is a simple Svelte action that makes titles more readable
+- [svelte-object](https://github.com/Refzlund/svelte-object) helps create and maintain objects using components. Values are stores and can therefore be intuitively subscribed to and updated
 - [svelte-relative-time](https://www.npmjs.com/package/svelte-relative-time) is a tiny Svelte action and component to render relative times
-- [svelte-disable-preload](https://www.npmjs.com/package/svelte-disable-preload) is a simple action to apply noop event listeners to an element that prevent the document-level SvelteKit event handlers being invoked
+- [svelte-disable-preload](https://www.npmjs.com/package/svelte-disable-preload) is a simple action to apply no-op event listeners to an element that prevent the document-level SvelteKit event handlers being invoked
 - [SvelteKit Static Sitemap](https://github.com/tlaundal/sveltekit-static-sitemap) generates a sitemap.xml for your page during build
 - [svelte-intersection-observer-action](https://www.npmjs.com/package/svelte-intersection-observer-action) is a Svelte action for element position notifications using IntersectionObserver
 - [svelte-sequence](https://github.com/AlexWarnes/svelte-sequence) provides custom stores to compose tweened motion sequences over multiple steps
@@ -115,7 +115,7 @@ _Helpers, Stores and Actions_
 
 _Other cool tools_
 - [sveltekit-modal](https://github.com/semicognitive/sveltekit-modal) lets you write Python endpoints in SvelteKit using Modal
-- [svelte-kit-bot-block](https://www.npmjs.com/package/svelte-kit-bot-block) is a serer hook to handle spam requests with SvelteKit
+- [svelte-kit-bot-block](https://www.npmjs.com/package/svelte-kit-bot-block) is a server hook to handle spam requests with SvelteKit
 - [Svelte Email](https://github.com/carstenlebek/svelte-email) lets you write and design email templates with Svelte and render them to HTML or plain text
 - [Inertia.js](https://github.com/inertiajs/inertia) lets you quickly build modern single-page React, Vue and Svelte apps using classic server-side routing and controllers
 - [svelte-adapter-bun](https://github.com/gornostay25/svelte-adapter-bun) is an adapter for SvelteKit apps that generates a standalone Bun server

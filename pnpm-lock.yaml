@@ -111,7 +111,6 @@ importers:
       prettier-plugin-svelte: ^2.6.0
       prism-svelte: ^0.5.0
       prismjs: ^1.29.0
-      resolve.exports: ^2.0.0
       satori: ^0.0.44
       satori-html: ^0.3.2
       shelljs: ^0.8.5
@@ -142,7 +141,6 @@ importers:
       prettier-plugin-svelte: 2.9.0_jrsxveqmsx2uadbqiuq74wlc4u
       prism-svelte: 0.5.0
       prismjs: 1.29.0
-      resolve.exports: 2.0.0
       satori: 0.0.44
       satori-html: 0.3.2
       shelljs: 0.8.5
@@ -3557,6 +3555,7 @@ packages:
   /resolve.exports/2.0.0:
     resolution: {integrity: sha512-6K/gDlqgQscOlg9fSRpWstA8sYe8rbELsSTNpx+3kTrsVCzvSl0zIvRErM7fdl9ERWDsKnrLnwB+Ne89918XOg==}
     engines: {node: '>=10'}
+    dev: false
 
   /resolve/1.22.1:
     resolution: {integrity: sha512-nBpuuYuY5jFsli/JIs1oldw6fOQCBioohqWZg/2hiaOybXOft4lonv85uDOKXdf8rhyK159cxU5cDcK/NKk8zw==}

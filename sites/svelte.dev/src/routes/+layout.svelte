@@ -58,7 +58,7 @@
 			<strong>Announcing SvelteHack</strong> Participate →
 		</span>
 		<span class="large">
-			<strong>Announcing SvelteHack</strong> Participate in our first hackathon and win →
+			<strong>Announcing SvelteHack</strong> Our first hackathon with over $12,000 in prizes →
 		</span>
 	</div>
 </a>

@@ -1,5 +1,5 @@
 import { rollup } from '@rollup/browser';
-import { exports as exports_resolver, legacy as legacy_resolver } from 'resolve.exports';
+import * as resolve from 'resolve.exports';
 import { sleep } from 'yootils';
 import commonjs from './plugins/commonjs.js';
 import glsl from './plugins/glsl.js';
@@ -107,6 +107,59 @@ function has_loopGuardTimeout_feature() {
 	return compare_to_version(3, 14, 0) >= 0;
 }
 
+async function resolve_from_pkg(pkg, subpath) {
+	// match legacy Rollup logic — pkg.svelte takes priority over pkg.exports
+	if (typeof pkg.svelte === 'string' && subpath === '.') {
+		return pkg.svelte;
+	}
+
+	// modern
+	if (pkg.exports) {
+		try {
+			const [resolved] = resolve.exports(pkg, subpath, {
+				browser: true,
+				conditions: ['svelte', 'production']
+			});
+
+			return resolved;
+		} catch {
+			throw `no matched export path was found in "${pkg_name}/package.json"`;
+		}
+	}
+
+	// legacy
+	if (subpath === '.') {
+		const resolved_id = resolve.legacy(pkg, {
+			fields: ['browser', 'module', 'main']
+		});
+
+		if (!resolved_id) {
+			// last ditch — try to match index.js/index.mjs
+			for (const index_file of ['index.mjs', 'index.js']) {
+				try {
+					const indexUrl = new URL(index_file, `${pkg_url_base}/`).href;
+					return await follow_redirects(indexUrl, uid);
+				} catch {
+					// maybe the next option will be successful
+				}
+			}
+
+			throw `could not find entry point in "${pkg_name}/package.json"`;
+		}
+
+		return resolved_id;
+	}
+
+	if (typeof pkg.browser === 'object') {
+		// this will either return `pkg.browser[subpath]` or `subpath`
+		return resolve.legacy(pkg, {
+			browser: subpath
+		});
+	}
+
+	return subpath;
+}
+
 async function get_bundle(uid, mode, cache, lookup) {
 	let bundle;
 
@@ -157,98 +210,44 @@ async function get_bundle(uid, mode, cache, lookup) {
 				// fetch from unpkg
 				self.postMessage({ type: 'status', uid, message: `resolving ${importee}` });
 
-				const importee_package_name_match = /^(@[^/]+\/)?[^/]+/.exec(importee);
-
-				if (importee_package_name_match) {
-					const importee_package_name = importee_package_name_match[0];
-
-					if (importer in lookup) {
-						imports.add(importee_package_name);
-					}
-
-					const fetch_package_info = async () => {
-						try {
-							const pkg_url = await follow_redirects(
-								`${packagesUrl}/${importee_package_name}/package.json`,
-								uid
-							);
-							const pkg_json = (await fetch_if_uncached(pkg_url, uid)).body;
-							const pkg = JSON.parse(pkg_json);
-
-							const pkg_url_base = pkg_url.replace(/\/package\.json$/, '');
-
-							return {
-								pkg,
-								pkg_url_base
-							};
-						} catch (_e) {
-							throw new Error(
-								`Error fetching "${importee_package_name}" from unpkg. Does the package exist?`
-							);
-						}
-					};
-
-					const { pkg, pkg_url_base } = await fetch_package_info();
-
-					const invalid_import = (reason) => new Error(`Cannot import "${importee}": ${reason}.`);
-
-					/** @type {string | false | undefined} */
-					let resolved_id;
-
-					try {
-						const result = exports_resolver(pkg, importee, {
-							browser: true,
-							conditions: ['svelte', 'production']
-						});
-
-						if (result) {
-							resolved_id = result[0];
-						}
-					} catch {
-						throw invalid_import(
-							`no matched export path was found in "${importee_package_name}/package.json"`
-						);
-					}
-
-					if (resolved_id == null) {
-						resolved_id = legacy_resolver(pkg, {
-							browser: importee,
-							fields: ['svelte', 'browser', 'module', 'main']
-						});
-
-						if (resolved_id === false) {
-							throw invalid_import(
-								`forbidden by "browser" field in "${importee_package_name}/package.json"`
-							);
-						}
-					}
-
-					if (resolved_id == null) {
-						// If not resolved, there is still hope by the NPM standards to resolve it
-						//  to the file `./index.{mjs|js}`, if exists.
-						if (importee_package_name === importee) {
-							const index_files = ['mjs', 'js'].map((ext) => `index.${ext}`);
-
-							// Return the first one that doesn't throw, if any
-							for (const index_file of index_files) {
-								try {
-									const indexUrl = new URL(index_file, `${pkg_url_base}/`).href;
-									return await follow_redirects(indexUrl, uid);
-								} catch {
-									// maybe the next option will be successful
-								}
-							}
-
-							throw invalid_import(
-								`could not find entry point in "${importee_package_name}/package.json"`
-							);
-						}
-					} else {
-						return new URL(resolved_id, `${pkg_url_base}/`).href;
-					}
+				const match = /^((?:@[^/]+\/)?[^/]+)(\/.+)?$/.exec(importee);
+				if (!match) {
+					throw new Error(`Invalid import "${importee}"`);
 				}
 
-				return await follow_redirects(`${packagesUrl}/${importee}`, uid);
+				const pkg_name = match[1];
+				const subpath = `.${match[2] ?? ''}`;
+
+				// if this was imported by one of our files, add it to the `imports` set
+				if (importer in lookup) {
+					imports.add(pkg_name);
+				}
+
+				const fetch_package_info = async () => {
+					try {
+						const pkg_url = await follow_redirects(`${packagesUrl}/${pkg_name}/package.json`, uid);
+						const pkg_json = (await fetch_if_uncached(pkg_url, uid)).body;
+						const pkg = JSON.parse(pkg_json);
+
+						const pkg_url_base = pkg_url.replace(/\/package\.json$/, '');
+
+						return {
+							pkg,
+							pkg_url_base
+						};
+					} catch (_e) {
+						throw new Error(`Error fetching "${pkg_name}" from unpkg. Does the package exist?`);
+					}
+				};
+
+				const { pkg, pkg_url_base } = await fetch_package_info();
+
+				try {
+					const resolved_id = await resolve_from_pkg(pkg, subpath);
+					return new URL(resolved_id, `${pkg_url_base}/`).href;
+				} catch (reason) {
+					throw new Error(`Cannot import "${importee}": ${reason}.`);
+				}
 			}
 		},
 		async load(resolved) {

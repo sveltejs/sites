@@ -181,15 +181,15 @@ async function get_bundle(uid, mode, cache, lookup) {
 								pkg_url_base
 							};
 						} catch (_e) {
-							throw `Error during fetching the NPM package "${importee_package_name}". Does this package exist?`;
+							throw new Error(
+								`Error fetching "${importee_package_name}" from unpkg. Does the package exist?`
+							);
 						}
 					};
 
 					const { pkg, pkg_url_base } = await fetch_package_info();
 
-					const throwInvalidImportError = (reason) => {
-						throw `Cannot import "${importee}": ${reason}.`;
-					};
+					const invalid_import = (reason) => new Error(`Cannot import "${importee}": ${reason}.`);
 
 					/** @type {string | false | undefined} */
 					let resolved_id;
@@ -204,7 +204,7 @@ async function get_bundle(uid, mode, cache, lookup) {
 							resolved_id = result[0];
 						}
 					} catch {
-						throw throwInvalidImportError(
+						throw invalid_import(
 							`no matched export path was found in "${importee_package_name}/package.json"`
 						);
 					}
@@ -216,8 +216,8 @@ async function get_bundle(uid, mode, cache, lookup) {
 						});
 
 						if (resolved_id === false) {
-							throwInvalidImportError(
-								`this path is forbidden to be loaded in the browser, stated by the "browser" field in "${importee_package_name}/package.json"`
+							throw invalid_import(
+								`forbidden by "browser" field in "${importee_package_name}/package.json"`
 							);
 						}
 					}
@@ -238,11 +238,8 @@ async function get_bundle(uid, mode, cache, lookup) {
 								}
 							}
 
-							throwInvalidImportError(
-								`no main entry point were found in "${importee_package_name}/package.json", ` +
-									`nor the files ${index_files
-										.map((index_file) => `"${importee_package_name}/${index_file}"`)
-										.join(' and ')}`
+							throw invalid_import(
+								`could not find entry point in "${importee_package_name}/package.json"`
 							);
 						}
 					} else {

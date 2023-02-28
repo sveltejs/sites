@@ -165,51 +165,88 @@ async function get_bundle(uid, mode, cache, lookup) {
 						imports.add(importee_package_name);
 					}
 
+					const fetch_package_info = async () => {
+						try {
+							const pkg_url = await follow_redirects(
+								`${packagesUrl}/${importee_package_name}/package.json`,
+								uid
+							);
+							const pkg_json = (await fetch_if_uncached(pkg_url, uid)).body;
+							const pkg = JSON.parse(pkg_json);
+
+							const pkg_url_base = pkg_url.replace(/\/package\.json$/, '');
+
+							return {
+								pkg,
+								pkg_url_base
+							};
+						} catch (_e) {
+							throw `Error during fetching the NPM package "${importee_package_name}". Does this package exist?`;
+						}
+					};
+
+					const { pkg, pkg_url_base } = await fetch_package_info();
+
+					const throwInvalidImportError = (reason) => {
+						throw `Cannot import "${importee}": ${reason}.`;
+					};
+
+					/** @type {string | false | undefined} */
+					let resolved_id;
+
 					try {
-						const pkg_url = await follow_redirects(
-							`${packagesUrl}/${importee_package_name}/package.json`,
-							uid
+						const result = exports_resolver(pkg, importee, {
+							browser: true,
+							conditions: ['svelte', 'production']
+						});
+
+						if (result) {
+							resolved_id = result[0];
+						}
+					} catch {
+						throw throwInvalidImportError(
+							`no matched export path was found in "${importee_package_name}/package.json"`
 						);
-						const pkg_json = (await fetch_if_uncached(pkg_url, uid)).body;
-						const pkg = JSON.parse(pkg_json);
+					}
 
-						const pkg_url_base = pkg_url.replace(/\/package\.json$/, '');
-
-						/** @type {string | false | undefined} */
-						const resolved_id =
-							exports_resolver(pkg, importee, {
-								browser: true,
-								conditions: ['svelte', 'production']
-							}) ??
-							legacy_resolver(pkg, {
-								browser: importee,
-								fields: ['svelte', 'browser', 'module', 'main']
-							});
+					if (resolved_id == null) {
+						resolved_id = legacy_resolver(pkg, {
+							browser: importee,
+							fields: ['svelte', 'browser', 'module', 'main']
+						});
 
 						if (resolved_id === false) {
-							// TODO: Output an error to the user that the package author doesn't want the user to import this path
-						} else if (resolved_id == null) {
-							// If not resolved, there is still hope by the NPM standards to resolve it
-							//  to the file `./index.{mjs|js}`, if exists.
-							if (importee_package_name === importee) {
-								// Return the first one that doesn't throw, if any
-								for (const ext of ['.mjs', '.js']) {
-									try {
-										const indexUrl = new URL(`index.${ext}`, `${pkg_url_base}/`).href;
-										return (await fetch_if_uncached(indexUrl, uid)).url;
-									} catch {
-										// ignore, try the next option
-									}
-								}
-
-								// TODO: Throw an error that there no main entry field were found nor './index.mjs' or './index.js' file exist.
-							}
-						} else {
-							return new URL(resolved_id, `${pkg_url_base}/`).href;
+							throwInvalidImportError(
+								`this path is forbidden to be loaded in the browser, stated by the "browser" field in "${importee_package_name}/package.json"`
+							);
 						}
-					} catch (err) {
-						// ignore
-						// TODO: Don't ignore, handle import errors correctly
+					}
+
+					if (resolved_id == null) {
+						// If not resolved, there is still hope by the NPM standards to resolve it
+						//  to the file `./index.{mjs|js}`, if exists.
+						if (importee_package_name === importee) {
+							const index_files = ['mjs', 'js'].map((ext) => `index.${ext}`);
+
+							// Return the first one that doesn't throw, if any
+							for (const index_file of index_files) {
+								try {
+									const indexUrl = new URL(index_file, `${pkg_url_base}/`).href;
+									return await follow_redirects(indexUrl, uid);
+								} catch {
+									// maybe the next option will be successful
+								}
+							}
+
+							throwInvalidImportError(
+								`no main entry point were found in "${importee_package_name}/package.json", ` +
+									`nor the files ${index_files
+										.map((index_file) => `"${importee_package_name}/${index_file}"`)
+										.join(' and ')}`
+							);
+						}
+					} else {
+						return new URL(resolved_id, `${pkg_url_base}/`).href;
 					}
 				}
 

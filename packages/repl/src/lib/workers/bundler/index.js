@@ -157,11 +157,10 @@ async function get_bundle(uid, mode, cache, lookup) {
 				self.postMessage({ type: 'status', uid, message: `resolving ${importee}` });
 
 				const importee_package_name_match = /^(@[^/]+\/)?[^/]+/.exec(importee);
-				const importee_package_name = importee_package_name_match
-					? importee_package_name_match[0]
-					: null;
 
-				if (importee_package_name != null) {
+				if (importee_package_name_match) {
+					const importee_package_name = importee_package_name_match[0];
+					
 					if (importer in lookup) {
 						imports.add(importee_package_name);
 					}

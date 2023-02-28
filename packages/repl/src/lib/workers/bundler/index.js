@@ -110,6 +110,7 @@ function has_loopGuardTimeout_feature() {
 async function get_bundle(uid, mode, cache, lookup) {
 	let bundle;
 
+	/** A set of package names (without subpaths) to include in pkg.devDependencies when downloading an app */
 	const imports = new Set();
 	const warnings = [];
 	const all_warnings = [];

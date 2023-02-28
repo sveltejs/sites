@@ -160,7 +160,7 @@ async function get_bundle(uid, mode, cache, lookup) {
 
 				if (importee_package_name_match) {
 					const importee_package_name = importee_package_name_match[0];
-					
+
 					if (importer in lookup) {
 						imports.add(importee_package_name);
 					}
@@ -173,9 +173,14 @@ async function get_bundle(uid, mode, cache, lookup) {
 						const pkg_json = (await fetch_if_uncached(pkg_url, uid)).body;
 						const pkg = JSON.parse(pkg_json);
 
+						const pkg_url_base = pkg_url.replace(/\/package\.json$/, '');
+
 						/** @type {string | false | undefined} */
 						const resolved_id =
-							exports_resolver(pkg, importee, { browser: true, conditions: ['svelte', 'production'] }) ??
+							exports_resolver(pkg, importee, {
+								browser: true,
+								conditions: ['svelte', 'production']
+							}) ??
 							legacy_resolver(pkg, {
 								browser: importee,
 								fields: ['svelte', 'browser', 'module', 'main']
@@ -183,9 +188,24 @@ async function get_bundle(uid, mode, cache, lookup) {
 
 						if (resolved_id === false) {
 							// TODO: Output an error to the user that the package author doesn't want the user to import this path
-						} else if (resolved_id != null) {
-							const url = pkg_url.replace(/\/package\.json$/, '');
-							return new URL(resolved_id, `${url}/`).href;
+						} else if (resolved_id == null) {
+							// If not resolved, there is still hope by the NPM standards to resolve it
+							//  to the file `./index.{mjs|js}`, if exists.
+							if (importee_package_name === importee) {
+								// Return the first one that doesn't throw, if any
+								for (const ext of ['.mjs', '.js']) {
+									try {
+										const indexUrl = new URL(`index.${ext}`, `${pkg_url_base}/`).href;
+										return (await fetch_if_uncached(indexUrl, uid)).url;
+									} catch {
+										// ignore, try the next option
+									}
+								}
+
+								// TODO: Throw an error that there no main entry field were found nor './index.mjs' or './index.js' file exist.
+							}
+						} else {
+							return new URL(resolved_id, `${pkg_url_base}/`).href;
 						}
 					} catch (err) {
 						// ignore

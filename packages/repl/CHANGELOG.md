@@ -1,5 +1,11 @@
 # @sveltejs/repl
 
+## 0.2.0
+
+### Minor Changes
+
+- b9de0d5: feat: respect `pkg.exports` when resolving
+
 ## 0.1.2
 
 ### Patch Changes

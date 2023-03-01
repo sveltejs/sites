@@ -30,6 +30,7 @@
 		"acorn": "^8.8.2",
 		"codemirror": "5.65.1",
 		"estree-walker": "^3.0.3",
+		"resolve.exports": "^2.0.0",
 		"svelte-json-tree": "^1.0.0",
 		"yootils": "^0.3.1"
 	},

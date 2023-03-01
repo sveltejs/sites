@@ -22,6 +22,7 @@ importers:
       estree-walker: ^3.0.3
       prettier: ^2.8.4
       prettier-plugin-svelte: ^2.9.0
+      resolve.exports: ^2.0.0
       svelte: ^3.55.1
       svelte-json-tree: ^1.0.0
       svelte2tsx: ^0.6.1
@@ -34,6 +35,7 @@ importers:
       acorn: 8.8.2
       codemirror: 5.65.1
       estree-walker: 3.0.3
+      resolve.exports: 2.0.0
       svelte-json-tree: 1.0.0
       yootils: 0.3.1
     devDependencies:
@@ -3549,6 +3551,11 @@ packages:
     resolution: {integrity: sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==}
     engines: {node: '>=8'}
     dev: true
+
+  /resolve.exports/2.0.0:
+    resolution: {integrity: sha512-6K/gDlqgQscOlg9fSRpWstA8sYe8rbELsSTNpx+3kTrsVCzvSl0zIvRErM7fdl9ERWDsKnrLnwB+Ne89918XOg==}
+    engines: {node: '>=10'}
+    dev: false
 
   /resolve/1.22.1:
     resolution: {integrity: sha512-nBpuuYuY5jFsli/JIs1oldw6fOQCBioohqWZg/2hiaOybXOft4lonv85uDOKXdf8rhyK159cxU5cDcK/NKk8zw==}

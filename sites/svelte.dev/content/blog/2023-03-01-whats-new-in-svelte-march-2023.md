@@ -5,11 +5,13 @@ author: Dani Sandoval
 authorURL: https://dreamindani.com
 ---
 
-March is coming in hot with a number of essential features having been added to SvelteKit following its 1.0 launch. Check out [last week's blog post](https://svelte.dev/blog/streaming-snapshots-sveltekit) for more details.
+March is *coming in hot* with a number of essential features having been added to SvelteKit following its 1.0 launch. Check out [last week's blog post](https://svelte.dev/blog/streaming-snapshots-sveltekit) for more details.
 
 Svelte Society also launched [SvelteHack](https://hack.sveltesociety.dev/) last month with over $12,000 in prizes - calling all Svelte developers, new and old, to make something awesome before the April 17th deadline!
 
-Let's jump into all the details...
+And, if you haven't heard already, there's going to be another Svelte Summit! Head over to [SvelteSummit.com](https://www.sveltesummit.com/) and sign up for the newsletter to get updates about the next event 📬
+
+Now let's jump into this month's changes...
 
 ## What's new in SvelteKit
 - `$app/paths` can now be used without an app - making things like component testing with Vitest, using Storybook, etc. easier (**1.4.0**, [#8838](https://github.com/sveltejs/kit/pull/8838))
@@ -17,10 +19,13 @@ Let's jump into all the details...
 - The new snapshot mechanism preserves ephemeral DOM state even after navigation and page reloads (**1.5.0**,[Docs](https://kit.svelte.dev/docs/snapshots), [#8710](https://github.com/sveltejs/kit/pull/8710))
 - `OPTIONS` are now available within the server method (**1.6.0**, [Docs](https://kit.svelte.dev/docs/routing#server), [#8731](https://github.com/sveltejs/kit/pull/8731))
 - Richer error messages have been added for invalid exports (**1.7.0**, [#9055](https://github.com/sveltejs/kit/pull/9055))
-- Streaming promises are now available for server load functions ([Docs](https://kit.svelte.dev/docs/load#streaming-with-promises), [#8901](https://github.com/sveltejs/kit/pull/8901))
+- Streaming promises are now available for server load functions (**1.8.0**, [Docs](https://kit.svelte.dev/docs/load#streaming-with-promises), [#8901](https://github.com/sveltejs/kit/pull/8901))
+- A new configuration option, `preloadStrategy`, helps tune preloading to avoid import 'waterfalls' on certain browsers (**1.8.4**, [Docs](https://kit.svelte.dev/docs/configuration#output), [#9179](https://github.com/sveltejs/kit/pull/9179))
+- The new `paths.relative` option can control interpretation of `paths.assets` and `paths.base` (**1.9.0**, [Docs](https://kit.svelte.dev/docs/configuration#paths), [#9220](https://github.com/sveltejs/kit/pull/9220))
 
 
 ## What's new in Svelte and Language Tools
+- The REPL on `svelte.dev` now supports the `exports` field in `package.json` ([#445](https://github.com/sveltejs/sites/pull/445))
 - The new Call Hierarchy feature lets you see where a function or a class is called and follow the call stack up (**extensions-107.1.0**, [#1889](https://github.com/sveltejs/language-tools/pull/1889))
 - `declarationMap` support has been added to the Svelte extension. Now "go to definition" on `.svelte` files will navigate to the source code when a library has declaration maps (**extensions-107.1.0**, [#1878](https://github.com/sveltejs/language-tools/pull/1878))
 - [TypeScript Inlay Hints](https://code.visualstudio.com/docs/typescript/typescript-editing#_inlay-hints) support is now available via the Svelte Extension. Enable them with `javascript.inlayHints.*` or `typescript.inlayHints.*` (**extensions-107.1.0**, [#1855](https://github.com/sveltejs/language-tools/pull/1855))

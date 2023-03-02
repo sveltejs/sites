@@ -58,6 +58,7 @@ _Featuring Svelte Contributors and Ambassadors_
 - [Ron Au's story and how to be whimsical!](https://www.svelteradio.com/episodes/ron-aus-story-and-how-to-be-whimsical) by Svelte Radio
 - [SvelteKit 1.0 with Rich Harris](https://podrocket.logrocket.com/sveltekit) by PodRocket
 - [Svelte Society Africa](https://twitter.com/SvelteAfrica/status/1620526757593116672?s=20) has formally launched!
+- [SvelteKit overview with Simon and Dominik](https://www.youtube.com/watch?v=CiOigf4FbNg) by Frontend RheinMain
 
 
 _To Watch or Hear_

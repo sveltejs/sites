@@ -157,6 +157,7 @@
 		color: var(--banner-color);
 		width: 2rem;
 		height: 2rem;
+		padding-right: 15px; /* scrollbar width */
 	}
 
 	:global(.examples-container, .repl-outer, .tutorial-outer) {

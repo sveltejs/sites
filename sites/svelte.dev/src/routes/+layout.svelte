@@ -4,6 +4,11 @@
 	import { Icon, Icons, Nav, NavItem, SkipLink } from '@sveltejs/site-kit';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 	import StopWar from './stopwar.svg';
+
+	function close_banner(event) {
+		document.querySelector('.banner').remove();
+		document.documentElement.style.setProperty('--banner-footer-height', '0px')
+	}
 </script>
 
 <Icons />
@@ -52,16 +57,30 @@
 	<slot />
 </main>
 
-<a target="_blank" rel="noopener noreferrer" href="https://hack.sveltesociety.dev/">
-	<div class="banner">
+<div class="banner">
+	<a target="_blank" rel="noopener noreferrer" href="https://hack.sveltesociety.dev/">
 		<span class="small">
-			<strong>Announcing SvelteHack</strong> Participate →
+			<strong>Announcing SvelteHack</strong> →
 		</span>
 		<span class="large">
 			<strong>Announcing SvelteHack</strong> Our first hackathon with over $12,000 in prizes →
 		</span>
-	</div>
-</a>
+	</a>
+	<button on:click={close_banner}>
+		<svg
+			width="24"
+			height="24"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+		>
+			<line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg
+		>
+	</button>
+</div>
 
 <style>
 	@media (max-width: 830px) {
@@ -96,7 +115,6 @@
 		}
 	}
 
-	/** Ukraine banner */
 	:root {
 		--banner-footer-height: 48px;
 	}
@@ -111,20 +129,35 @@
 		--banner-strong-color: white;
 
 		background-color: var(--banner-bg);
-		color: var(--banner-color);
 		position: fixed;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		display: grid;
+		grid-template-columns: 4rem 1fr 4rem;
+		grid-template-rows: auto;
+		grid-template-areas: "start center end";
+		place-items: center;
+		
 		bottom: 0;
 		width: 100vw;
 		height: var(--banner-footer-height);
 		z-index: 999;
 	}
 
+	.banner a {
+		grid-area: center;
+		color: var(--banner-color);
+	}
+
 	.banner strong {
 		font-weight: bold;
 		color: var(--banner-strong-color);
+	}
+
+	.banner button {
+		grid-area: end;
+		color: var(--banner-color);
+		width: 2rem;
+		height: 2rem;
+		margin-right: 15px; /* scrollbar width */
 	}
 
 	:global(.examples-container, .repl-outer, .tutorial-outer) {

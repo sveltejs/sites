@@ -53,10 +53,24 @@ const default_renderer = {
 	code(code, infostring, escaped) {
 		const lang = (infostring || '').match(/\S*/)[0];
 
+		if (lang === 'diff') {
+			// Prism interprets a leading `<` the same as a leading `-`, meaning it — stupidly — can't diff HTML
+			const highlighted = code.split('\n').map(line => {
+				if (line[0] === '-') return `<span class="deleted">${escape(line.slice(1))}</span>`;
+				if (line[0] === '+') return `<span class="inserted">${escape(line.slice(1))}</span>`;
+				return escape(line);
+			}).join('\n');
+
+			return `<div class="code-block"><pre class="language-diff"><code>${highlighted}</code></pre></div>`;
+		}
+
 		const prism_language = prism_languages[lang];
 
 		if (prism_language) {
 			const highlighted = PrismJS.highlight(code, PrismJS.languages[prism_language], lang);
+			if (lang === 'diff') {
+				console.log({code, highlighted});
+			}
 			return `<div class="code-block"><pre class="language-${prism_language}"><code>${highlighted}</code></pre></div>`;
 		}
 

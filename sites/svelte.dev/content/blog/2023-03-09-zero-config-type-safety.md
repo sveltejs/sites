@@ -161,4 +161,4 @@ We'd like to thank the Next.js team for [inspiring](https://twitter.com/shuding_
 
 For the future we want to look into making even more areas of SvelteKit type-safe — links for example, be it in your HTML or through programmatically calling `goto`.
 
-TypeScript is eating the JavaScript world — and we're here for it! We care deeply about first class type safety in SvelteKit, and we provide you the the tools to make the experience as smooth as possible — one that also scales beautifully to larger Svelte code bases — regardless of whether you use TypeScript or typed JavaScript through JSDoc.
+TypeScript is eating the JavaScript world — and we're here for it! We care deeply about first class type safety in SvelteKit, and we provide you the tools to make the experience as smooth as possible — one that also scales beautifully to larger Svelte code bases — regardless of whether you use TypeScript or typed JavaScript through JSDoc.

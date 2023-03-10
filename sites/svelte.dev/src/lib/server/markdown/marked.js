@@ -68,9 +68,6 @@ const default_renderer = {
 
 		if (prism_language) {
 			const highlighted = PrismJS.highlight(code, PrismJS.languages[prism_language], lang);
-			if (lang === 'diff') {
-				console.log({code, highlighted});
-			}
 			return `<div class="code-block"><pre class="language-${prism_language}"><code>${highlighted}</code></pre></div>`;
 		}
 

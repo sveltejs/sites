@@ -148,6 +148,22 @@
 		border: none;
 	}
 
+	.post :global(.deleted),
+	.post :global(.inserted) {
+		display: inline-block;
+		width: 100%;
+	}
+
+	.post :global(.deleted) {
+		color: hsl(2, 80%, 47%);
+		background: hsla(2, 80%, 47%, 0.05);
+	}
+
+	.post :global(.inserted) {
+		color: hsl(120, 100%, 25%);
+		background: hsla(120, 100%, 25%, 0.05);
+	}
+
 	@media (max-width: 768px) {
 		.post :global(.anchor) {
 			transform: scale(0.6);

@@ -13,7 +13,7 @@ As of today, yes: it can.
 
 <video src="https://sveltejs.github.io/assets/video/zero-config-types.mp4" controls muted playsinline></video>
 
-If you're using VSCode, just upgrade the Svelte extension to the latest version, and you'll never have to annotate your `load` functions or `data` props again. Extensions for other editors can also use this feature, as long as they support the Language Server Protocol and TypeScript plugins. It even works with our CLI diagnostics tool `svelte-check`!
+If you're using VSCode, just upgrade the Svelte extension to the latest version, and you'll never have to annotate your `load` functions or `data` props again. Extensions for other editors can also use this feature, as long as they support the Language Server Protocol and TypeScript plugins. It even works with the latest version of our CLI diagnostics tool `svelte-check`!
 
 Before we dive in, let's recap how type safety works in SvelteKit.
 
@@ -149,7 +149,7 @@ While this is super convenient, this isn't just about that. It's also about _cor
 
 This works for all exports from SvelteKit files (`+page`, `+layout`, `+server`, `hooks`, `params` and so on) and for `data`, `form` and `snapshot` properties in `+page/layout.svelte` files.
 
-To use this feature with VS Code install the latest version of the Svelte for VS Code extension. For other IDEs, use the latest versions of the Svelte language server and the Svelte TypeScript plugin. Beyond the editor, our command line tool `svelte-check` also knows how to add these annotations.
+To use this feature with VS Code install the latest version of the Svelte for VS Code extension. For other IDEs, use the latest versions of the Svelte language server and the Svelte TypeScript plugin. Beyond the editor, our command line tool `svelte-check` also knows how to add these annotations since version 3.1.1.
 
 ## How does it work?
 

@@ -1,7 +1,21 @@
 <script>
+	// @ts-check
 	import { onMount, createEventDispatcher } from 'svelte';
 	import { writable } from 'svelte/store';
 	import Message from './Message.svelte';
+	import { basicSetup } from 'codemirror';
+	import { EditorView, keymap } from '@codemirror/view';
+	import { EditorState } from '@codemirror/state';
+	import { indentWithTab } from '@codemirror/commands';
+	import { indentUnit } from '@codemirror/language';
+	import { acceptCompletion } from '@codemirror/autocomplete';
+	import { setDiagnostics } from '@codemirror/lint';
+	import { javascript } from '@codemirror/lang-javascript';
+	import { html } from '@codemirror/lang-html';
+	import { svelte } from '@replit/codemirror-lang-svelte';
+	import { tags } from '@lezer/highlight';
+	import { HighlightStyle } from '@codemirror/language';
+	import { syntaxHighlighting } from '@codemirror/language';
 
 	const dispatch = createEventDispatcher();
 
@@ -15,6 +29,22 @@
 	let h;
 	let code = '';
 	let mode;
+
+	const extensions = [
+		basicSetup,
+		EditorState.tabSize.of(2),
+		keymap.of([{ key: 'Tab', run: acceptCompletion }, indentWithTab]),
+		indentUnit.of('\t'),
+		syntaxHighlighting(
+			HighlightStyle.define([
+				// TODO add more styles
+				{ tag: tags.tagName, color: '#c05726' },
+				{ tag: tags.keyword, color: 'var(--sk-code-keyword)' },
+				{ tag: tags.comment, color: 'var(--sk-code-comment)' },
+				{ tag: tags.string, color: 'var(--sk-code-string)' }
+			])
+		)
+	];
 
 	// We have to expose set and update methods, rather
 	// than making this state-driven through props,

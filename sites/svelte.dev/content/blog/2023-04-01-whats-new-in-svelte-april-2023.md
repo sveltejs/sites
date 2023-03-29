@@ -7,6 +7,8 @@ authorURL: https://dreamindani.com
 
 Happy April, everyone! This month, we're covering all the new features in the Svelte compiler, some quality-of-life improvements in SvelteKit and a huge showcase (like always).
 
+In core team news, Dominic Gannaway has joined Vercel to work on Svelte full-time! Dominic is a world-class expert on wringing performance out of javascript engines, on the DOM, on reactivity, on accessibility, and more! You might know him as the creator of the [Inferno](https://www.infernojs.org/) UI framework or [Lexical](https://lexical.dev/), Meta's WYSIWYG editor. It'll be great to see his talents at work across the Svelte ecosystem 🌱
+
 Don't forget! Svelte Summit Spring, Svelte's 6th virtual conference, will be happening on May 6th. Also, there's just two weeks left until the end of [SvelteHack](https://hack.sveltesociety.dev/)... It's a great opportunity to share your creations with the community and maybe even earn a prize!
 
 Now let's jump into this month's changes...
@@ -39,7 +41,7 @@ Now let's jump into this month's changes...
 
 **Apps & Sites built with Svelte**
 - [Peerbeer](https://peer.beer/) let's you share files peer-to-peer (p2p) without any third parties or data limits
-- [unplanted](https://unplaneted.com/) is an interface for exploring very large space images
+- [unplaneted](https://unplaneted.com/) is an interface for exploring very large space images
 - [PokeBook](https://github.com/pokegh0st/pokebook) is a digital notebook for writing poetry that provides a beautiful distraction-free environment and autosave
 - [papi](https://papi.run/) lets you create prompts for AI models and share them with others with a unique link
 - [Mathesar](https://github.com/centerofci/mathesar) is a straightforward open source tool that provides a spreadsheet-like interface to a PostgreSQL database
@@ -48,17 +50,20 @@ Now let's jump into this month's changes...
 - [Swehl](https://swehl.com/) is an eCommerce store, community and tutorial site for breastfeeding mothers
 - [Codeverter](https://github.com/TGlide/codeverter) is a GPT-powered code converter, allowing you to convert between different languages and frameworks
 - [Game On Or Not](https://gameonornot.com/) is a free web app that helps you organize sports with your friends
+- [Sveltia CMS](https://github.com/sveltia/sveltia-cms) is a Git-based lightweight headless CMS
 
 **Learning Resources**
 
 _Featuring Svelte Contributors and Ambassadors_
 - [Streaming, snapshots, and other new features since SvelteKit 1.0](https://svelte.dev/blog/streaming-snapshots-sveltekit) by Geoff Rich on the svelte.dev Blog
 - [Dev Vlog: Rich Harris shows us what's new in Svelte and Kit, March 2023](https://www.youtube.com/watch?v=vgXgex5E-8g) from Svelte Society
+  - If you missed this one live, check out [the next one](https://www.youtube.com/watch?v=MJHO6FSioPI) - scheduled for April 5th
 - [Svelte Society - London February 2023](https://www.youtube.com/watch?v=RkQ_f7XxdMI)
 - Svelte Radio episodes from this month:
   - [We all live in a Svelte Submarine](https://www.svelteradio.com/episodes/we-all-live-in-a-svelte-submarine)
   - [Building furniture using Svelte with Bert Bengtson](https://www.svelteradio.com/episodes/building-furniture-using-svelte-with-bert-bengtson)
   - [Svelte Hackathon Announcement](https://www.svelteradio.com/episodes/svelte-hackathon-announcement)
+  - [LevelUpTuts 6 months later with Scott Tolinski](https://www.svelteradio.com/episodes/leveluptuts-6-months-later-with-scott-tolinski)
 - This Week In Svelte videos:
   - [2023 March 10 - New prompts! Underline your links!](https://www.youtube.com/watch?v=WiCjQVoE-3k)
   - [2023 March 17 - More a11y warnings! How to: Dynamic Form Actions!](https://www.youtube.com/watch?v=sRhZQ-2VxVU)

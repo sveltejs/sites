@@ -28,7 +28,7 @@ Now let's jump into this month's changes...
 - The `style:` directive will now take precedence over a `style=` attribute (**3.57.0**, [#7475](https://github.com/sveltejs/svelte/issues/7475))
 - CSS units are now supported in the `fly` and `blur` transitions (**3.57.0**, [#7623](https://github.com/sveltejs/svelte/pull/7623), [Docs](https://svelte.dev/docs#run-time-svelte-transition))
 
-*for all the changes to the Svelte compiler, including unreleased changes, check out the [CHANGELOG](https://github.com/sveltejs/svelte/blob/master/CHANGELOG.md).
+For all the changes to the Svelte compiler, including unreleased changes, check out the [CHANGELOG](https://github.com/sveltejs/svelte/blob/master/CHANGELOG.md).
 
 ## What's new in SvelteKit
 - You can now get all cookies for a request with `cookies.getAll` (**1.10.0**, [#9287](https://github.com/sveltejs/kit/pull/9287), [Docs](https://kit.svelte.dev/docs/types#public-types-cookies))

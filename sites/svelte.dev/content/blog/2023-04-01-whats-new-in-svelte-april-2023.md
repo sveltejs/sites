@@ -64,6 +64,7 @@ _Featuring Svelte Contributors and Ambassadors_
   - [Building furniture using Svelte with Bert Bengtson](https://www.svelteradio.com/episodes/building-furniture-using-svelte-with-bert-bengtson)
   - [Svelte Hackathon Announcement](https://www.svelteradio.com/episodes/svelte-hackathon-announcement)
   - [LevelUpTuts 6 months later with Scott Tolinski](https://www.svelteradio.com/episodes/leveluptuts-6-months-later-with-scott-tolinski)
+  - [I got a cold and had fever dreams about React 😱](https://www.svelteradio.com/episodes/i-got-a-cold-and-had-fever-dreams-about-react)
 - This Week In Svelte videos:
   - [2023 March 10 - New prompts! Underline your links!](https://www.youtube.com/watch?v=WiCjQVoE-3k)
   - [2023 March 17 - More a11y warnings! How to: Dynamic Form Actions!](https://www.youtube.com/watch?v=sRhZQ-2VxVU)

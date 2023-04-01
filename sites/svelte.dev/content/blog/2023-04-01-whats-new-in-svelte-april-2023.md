@@ -40,7 +40,7 @@ For all the changes to the Svelte compiler, including unreleased changes, check 
 ## Community Showcase
 
 **Apps & Sites built with Svelte**
-- [Peerbeer](https://peer.beer/) let's you share files peer-to-peer (p2p) without any third parties or data limits
+- [Peerbeer](https://peer.beer/) lets you share files peer-to-peer (p2p) without any third parties or data limits
 - [unplaneted](https://unplaneted.com/) is an interface for exploring very large space images
 - [PokeBook](https://github.com/pokegh0st/pokebook) is a digital notebook for writing poetry that provides a beautiful distraction-free environment and autosave
 - [papi](https://papi.run/) lets you create prompts for AI models and share them with others with a unique link

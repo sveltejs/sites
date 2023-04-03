@@ -24,7 +24,7 @@ Now let's jump into this month's changes...
 - Inputs in a `bind:group` will clear when their value is set to `undefined` (**3.56.0**, [#8214](https://github.com/sveltejs/svelte/issues/8214))
 - `<input>` values will now persist when swapping elements with spread attributes in an `{#each}` block (**3.56.0**, [#7578](https://github.com/sveltejs/svelte/issues/7578))
 - Better warnings across the board - from `noreferrer` to `aria` rules (**3.56.0**)
-- Add <svelte:document> (**3.57.0**, [#3310](https://github.com/sveltejs/svelte/issues/3310))
+- Add `<svelte:document>` (**3.57.0**, [#3310](https://github.com/sveltejs/svelte/issues/3310))
 - The `style:` directive will now take precedence over a `style=` attribute (**3.57.0**, [#7475](https://github.com/sveltejs/svelte/issues/7475))
 - CSS units are now supported in the `fly` and `blur` transitions (**3.57.0**, [#7623](https://github.com/sveltejs/svelte/pull/7623), [Docs](https://svelte.dev/docs#run-time-svelte-transition))
 

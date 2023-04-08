@@ -24,11 +24,18 @@
 		<span class="boolean">{$compile_options.dev}</span>,
 	</label>
 
-	<label class="option">
+	<div class="option">
 		<span class="key">css:</span>
-		<Checkbox bind:checked={$compile_options.css} />
-		<span class="boolean">{$compile_options.css}</span>,
-	</label>
+
+		<input id="injected-input" type="radio" bind:group={$compile_options.css} value="injected" />
+		<label for="injected-input"><span class="string">"injected"</span></label>
+
+		<input id="external-input" type="radio" bind:group={$compile_options.css} value="external" />
+		<label for="external-input"><span class="string">"external"</span></label>
+
+		<input id="none-input" type="radio" bind:group={$compile_options.css} value="none" />
+		<label for="none-input"><span class="string">"none"</span>,</label>
+	</div>
 
 	<label class="option">
 		<span class="key">hydratable:</span>

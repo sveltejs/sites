@@ -92,7 +92,7 @@
 	const compile_options = writable({
 		generate: 'dom',
 		dev: false,
-		css: false,
+		css: 'injected',
 		hydratable: false,
 		customElement: false,
 		immutable: false,

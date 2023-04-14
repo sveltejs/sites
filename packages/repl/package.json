@@ -52,7 +52,7 @@
 		}
 	},
 	"typesVersions": {
-		"*": {
+		">4.0": {
 			"*": [
 				"./dist/index.d.ts"
 			]

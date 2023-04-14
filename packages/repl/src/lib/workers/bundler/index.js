@@ -1,5 +1,5 @@
 import { rollup } from '@rollup/browser';
-import { BROWSER } from 'esm-env';
+import { DEV } from 'esm-env';
 import * as resolve from 'resolve.exports';
 import { sleep } from 'yootils';
 import commonjs from './plugins/commonjs.js';
@@ -340,7 +340,8 @@ async function get_bundle(uid, mode, cache, lookup) {
 }
 
 async function bundle({ uid, components }) {
-	if (BROWSER) {
+	if (!DEV) {
+		console.clear();
 		console.log(`running Svelte compiler version %c${svelte.VERSION}`, 'font-weight: bold');
 	}
 

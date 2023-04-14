@@ -131,7 +131,7 @@
 
 <style>
 	.view-toggle {
-		height: 4.2rem;
+		flex: 0 0 4.2rem !important;
 		border-bottom: 1px solid #eee;
 		white-space: nowrap;
 		box-sizing: border-box;
@@ -162,6 +162,7 @@
 
 	.tab-content {
 		position: absolute;
+		top: 42px;
 		width: 100%;
 		height: calc(100% - 42px) !important;
 		visibility: hidden;

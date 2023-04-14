@@ -1,11 +1,11 @@
 import { rollup } from '@rollup/browser';
+import { BROWSER } from 'esm-env';
 import * as resolve from 'resolve.exports';
 import { sleep } from 'yootils';
 import commonjs from './plugins/commonjs.js';
 import glsl from './plugins/glsl.js';
 import json from './plugins/json.js';
 import replace from './plugins/replace.js';
-import { BROWSER } from 'esm-env';
 
 self.window = self; // egregious hack to get magic-string to work in a worker
 

@@ -1,13 +1,12 @@
 <script>
-	import { onMount, getContext } from 'svelte';
-	import getLocationFromStack from './getLocationFromStack.js';
+	import { BROWSER } from 'esm-env';
+	import { getContext, onMount } from 'svelte';
+	import Message from '../Message.svelte';
+	import Console from './Console.svelte';
 	import PaneWithPanel from './PaneWithPanel.svelte';
 	import ReplProxy from './ReplProxy.js';
-	import Console from './Console.svelte';
-	import Message from '../Message.svelte';
+	import getLocationFromStack from './getLocationFromStack.js';
 	import srcdoc from './srcdoc/index.html?raw';
-
-	import { BROWSER } from 'esm-env';
 
 	const { bundle } = getContext('REPL');
 

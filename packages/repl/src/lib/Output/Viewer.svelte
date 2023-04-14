@@ -6,7 +6,8 @@
 	import Console from './Console.svelte';
 	import Message from '../Message.svelte';
 	import srcdoc from './srcdoc/index.html?raw';
-	import { browser } from '$app/environment';
+
+	import { BROWSER } from 'esm-env';
 
 	const { bundle } = getContext('REPL');
 
@@ -201,7 +202,7 @@
 					? 'allow-same-origin'
 					: ''}"
 				class={error || pending || pending_imports ? 'greyed-out' : ''}
-				srcdoc={browser ? srcdoc : ''}
+				srcdoc={BROWSER ? srcdoc : ''}
 			/>
 		</div>
 

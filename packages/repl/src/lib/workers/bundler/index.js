@@ -5,6 +5,7 @@ import commonjs from './plugins/commonjs.js';
 import glsl from './plugins/glsl.js';
 import json from './plugins/json.js';
 import replace from './plugins/replace.js';
+import { BROWSER } from 'esm-env';
 
 self.window = self; // egregious hack to get magic-string to work in a worker
 
@@ -339,8 +340,7 @@ async function get_bundle(uid, mode, cache, lookup) {
 }
 
 async function bundle({ uid, components }) {
-	if (import.meta.env.PROD) {
-		console.clear();
+	if (BROWSER) {
 		console.log(`running Svelte compiler version %c${svelte.VERSION}`, 'font-weight: bold');
 	}
 

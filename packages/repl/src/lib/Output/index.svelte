@@ -7,7 +7,7 @@
 	import Compiler from './Compiler.js';
 	import CodeMirror from '../CodeMirror.svelte';
 	import AstView from './AstView.svelte';
-	import { is_browser } from '../env.js';
+	import { BROWSER } from 'esm-env';
 
 	const { register_output, module_editor_ready } = getContext('REPL');
 
@@ -62,7 +62,7 @@
 		}
 	});
 
-	const compiler = is_browser && new Compiler(svelteUrl);
+	const compiler = BROWSER && new Compiler(svelteUrl);
 
 	// refs
 	let js_editor;

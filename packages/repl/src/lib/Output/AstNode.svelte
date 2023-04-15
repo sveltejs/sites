@@ -96,7 +96,7 @@
 	}
 
 	.marked {
-		background-color: var(--highlight);
+		background-color: var(--sk-highlight-color);
 	}
 
 	.preview {
@@ -125,14 +125,14 @@
 	}
 
 	.token {
-		color: var(--base);
+		color: var(--sk-code-base);
 	}
 
 	.token.string {
-		color: var(--string);
+		color: var(--sk-code-string);
 	}
 
 	.token.number {
-		color: var(--number);
+		color: var(--sk-code-number);
 	}
 </style>

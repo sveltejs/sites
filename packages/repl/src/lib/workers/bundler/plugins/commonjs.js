@@ -21,7 +21,7 @@ export default {
 			const requires = [];
 
 			walk(ast, {
-				enter: node => {
+				enter: (node) => {
 					if (node.type === 'CallExpression' && node.callee.name === 'require') {
 						if (node.arguments.length !== 1) return;
 						const arg = node.arguments[0];
@@ -33,7 +33,9 @@ export default {
 			});
 
 			const imports = requires.map((id, i) => `import __repl_${i} from '${id}';`).join('\n');
-			const lookup = `const __repl_lookup = { ${requires.map((id, i) => `'${id}': __repl_${i}`).join(', ')} };`;
+			const lookup = `const __repl_lookup = { ${requires
+				.map((id, i) => `'${id}': __repl_${i}`)
+				.join(', ')} };`;
 
 			const transformed = [
 				imports,

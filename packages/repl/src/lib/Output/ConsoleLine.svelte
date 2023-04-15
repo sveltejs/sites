@@ -83,12 +83,12 @@
 		display: flex;
 		position: relative;
 		font-size: 12px;
-		font-family: var(--font-mono);
+		font-family: var(--sk-font-mono);
 	}
 
 	.log > :global(*) {
 		margin-right: 10px;
-		font-family: var(--font-mono);
+		font-family: var(--sk-font-mono);
 	}
 
 	.console-warn,
@@ -122,7 +122,7 @@
 	.trace {
 		border-bottom: 1px solid #eee;
 		font-size: 12px;
-		font-family: var(--font-mono);
+		font-family: var(--sk-font-mono);
 		padding: 4px 0 2px;
 	}
 
@@ -166,7 +166,7 @@
 	}
 
 	.title {
-		font-family: var(--font-mono);
+		font-family: var(--sk-font-mono);
 		font-size: 13px;
 		font-weight: bold;
 		padding-left: 11px;

@@ -69,8 +69,8 @@
 		--base: hsl(45, 7%, 45%);
 		--string: hsl(41, 37%, 45%);
 		--number: hsl(102, 27%, 50%);
-		background: var(--back-light);
-		color: var(--base);
+		background: var(--sk-back-3);
+		color: var(--sk-code-base);
 		display: flex;
 		flex-direction: column;
 	}
@@ -80,7 +80,7 @@
 	code {
 		height: 100%;
 		block-size: 100%;
-		font: 400 var(--code-fs) / 1.7 var(--font-mono);
+		font: 400 var(--sk-text-xs) / 1.7 var(--sk-font-mono);
 	}
 
 	pre {

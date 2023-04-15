@@ -15,7 +15,7 @@
 		for (const key of keys) {
 			const value = data[key];
 			if (typeof value === 'object') {
-				Object.keys(value).forEach(key => columns.add(key));
+				Object.keys(value).forEach((key) => columns.add(key));
 			} else {
 				columns.add(VALUE_KEY);
 			}
@@ -45,7 +45,7 @@
 						{:else if column in data[key]}
 							<td><JSONNode value={data[key][column]} /></td>
 						{:else}
-							<td></td>
+							<td />
 						{/if}
 					{/each}
 				</tr>
@@ -62,7 +62,7 @@
 	}
 	table {
 		font-size: 12px;
-		font-family: var(--font-mono);
+		font-family: var(--sk-font-mono);
 		border-collapse: collapse;
 		line-height: 1;
 		border: 1px solid #aaa;
@@ -80,7 +80,8 @@
 	tr:nth-child(2n) {
 		background: #f2f7fd;
 	}
-	th, td {
+	th,
+	td {
 		border-right: 1px solid #aaa;
 	}
 </style>

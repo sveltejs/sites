@@ -43,7 +43,7 @@
 		position: relative;
 		color: white;
 		padding: 12px 16px 12px 44px;
-		font: 400 12px/1.7 var(--font);
+		font: 400 12px/1.7 var(--sk-font);
 		margin: 0;
 		border-top: 1px solid white;
 	}
@@ -89,6 +89,6 @@
 	}
 
 	.info {
-		background-color: var(--second);
+		background-color: var(--sk-theme-2);
 	}
 </style>

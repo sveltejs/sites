@@ -132,7 +132,7 @@
 <style>
 	.view-toggle {
 		height: 4.2rem;
-		border-bottom: 1px solid #eee;
+		border-bottom: 1px solid var(--sk-text-4);
 		white-space: nowrap;
 		box-sizing: border-box;
 	}

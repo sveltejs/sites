@@ -169,7 +169,7 @@
 		content: '';
 		position: absolute;
 		/* background-color: #eee; */
-		background-color: var(--sk-back-3);
+		background-color: var(--sk-text-4);
 	}
 
 	.horizontal {

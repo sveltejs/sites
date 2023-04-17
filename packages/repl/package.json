@@ -12,7 +12,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
-		"@sveltejs/kit": "^1.15.5",
+		"@sveltejs/kit": "^1.15.6",
 		"@sveltejs/package": "^2.0.2",
 		"eslint": "^8.38.0",
 		"eslint-config-prettier": "^8.8.0",
@@ -29,8 +29,8 @@
 		"svelte": "^3.50.0"
 	},
 	"dependencies": {
-		"@rollup/browser": "^3.20.2",
-		"@sveltejs/site-kit": "4.1.1",
+		"@rollup/browser": "^3.20.4",
+		"@sveltejs/site-kit": "5.0.1",
 		"acorn": "^8.8.2",
 		"codemirror": "5.65.12",
 		"esm-env": "^1.0.0",

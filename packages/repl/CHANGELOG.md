@@ -1,5 +1,11 @@
 # @sveltejs/repl
 
+## 0.4.0
+
+### Minor Changes
+
+- 4dd85b9: Compat with site-kit 5
+
 ## 0.3.0
 
 ### Minor Changes

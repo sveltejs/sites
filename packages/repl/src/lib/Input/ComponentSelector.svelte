@@ -137,6 +137,7 @@
 					id={component.name}
 					class="button"
 					role="button"
+					tabindex="0"
 					class:active={component === $selected}
 					class:draggable={component !== editing && index !== 0}
 					class:drag-over={over === component.name}

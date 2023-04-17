@@ -7,7 +7,7 @@
 	import ModuleEditor from './Input/ModuleEditor.svelte';
 	import Output from './Output/index.svelte';
 	import Bundler from './Bundler.js';
-	import { is_browser } from './env.js';
+	import { BROWSER } from 'esm-env';
 
 	export let packagesUrl = 'https://unpkg.com';
 	export let svelteUrl = `${packagesUrl}/svelte`;
@@ -237,7 +237,7 @@
 	let status_timeout = null;
 
 	const bundler =
-		is_browser &&
+		BROWSER &&
 		new Bundler({
 			packagesUrl,
 			svelteUrl,

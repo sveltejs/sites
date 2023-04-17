@@ -7,7 +7,7 @@ export default class ReplProxy {
 
 		this.pending_cmds = new Map();
 
-		this.handle_event = e => this.handle_repl_message(e);
+		this.handle_event = (e) => this.handle_repl_message(e);
 		window.addEventListener('message', this.handle_event, false);
 	}
 
@@ -36,11 +36,11 @@ export default class ReplProxy {
 				let { message, stack } = cmd_data;
 				let e = new Error(message);
 				e.stack = stack;
-				handler.reject(e)
+				handler.reject(e);
 			}
 
 			if (action === 'cmd_ok') {
-				handler.resolve(cmd_data.args)
+				handler.resolve(cmd_data.args);
 			}
 		} else {
 			console.error('command not found', id, cmd_data, [...this.pending_cmds.keys()]);
@@ -57,7 +57,7 @@ export default class ReplProxy {
 			case 'cmd_ok':
 				return this.handle_command_message(event.data);
 			case 'fetch_progress':
-				return this.handlers.on_fetch_progress(args.remaining)
+				return this.handlers.on_fetch_progress(args.remaining);
 			case 'error':
 				return this.handlers.on_error(event.data);
 			case 'unhandledrejection':

@@ -57,7 +57,7 @@
 	}
 
 	h3 {
-		font: 700 12px/1.5 var(--font);
+		font: 700 12px/1.5 var(--sk-font);
 		color: var(--sk-text-1, #333);
 	}
 

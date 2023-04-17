@@ -1,7 +1,14 @@
 <script>
 	export let checked;
-	import Checkbox from './Checkbox.svelte'
+	import Checkbox from './Checkbox.svelte';
 </script>
+
+<!-- svelte-ignore a11y-label-has-associated-control -->
+<label class="input-output-toggle">
+	<span class:active={!checked} style="text-align: right">input</span>
+	<Checkbox bind:checked />
+	<span class:active={checked}>output</span>
+</label>
 
 <style>
 	.input-output-toggle {
@@ -14,17 +21,14 @@
 		align-items: center;
 		width: 100%;
 		height: 42px;
-		border-top: 1px solid var(--second);
+		border-top: 1px solid var(--sk-theme-2);
 		z-index: 2;
 	}
 
-	span { color: #ccc }
-	.active { color: #555 }
+	span {
+		color: #ccc;
+	}
+	.active {
+		color: #555;
+	}
 </style>
-
-<!-- svelte-ignore a11y-label-has-associated-control -->
-<label class="input-output-toggle">
-	<span class:active={!checked} style="text-align: right">input</span>
-	<Checkbox bind:checked />
-	<span class:active={checked}>output</span>
-</label>

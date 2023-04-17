@@ -254,7 +254,7 @@
 
 	.codemirror-container :global(.CodeMirror) {
 		height: 100%;
-		font: 400 var(--code-fs) / 1.7 var(--font-mono);
+		font: 400 var(--sk-text-xs) / 1.7 var(--sk-font-mono);
 	}
 
 	.codemirror-container :global(.error-loc) {
@@ -267,7 +267,7 @@
 	}
 
 	.codemirror-container :global(.mark-text) {
-		background-color: var(--highlight);
+		background-color: var(--sk-selection-color);
 	}
 
 	textarea {
@@ -283,7 +283,7 @@
 		border: none;
 		padding: 4px 4px 4px 60px;
 		resize: none;
-		font-family: var(--font-mono);
+		font-family: var(--sk-font-mono);
 		font-size: 13px;
 		line-height: 1.7;
 		user-select: none;

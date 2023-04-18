@@ -201,12 +201,18 @@ async function get_bundle(uid, mode, cache, lookup) {
 			// importing from a URL
 			if (importee.startsWith('http:') || importee.startsWith('https:')) return importee;
 
-			// importing from (probably) unpkg
+			
 			if (importee.startsWith('.')) {
-				const url = new URL(importee, importer).href;
-				self.postMessage({ type: 'status', uid, message: `resolving ${url}` });
+				if (importer in lookup) {
+					// should've matched above
+					throw new Error(`Cannot find file "${importee}" imported by "${importer}" in the REPL`);
+				} else {
+					// relative import in an external file
+					const url = new URL(importee, importer).href;
+					self.postMessage({ type: 'status', uid, message: `resolving ${url}` });
 
-				return await follow_redirects(url, uid);
+					return await follow_redirects(url, uid);
+				}
 			} else {
 				// fetch from unpkg
 				self.postMessage({ type: 'status', uid, message: `resolving ${importee}` });

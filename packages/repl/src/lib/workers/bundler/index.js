@@ -204,7 +204,8 @@ async function get_bundle(uid, mode, cache, lookup) {
 			
 			if (importee.startsWith('.')) {
 				if (importer in lookup) {
-					// should've matched above
+					// relative import in a REPL file
+					// should've matched above otherwise importee doesn't exist
 					throw new Error(`Cannot find file "${importee}" imported by "${importer}" in the REPL`);
 				} else {
 					// relative import in an external file

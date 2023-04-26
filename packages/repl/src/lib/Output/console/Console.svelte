@@ -1,6 +1,7 @@
 <script>
 	import ConsoleLine from './ConsoleLine.svelte';
 
+	/** @type {import('./console').Log[]} */
 	export let logs;
 </script>
 
@@ -9,3 +10,9 @@
 		<ConsoleLine {log} />
 	{/each}
 </div>
+
+<style>
+	.container {
+		--json-tree-string-color: var(--sk-code-string);
+	}
+</style>

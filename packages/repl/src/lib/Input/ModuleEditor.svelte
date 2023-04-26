@@ -1,25 +1,26 @@
 <script>
-	import { getContext, onMount } from 'svelte';
+	import { bundle, handle_change, module_editor, selected } from '$lib/state';
 	import CodeMirror from '../CodeMirror.svelte';
 	import Message from '../Message.svelte';
 
-	const { bundle, selected, handle_change, register_module_editor } = getContext('REPL');
-
-	export let errorLoc;
-	export let theme;
-
-	let editor;
-	onMount(() => {
-		register_module_editor(editor);
-	});
+	/** @type {import('$lib/types').StartOrEnd | null} */
+	export let errorLoc = null;
+	// export let theme;
 
 	export function focus() {
-		editor.focus();
+		$module_editor?.focus();
 	}
 
+	/** @type {import('$lib/types').Error | null | undefined} */
 	let error = null;
+
+	/** @type {import('$lib/types').Warning[]} */
 	let warnings = [];
-	let timeout = null;
+
+	/** @type {NodeJS.Timeout} */
+	let timeout;
+
+	$: filename = $selected?.name + '.' + $selected?.type;
 
 	$: if ($bundle) {
 		clearTimeout(timeout);
@@ -29,23 +30,23 @@
 		if (warnings.length > 0) warnings = $bundle.warnings;
 
 		timeout = setTimeout(() => {
-			error = $bundle.error;
-			warnings = $bundle.warnings;
+			error = $bundle?.error;
+			warnings = $bundle?.warnings ?? [];
 		}, 400);
 	}
 </script>
 
 <div class="editor-wrapper">
 	<div class="editor notranslate" translate="no">
-		<CodeMirror bind:this={editor} {errorLoc} {theme} on:change={handle_change} />
+		<CodeMirror bind:this={$module_editor} {errorLoc} on:change on:change={handle_change} />
 	</div>
 
 	<div class="info">
 		{#if error}
-			<Message kind="error" details={error} filename="{$selected.name}.{$selected.type}" />
+			<Message kind="error" details={error} {filename} />
 		{:else if warnings.length > 0}
 			{#each warnings as warning}
-				<Message kind="warning" details={warning} filename="{$selected.name}.{$selected.type}" />
+				<Message kind="warning" details={warning} {filename} />
 			{/each}
 		{/if}
 	</div>

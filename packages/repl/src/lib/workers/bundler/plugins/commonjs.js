@@ -1,4 +1,4 @@
-import * as acorn from 'acorn';
+import { parse } from 'acorn';
 import { walk } from 'estree-walker';
 
 const require = `function require(id) {
@@ -6,6 +6,7 @@ const require = `function require(id) {
 	throw new Error(\`Cannot require modules dynamically (\${id})\`);
 }`;
 
+/** @type {import('@rollup/browser').Plugin} */
 export default {
 	name: 'commonjs',
 
@@ -13,9 +14,9 @@ export default {
 		if (!/\b(require|module|exports)\b/.test(code)) return;
 
 		try {
-			const ast = acorn.parse(code, {
+			const ast = parse(code, {
 				// for some reason this hangs for some code if you use 'latest'. change with caution
-				ecmaVersion: 'latest'
+				ecmaVersion: 'latest',
 			});
 
 			const requires = [];
@@ -29,7 +30,7 @@ export default {
 
 						requires.push(arg.value);
 					}
-				}
+				},
 			});
 
 			const imports = requires.map((id, i) => `import __repl_${i} from '${id}';`).join('\n');
@@ -43,15 +44,15 @@ export default {
 				require,
 				`const exports = {}; const module = { exports };`,
 				code,
-				`export default module.exports;`
+				`export default module.exports;`,
 			].join('\n\n');
 
 			return {
 				code: transformed,
-				map: null
+				map: null,
 			};
 		} catch (err) {
 			return null;
 		}
-	}
+	},
 };

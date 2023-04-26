@@ -1,239 +1,306 @@
+<script context="module">
+	export const cursorIndex = writable(0);
+</script>
+
 <script>
-	import { onMount, createEventDispatcher } from 'svelte';
+	import { autocompletion, closeBrackets } from '@codemirror/autocomplete';
+	import { defaultKeymap, history, historyField, indentWithTab } from '@codemirror/commands';
+	import { bracketMatching, codeFolding, indentUnit } from '@codemirror/language';
+	import { EditorState, Range, StateEffect, StateEffectType, StateField } from '@codemirror/state';
+	import { Decoration, EditorView, keymap } from '@codemirror/view';
+	import { basicSetup } from 'codemirror';
+	import { createEventDispatcher, onMount, tick } from 'svelte';
 	import { writable } from 'svelte/store';
 	import Message from './Message.svelte';
+	import { svelte as svelteTheme } from './theme';
 
+	/** @type {import('./types').StartOrEnd | null} */
+	export let errorLoc = null;
+
+	/** @type {ReturnType<typeof createEventDispatcher<{ change: { value: string } }>>} */
 	const dispatch = createEventDispatcher();
 
-	export let readonly = false;
-	export let errorLoc = null;
-	export let lineNumbers = true;
-	export let tab = true;
-	export let theme;
-
-	let w;
-	let h;
 	let code = '';
-	let mode;
 
-	// We have to expose set and update methods, rather
-	// than making this state-driven through props,
-	// because it's difficult to update an editor
-	// without resetting scroll otherwise
-	export async function set(new_code, new_mode) {
-		if (new_mode !== mode) {
-			await createEditor((mode = new_mode));
-		}
+	/** @type {import('./types').Lang} */
+	let lang = 'svelte';
 
-		code = new_code;
-		updating_externally = true;
-		if (editor) editor.setValue(code);
-		updating_externally = false;
+	export let readonly = false;
+	export let tab = true;
+
+	/**
+	 * @param {{ code: string; lang: import('./types').Lang }} options
+	 */
+	export async function set(options) {
+		update(options);
 	}
 
-	export function update(new_code) {
-		code = new_code;
+	/**
+	 * @param {{ code?: string; lang?: import('./types').Lang }} options
+	 */
+	export async function update(options) {
+		if (!editor) return;
 
-		if (editor) {
-			const { left, top } = editor.getScrollInfo();
-			editor.setValue((code = new_code));
-			editor.scrollTo(left, top);
+		await tick();
+
+		if (options.lang && options.lang !== lang) {
+			// This will trigger change_mode
+			change_mode((lang = options.lang));
+		}
+
+		if (options.code) {
+			updating_externally = true;
+
+			const { scrollLeft: left, scrollTop: top } = editor.scrollDOM;
+
+			change_code((code = options.code));
+
+			updating_externally = false;
+
+			editor.scrollDOM.scrollTop = top;
+			editor.scrollDOM.scrollLeft = left;
 		}
 	}
+
+	/**
+	 * @param {number} pos
+	 */
+	export function setCursor(pos) {
+		editor?.dispatch({ selection: { anchor: pos, head: pos } });
+	}
+
+	/** @type {(...val: any) => void} */
+	let fulfil_module_editor_ready;
+	export const isReady = new Promise((f) => (fulfil_module_editor_ready = f));
 
 	export function resize() {
-		editor.refresh();
+		editor?.requestMeasure();
 	}
 
 	export function focus() {
-		editor.focus();
+		editor?.focus();
 	}
 
-	export function getHistory() {
-		return editor.getHistory();
+	export function getEditorState() {
+		return editor?.state.toJSON({ history: historyField });
 	}
 
-	export function setHistory(history) {
-		editor.setHistory(history);
+	/**
+	 * @param {any} state
+	 */
+	export function setEditorState(state) {
+		if (!editor) return;
+
+		editor.setState(
+			EditorState.fromJSON(state, { extensions, doc: state.doc }, { history: historyField })
+		);
+		editor?.dispatch({ changes: { from: 0, to: editor.state.doc.length, insert: state.doc } });
 	}
 
-	export function clearHistory() {
-		if (editor) editor.clearHistory();
+	export async function clearEditorState() {
+		await tick();
+
+		editor?.setState(EditorState.create({ extensions, doc: '' }));
+		editor?.dispatch({ changes: { from: 0, to: editor.state.doc.length, insert: '' } });
 	}
 
-	export function setCursor(pos) {
-		if (editor) editor.setCursor(pos);
-	}
+	/** @type {StateEffectType<Range<Decoration>[]>} */
+	const addMarksDecoration = StateEffect.define();
 
-	export const cursorIndex = writable(0);
+	// This value must be added to the set of extensions to enable this
+	const markField = StateField.define({
+		// Start with an empty set of decorations
+		create() {
+			return Decoration.none;
+		},
+		// This is called whenever the editor updates—it computes the new set
+		update(value, tr) {
+			// Move the decorations to account for document changes
+			value = value.map(tr.changes);
+			// If this transaction adds or removes decorations, apply those changes
+			for (let effect of tr.effects) {
+				if (effect.is(addMarksDecoration)) value = value.update({ add: effect.value, sort: true });
+			}
+			return value;
+		},
+		// Indicate that this field provides a set of decorations
+		provide: (f) => EditorView.decorations.from(f),
+	});
 
-	export function markText({ from, to }) {
-		if (editor)
-			editor.markText(editor.posFromIndex(from), editor.posFromIndex(to), {
-				className: 'mark-text'
-			});
+	/**
+	 * @param {object} param0
+	 * @param {number} param0.from
+	 * @param {number} param0.to
+	 * @param {string} [param0.className]
+	 */
+	export function markText({ from, to, className = 'mark-text' }) {
+		const executedMark = Decoration.mark({
+			class: className,
+		});
+
+		editor.dispatch({
+			effects: [
+				StateEffect.appendConfig.of(markField),
+				addMarksDecoration.of([executedMark.range(from, to)]),
+			],
+		});
 	}
 
 	export function unmarkText() {
-		if (editor) editor.getAllMarks().forEach((m) => m.clear());
+		editor.dispatch({
+			effects: StateEffect.reconfigure.of(extensions),
+		});
 	}
 
-	const modes = {
-		js: {
-			name: 'javascript',
-			json: false
-		},
-		json: {
-			name: 'javascript',
-			json: true
-		},
-		svelte: {
-			name: 'handlebars',
-			base: 'text/html'
-		},
-		md: {
-			name: 'markdown'
-		}
-	};
-
-	const refs = {};
+	/** @type {EditorView} */
 	let editor;
-	let updating_externally = false;
-	let marker;
-	let error_line;
-	let destroyed = false;
-	let CodeMirror;
 
-	$: if (editor && w && h) {
-		editor.refresh();
-	}
+	/** @type {number} */
+	let w;
+	/** @type {number} */
+	let h;
+
+	let marked = false;
+	let destroyed = false;
+
+	/** @type {number | null}*/
+	let error_line = null;
+
+	let updating_externally = false;
+
+	/** @type {import('@codemirror/state').Extension[]} */
+	let extensions = [];
+
+	$: if (editor && w && h) resize();
 
 	$: {
-		if (marker) marker.clear();
+		if (marked) {
+			unmarkText();
+			marked = false;
+		}
 
 		if (errorLoc) {
-			const line = errorLoc.line - 1;
-			const ch = errorLoc.column;
+			markText({ from: errorLoc.character, to: errorLoc.character + 1, className: 'error-loc' });
 
-			marker = editor.markText(
-				{ line, ch },
-				{ line, ch: ch + 1 },
-				{
-					className: 'error-loc'
-				}
-			);
-
-			error_line = line;
+			error_line = errorLoc.line;
 		} else {
 			error_line = null;
 		}
 	}
 
-	let previous_error_line;
-	$: if (editor) {
-		if (previous_error_line != null) {
-			editor.removeLineClass(previous_error_line, 'wrap', 'error-line');
-		}
+	// /** @type {number | null} */
+	// let previous_error_line;
+	// $: if (editor) {
+	// 	if (previous_error_line != null) {
+	// 		editor.removeLineClass(previous_error_line, 'wrap', 'error-line');
+	// 	}
 
-		if (error_line && error_line !== previous_error_line) {
-			editor.addLineClass(error_line, 'wrap', 'error-line');
-			previous_error_line = error_line;
+	// 	if (error_line && error_line !== previous_error_line) {
+	// 		editor.addLineClass(error_line, 'wrap', 'error-line');
+	// 		previous_error_line = error_line;
+	// 	}
+	// }
+
+	/**
+	 * @param {string} mode
+	 */
+	async function get_lang_plugin(mode) {
+		switch (mode) {
+			case 'js':
+				return (await import('@codemirror/lang-javascript')).javascript();
+			case 'json':
+				return (await import('@codemirror/lang-json')).json();
+			case 'md':
+				return (await import('@codemirror/lang-markdown')).markdown();
+			case 'css':
+				return (await import('@codemirror/lang-css')).css();
+			default:
+				return (await import('@replit/codemirror-lang-svelte')).svelte();
 		}
 	}
 
-	onMount(() => {
-		(async () => {
-			if (!CodeMirror) {
-				let mod = await import('./codemirror.js');
-				CodeMirror = mod.default;
-			}
-			await createEditor(mode || 'svelte');
-			if (editor) editor.setValue(code || '');
-		})();
+	/**
+	 * @param {import('./types').Lang} new_mode
+	 */
+	async function change_mode(new_mode) {
+		editor.dispatch({
+			effects: StateEffect.reconfigure.of(await make_extensions({ mode: new_mode })),
+		});
+	}
 
-		return () => {
-			destroyed = true;
-			if (editor) editor.toTextArea();
-		};
+	/**
+	 * @param {string} new_value
+	 */
+	function change_code(new_value) {
+		const transaction = editor.state.update({
+			changes: { from: 0, to: editor.state.doc.length, insert: new_value },
+		});
+		editor.dispatch(transaction);
+	}
+
+	const watcher = EditorView.updateListener.of((viewUpdate) => {
+		if (viewUpdate.selectionSet) {
+			cursorIndex.set(viewUpdate.state.selection.main.head);
+		}
+
+		if (!viewUpdate.changes.empty) {
+			dispatch('change', { value: viewUpdate.state.doc.toString() });
+		}
 	});
 
-	let first = true;
+	/**
+	 * @param {object} param0
+	 * @param {import('./types').Lang} param0.mode
+	 */
+	async function make_extensions({ mode }) {
+		extensions = [
+			basicSetup,
+			watcher,
+			await get_lang_plugin(mode || 'svelte'),
+			autocompletion({ closeOnBlur: false }),
+			EditorState.tabSize.of(2),
+			keymap.of([...defaultKeymap, indentWithTab]),
+			indentUnit.of(tab ? '\t' : '  '),
+			closeBrackets(),
+			bracketMatching(),
+			codeFolding(),
+			history(),
+			svelteTheme,
+		];
 
-	async function createEditor(mode) {
-		if (destroyed || !CodeMirror) return;
+		extensions.push(EditorState.readOnly.of(readonly));
 
-		if (editor) editor.toTextArea();
-
-		const opts = {
-			lineNumbers,
-			lineWrapping: true,
-			indentWithTabs: true,
-			indentUnit: 2,
-			tabSize: 2,
-			value: '',
-			mode: modes[mode] || {
-				name: mode
-			},
-			readOnly: readonly,
-			autoCloseBrackets: true,
-			autoCloseTags: true,
-			extraKeys: CodeMirror.normalizeKeyMap({
-				Enter: 'newlineAndIndentContinueMarkdownList',
-				'Ctrl-/': 'toggleComment',
-				'Cmd-/': 'toggleComment',
-				'Ctrl-Q': function (cm) {
-					cm.foldCode(cm.getCursor());
-				},
-				'Cmd-Q': function (cm) {
-					cm.foldCode(cm.getCursor());
-				},
-				// allow escaping the CodeMirror with Esc Tab
-				'Esc Tab': false
-			}),
-			foldGutter: true,
-			gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-			theme
-		};
-
-		if (!tab) {
-			opts.extraKeys['Tab'] = tab;
-			opts.extraKeys['Shift-Tab'] = tab;
-		}
-
-		// Creating a text editor is a lot of work, so we yield
-		// the main thread for a moment. This helps reduce jank
-		if (first) await sleep(50);
-
-		if (destroyed) return;
-
-		editor = CodeMirror.fromTextArea(refs.editor, opts);
-
-		editor.on('change', (instance) => {
-			if (!updating_externally) {
-				const value = instance.getValue();
-				dispatch('change', { value });
-			}
-		});
-
-		editor.on('cursorActivity', (instance) => {
-			cursorIndex.set(instance.indexFromPos(instance.getCursor()));
-		});
-
-		if (first) await sleep(50);
-		editor.refresh();
-
-		first = false;
+		return (extensions = extensions);
 	}
 
-	function sleep(ms) {
-		return new Promise((fulfil) => setTimeout(fulfil, ms));
+	/**
+	 * @type {import('svelte/action').Action<HTMLDivElement>}
+	 */
+	async function codemirror(node) {
+		(async () => {
+			if (!destroyed) {
+				editor = new EditorView({
+					parent: node,
+					extensions: await make_extensions({ mode: lang }),
+					doc: '',
+					selection: { anchor: 0, head: 0 },
+				});
+
+				fulfil_module_editor_ready();
+			}
+		})();
+
+		return {
+			destroy: () => {
+				destroyed = true;
+				editor.destroy();
+			},
+		};
 	}
 </script>
 
-<div class="codemirror-container" bind:offsetWidth={w} bind:offsetHeight={h}>
-	<textarea bind:this={refs.editor} readonly value={code} />
-
-	{#if !CodeMirror}
+<div class="codemirror-container" use:codemirror>
+	{#if !editor}
 		<pre style="position: absolute; left: 0; top: 0">{code}</pre>
 
 		<div style="position: absolute; width: 100%; bottom: 0">
@@ -252,9 +319,12 @@
 		overflow: hidden;
 	}
 
-	.codemirror-container :global(.CodeMirror) {
+	.codemirror-container :global(.cm-editor) {
 		height: 100%;
-		font: 400 var(--sk-text-xs) / 1.7 var(--sk-font-mono);
+	}
+
+	.codemirror-container :global(*) {
+		font: 400 var(--sk-text-xs) / 1.7 var(--sk-font-mono) !important;
 	}
 
 	.codemirror-container :global(.error-loc) {
@@ -264,14 +334,6 @@
 
 	.codemirror-container :global(.error-line) {
 		background-color: rgba(200, 0, 0, 0.05);
-	}
-
-	.codemirror-container :global(.mark-text) {
-		background-color: var(--sk-selection-color);
-	}
-
-	textarea {
-		visibility: hidden;
 	}
 
 	pre {

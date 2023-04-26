@@ -13,7 +13,7 @@ const DEFAULT_COMPILE_OPTIONS = {
 	hydratable: false,
 	customElement: false,
 	immutable: false,
-	legacy: false,
+	legacy: false
 };
 
 /** @type {Map<string, import('@codemirror/state').EditorState>} */
@@ -45,6 +45,7 @@ export async function handle_select(index) {
 	const $compile_options = get(compile_options);
 	const $output = get(output);
 	const $selected = get(selected);
+	const $old_selected_index = get(selected_index);
 
 	if (!$selected) return;
 
@@ -52,11 +53,11 @@ export async function handle_select(index) {
 
 	await tick();
 
-	EDITOR_STATE_MAP.set(get_full_filename($selected), $module_editor?.getEditorState());
-
 	const $new_selected = get(selected);
-
 	if (!$new_selected) return;
+
+	if ($old_selected_index !== get(selected_index))
+		EDITOR_STATE_MAP.set(get_full_filename($selected), $module_editor?.getEditorState());
 
 	await $module_editor?.set({ code: $new_selected.source, lang: $new_selected.type });
 

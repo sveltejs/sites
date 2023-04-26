@@ -5,7 +5,7 @@
 		module_editor,
 		rebundle,
 		selected,
-		selected_index,
+		selected_index
 	} from '$lib/state';
 	import { createEventDispatcher, tick } from 'svelte';
 
@@ -81,7 +81,7 @@
 		if (!result) return;
 
 		if (index !== -1) {
-			$files = $files.slice(0, index).concat($files.slice(index + 1));
+			$files = $files.filter((_, idx) => idx !== index);
 
 			dispatch('remove', { files: $files });
 		} else {
@@ -105,7 +105,7 @@
 			name: uid++ ? `Component${uid}` : 'Component1',
 			type: 'svelte',
 			source: '',
-			modified: true,
+			modified: true
 		};
 
 		$files = $files.concat(file);

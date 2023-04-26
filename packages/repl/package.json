@@ -1,6 +1,6 @@
 {
-	"name": "@puruvj/svelte-repl-next",
-	"version": "0.0.1",
+	"name": "@sveltejs/repl",
+	"version": "0.4.0",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",

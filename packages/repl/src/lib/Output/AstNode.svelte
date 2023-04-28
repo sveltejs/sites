@@ -59,8 +59,9 @@
 				'end' in value &&
 				typeof value.start === 'number' &&
 				typeof value.end === 'number'
-			)
+			) {
 				$module_editor?.markText({ from: value.start ?? 0, to: value.end ?? 0 });
+			}
 		}
 	}
 

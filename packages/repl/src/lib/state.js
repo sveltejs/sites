@@ -63,10 +63,8 @@ export async function handle_select(index) {
 	await $module_editor?.set({ code: $new_selected.source, lang: $new_selected.type });
 
 	if (EDITOR_STATE_MAP.has(get_full_filename($new_selected))) {
-		console.log(40);
 		$module_editor?.setEditorState(EDITOR_STATE_MAP.get(get_full_filename($new_selected)));
 	} else {
-		console.log(50);
 		$module_editor?.clearEditorState();
 	}
 

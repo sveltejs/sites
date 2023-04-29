@@ -105,8 +105,6 @@
 		});
 	}
 
-	$: console.log(diagnostics);
-
 	export async function clearEditorState() {
 		await tick();
 

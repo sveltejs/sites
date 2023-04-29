@@ -11,8 +11,6 @@
 		$module_editor?.focus();
 	}
 
-	bundle.subscribe(() => console.log('bundle changed'));
-
 	/** @type {import('$lib/types').Error | null | undefined} */
 	let error = null;
 
@@ -26,8 +24,6 @@
 	$: if ($bundle) {
 		error = $bundle?.error;
 		warnings = $bundle?.warnings ?? [];
-
-		console.log(warnings);
 
 		if (error || warnings.length > 1) {
 			error_file = error?.filename ?? warnings[0].filename;

@@ -1,7 +1,7 @@
 <script>
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
 	import { BROWSER } from 'esm-env';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, tick } from 'svelte';
 	import Bundler from './Bundler';
 	import InputOutputToggle from './InputOutputToggle.svelte';
 	import ComponentSelector from './input/ComponentSelector.svelte';
@@ -19,8 +19,9 @@
 		rebundle,
 		selected,
 		selected_index,
-		toggleable,
+		toggleable
 	} from './state';
+	import { sleep } from './utils';
 
 	export let packagesUrl = 'https://unpkg.com';
 	export let svelteUrl = `${packagesUrl}/svelte`;
@@ -39,7 +40,7 @@
 	export function toJSON() {
 		return {
 			imports: $bundle?.imports ?? [],
-			files: $files,
+			files: $files
 		};
 	}
 
@@ -58,6 +59,8 @@
 		await $module_editor?.set({ code: data.files[0].source, lang: data.files[0].type });
 
 		injectedCSS = data.css || '';
+
+		await sleep(50);
 
 		EDITOR_STATE_MAP.set(get_full_filename(data.files[0]), $module_editor?.getEditorState());
 	}
@@ -89,7 +92,7 @@
 		if (matched_component_index) {
 			$module_editor?.update({
 				code: $files[matched_component_index].source,
-				lang: $files[matched_component_index].type,
+				lang: $files[matched_component_index].type
 			});
 
 			$output?.update?.($files[matched_component_index], $compile_options);
@@ -141,7 +144,7 @@
 					}
 
 					status = message;
-				},
+				}
 		  })
 		: null;
 
@@ -178,7 +181,7 @@
 					errorLoc={sourceErrorLoc}
 					on:change={() =>
 						dispatch('change', {
-							files: $files,
+							files: $files
 						})}
 				/>
 			</section>

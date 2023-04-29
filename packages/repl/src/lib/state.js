@@ -56,14 +56,17 @@ export async function handle_select(index) {
 	const $new_selected = get(selected);
 	if (!$new_selected) return;
 
-	if ($old_selected_index !== get(selected_index))
+	if ($old_selected_index !== get(selected_index)) {
 		EDITOR_STATE_MAP.set(get_full_filename($selected), $module_editor?.getEditorState());
+	}
 
 	await $module_editor?.set({ code: $new_selected.source, lang: $new_selected.type });
 
 	if (EDITOR_STATE_MAP.has(get_full_filename($new_selected))) {
+		console.log(40);
 		$module_editor?.setEditorState(EDITOR_STATE_MAP.get(get_full_filename($new_selected)));
 	} else {
+		console.log(50);
 		$module_editor?.clearEditorState();
 	}
 
@@ -97,8 +100,13 @@ export async function handle_change(event) {
 
 	await tick();
 
+	const $new_selected = get(selected);
+	if (!$new_selected) return;
+
+	EDITOR_STATE_MAP.set(get_full_filename($new_selected), get(module_editor)?.getEditorState());
+
 	// recompile selected component
-	$output?.update(get(selected), $compile_options);
+	$output?.update($new_selected, $compile_options);
 
 	rebundle();
 }

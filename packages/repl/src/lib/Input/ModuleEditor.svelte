@@ -1,5 +1,5 @@
 <script>
-	import { bundle, handle_change, module_editor, selected } from '$lib/state';
+	import { bundle, get_full_filename, handle_change, module_editor, selected } from '$lib/state';
 	import CodeMirror from '../CodeMirror.svelte';
 	import Message from '../Message.svelte';
 
@@ -11,34 +11,61 @@
 		$module_editor?.focus();
 	}
 
+	bundle.subscribe(() => console.log('bundle changed'));
+
 	/** @type {import('$lib/types').Error | null | undefined} */
 	let error = null;
 
 	/** @type {import('$lib/types').Warning[]} */
 	let warnings = [];
 
-	/** @type {NodeJS.Timeout} */
-	let timeout;
-
 	$: filename = $selected?.name + '.' + $selected?.type;
 
+	let error_file = '';
+
 	$: if ($bundle) {
-		clearTimeout(timeout);
+		error = $bundle?.error;
+		warnings = $bundle?.warnings ?? [];
 
-		// if there's already an error/warnings displayed, update them
-		if (error) error = $bundle.error;
-		if (warnings.length > 0) warnings = $bundle.warnings;
+		console.log(warnings);
 
-		timeout = setTimeout(() => {
-			error = $bundle?.error;
-			warnings = $bundle?.warnings ?? [];
-		}, 400);
+		if (error || warnings.length > 1) {
+			error_file = error?.filename ?? warnings[0].filename;
+		}
 	}
+
+	$: diagnostics =
+		$selected && error_file === get_full_filename($selected)
+			? [
+					...(error
+						? [
+								{
+									from: error.start.character,
+									to: error.end.character,
+									severity: 'error',
+									message: error.message
+								}
+						  ]
+						: []),
+					...warnings.map((warning) => ({
+						from: warning.start.character,
+						to: warning.end.character,
+						severity: 'warning',
+						message: warning.message
+					}))
+			  ]
+			: [];
 </script>
 
 <div class="editor-wrapper">
 	<div class="editor notranslate" translate="no">
-		<CodeMirror bind:this={$module_editor} {errorLoc} on:change on:change={handle_change} />
+		<CodeMirror
+			bind:this={$module_editor}
+			{errorLoc}
+			on:change
+			on:change={handle_change}
+			{diagnostics}
+		/>
 	</div>
 
 	<div class="info">
@@ -75,6 +102,6 @@
 		/* make it easier to interact with scrollbar */
 		padding-right: 8px;
 		height: auto;
-		/* height: 100%; */
+		height: 100%;
 	}
 </style>

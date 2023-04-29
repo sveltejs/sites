@@ -17,6 +17,12 @@
 	/** @type {import('./types').StartOrEnd | null} */
 	export let errorLoc = null;
 
+	/** @type {import('@codemirror/lint').Diagnostic[]} */
+	export let diagnostics = [];
+
+	export let readonly = false;
+	export let tab = true;
+
 	/** @type {ReturnType<typeof createEventDispatcher<{ change: { value: string } }>>} */
 	const dispatch = createEventDispatcher();
 
@@ -24,9 +30,6 @@
 
 	/** @type {import('./types').Lang} */
 	let lang = 'svelte';
-
-	export let readonly = false;
-	export let tab = true;
 
 	/**
 	 * @param {{ code: string; lang: import('./types').Lang }} options
@@ -66,7 +69,9 @@
 	 * @param {number} pos
 	 */
 	export function setCursor(pos) {
-		$cmInstance.view?.dispatch({ selection: { anchor: pos, head: pos } });
+		$cmInstance.view?.dispatch({
+			selection: { anchor: pos, head: pos }
+		});
 	}
 
 	/** @type {(...val: any) => void} */
@@ -99,6 +104,8 @@
 			effects: [StateEffect.reconfigure.of($cmInstance.extensions ?? [])]
 		});
 	}
+
+	$: console.log(diagnostics);
 
 	export async function clearEditorState() {
 		await tick();
@@ -226,6 +233,7 @@
 		useTabs: tab,
 		tabSize: 2,
 		theme: svelteTheme,
+		readonly,
 		lang,
 		langMap: {
 			js: () => import('@codemirror/lang-javascript').then((m) => m.javascript()),
@@ -235,10 +243,12 @@
 			svelte: () => import('@replit/codemirror-lang-svelte').then((m) => m.svelte())
 		},
 		extensions: [closeBrackets(), bracketMatching(), codeFolding(), history(), watcher],
+		diagnostics,
 		instanceStore: cmInstance
 	}}
 	on:codemirror:change={(e) => {
-		dispatch('change', { value: e.detail });
+		code = e.detail;
+		dispatch('change', { value: code });
 	}}
 >
 	{#if !$cmInstance.view}

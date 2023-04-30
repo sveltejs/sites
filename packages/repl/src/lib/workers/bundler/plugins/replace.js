@@ -49,9 +49,9 @@ function replace(options) {
 
 			return {
 				code,
-				map: null
+				map: null,
 			};
-		}
+		},
 	};
 }
 

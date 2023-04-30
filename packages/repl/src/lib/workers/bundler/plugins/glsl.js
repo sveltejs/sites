@@ -1,3 +1,4 @@
+/** @type {import('@rollup/browser').Plugin} */
 export default {
 	name: 'glsl',
 	transform: (code, id) => {
@@ -5,7 +6,7 @@ export default {
 
 		return {
 			code: `export default ${JSON.stringify(code)};`,
-			map: null
+			map: null,
 		};
-	}
+	},
 };

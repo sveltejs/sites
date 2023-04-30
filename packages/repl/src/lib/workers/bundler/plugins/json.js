@@ -1,3 +1,4 @@
+/** @type {import('@rollup/browser').Plugin} */
 export default {
 	name: 'json',
 	transform: (code, id) => {
@@ -5,7 +6,7 @@ export default {
 
 		return {
 			code: `export default ${code};`,
-			map: null
+			map: null,
 		};
-	}
+	},
 };

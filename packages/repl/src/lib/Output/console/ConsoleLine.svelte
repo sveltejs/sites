@@ -2,25 +2,26 @@
 	import JSONNode from 'svelte-json-tree';
 	import ConsoleTable from './ConsoleTable.svelte';
 
+	/** @type {import('./console').Log} */
 	export let log;
 	export let level = 1;
 
-	function toggleGroupCollapse() {
+	function toggle_group_collapse() {
 		log.collapsed = !log.collapsed;
 	}
 </script>
 
-{#if log.level === 'table'}
+{#if log.args && log.level === 'table'}
 	<ConsoleTable data={log.args[0]} columns={log.args[1]} />
 {/if}
 
 <div
 	class="log console-{log.level}"
 	style="padding-left: {level * 15}px"
-	on:click={log.level === 'group' ? toggleGroupCollapse : undefined}
-	on:keyup={(e) => (e.key === ' ' && log.level === 'group' ? toggleGroupCollapse() : undefined)}
+	on:click={log.level === 'group' ? toggle_group_collapse : undefined}
+	on:keyup={(e) => (e.key === ' ' && log.level === 'group' ? toggle_group_collapse() : undefined)}
 >
-	{#if log.count > 1}
+	{#if log.count && log.count > 1}
 		<span class="count">{log.count}x</span>
 	{/if}
 
@@ -28,8 +29,8 @@
 		<div
 			class="arrow"
 			class:expand={!log.collapsed}
-			on:click={toggleGroupCollapse}
-			on:keyup={(e) => e.key === ' ' && toggleGroupCollapse()}
+			on:click={toggle_group_collapse}
+			on:keyup={(e) => e.key === ' ' && toggle_group_collapse()}
 		>
 			▶
 		</div>
@@ -47,13 +48,13 @@
 		<div class="arrow" class:expand={!log.collapsed}>▶</div>
 		<span class="title">{log.label}</span>
 	{:else if log.level.startsWith('system')}
-		{#each log.args as arg}
+		{#each log.args ?? [] as arg}
 			{arg}
 		{/each}
-	{:else if log.level === 'table'}
+	{:else if log.args && log.level === 'table'}
 		<JSONNode value={log.args[0]} />
 	{:else}
-		{#each log.args as arg}
+		{#each log.args ?? [] as arg}
 			<JSONNode value={arg} />
 		{/each}
 	{/if}
@@ -63,14 +64,14 @@
 </div>
 
 {#if log.level === 'group' && !log.collapsed}
-	{#each log.logs as childLog}
+	{#each log.logs ?? [] as childLog}
 		<svelte:self log={childLog} level={level + 1} />
 	{/each}
 {/if}
 
 {#if (log.level === 'trace' || log.level === 'assert') && !log.collapsed}
 	<div class="trace">
-		{#each log.stack.split('\n').slice(2) as stack}
+		{#each log.stack?.split('\n').slice(2) ?? '' as stack}
 			<div>{stack.replace(/^\s*at\s+/, '')}</div>
 		{/each}
 	</div>
@@ -78,7 +79,7 @@
 
 <style>
 	.log {
-		border-bottom: 1px solid #eee;
+		border-bottom: 0.5px solid var(--sk-back-4);
 		padding: 5px 10px 0px;
 		display: flex;
 		position: relative;
@@ -93,7 +94,7 @@
 
 	.console-warn,
 	.console-system-warn {
-		background: #fffbe6;
+		background: hsla(50, 100%, 95%, 0.4);
 		border-color: #fff4c4;
 	}
 

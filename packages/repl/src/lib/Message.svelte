@@ -1,22 +1,25 @@
 <script>
-	import { getContext } from 'svelte';
 	import { slide } from 'svelte/transition';
+	import { go_to_warning_pos } from './state';
 
-	const { navigate } = getContext('REPL');
+	/** @type {'info' | 'warning' | 'error'} */
+	export let kind = 'info';
 
-	export let kind;
-	export let details = null;
-	export let filename = null;
+	/** @type {import('./types').MessageDetails | undefined} */
+	export let details = undefined;
+
+	/** @type {string | undefined} */
+	export let filename = undefined;
+
 	export let truncate = false;
 
+	/** @param {import('./types').MessageDetails} details */
 	function message(details) {
 		let str = details.message || '[missing message]';
 
 		let loc = [];
 
-		if (details.filename && details.filename !== filename) {
-			loc.push(details.filename);
-		}
+		if (details.filename && details.filename !== filename) loc.push(details.filename);
 
 		if (details.start) loc.push(details.start.line, details.start.column);
 
@@ -28,8 +31,8 @@
 	{#if details}
 		<p
 			class:navigable={details.filename}
-			on:click={() => navigate(details)}
-			on:keyup={(e) => e.key === ' ' && navigate(details)}
+			on:click={() => go_to_warning_pos(details)}
+			on:keyup={(e) => e.key === ' ' && go_to_warning_pos(details)}
 		>
 			{message(details)}
 		</p>

@@ -1,26 +1,37 @@
 <script>
-	import { getContext, tick } from 'svelte';
+	import { module_editor, toggleable } from '$lib/state';
+	import { tick } from 'svelte';
 
 	export let key = '';
-	export let value = undefined;
+	/** @type {import('svelte/types/compiler/interfaces').Ast} */
+	export let value;
 	export let collapsed = true;
+	/** @type {import('svelte/types/compiler/interfaces').Ast[]} */
 	export let path_nodes = [];
 	export let autoscroll = true;
 
-	const { toggleable, mark_text, unmark_text } = getContext('REPL');
-
-	let list_item;
+	/** @type {HTMLLIElement} */
+	let list_item_el;
 
 	$: is_root = path_nodes[0] === value;
 	$: is_leaf = path_nodes[path_nodes.length - 1] === value;
 	$: is_ast_array = Array.isArray(value);
 	$: is_collapsable = value && typeof value === 'object';
-	$: is_markable = value && typeof value.start === 'number' && typeof value.end === 'number';
+	$: is_markable =
+		is_collapsable &&
+		'start' in value &&
+		'end' in value &&
+		typeof value.start === 'number' &&
+		typeof value.end === 'number';
 	$: key_text = key ? `${key}:` : '';
 
-	let preview_text;
-	$: if (is_collapsable && collapsed) {
+	let preview_text = '';
+	$: {
+		if (!is_collapsable || !collapsed) break $;
+
 		if (is_ast_array) {
+			if (!('length' in value)) break $;
+
 			preview_text = `[ ${value.length} element${value.length === 1 ? '' : 's'} ]`;
 		} else {
 			preview_text = `{ ${Object.keys(value).join(', ')} }`;
@@ -32,29 +43,39 @@
 	$: if (autoscroll && is_leaf && !$toggleable) {
 		// wait for all nodes to render before scroll
 		tick().then(() => {
-			if (list_item) {
-				list_item.scrollIntoView();
+			if (list_item_el) {
+				list_item_el.scrollIntoView();
 			}
 		});
 	}
 
+	/** @param {MouseEvent | FocusEvent} e */
 	function handle_mark_text(e) {
 		if (is_markable) {
 			e.stopPropagation();
-			mark_text({ from: value.start, to: value.end });
+
+			if (
+				'start' in value &&
+				'end' in value &&
+				typeof value.start === 'number' &&
+				typeof value.end === 'number'
+			) {
+				$module_editor?.markText({ from: value.start ?? 0, to: value.end ?? 0 });
+			}
 		}
 	}
 
+	/** @param {MouseEvent} e */
 	function handle_unmark_text(e) {
 		if (is_markable) {
 			e.stopPropagation();
-			unmark_text();
+			$module_editor?.unmarkText();
 		}
 	}
 </script>
 
 <li
-	bind:this={list_item}
+	bind:this={list_item_el}
 	class:marked={!is_root && is_leaf}
 	on:mouseover={handle_mark_text}
 	on:focus={handle_mark_text}

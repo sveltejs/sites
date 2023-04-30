@@ -1,7 +1,10 @@
 <script>
 	import JSONNode from 'svelte-json-tree';
 
+	/** @type {any} */
 	export let data;
+
+	/** @type {any} */
 	export let columns;
 
 	const INDEX_KEY = '(index)';
@@ -10,6 +13,10 @@
 	$: keys = Object.keys(data);
 	$: columns_to_render = columns || get_columns_to_render(data, keys);
 
+	/**
+	 * @param {any} data
+	 * @param {string[]} keys
+	 */
 	function get_columns_to_render(data, keys) {
 		const columns = new Set([INDEX_KEY]);
 		for (const key of keys) {

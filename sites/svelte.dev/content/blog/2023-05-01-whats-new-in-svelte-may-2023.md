@@ -1,11 +1,19 @@
 ---
 title: "What's new in Svelte: May 2023"
-description: "TBD"
+description: "New Ambassadors, a new ESLint plugin and a whole bunch of SvelteHack submissions"
 author: Dani Sandoval
 authorURL: https://dreamindani.com
 ---
 
-TBD... Svelte Hackathon winner goes here too.
+Before we dive into the updates, there's a few announcements worth mentioning at the top:
+
+## New Svelte Ambassadors
+Regular features of this newsletter and all-around great content creators for Svelte [JoyOfCode](https://www.youtube.com/@JoyofCodeDev) and [HuntaByte](https://www.youtube.com/@Huntabyte) have been appointed as Svelte Ambassadors. Ambassadors are people who are well known for their helpfulness and contributions and for upholding Svelte’s reputation as a friendly, welcoming community, and we’re deeply grateful for their involvement!
+
+## SvelteHack winners will be announced May 6th
+In a just a few days, we'll find out who won [SvelteHack](https://hack.sveltesociety.dev/) - the Svelte Hackathon that took place between February 17th and April 17th. Keep an eye on the [Svelte Society socials](https://sveltesociety.dev/) to see if your favorite project was chosen 👀
+
+Lots of submissions to the hackathon are featured in this month's showcase... but first, let's see what's new!
 
 ## What's new in Svelte
 - `style` blocks now support CSS `@container` queries (**3.58.0**)
@@ -17,11 +25,13 @@ For all the changes to the Svelte compiler, including unreleased changes, check 
 ## What's new in SvelteKit
 - When hot module reloading (HMR) is enabled, the page will reload after an error is fixed (**1.14.0**, [#9497](https://github.com/sveltejs/kit/pull/9497))
 - Two pages generated into the same page can now be loaded simultaneously in "embedded" mode (**1.15.7**, [#9610](https://github.com/sveltejs/kit/pull/9610))
+- Vite's compilation will now log warnings for packages that use the `svelte` field to resolve Svelte files differently than standard Vite resolve (**vite-plugin-svelte@2.1.0**, **kit@1.15.8**)
 
 
 ## What's new in Language Tools
 - Support for `<svelte:document>` ([#1958](https://github.com/sveltejs/language-tools/pull/1958)) and intellisense report for new bindings ([#1957](https://github.com/sveltejs/language-tools/pull/1957)) (**107.3.0**)
 - The new fix-all menu option for the "Quick fix..." makes it easy to "Add all missing imports" and other detected errors (**107.3.0**, [#1939](https://github.com/sveltejs/language-tools/pull/1939))
+- The official [ESLint plugin](https://github.com/sveltejs/eslint-plugin-svelte) has landed 🎉 Previous support for Svelte in ESLint did not handle the template AST well, resulting in false positive/negatives and a high barrier to custom ESLint rules. This new official version is based on [ota-meshi](https://github.com/ota-meshi)'s [svelte-eslint-parser](https://github.com/sveltejs/svelte-eslint-parser) and is ready for prime time. Try it out and [share your feedback](https://github.com/sveltejs/eslint-plugin-svelte/issues)!
 
 ---
 
@@ -88,7 +98,7 @@ _To Read_
 - [SvelteKit Music App Example](https://github.com/tguelcan/music) demonstrates how to connect and process data as well as some practical examples of how to develop frontend components with TailwindCSS
 - [Socio](https://www.npmjs.com/package/socio) is a WebSocket Real-Time Communication (RTC) API framework to connect your front-end logic to a back-end database reactively
 - [Flowbite Svelte](https://flowbite-svelte.com/) is an official Flowbite component library for Svelte
-- [Wondergraph](https://wundergraph.com/blog/introducing_svelte_query_client), a backend for frontend framework, just released their Svelte Query client
+- [Wundergraph](https://wundergraph.com/blog/introducing_svelte_query_client), a backend for frontend framework, just released their Svelte Query client
 - [Lucia](https://lucia-auth.com/blog/lucia-1) just reached 1.0 for their simple and flexible auth library for SvelteKit
 - [svelte-stepper](https://github.com/efstajas/svelte-stepper) is a simple library for building animated stepper flows with Svelte
 

@@ -1,5 +1,11 @@
 # @sveltejs/repl
 
+## 0.5.0-next.0
+
+### Minor Changes
+
+- d0398b2: Overhaul
+
 ## 0.4.0
 
 ### Minor Changes

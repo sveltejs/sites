@@ -7,5 +7,7 @@
     "hn.svelte.dev": "0.0.1",
     "svelte.dev": "1.0.3"
   },
-  "changesets": []
+  "changesets": [
+    "wise-vans-smoke"
+  ]
 }

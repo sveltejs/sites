@@ -1,5 +1,11 @@
 # @sveltejs/repl
 
+## 0.5.0-next.1
+
+### Patch Changes
+
+- b58af12: Fix exports
+
 ## 0.5.0-next.0
 
 ### Minor Changes

@@ -8,6 +8,7 @@
     "svelte.dev": "1.0.3"
   },
   "changesets": [
+    "early-planes-love",
     "wise-vans-smoke"
   ]
 }

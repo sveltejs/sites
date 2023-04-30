@@ -14,7 +14,7 @@ export default class ReplProxy {
 		on_console_group: noop,
 		on_console_group_collapsed: noop,
 		on_console_group_end: noop,
-		on_unhandled_rejection: noop,
+		on_unhandled_rejection: noop
 	};
 
 	/** @type {Map<number, { resolve: (value: any) => void, reject: (value: any) => void }>} */

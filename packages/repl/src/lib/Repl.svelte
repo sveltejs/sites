@@ -33,7 +33,8 @@
 	export let fixedPos = 50;
 	export let injectedJS = '';
 	export let injectedCSS = '';
-	// export let theme = 'svelte';
+	/** @type {'light' | 'dark'} */
+	export let previewTheme = 'light';
 	export let showModified = false;
 	export let showAst = false;
 
@@ -196,6 +197,7 @@
 					{injectedJS}
 					{injectedCSS}
 					{showAst}
+					{previewTheme}
 				/>
 			</section>
 		</SplitPane>

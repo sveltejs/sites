@@ -28,7 +28,7 @@
 </script>
 
 <main>
-	<Repl bind:this={repl} showAst />
+	<Repl bind:this={repl} previewTheme="dark" />
 </main>
 
 <style>

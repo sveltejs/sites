@@ -24,14 +24,14 @@ For all the changes to the Svelte compiler, including unreleased changes, check 
 
 ## What's new in SvelteKit
 - When hot module reloading (HMR) is enabled, the page will reload after an error is fixed (**1.14.0**, [#9497](https://github.com/sveltejs/kit/pull/9497))
-- Two pages generated into the same page can now be loaded simultaneously in "embedded" mode (**1.15.7**, [#9610](https://github.com/sveltejs/kit/pull/9610))
+- Two apps loaded into the same html page can now be loaded simultaneously in "embedded" mode (**1.15.7**, [#9610](https://github.com/sveltejs/kit/pull/9610))
 - Vite's compilation will now log warnings for packages that use the `svelte` field to resolve Svelte files differently than standard Vite resolve (**vite-plugin-svelte@2.1.0**, **kit@1.15.8**)
 
 
 ## What's new in Language Tools
 - Support for `<svelte:document>` ([#1958](https://github.com/sveltejs/language-tools/pull/1958)) and intellisense report for new bindings ([#1957](https://github.com/sveltejs/language-tools/pull/1957)) (**107.3.0**)
 - The new fix-all menu option for the "Quick fix..." makes it easy to "Add all missing imports" and other detected errors (**107.3.0**, [#1939](https://github.com/sveltejs/language-tools/pull/1939))
-- The official [ESLint plugin](https://github.com/sveltejs/eslint-plugin-svelte) has landed 🎉 Previous support for Svelte in ESLint did not handle the template AST well, resulting in false positive/negatives and a high barrier to custom ESLint rules. This new official version is based on [ota-meshi](https://github.com/ota-meshi)'s [svelte-eslint-parser](https://github.com/sveltejs/svelte-eslint-parser) and is ready for prime time. Try it out and [share your feedback](https://github.com/sveltejs/eslint-plugin-svelte/issues)!
+- We have a new and better official [ESLint plugin](https://github.com/sveltejs/eslint-plugin-svelte)! Previous support for Svelte in ESLint did not handle the template AST well, resulting in false positive/negatives and a high barrier to custom ESLint rules. This new official version is based on [ota-meshi](https://github.com/ota-meshi)'s [svelte-eslint-parser](https://github.com/sveltejs/svelte-eslint-parser) and is ready for prime time. Try it out and [share your feedback](https://github.com/sveltejs/eslint-plugin-svelte/issues)!
 
 ---
 

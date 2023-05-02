@@ -11,7 +11,7 @@ Before we dive into the updates, there's a few announcements worth mentioning at
 Regular features of this newsletter and all-around great content creators for Svelte [JoyOfCode](https://www.youtube.com/@JoyofCodeDev) and [HuntaByte](https://www.youtube.com/@Huntabyte) have been appointed as Svelte Ambassadors. Ambassadors are people who are well known for their helpfulness and contributions and for upholding Svelte’s reputation as a friendly, welcoming community, and we’re deeply grateful for their involvement!
 
 ## SvelteHack winners will be announced May 6th
-In a just a few days, we'll find out who won [SvelteHack](https://hack.sveltesociety.dev/) - the Svelte Hackathon that took place between February 17th and April 17th. Keep an eye on the [Svelte Society socials](https://sveltesociety.dev/) to see if your favorite project was chosen 👀
+In a just a few days, we'll find out who won [SvelteHack](https://hack.sveltesociety.dev/) - the Svelte Hackathon that took place between February 17th and April 17th. Tune in to [Svelte Summit](https://www.sveltesummit.com/) on May 6th to see if your favorite project was chosen 👀
 
 Lots of submissions to the hackathon are featured in this month's showcase... but first, let's see what's new!
 

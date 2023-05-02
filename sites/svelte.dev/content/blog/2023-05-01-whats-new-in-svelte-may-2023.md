@@ -59,6 +59,7 @@ For all the changes to the Svelte compiler, including unreleased changes, check 
 - [MineSweep](https://alecames.com/minesweep) is a rendition of Minesweeper built with Svelte and JavaScript
 - [Biolytics](https://biolytics.app/) lets you import your lab tests to see all your lab tests in one place
 - [Zero share](https://github.com/ntsd/zero-share) is a secure P2P file sharing using WebRTC
+- [Svelte lab](https://www.sveltelab.dev/) is a sandbox for creating and sharing SvelteKit projects
 
 **Learning Resources**
 
@@ -70,6 +71,7 @@ _Featuring Svelte Contributors and Ambassadors_
   - [2023 March 31 - SvelteKit, Svelte; static sites and headless CMS demos](https://www.youtube.com/watch?v=-YjLubiieYs)
   - [2023 April 22 - SvelteKit 1.15.7, skip links, error handling, static assets](https://www.youtube.com/watch?v=SCMosMo85_8)
   - [2023 April 14 - SvelteKit 1.15.5, accessible buttons, advanced toggle state 🧪🔥](https://www.youtube.com/watch?v=H2kOO5mvUQs)
+  - [2023 April 21 - SvelteKit 1.15.7, skip links, error handling, static assets](https://www.youtube.com/watch?v=SCMosMo85_8)
 - Svelte Radio
   - [Using Svelte in React with Puru Vijay](https://www.svelteradio.com/episodes/using-svelte-in-react-with-puru-vijay)
   - [Eric Brehault and Nuclia](https://www.svelteradio.com/episodes/eric-brehault-and-nuclia)

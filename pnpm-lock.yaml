@@ -47,8 +47,8 @@ importers:
         specifier: ^1.1.4
         version: 1.1.4
       '@neocodemirror/svelte':
-        specifier: 0.0.6
-        version: 0.0.6(@codemirror/commands@6.2.3)(@codemirror/language@6.6.0)(@codemirror/lint@6.2.1)(@codemirror/state@6.2.0)(@codemirror/view@6.10.1)(codemirror@6.0.1)
+        specifier: 0.0.8
+        version: 0.0.8(@codemirror/commands@6.2.3)(@codemirror/language@6.6.0)(@codemirror/lint@6.2.1)(@codemirror/state@6.2.0)(@codemirror/view@6.10.1)(codemirror@6.0.1)
       '@replit/codemirror-lang-svelte':
         specifier: ^6.0.0
         version: 6.0.0(@codemirror/autocomplete@6.6.0)(@codemirror/lang-css@6.2.0)(@codemirror/lang-html@6.4.3)(@codemirror/lang-javascript@6.1.7)(@codemirror/language@6.6.0)(@codemirror/state@6.2.0)(@codemirror/view@6.10.1)(@lezer/common@1.0.2)(@lezer/highlight@1.1.4)(@lezer/javascript@1.4.3)(@lezer/lr@1.3.4)
@@ -1386,8 +1386,8 @@ packages:
       read-yaml-file: 1.1.0
     dev: true
 
-  /@neocodemirror/svelte@0.0.6(@codemirror/commands@6.2.3)(@codemirror/language@6.6.0)(@codemirror/lint@6.2.1)(@codemirror/state@6.2.0)(@codemirror/view@6.10.1)(codemirror@6.0.1):
-    resolution: {integrity: sha512-NrRqPyskG3PEcS9+5Iej+yBbcU4HWAqnXVy3YV3I8ph1ael0VY+X63DiSU/czf+o/gU1VBopQcCoGuKhFfrkTQ==}
+  /@neocodemirror/svelte@0.0.8(@codemirror/commands@6.2.3)(@codemirror/language@6.6.0)(@codemirror/lint@6.2.1)(@codemirror/state@6.2.0)(@codemirror/view@6.10.1)(codemirror@6.0.1):
+    resolution: {integrity: sha512-t3CP/ZsWgPYzrhqLH9Dukw0GNpMJSpqGBYAQFP1OvYXerd9xwBdXcKovP/x5SmKAiJF6cvWey/5plZNzJvB3vQ==}
     peerDependencies:
       '@codemirror/commands': ^6.2.0
       '@codemirror/language': ^6.0.0

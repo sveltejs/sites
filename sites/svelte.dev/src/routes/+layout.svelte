@@ -58,12 +58,12 @@
 </main>
 
 <div class="banner">
-	<a target="_blank" rel="noopener noreferrer" href="https://hack.sveltesociety.dev/">
+	<a target="_blank" rel="noopener noreferrer" href="https://sveltesummit.com/">
 		<span class="small">
 			<strong>Announcing SvelteHack</strong> →
 		</span>
 		<span class="large">
-			<strong>Announcing SvelteHack</strong> Our first hackathon with over $12,000 in prizes →
+			<strong>Svelte Summit</strong> The Svelte Conference for everyone →
 		</span>
 	</a>
 	<button on:click={close_banner}>

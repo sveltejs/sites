@@ -23,11 +23,11 @@ jobs:
           fetch-depth: 0
       - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 8.2
+          version: 8.4
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 18.x
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile

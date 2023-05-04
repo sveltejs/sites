@@ -1,5 +1,11 @@
 # @sveltejs/repl
 
+## 0.5.0-next.2
+
+### Patch Changes
+
+- 4755c1a: Themeable previews
+
 ## 0.5.0-next.1
 
 ### Patch Changes

@@ -25,6 +25,9 @@
 	export let injectedJS = '';
 	export let injectedCSS = '';
 
+	/** @type {'light' | 'dark'} */
+	export let theme;
+
 	/** @type {HTMLIFrameElement} */
 	let iframe;
 	let pending_imports = 0;
@@ -75,7 +78,7 @@
 			},
 			on_console_group_collapsed: (action) => {
 				group_logs(action.label, true);
-			},
+			}
 		});
 
 		iframe.addEventListener('load', () => {
@@ -87,6 +90,8 @@
 			proxy?.destroy();
 		};
 	});
+
+	$: if (ready) proxy?.iframe_command('set_theme', { theme });
 
 	/**
 	 * @param {import('$lib/types').Bundle | null} $bundle
@@ -231,7 +236,7 @@
 					'allow-pointer-lock',
 					'allow-top-navigation',
 					'allow-modals',
-					relaxed ? 'allow-same-origin' : '',
+					relaxed ? 'allow-same-origin' : ''
 				].join(' ')}
 				class={error || pending || pending_imports ? 'greyed-out' : ''}
 				srcdoc={BROWSER ? srcdoc : ''}

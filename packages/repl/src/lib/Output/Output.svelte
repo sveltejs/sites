@@ -32,6 +32,9 @@
 	// export let theme;
 	export let showAst = false;
 
+	/** @type {'light' | 'dark'} */
+	export let previewTheme;
+
 	/**
 	 * @param {import('$lib/types').File} file
 	 * @param {import('svelte/types/compiler').CompileOptions} options
@@ -113,7 +116,14 @@
 
 <!-- component viewer -->
 <div class="tab-content" class:visible={selected_type !== 'md' && view === 'result'}>
-	<Viewer bind:error={runtimeError} {status} {relaxed} {injectedJS} {injectedCSS} />
+	<Viewer
+		bind:error={runtimeError}
+		{status}
+		{relaxed}
+		{injectedJS}
+		{injectedCSS}
+		theme={previewTheme}
+	/>
 </div>
 
 <!-- js output -->

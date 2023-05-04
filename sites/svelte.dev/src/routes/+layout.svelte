@@ -60,7 +60,7 @@
 <div class="banner">
 	<a target="_blank" rel="noopener noreferrer" href="https://sveltesummit.com/">
 		<span class="small">
-			<strong>Announcing SvelteHack</strong> →
+			<strong>Svelte Summit</strong> spring conference →
 		</span>
 		<span class="large">
 			<strong>Svelte Summit</strong> The Svelte Conference for everyone →

@@ -1,7 +1,9 @@
+/** @param {string} str  */
 function escape(str) {
 	return str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
 }
 
+/** @param {unknown} functionOrValue  */
 function ensureFunction(functionOrValue) {
 	if (typeof functionOrValue === 'function') {
 		return functionOrValue;
@@ -11,17 +13,29 @@ function ensureFunction(functionOrValue) {
 	};
 }
 
+/**
+ * @param {string} a
+ * @param {string} b
+ */
 function longest(a, b) {
 	return b.length - a.length;
 }
 
+/** @param {Record<string, unknown>} object */
 function mapToFunctions(object) {
-	return Object.keys(object).reduce(function (functions, key) {
-		functions[key] = ensureFunction(object[key]);
-		return functions;
-	}, {});
+	return Object.keys(object).reduce(
+		/** @param {Record<string, Function>} functions */ function (functions, key) {
+			functions[key] = ensureFunction(object[key]);
+			return functions;
+		},
+		{}
+	);
 }
 
+/**
+ * @param {Record<string, unknown>} options
+ * @returns {import('@rollup/browser').Plugin}
+ */
 function replace(options) {
 	const functionValues = mapToFunctions(options);
 	const keys = Object.keys(functionValues).sort(longest).map(escape);
@@ -49,9 +63,9 @@ function replace(options) {
 
 			return {
 				code,
-				map: null,
+				map: null
 			};
-		},
+		}
 	};
 }
 

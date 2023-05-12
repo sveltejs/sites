@@ -1,6 +1,6 @@
 {
 	"name": "@sveltejs/repl",
-	"version": "0.5.0-next.2",
+	"version": "0.5.0-next.3",
 	"license": "MIT",
 	"publishConfig": {
 		"access": "public"

@@ -1,5 +1,11 @@
 # @sveltejs/repl
 
+## 0.5.0-next.3
+
+### Patch Changes
+
+- 2c3c2d0: Minor fixes
+
 ## 0.5.0-next.2
 
 ### Patch Changes

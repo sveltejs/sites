@@ -1,12 +1,12 @@
 <script>
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
 	import { BROWSER } from 'esm-env';
-	import { createEventDispatcher, tick } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 	import Bundler from './Bundler';
+	import ComponentSelector from './Input/ComponentSelector.svelte';
+	import ModuleEditor from './Input/ModuleEditor.svelte';
 	import InputOutputToggle from './InputOutputToggle.svelte';
-	import ComponentSelector from './input/ComponentSelector.svelte';
-	import ModuleEditor from './input/ModuleEditor.svelte';
-	import Output from './output/Output.svelte';
+	import Output from './Output/Output.svelte';
 	import {
 		EDITOR_STATE_MAP,
 		bundle,
@@ -106,7 +106,7 @@
 	const dispatch = createEventDispatcher();
 
 	$: if ($output && $selected) {
-		$output?.update($selected, $compile_options);
+		$output?.update?.($selected, $compile_options);
 	}
 
 	$: mobile = width < 540;
@@ -148,10 +148,6 @@
 				}
 		  })
 		: null;
-
-	$: if (output && $selected) {
-		$output?.update($selected, $compile_options);
-	}
 
 	/**
 	 * @param {BeforeUnloadEvent} event

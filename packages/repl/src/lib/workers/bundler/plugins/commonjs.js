@@ -16,13 +16,16 @@ export default {
 		try {
 			const ast = parse(code, {
 				// for some reason this hangs for some code if you use 'latest'. change with caution
-				ecmaVersion: 'latest',
+				ecmaVersion: 'latest'
 			});
 
+			/** @type {string[]}  */
 			const requires = [];
 
+			// @ts-ignore
 			walk(ast, {
 				enter: (node) => {
+					// @ts-ignore
 					if (node.type === 'CallExpression' && node.callee.name === 'require') {
 						if (node.arguments.length !== 1) return;
 						const arg = node.arguments[0];
@@ -30,7 +33,7 @@ export default {
 
 						requires.push(arg.value);
 					}
-				},
+				}
 			});
 
 			const imports = requires.map((id, i) => `import __repl_${i} from '${id}';`).join('\n');
@@ -44,15 +47,15 @@ export default {
 				require,
 				`const exports = {}; const module = { exports };`,
 				code,
-				`export default module.exports;`,
+				`export default module.exports;`
 			].join('\n\n');
 
 			return {
 				code: transformed,
-				map: null,
+				map: null
 			};
 		} catch (err) {
 			return null;
 		}
-	},
+	}
 };

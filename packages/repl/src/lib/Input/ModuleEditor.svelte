@@ -30,7 +30,7 @@
 		}
 	}
 
-	$: diagnostics =
+	$: diagnostics = /** @type {import('@codemirror/lint').Diagnostics[]} */ (
 		$selected && error_file === get_full_filename($selected)
 			? [
 					...(error
@@ -50,7 +50,8 @@
 						message: warning.message
 					}))
 			  ]
-			: [];
+			: []
+	);
 </script>
 
 <div class="editor-wrapper">

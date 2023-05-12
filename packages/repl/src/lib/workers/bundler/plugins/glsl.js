@@ -6,7 +6,7 @@ export default {
 
 		return {
 			code: `export default ${JSON.stringify(code)};`,
-			map: null,
+			map: null
 		};
-	},
+	}
 };

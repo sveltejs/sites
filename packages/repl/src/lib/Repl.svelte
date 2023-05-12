@@ -3,10 +3,10 @@
 	import { BROWSER } from 'esm-env';
 	import { createEventDispatcher } from 'svelte';
 	import Bundler from './Bundler';
+	import ComponentSelector from './Input/ComponentSelector.svelte';
+	import ModuleEditor from './Input/ModuleEditor.svelte';
 	import InputOutputToggle from './InputOutputToggle.svelte';
-	import ComponentSelector from './input/ComponentSelector.svelte';
-	import ModuleEditor from './input/ModuleEditor.svelte';
-	import Output from './output/Output.svelte';
+	import Output from './Output/Output.svelte';
 	import {
 		EDITOR_STATE_MAP,
 		bundle,

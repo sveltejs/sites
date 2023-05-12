@@ -55,5 +55,5 @@ export type ReplState = {
 	cursor_pos: number;
 	toggleable: boolean;
 	module_editor: import('./CodeMirror.svelte').default | null;
-	output: import('./output/Output.svelte').default | null;
+	output: import('./Output/Output.svelte').default | null;
 };

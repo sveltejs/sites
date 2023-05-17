@@ -4,11 +4,6 @@
 	import { Icon, Icons, Nav, NavItem, SkipLink } from '@sveltejs/site-kit';
 	import PreloadingIndicator from '$lib/components/PreloadingIndicator.svelte';
 	import StopWar from './stopwar.svg';
-
-	function close_banner(event) {
-		document.querySelector('.banner').remove();
-		document.documentElement.style.setProperty('--banner-footer-height', '0px')
-	}
 </script>
 
 <Icons />
@@ -57,31 +52,6 @@
 	<slot />
 </main>
 
-<div class="banner">
-	<a target="_blank" rel="noopener noreferrer" href="https://sveltesummit.com/">
-		<span class="small">
-			<strong>Svelte Summit</strong> spring conference →
-		</span>
-		<span class="large">
-			<strong>Svelte Summit</strong> The Svelte Conference for everyone →
-		</span>
-	</a>
-	<button on:click={close_banner}>
-		<svg
-			width="24"
-			height="24"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		>
-			<line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg
-		>
-	</button>
-</div>
-
 <style>
 	@media (max-width: 830px) {
 		:global(aside) {
@@ -115,61 +85,16 @@
 		}
 	}
 
-	:root {
-		--banner-footer-height: 48px;
-	}
-
-	main {
-		padding-bottom: var(--banner-footer-height);
-	}
-
-	.banner {
-		--banner-bg: #ff4700;
-		--banner-color: white;
-		--banner-strong-color: white;
-
-		background-color: var(--banner-bg);
-		position: fixed;
-		display: grid;
-		grid-template-columns: 4rem 1fr 4rem;
-		grid-template-rows: auto;
-		grid-template-areas: "start center end";
-		place-items: center;
-		
-		bottom: 0;
-		width: 100vw;
-		height: var(--banner-footer-height);
-		z-index: 999;
-	}
-
-	.banner a {
-		grid-area: center;
-		color: var(--banner-color);
-	}
-
-	.banner strong {
-		font-weight: bold;
-		color: var(--banner-strong-color);
-	}
-
-	.banner button {
-		grid-area: end;
-		color: var(--banner-color);
-		width: 2rem;
-		height: 2rem;
-		margin-right: 15px; /* scrollbar width */
-	}
-
 	:global(.examples-container, .repl-outer, .tutorial-outer) {
-		height: calc(100vh - var(--nav-h) - var(--banner-footer-height)) !important;
+		height: calc(100vh - var(--nav-h)) !important;
 	}
 
 	:global(.toggle) {
-		bottom: var(--banner-footer-height) !important;
+		bottom: 0 !important;
 	}
 
 	:global(.zen-mode) {
-		height: calc(100vh - var(--banner-footer-height)) !important;
+		height: 100vh !important;
 	}
 
 	@media (max-width: 830px) {

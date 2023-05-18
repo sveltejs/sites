@@ -254,8 +254,8 @@ async function get_bundle(uid, mode, cache, lookup) {
 			// importing from a URL
 			if (importee.startsWith('http:') || importee.startsWith('https:')) return importee;
 
-			// importing from (probably) unpkg
-			if (importee.startsWith('.')) {
+			// importing from a cdn
+			if (importee.startsWith('.') || importee.startsWith('/')) {
 				const url = new URL(importee, importer).href;
 				self.postMessage({ type: 'status', uid, message: `resolving ${url}` });
 

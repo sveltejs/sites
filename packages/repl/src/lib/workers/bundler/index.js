@@ -70,7 +70,7 @@ self.addEventListener(
 /** @type {Record<'dom' | 'ssr', Map<string, { code: string, result: ReturnType<typeof import('svelte/compiler').compile> }>>} */
 let cached = {
 	dom: new Map(),
-	ssr: new Map(),
+	ssr: new Map()
 };
 
 const ABORT = { aborted: true };
@@ -87,7 +87,8 @@ async function fetch_if_uncached(url, uid) {
 		return FETCH_CACHE.get(url);
 	}
 
-	await sleep(200);
+	// TODO: investigate whether this is necessary
+	await sleep(50);
 	if (uid !== current_id) throw ABORT;
 
 	const promise = fetch(url)
@@ -96,7 +97,7 @@ async function fetch_if_uncached(url, uid) {
 
 			return {
 				url: r.url,
-				body: await r.text(),
+				body: await r.text()
 			};
 		})
 		.catch((err) => {
@@ -158,7 +159,7 @@ async function resolve_from_pkg(pkg, subpath, uid, pkg_url_base) {
 			const [resolved] =
 				resolve.exports(pkg, subpath, {
 					browser: true,
-					conditions: ['svelte', 'production'],
+					conditions: ['svelte', 'production']
 				}) ?? [];
 
 			return resolved;
@@ -170,7 +171,7 @@ async function resolve_from_pkg(pkg, subpath, uid, pkg_url_base) {
 	// legacy
 	if (subpath === '.') {
 		const resolved_id = resolve.legacy(pkg, {
-			fields: ['browser', 'module', 'main'],
+			fields: ['browser', 'module', 'main']
 		});
 
 		if (!resolved_id) {
@@ -193,7 +194,7 @@ async function resolve_from_pkg(pkg, subpath, uid, pkg_url_base) {
 	if (typeof pkg.browser === 'object') {
 		// this will either return `pkg.browser[subpath]` or `subpath`
 		return resolve.legacy(pkg, {
-			browser: subpath,
+			browser: subpath
 		});
 	}
 
@@ -204,9 +205,9 @@ async function resolve_from_pkg(pkg, subpath, uid, pkg_url_base) {
  * @param {number} uid
  * @param {'dom' | 'ssr'} mode
  * @param {typeof cached['dom']} cache
- * @param {Map<string, import('$lib/types.js').File>} lookup
+ * @param {Map<string, import('$lib/types.js').File>} local_files_lookup
  */
-async function get_bundle(uid, mode, cache, lookup) {
+async function get_bundle(uid, mode, cache, local_files_lookup) {
 	let bundle;
 
 	/** A set of package names (without subpaths) to include in pkg.devDependencies when downloading an app */
@@ -244,15 +245,16 @@ async function get_bundle(uid, mode, cache, lookup) {
 			}
 
 			// importing from another file in REPL
-			if (lookup.has(importee) && (!importer || lookup.has(importer))) return importee;
-			if (lookup.has(importee + '.js')) return importee + '.js';
-			if (lookup.has(importee + '.json')) return importee + '.json';
+			if (local_files_lookup.has(importee) && (!importer || local_files_lookup.has(importer)))
+				return importee;
+			if (local_files_lookup.has(importee + '.js')) return importee + '.js';
+			if (local_files_lookup.has(importee + '.json')) return importee + '.json';
 
 			// remove trailing slash
 			if (importee.endsWith('/')) importee = importee.slice(0, -1);
 
 			// importing from a URL
-			if (importee.startsWith('http:') || importee.startsWith('https:')) return importee;
+			if (/^https?:/.test(importee)) return importee;
 
 			// importing from (probably) unpkg
 			if (importee.startsWith('.')) {
@@ -273,7 +275,7 @@ async function get_bundle(uid, mode, cache, lookup) {
 				const subpath = `.${match[2] ?? ''}`;
 
 				// if this was imported by one of our files, add it to the `imports` set
-				if (importer && importer in lookup) {
+				if (importer && local_files_lookup.has(importer)) {
 					imports.add(pkg_name);
 				}
 
@@ -284,13 +286,13 @@ async function get_bundle(uid, mode, cache, lookup) {
 						if (!pkg_url) throw new Error();
 
 						const pkg_json = (await fetch_if_uncached(pkg_url, uid))?.body;
-						const pkg = JSON.parse(pkg_json ?? '"');
+						const pkg = JSON.parse(pkg_json ?? '""');
 
 						const pkg_url_base = pkg_url.replace(/\/package\.json$/, '');
 
 						return {
 							pkg,
-							pkg_url_base,
+							pkg_url_base
 						};
 					} catch (_e) {
 						throw new Error(`Error fetching "${pkg_name}" from unpkg. Does the package exist?`);
@@ -310,7 +312,7 @@ async function get_bundle(uid, mode, cache, lookup) {
 		async load(resolved) {
 			if (uid !== current_id) throw ABORT;
 
-			const cached_file = lookup.get(resolved);
+			const cached_file = local_files_lookup.get(resolved);
 			if (cached_file) return cached_file.source;
 
 			if (!FETCH_CACHE.has(resolved)) {
@@ -339,21 +341,24 @@ async function get_bundle(uid, mode, cache, lookup) {
 							dev: true,
 							filename: name + '.svelte',
 							...(has_loopGuardTimeout_feature() && {
-								loopGuardTimeout: 100,
-							}),
+								loopGuardTimeout: 100
+							})
 					  });
 
 			new_cache.set(id, { code, result });
 
+			// @ts-expect-error
 			(result.warnings || result.stats.warnings)?.forEach((warning) => {
 				// This is required, otherwise postMessage won't work
+				// @ts-ignore
 				delete warning.toString;
 				// TODO remove stats post-launch
+				// @ts-ignore
 				warnings.push(warning);
 			});
 
 			return result.js;
-		},
+		}
 	};
 
 	try {
@@ -365,15 +370,15 @@ async function get_bundle(uid, mode, cache, lookup) {
 				json,
 				glsl,
 				replace({
-					'process.env.NODE_ENV': JSON.stringify('production'),
-				}),
+					'process.env.NODE_ENV': JSON.stringify('production')
+				})
 			],
 			inlineDynamicImports: true,
 			onwarn(warning) {
 				all_warnings.push({
-					message: warning.message,
+					message: warning.message
 				});
-			},
+			}
 		});
 
 		return {
@@ -382,7 +387,7 @@ async function get_bundle(uid, mode, cache, lookup) {
 			cache: new_cache,
 			error: null,
 			warnings,
-			all_warnings,
+			all_warnings
 		};
 	} catch (error) {
 		return { error, imports: null, bundle: null, cache: new_cache, warnings, all_warnings };
@@ -399,7 +404,7 @@ async function bundle({ uid, files }) {
 		console.log(`running Svelte compiler version %c${self.svelte.VERSION}`, 'font-weight: bold');
 	}
 
-	/** @type {Map<string, import('$lib/types.js').File>} */
+	/** @type {Map<string, import('$lib/types').File>} */
 	const lookup = new Map();
 
 	files.forEach((file) => {
@@ -423,7 +428,7 @@ async function bundle({ uid, files }) {
 				format: 'iife',
 				name: 'SvelteComponent',
 				exports: 'named',
-				sourcemap: true,
+				sourcemap: true
 			})
 		)?.output[0];
 
@@ -444,7 +449,7 @@ async function bundle({ uid, files }) {
 						format: 'iife',
 						name: 'SvelteComponent',
 						exports: 'named',
-						sourcemap: true,
+						sourcemap: true
 					})
 			  )?.output?.[0]
 			: null;
@@ -455,7 +460,7 @@ async function bundle({ uid, files }) {
 			ssr: ssr_result,
 			imports: dom.imports,
 			warnings: dom.warnings,
-			error: null,
+			error: null
 		};
 	} catch (err) {
 		console.error(err);
@@ -475,8 +480,8 @@ async function bundle({ uid, files }) {
 			warnings: dom.warnings,
 			error: Object.assign({}, e, {
 				message: e.message,
-				stack: e.stack,
-			}),
+				stack: e.stack
+			})
 		};
 	}
 }

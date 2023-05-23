@@ -1,6 +1,6 @@
 <script>
+	import { getContext } from 'svelte';
 	import { slide } from 'svelte/transition';
-	import { go_to_warning_pos } from './state';
 
 	/** @type {'info' | 'warning' | 'error'} */
 	export let kind = 'info';
@@ -12,6 +12,8 @@
 	export let filename = undefined;
 
 	export let truncate = false;
+
+	const { go_to_warning_pos } = /** @type {import('./types').ReplContext}*/ (getContext('REPL'));
 
 	/** @param {import('./types').MessageDetails} details */
 	function message(details) {
@@ -27,7 +29,7 @@
 	}
 </script>
 
-<div transition:slide={{ duration: 100 }} class="message {kind}" class:truncate>
+<div transition:slide|local={{ duration: 100 }} class="message {kind}" class:truncate>
 	{#if details}
 		<p
 			class:navigable={details.filename}

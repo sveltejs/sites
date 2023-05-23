@@ -1,7 +1,9 @@
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <script>
-	import { compile_options } from '$lib/state';
+	import { getContext } from 'svelte';
 	import Checkbox from '../Checkbox.svelte';
+
+	const { compile_options } = /** @type {import('../types').ReplContext}*/ (getContext('REPL'));
 </script>
 
 <div class="options">

@@ -65,6 +65,7 @@ export const svelteTheme = EditorView.theme(
 		},
 		'.cm-tooltip-autocomplete': {
 			color: 'var(--sk-text-2) !important',
+			perspective: '1px',
 			'& > ul > li[aria-selected]': {
 				backgroundColor: 'var(--sk-back-4)',
 				color: 'var(--sk-text-1) !important'

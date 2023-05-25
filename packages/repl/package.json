@@ -14,12 +14,20 @@
 			"types": "./dist/index.d.ts",
 			"svelte": "./dist/index.js",
 			"default": "./dist/index.js"
+		},
+		"./theme": {
+			"types": "./dist/theme.d.ts",
+			"svelte": "./dist/theme.js",
+			"default": "./dist/theme.js"
 		}
 	},
 	"typesVersions": {
 		">4.0": {
 			"*": [
 				"./dist/index.d.ts"
+			],
+			"./theme": [
+				"./dist/theme.d.ts"
 			]
 		}
 	},
@@ -64,7 +72,7 @@
 		"@codemirror/state": "^6.2.1",
 		"@codemirror/view": "^6.12.0",
 		"@jridgewell/sourcemap-codec": "^1.4.15",
-		"@lezer/highlight": "^1.1.4",
+		"@lezer/highlight": "^1.1.5",
 		"@neocodemirror/svelte": "0.0.9",
 		"@replit/codemirror-lang-svelte": "^6.0.0",
 		"@rich_harris/svelte-split-pane": "^1.1.1",

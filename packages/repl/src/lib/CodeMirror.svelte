@@ -11,8 +11,7 @@
 	import { createEventDispatcher, tick } from 'svelte';
 	import { writable } from 'svelte/store';
 	import Message from './Message.svelte';
-	import { svelte as svelteTheme } from './theme';
-	import { sleep } from './utils';
+	import { svelteTheme } from './theme.js';
 
 	/** @type {import('./types').StartOrEnd | null} */
 	export let errorLoc = null;

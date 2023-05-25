@@ -2,7 +2,7 @@ import { HighlightStyle, syntaxHighlighting } from '@codemirror/language';
 import { EditorView } from '@codemirror/view';
 import { tags as t } from '@lezer/highlight';
 
-export const svelteTheme = EditorView.theme(
+const svelteThemeStyles = EditorView.theme(
 	{
 		'&': {
 			color: 'var(--sk-code-base)',
@@ -76,7 +76,7 @@ export const svelteTheme = EditorView.theme(
 );
 
 /// The highlighting style for code in the One Dark theme.
-export const svelteHighlightStyle = HighlightStyle.define([
+const svelteHighlightStyle = HighlightStyle.define([
 	{ tag: t.keyword, color: 'var(--sk-code-keyword)' },
 	{
 		tag: [t.name, t.deleted, t.character, t.propertyName, t.macroName],
@@ -113,6 +113,4 @@ export const svelteHighlightStyle = HighlightStyle.define([
 	{ tag: t.invalid, color: '#ff008c' }
 ]);
 
-/// Extension to enable the One Dark theme (both the editor theme and
-/// the highlight style).
-export const svelte = [svelteTheme, syntaxHighlighting(svelteHighlightStyle)];
+export const svelteTheme = [svelteThemeStyles, syntaxHighlighting(svelteHighlightStyle)];

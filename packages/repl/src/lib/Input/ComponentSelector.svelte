@@ -1,6 +1,7 @@
 <script>
-	import { get_full_filename } from '$lib/utils';
-	import { createEventDispatcher, getContext, tick } from 'svelte';
+	import { get_repl_context } from '$lib/context.js';
+	import { get_full_filename } from '$lib/utils.js';
+	import { createEventDispatcher, tick } from 'svelte';
 
 	/** @type {boolean}  */
 	export let show_modified;
@@ -19,7 +20,7 @@
 		selected,
 		selected_index,
 		EDITOR_STATE_MAP
-	} = /** @type {import('../types').ReplContext}*/ (getContext('REPL'));
+	} = get_repl_context();
 
 	/** @type {number} */
 	let editing_index = -1;

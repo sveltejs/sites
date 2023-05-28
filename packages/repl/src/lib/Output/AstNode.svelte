@@ -1,5 +1,6 @@
 <script>
-	import { getContext, tick } from 'svelte';
+	import { get_repl_context } from '$lib/context.js';
+	import { tick } from 'svelte';
 
 	export let key = '';
 	/** @type {import('svelte/types/compiler/interfaces').Ast} */
@@ -9,9 +10,7 @@
 	export let path_nodes = [];
 	export let autoscroll = true;
 
-	const { module_editor, toggleable } = /** @type {import('../types').ReplContext}*/ (
-		getContext('REPL')
-	);
+	const { module_editor, toggleable } = get_repl_context();
 
 	/** @type {HTMLLIElement} */
 	let list_item_el;

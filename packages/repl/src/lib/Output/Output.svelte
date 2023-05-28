@@ -1,7 +1,7 @@
 <script>
+	import { get_repl_context } from '$lib/context.js';
 	import { BROWSER } from 'esm-env';
 	import { marked } from 'marked';
-	import { getContext } from 'svelte';
 	import CodeMirror from '../CodeMirror.svelte';
 	import AstView from './AstView.svelte';
 	import Compiler from './Compiler.js';
@@ -84,7 +84,7 @@
 		ast = compiled.ast;
 	}
 
-	const { module_editor } = /** @type {import('../types').ReplContext}*/ (getContext('REPL'));
+	const { module_editor } = get_repl_context();
 
 	const compiler = BROWSER ? new Compiler(svelteUrl) : null;
 

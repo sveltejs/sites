@@ -1,6 +1,6 @@
 <script>
-	import { getContext } from 'svelte';
 	import { slide } from 'svelte/transition';
+	import { get_repl_context } from './context.js';
 
 	/** @type {'info' | 'warning' | 'error'} */
 	export let kind = 'info';
@@ -13,7 +13,7 @@
 
 	export let truncate = false;
 
-	const { go_to_warning_pos } = /** @type {import('./types').ReplContext}*/ (getContext('REPL'));
+	const { go_to_warning_pos } = get_repl_context();
 
 	/** @param {import('./types').MessageDetails} details */
 	function message(details) {

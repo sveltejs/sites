@@ -1,13 +1,14 @@
 <script>
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
 	import { BROWSER } from 'esm-env';
-	import { createEventDispatcher, setContext } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 	import { derived, writable } from 'svelte/store';
 	import Bundler from './Bundler.js';
 	import ComponentSelector from './Input/ComponentSelector.svelte';
 	import ModuleEditor from './Input/ModuleEditor.svelte';
 	import InputOutputToggle from './InputOutputToggle.svelte';
 	import Output from './Output/Output.svelte';
+	import { set_repl_context } from './context.js';
 	import { get_full_filename, sleep } from './utils.js';
 
 	export let packagesUrl = 'https://unpkg.com';
@@ -143,29 +144,26 @@
 	/** @type {ReplContext['bundler']} */
 	const bundler = writable(null);
 
-	setContext(
-		'REPL',
-		/** @type {import('./types').ReplContext} */ ({
-			files,
-			selected_index,
-			selected,
-			bundle,
-			bundler,
-			compile_options,
-			cursor_pos,
-			module_editor,
-			output,
-			toggleable,
+	set_repl_context({
+		files,
+		selected_index,
+		selected,
+		bundle,
+		bundler,
+		compile_options,
+		cursor_pos,
+		module_editor,
+		output,
+		toggleable,
 
-			EDITOR_STATE_MAP,
+		EDITOR_STATE_MAP,
 
-			rebundle,
-			clear_state,
-			go_to_warning_pos,
-			handle_change,
-			handle_select
-		})
-	);
+		rebundle,
+		clear_state,
+		go_to_warning_pos,
+		handle_change,
+		handle_select
+	});
 
 	/** @type {Symbol}  */
 	let current_token;

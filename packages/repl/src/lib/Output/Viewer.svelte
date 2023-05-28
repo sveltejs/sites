@@ -1,6 +1,7 @@
 <script>
+	import { get_repl_context } from '$lib/context.js';
 	import { BROWSER } from 'esm-env';
-	import { getContext, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import Message from '../Message.svelte';
 	import PaneWithPanel from './PaneWithPanel.svelte';
 	import ReplProxy from './ReplProxy.js';
@@ -19,7 +20,7 @@
 	/** @type {'light' | 'dark'} */
 	export let theme;
 
-	const { bundle } = /** @type {import('../types').ReplContext}*/ (getContext('REPL'));
+	const { bundle } = get_repl_context();
 
 	/** @type {import('./console/console').Log[]} */
 	let logs = [];

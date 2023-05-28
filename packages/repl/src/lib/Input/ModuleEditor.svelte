@@ -1,6 +1,6 @@
 <script>
+	import { get_repl_context } from '$lib/context.js';
 	import { get_full_filename } from '$lib/utils.js';
-	import { getContext } from 'svelte';
 	import CodeMirror from '../CodeMirror.svelte';
 	import Message from '../Message.svelte';
 
@@ -14,8 +14,7 @@
 		$module_editor?.focus();
 	}
 
-	const { bundle, handle_change, module_editor, selected } =
-		/** @type {import('../types').ReplContext}*/ (getContext('REPL'));
+	const { bundle, handle_change, module_editor, selected } = get_repl_context();
 
 	/** @type {import('$lib/types').Error | null | undefined} */
 	let error = null;

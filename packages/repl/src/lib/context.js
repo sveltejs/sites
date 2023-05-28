@@ -1,6 +1,6 @@
 import { getContext, setContext } from 'svelte';
 
-const key = {};
+const key = Symbol('repl');
 
 /** @returns {import("./types").ReplContext} */
 export function get_repl_context() {

@@ -1,5 +1,11 @@
 # @sveltejs/repl
 
+## 0.5.0-next.4
+
+### Patch Changes
+
+- 949ff2f: Localise all state to each component instance, use neocodemirror 0.0.10, expose `theme`
+
 ## 0.5.0-next.3
 
 ### Patch Changes

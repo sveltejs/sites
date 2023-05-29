@@ -1,5 +1,29 @@
 # @sveltejs/repl
 
+## 0.5.0-next.3
+
+### Patch Changes
+
+- 2c3c2d0: Minor fixes
+
+## 0.5.0-next.2
+
+### Patch Changes
+
+- 4755c1a: Themeable previews
+
+## 0.5.0-next.1
+
+### Patch Changes
+
+- b58af12: Fix exports
+
+## 0.5.0-next.0
+
+### Minor Changes
+
+- d0398b2: Overhaul
+
 ## 0.4.0
 
 ### Minor Changes

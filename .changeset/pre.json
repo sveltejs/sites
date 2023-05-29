@@ -1,0 +1,16 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "@sveltejs/repl": "0.4.0",
+    "@sveltejs/site-kit": "2.1.4",
+    "hn.svelte.dev": "0.0.1",
+    "svelte.dev": "1.0.3"
+  },
+  "changesets": [
+    "early-planes-love",
+    "fresh-countries-hear",
+    "great-singers-attack",
+    "wise-vans-smoke"
+  ]
+}

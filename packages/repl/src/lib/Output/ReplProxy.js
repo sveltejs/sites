@@ -1,13 +1,36 @@
 let uid = 1;
 
+const noop = () => {};
+
 export default class ReplProxy {
+	/** @type {HTMLIFrameElement} */
+	iframe;
+
+	/** @type {import("./proxy").Handlers} */
+	handlers = {
+		on_fetch_progress: noop,
+		on_console: noop,
+		on_error: noop,
+		on_console_group: noop,
+		on_console_group_collapsed: noop,
+		on_console_group_end: noop,
+		on_unhandled_rejection: noop
+	};
+
+	/** @type {Map<number, { resolve: (value: any) => void, reject: (value: any) => void }>} */
+	pending_cmds = new Map();
+
+	/** @param {MessageEvent<any>} e */
+	handle_event = (e) => this.handle_repl_message(e);
+
+	/**
+	 * @param {HTMLIFrameElement} iframe
+	 * @param {import("./proxy").Handlers} handlers
+	 */
 	constructor(iframe, handlers) {
 		this.iframe = iframe;
 		this.handlers = handlers;
 
-		this.pending_cmds = new Map();
-
-		this.handle_event = (e) => this.handle_repl_message(e);
 		window.addEventListener('message', this.handle_event, false);
 	}
 
@@ -15,16 +38,23 @@ export default class ReplProxy {
 		window.removeEventListener('message', this.handle_event);
 	}
 
+	/**
+	 * @param {string} action
+	 * @param {any} args
+	 */
 	iframe_command(action, args) {
 		return new Promise((resolve, reject) => {
 			const cmd_id = uid++;
 
 			this.pending_cmds.set(cmd_id, { resolve, reject });
 
-			this.iframe.contentWindow.postMessage({ action, cmd_id, args }, '*');
+			this.iframe.contentWindow?.postMessage({ action, cmd_id, args }, '*');
 		});
 	}
 
+	/**
+	 * @param {{ action: string; cmd_id: number; message: string; stack: any; args: any; }} cmd_data
+	 */
 	handle_command_message(cmd_data) {
 		let action = cmd_data.action;
 		let id = cmd_data.cmd_id;
@@ -47,6 +77,9 @@ export default class ReplProxy {
 		}
 	}
 
+	/**
+	 * @param {MessageEvent<any>} event
+	 */
 	handle_repl_message(event) {
 		if (event.source !== this.iframe.contentWindow) return;
 
@@ -73,6 +106,7 @@ export default class ReplProxy {
 		}
 	}
 
+	/** @param {string} script */
 	eval(script) {
 		return this.iframe_command('eval', { script });
 	}

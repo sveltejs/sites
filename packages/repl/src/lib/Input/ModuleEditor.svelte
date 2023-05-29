@@ -1,51 +1,80 @@
 <script>
-	import { getContext, onMount } from 'svelte';
+	import { get_repl_context } from '$lib/context.js';
+	import { get_full_filename } from '$lib/utils.js';
 	import CodeMirror from '../CodeMirror.svelte';
 	import Message from '../Message.svelte';
 
-	const { bundle, selected, handle_change, register_module_editor } = getContext('REPL');
+	/** @type {import('$lib/types').StartOrEnd | null} */
+	export let errorLoc = null;
 
-	export let errorLoc;
-	export let theme;
-
-	let editor;
-	onMount(() => {
-		register_module_editor(editor);
-	});
+	/** @type {boolean} */
+	export let autocomplete;
 
 	export function focus() {
-		editor.focus();
+		$module_editor?.focus();
 	}
 
+	const { bundle, handle_change, module_editor, selected } = get_repl_context();
+
+	/** @type {import('$lib/types').Error | null | undefined} */
 	let error = null;
+
+	/** @type {import('$lib/types').Warning[]} */
 	let warnings = [];
-	let timeout = null;
+
+	$: filename = $selected?.name + '.' + $selected?.type;
+
+	let error_file = '';
 
 	$: if ($bundle) {
-		clearTimeout(timeout);
+		error = $bundle?.error;
+		warnings = $bundle?.warnings ?? [];
 
-		// if there's already an error/warnings displayed, update them
-		if (error) error = $bundle.error;
-		if (warnings.length > 0) warnings = $bundle.warnings;
-
-		timeout = setTimeout(() => {
-			error = $bundle.error;
-			warnings = $bundle.warnings;
-		}, 400);
+		if (error || warnings.length > 1) {
+			error_file = error?.filename ?? warnings[0]?.filename;
+		}
 	}
+
+	$: diagnostics =
+		$selected && error_file === get_full_filename($selected)
+			? /** @type {import('@codemirror/lint').Diagnostic[]} */ ([
+					...(error
+						? [
+								{
+									from: error.start.character,
+									to: error.end.character,
+									severity: 'error',
+									message: error.message
+								}
+						  ]
+						: []),
+					...warnings.map((warning) => ({
+						from: warning.start.character,
+						to: warning.end.character,
+						severity: 'warning',
+						message: warning.message
+					}))
+			  ])
+			: [];
 </script>
 
 <div class="editor-wrapper">
 	<div class="editor notranslate" translate="no">
-		<CodeMirror bind:this={editor} {errorLoc} {theme} on:change={handle_change} />
+		<CodeMirror
+			bind:this={$module_editor}
+			{errorLoc}
+			{autocomplete}
+			{diagnostics}
+			on:change={handle_change}
+		/>
 	</div>
 
 	<div class="info">
 		{#if error}
-			<Message kind="error" details={error} filename="{$selected.name}.{$selected.type}" />
+			<Message kind="error" details={error} {filename} />
 		{:else if warnings.length > 0}
 			{#each warnings as warning}
-				<Message kind="warning" details={warning} filename="{$selected.name}.{$selected.type}" />
+				<Message kind="warning" details={warning} {filename} />
 			{/each}
 		{/if}
 	</div>
@@ -74,6 +103,6 @@
 		/* make it easier to interact with scrollbar */
 		padding-right: 8px;
 		height: auto;
-		/* height: 100%; */
+		height: 100%;
 	}
 </style>

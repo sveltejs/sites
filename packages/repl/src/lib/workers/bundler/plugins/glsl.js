@@ -1,3 +1,4 @@
+/** @type {import('@rollup/browser').Plugin} */
 export default {
 	name: 'glsl',
 	transform: (code, id) => {

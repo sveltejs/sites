@@ -5,29 +5,46 @@ const workers = new Map();
 let uid = 1;
 
 export default class Compiler {
-	constructor(svelteUrl) {
-		if (!workers.has(svelteUrl)) {
+	/** @type {Worker} */
+	worker;
+
+	/** @type {Map<number, (...arg: any) => void>} */
+	handlers = new Map();
+
+	/** @param {string} svelte_url */
+	constructor(svelte_url) {
+		if (!workers.has(svelte_url)) {
 			const worker = new Worker();
-			worker.postMessage({ type: 'init', svelteUrl });
-			workers.set(svelteUrl, worker);
+			worker.postMessage({ type: 'init', svelte_url });
+			workers.set(svelte_url, worker);
 		}
 
-		this.worker = workers.get(svelteUrl);
+		this.worker = workers.get(svelte_url);
 
-		this.handlers = new Map();
+		this.worker.addEventListener(
+			'message',
+			/**
+			 * @param {MessageEvent<import('$lib/workers/workers').CompileMessageData>} event
+			 */
+			(event) => {
+				const handler = this.handlers.get(event.data.id);
 
-		this.worker.addEventListener('message', (event) => {
-			const handler = this.handlers.get(event.data.id);
-
-			if (handler) {
-				// if no handler, was meant for a different REPL
-				handler(event.data.result);
-				this.handlers.delete(event.data.id);
+				if (handler) {
+					// if no handler, was meant for a different REPL
+					handler(event.data.result);
+					this.handlers.delete(event.data.id);
+				}
 			}
-		});
+		);
 	}
 
-	compile(component, options, return_ast) {
+	/**
+	 * @param {import('$lib/types').File} file
+	 * @param {import('svelte/types/compiler').CompileOptions} options
+	 * @param {boolean} return_ast
+	 * @returns
+	 */
+	compile(file, options, return_ast) {
 		return new Promise((fulfil) => {
 			const id = uid++;
 
@@ -36,16 +53,16 @@ export default class Compiler {
 			this.worker.postMessage({
 				id,
 				type: 'compile',
-				source: component.source,
+				source: file.source,
 				options: Object.assign(
 					{
-						name: component.name,
-						filename: `${component.name}.svelte`
+						name: file.name,
+						filename: `${file.name}.svelte`,
 					},
 					options
 				),
-				entry: component.name === 'App',
-				return_ast
+				entry: file.name === 'App',
+				return_ast,
 			});
 		});
 	}

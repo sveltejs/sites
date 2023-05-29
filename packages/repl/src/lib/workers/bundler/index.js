@@ -256,12 +256,18 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 			// importing from a URL
 			if (/^https?:/.test(importee)) return importee;
 
-			// importing from (probably) unpkg
 			if (importee.startsWith('.')) {
-				const url = new URL(importee, importer).href;
-				self.postMessage({ type: 'status', uid, message: `resolving ${url}` });
+				if (importer && local_files_lookup.has(importer)) {
+					// relative import in a REPL file
+					// should've matched above otherwise importee doesn't exist
+					throw new Error(`Cannot find file "${importee}" imported by "${importer}" in the REPL`);
+				} else {
+					// relative import in an external file
+					const url = new URL(importee, importer).href;
+					self.postMessage({ type: 'status', uid, message: `resolving ${url}` });
 
-				return await follow_redirects(url, uid);
+					return await follow_redirects(url, uid);
+				}
 			} else {
 				// fetch from unpkg
 				self.postMessage({ type: 'status', uid, message: `resolving ${importee}` });

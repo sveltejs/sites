@@ -36,7 +36,7 @@ self.addEventListener(
 
 const common_options = {
 	dev: false,
-	css: false,
+	css: false
 };
 
 /** @param {import("../workers").CompileMessageData} param0 */
@@ -52,8 +52,8 @@ function compile({ id, source, options, return_ast }) {
 			result: {
 				js: js.code,
 				css: css.code || `/* Add a <sty` + `le> tag to see compiled CSS */`,
-				ast: return_ast ? ast : null,
-			},
+				ast: return_ast ? ast : null
+			}
 		};
 	} catch (err) {
 		// @ts-ignore
@@ -66,8 +66,8 @@ function compile({ id, source, options, return_ast }) {
 			id,
 			result: {
 				js: message,
-				css: message,
-			},
+				css: message
+			}
 		};
 	}
 }

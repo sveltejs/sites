@@ -19,7 +19,7 @@
 	// can still use the spring to drive `pos`
 	const driver = spring(+pos.replace(UNIT_REGEX, '$1'), {
 		stiffness: 0.2,
-		damping: 0.5,
+		damping: 0.5
 	});
 
 	// @ts-ignore
@@ -46,7 +46,7 @@
 
 	<section slot="b">
 		<div class="panel-header" on:click={toggle} on:keyup={(e) => e.key === ' ' && toggle()}>
-			<h3>{panel}</h3>
+			<span class="panel-heading">{panel}</span>
 			<slot name="panel-header" />
 		</div>
 
@@ -70,7 +70,7 @@
 		overflow: auto;
 	}
 
-	h3 {
+	.panel-heading {
 		font: 700 12px/1.5 var(--sk-font);
 		color: var(--sk-text-1, #333);
 	}

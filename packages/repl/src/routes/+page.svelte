@@ -2,7 +2,6 @@
 	import Repl from '$lib/Repl.svelte';
 	import { onMount } from 'svelte';
 	import '@sveltejs/site-kit/styles/index.css';
-	import '@sveltejs/site-kit/styles/code.css';
 
 	/** @type {Repl} */
 	let repl;
@@ -28,7 +27,7 @@
 </script>
 
 <main>
-	<Repl bind:this={repl} previewTheme="dark" />
+	<Repl bind:this={repl} showAst autocomplete={true} previewTheme="dark" />
 </main>
 
 <style>

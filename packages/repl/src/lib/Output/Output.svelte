@@ -1,13 +1,13 @@
 <script>
+	import { get_repl_context } from '$lib/context.js';
 	import { BROWSER } from 'esm-env';
+	import { marked } from 'marked';
 	import CodeMirror from '../CodeMirror.svelte';
 	import AstView from './AstView.svelte';
 	import Compiler from './Compiler.js';
 	import CompilerOptions from './CompilerOptions.svelte';
 	import PaneWithPanel from './PaneWithPanel.svelte';
 	import Viewer from './Viewer.svelte';
-	import { marked } from 'marked';
-	import { module_editor } from '$lib/state';
 
 	export let svelteUrl;
 
@@ -68,7 +68,7 @@
 	 * @param {import('svelte/types/compiler').CompileOptions} options
 	 */
 	export async function update(selected, options) {
-		if (selected.type === 'js' || selected.type === 'json') return;
+		if (/(js|json)/.test(selected.type)) return;
 
 		if (selected.type === 'md') {
 			markdown = marked(selected.source);
@@ -83,6 +83,8 @@
 		css_editor.update({ code: compiled.css, lang: 'css' });
 		ast = compiled.ast;
 	}
+
+	const { module_editor } = get_repl_context();
 
 	const compiler = BROWSER ? new Compiler(svelteUrl) : null;
 

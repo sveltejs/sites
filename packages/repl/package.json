@@ -14,12 +14,20 @@
 			"types": "./dist/index.d.ts",
 			"svelte": "./dist/index.js",
 			"default": "./dist/index.js"
+		},
+		"./theme": {
+			"types": "./dist/theme.d.ts",
+			"svelte": "./dist/theme.js",
+			"default": "./dist/theme.js"
 		}
 	},
 	"typesVersions": {
 		">4.0": {
 			"*": [
 				"./dist/index.d.ts"
+			],
+			"./theme": [
+				"./dist/theme.d.ts"
 			]
 		}
 	},
@@ -37,44 +45,44 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch"
 	},
 	"peerDependencies": {
-		"svelte": "^3.54.0"
+		"svelte": "^3.54.0 || ^4.0.0-next.0 || ^4.0.0"
 	},
 	"devDependencies": {
-		"@fontsource/fira-mono": "^4.5.10",
-		"@sveltejs/adapter-auto": "^2.0.1",
-		"@sveltejs/kit": "^1.16.3",
+		"@fontsource/fira-mono": "^5.0.1",
+		"@sveltejs/adapter-auto": "^2.1.0",
+		"@sveltejs/kit": "^1.19.0",
 		"@sveltejs/package": "^2.0.2",
-		"@types/marked": "^4.3.0",
-		"publint": "^0.1.11",
+		"@types/marked": "^5.0.0",
+		"publint": "^0.1.12",
 		"svelte": "^3.59.1",
-		"svelte-check": "^3.3.2",
-		"tslib": "^2.5.0",
+		"svelte-check": "^3.4.3",
+		"tslib": "^2.5.2",
 		"typescript": "^5.0.4",
-		"vite": "^4.3.5"
+		"vite": "^4.3.9"
 	},
 	"dependencies": {
-		"@codemirror/autocomplete": "^6.7.0",
+		"@codemirror/autocomplete": "^6.7.1",
 		"@codemirror/commands": "^6.2.4",
 		"@codemirror/lang-css": "^6.2.0",
-		"@codemirror/lang-javascript": "^6.1.7",
+		"@codemirror/lang-javascript": "^6.1.8",
 		"@codemirror/lang-json": "^6.0.1",
 		"@codemirror/lang-markdown": "^6.1.1",
-		"@codemirror/language": "^6.6.0",
+		"@codemirror/language": "^6.7.0",
 		"@codemirror/lint": "^6.2.1",
-		"@codemirror/state": "^6.2.0",
-		"@codemirror/view": "^6.11.1",
+		"@codemirror/state": "^6.2.1",
+		"@codemirror/view": "^6.12.0",
 		"@jridgewell/sourcemap-codec": "^1.4.15",
-		"@lezer/highlight": "^1.1.4",
-		"@neocodemirror/svelte": "0.0.8",
+		"@lezer/highlight": "^1.1.6",
+		"@neocodemirror/svelte": "0.0.10",
 		"@replit/codemirror-lang-svelte": "^6.0.0",
-		"@rich_harris/svelte-split-pane": "^1.1.0",
-		"@rollup/browser": "^3.21.6",
-		"@sveltejs/site-kit": "5.0.4",
+		"@rich_harris/svelte-split-pane": "^1.1.1",
+		"@rollup/browser": "^3.23.0",
+		"@sveltejs/site-kit": "5.2.1",
 		"acorn": "^8.8.2",
 		"codemirror": "^6.0.1",
 		"esm-env": "^1.0.0",
 		"estree-walker": "^3.0.3",
-		"marked": "^5.0.2",
+		"marked": "^5.0.3",
 		"resolve.exports": "^2.0.2",
 		"svelte-json-tree": "^1.0.0"
 	}

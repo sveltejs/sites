@@ -1,15 +1,20 @@
 <script>
-	import { bundle, get_full_filename, handle_change, module_editor, selected } from '$lib/state';
+	import { get_repl_context } from '$lib/context.js';
+	import { get_full_filename } from '$lib/utils.js';
 	import CodeMirror from '../CodeMirror.svelte';
 	import Message from '../Message.svelte';
 
 	/** @type {import('$lib/types').StartOrEnd | null} */
 	export let errorLoc = null;
-	// export let theme;
+
+	/** @type {boolean} */
+	export let autocomplete;
 
 	export function focus() {
 		$module_editor?.focus();
 	}
+
+	const { bundle, handle_change, module_editor, selected } = get_repl_context();
 
 	/** @type {import('$lib/types').Error | null | undefined} */
 	let error = null;
@@ -26,13 +31,13 @@
 		warnings = $bundle?.warnings ?? [];
 
 		if (error || warnings.length > 1) {
-			error_file = error?.filename ?? warnings[0].filename;
+			error_file = error?.filename ?? warnings[0]?.filename;
 		}
 	}
 
-	$: diagnostics = /** @type {import('@codemirror/lint').Diagnostics[]} */ (
+	$: diagnostics =
 		$selected && error_file === get_full_filename($selected)
-			? [
+			? /** @type {import('@codemirror/lint').Diagnostic[]} */ ([
 					...(error
 						? [
 								{
@@ -49,9 +54,8 @@
 						severity: 'warning',
 						message: warning.message
 					}))
-			  ]
-			: []
-	);
+			  ])
+			: [];
 </script>
 
 <div class="editor-wrapper">
@@ -59,9 +63,9 @@
 		<CodeMirror
 			bind:this={$module_editor}
 			{errorLoc}
-			on:change
-			on:change={handle_change}
+			{autocomplete}
 			{diagnostics}
+			on:change={handle_change}
 		/>
 	</div>
 

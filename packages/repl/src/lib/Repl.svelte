@@ -2,26 +2,14 @@
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
 	import { BROWSER } from 'esm-env';
 	import { createEventDispatcher } from 'svelte';
-	import Bundler from './Bundler';
+	import { derived, writable } from 'svelte/store';
+	import Bundler from './Bundler.js';
 	import ComponentSelector from './Input/ComponentSelector.svelte';
 	import ModuleEditor from './Input/ModuleEditor.svelte';
 	import InputOutputToggle from './InputOutputToggle.svelte';
 	import Output from './Output/Output.svelte';
-	import {
-		EDITOR_STATE_MAP,
-		bundle,
-		bundler,
-		compile_options,
-		files,
-		get_full_filename,
-		module_editor,
-		output,
-		rebundle,
-		selected,
-		selected_index,
-		toggleable
-	} from './state';
-	import { sleep } from './utils';
+	import { set_repl_context } from './context.js';
+	import { get_full_filename, sleep } from './utils.js';
 
 	export let packagesUrl = 'https://unpkg.com';
 	export let svelteUrl = `${packagesUrl}/svelte`;
@@ -37,6 +25,7 @@
 	export let previewTheme = 'light';
 	export let showModified = false;
 	export let showAst = false;
+	export let autocomplete = true;
 
 	export function toJSON() {
 		return {
@@ -104,6 +93,166 @@
 
 	/** @type {ReturnType<typeof createEventDispatcher<{ change: { files: import('./types').File[] } }>>} */
 	const dispatch = createEventDispatcher();
+
+	/**
+	 * @typedef {import('./types').ReplContext} ReplContext
+	 */
+
+	/** @type {import('svelte/types/compiler').CompileOptions} */
+	const DEFAULT_COMPILE_OPTIONS = {
+		generate: 'dom',
+		dev: false,
+		css: 'injected',
+		hydratable: false,
+		customElement: false,
+		immutable: false,
+		legacy: false
+	};
+
+	/** @type {Map<string, import('@codemirror/state').EditorState>} */
+	const EDITOR_STATE_MAP = new Map();
+
+	/** @type {ReplContext['files']} */
+	const files = writable([]);
+
+	/** @type {ReplContext['selected_index']} */
+	const selected_index = writable(-1);
+
+	/** @type {ReplContext['selected']} */
+	const selected = derived([files, selected_index], ([$files, $selected_index]) => {
+		return $selected_index !== -1 ? $files?.[$selected_index] ?? null : null;
+	});
+
+	/** @type {ReplContext['bundle']} */
+	const bundle = writable(null);
+
+	/** @type {ReplContext['compile_options']} */
+	const compile_options = writable(DEFAULT_COMPILE_OPTIONS);
+
+	/** @type {ReplContext['cursor_pos']} */
+	const cursor_pos = writable(0);
+
+	/** @type {ReplContext['module_editor']} */
+	const module_editor = writable(null);
+
+	/** @type {ReplContext['output']} */
+	const output = writable(null);
+
+	/** @type {ReplContext['toggleable']} */
+	const toggleable = writable(false);
+
+	/** @type {ReplContext['bundler']} */
+	const bundler = writable(null);
+
+	set_repl_context({
+		files,
+		selected_index,
+		selected,
+		bundle,
+		bundler,
+		compile_options,
+		cursor_pos,
+		module_editor,
+		output,
+		toggleable,
+
+		EDITOR_STATE_MAP,
+
+		rebundle,
+		clear_state,
+		go_to_warning_pos,
+		handle_change,
+		handle_select
+	});
+
+	/** @type {Symbol}  */
+	let current_token;
+	async function rebundle() {
+		const token = (current_token = Symbol());
+		const result = await $bundler?.bundle($files);
+		if (result && token === current_token) $bundle = result;
+	}
+
+	let is_select_changing = false;
+
+	/**
+	 * @param {number} index
+	 */
+	async function handle_select(index) {
+		is_select_changing = true;
+
+		$selected_index = index;
+
+		if (!$selected) return;
+
+		await $module_editor?.set({ code: $selected.source, lang: $selected.type });
+
+		if (EDITOR_STATE_MAP.has(get_full_filename($selected))) {
+			$module_editor?.setEditorState(EDITOR_STATE_MAP.get(get_full_filename($selected)));
+		} else {
+			$module_editor?.clearEditorState();
+		}
+
+		EDITOR_STATE_MAP.set(get_full_filename($selected), $module_editor?.getEditorState());
+
+		$output?.set($selected, $compile_options);
+
+		is_select_changing = false;
+	}
+
+	/**
+	 * @param {CustomEvent<{ value: string }>} event
+	 */
+	async function handle_change(event) {
+		if (is_select_changing) return;
+
+		files.update(($files) => {
+			const file = { ...$selected };
+
+			file.source = event.detail.value;
+			file.modified = true;
+
+			// @ts-ignore
+			$files[$selected_index] = file;
+
+			return $files;
+		});
+
+		if (!$selected) return;
+
+		EDITOR_STATE_MAP.set(get_full_filename($selected), $module_editor?.getEditorState());
+
+		dispatch('change', {
+			files: $files
+		});
+
+		rebundle();
+	}
+
+	/** @param {import('./types').MessageDetails | undefined} item */
+	async function go_to_warning_pos(item) {
+		if (!item) return;
+
+		const match = /^(.+)\.(\w+)$/.exec(item.filename);
+		if (!match) return; // ???
+
+		const [, name, type] = match;
+		const file_index = $files.findIndex((file) => file.name === name && file.type === type);
+
+		if (file_index === -1) return;
+
+		await handle_select(file_index);
+
+		$module_editor?.focus();
+		$module_editor?.setCursor(item.start.character);
+	}
+
+	/** Deletes all editor state */
+	function clear_state() {
+		$module_editor?.clearEditorState();
+
+		EDITOR_STATE_MAP.clear();
+	}
 
 	$: if ($output && $selected) {
 		$output?.update?.($selected, $compile_options);
@@ -174,13 +323,7 @@
 		>
 			<section slot="a">
 				<ComponentSelector show_modified={showModified} on:add on:remove />
-				<ModuleEditor
-					errorLoc={sourceErrorLoc}
-					on:change={() =>
-						dispatch('change', {
-							files: $files
-						})}
-				/>
+				<ModuleEditor errorLoc={sourceErrorLoc} {autocomplete} />
 			</section>
 
 			<section slot="b" style="height: 100%;">

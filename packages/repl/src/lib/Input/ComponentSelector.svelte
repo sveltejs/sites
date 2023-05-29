@@ -1,12 +1,6 @@
 <script>
-	import {
-		files,
-		handle_select,
-		module_editor,
-		rebundle,
-		selected,
-		selected_index
-	} from '$lib/state';
+	import { get_repl_context } from '$lib/context.js';
+	import { get_full_filename } from '$lib/utils.js';
 	import { createEventDispatcher, tick } from 'svelte';
 
 	/** @type {boolean}  */
@@ -17,6 +11,16 @@
 	 * add: { files: import('$lib/types').File[] },
 	 * }>>} */
 	const dispatch = createEventDispatcher();
+
+	const {
+		files,
+		handle_select,
+		module_editor,
+		rebundle,
+		selected,
+		selected_index,
+		EDITOR_STATE_MAP
+	} = get_repl_context();
 
 	/** @type {number} */
 	let editing_index = -1;
@@ -37,7 +41,7 @@
 	}
 
 	async function close_edit() {
-		const match = /(.+)\.(svelte|js|json|md)$/.exec($selected?.name ?? '');
+		const match = /(.+)\.(svelte|js|json|md|css)$/.exec($selected?.name ?? '');
 
 		const edited_file = $files[editing_index];
 		edited_file.name = match ? match[1] : edited_file.name;
@@ -58,6 +62,8 @@
 		if (match?.[2]) $files[$selected_index].type = match[2];
 
 		editing_index = -1;
+
+		EDITOR_STATE_MAP.delete(get_full_filename($selected));
 
 		// re-select, in case the type changed
 		handle_select($selected_index);
@@ -88,6 +94,7 @@
 			console.error(`Could not find component! That's... odd`);
 		}
 
+		EDITOR_STATE_MAP.delete(get_full_filename($files[index]));
 		handle_select(($selected_index = index - 1));
 	}
 
@@ -145,8 +152,7 @@
 		over = event.currentTarget.id;
 	}
 
-	/** @param {DragEvent & { currentTarget: HTMLDivElement }} event */
-	function dragEnd(event) {
+	function dragEnd() {
 		if (from && over) {
 			const from_index = $files.findIndex((file) => file.name === from);
 			const to_index = $files.findIndex((file) => file.name === over);
@@ -203,10 +209,8 @@
 							on:focus={select_input}
 							on:blur={close_edit}
 							on:keydown={(e) =>
-								e.key === 'Enter' &&
-								!is_file_name_used($files[editing_index]) &&
-								e.currentTarget.blur()}
-							class:duplicate={is_file_name_used($files[editing_index])}
+								e.key === 'Enter' && !is_file_name_used(file) && e.currentTarget.blur()}
+							class:duplicate={is_file_name_used(file)}
 						/>
 					{:else}
 						<div

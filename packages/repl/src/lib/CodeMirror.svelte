@@ -3,16 +3,15 @@
 </script>
 
 <script>
-	import { closeBrackets } from '@codemirror/autocomplete';
-	import { history, historyField } from '@codemirror/commands';
-	import { bracketMatching, codeFolding } from '@codemirror/language';
+	import { historyField } from '@codemirror/commands';
+	import { codeFolding } from '@codemirror/language';
 	import { EditorState, Range, StateEffect, StateEffectType, StateField } from '@codemirror/state';
 	import { Decoration, EditorView } from '@codemirror/view';
 	import { codemirror, withCodemirrorInstance } from '@neocodemirror/svelte';
 	import { createEventDispatcher, tick } from 'svelte';
 	import { writable } from 'svelte/store';
 	import Message from './Message.svelte';
-	import { svelte as svelteTheme } from './theme';
+	import { svelteTheme } from './theme.js';
 
 	/** @type {import('./types').StartOrEnd | null} */
 	export let errorLoc = null;
@@ -22,6 +21,9 @@
 
 	export let readonly = false;
 	export let tab = true;
+
+	/** @type {boolean} */
+	export let autocomplete = true;
 
 	/** @type {ReturnType<typeof createEventDispatcher<{ change: { value: string } }>>} */
 	const dispatch = createEventDispatcher();
@@ -203,19 +205,6 @@
 		}
 	}
 
-	// /** @type {number | null} */
-	// let previous_error_line;
-	// $: if (editor) {
-	// 	if (previous_error_line != null) {
-	// 		editor.removeLineClass(previous_error_line, 'wrap', 'error-line');
-	// 	}
-
-	// 	if (error_line && error_line !== previous_error_line) {
-	// 		editor.addLineClass(error_line, 'wrap', 'error-line');
-	// 		previous_error_line = error_line;
-	// 	}
-	// }
-
 	const watcher = EditorView.updateListener.of((viewUpdate) => {
 		if (viewUpdate.selectionSet) {
 			cursorIndex.set(viewUpdate.state.selection.main.head);
@@ -241,13 +230,14 @@
 			css: () => import('@codemirror/lang-css').then((m) => m.css()),
 			svelte: () => import('@replit/codemirror-lang-svelte').then((m) => m.svelte())
 		},
-		extensions: [closeBrackets(), bracketMatching(), codeFolding(), history(), watcher],
+		autocomplete,
+		extensions: [codeFolding(), watcher],
 		diagnostics,
-		instanceStore: cmInstance
-	}}
-	on:codemirror:change={(e) => {
-		code = e.detail;
-		dispatch('change', { value: code });
+		instanceStore: cmInstance,
+		onTextChange: (value) => {
+			code = value;
+			dispatch('change', { value: code });
+		}
 	}}
 >
 	{#if !$cmInstance.view}

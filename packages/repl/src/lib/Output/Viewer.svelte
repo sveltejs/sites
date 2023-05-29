@@ -1,5 +1,5 @@
 <script>
-	import { bundle } from '$lib/state';
+	import { get_repl_context } from '$lib/context.js';
 	import { BROWSER } from 'esm-env';
 	import { onMount } from 'svelte';
 	import Message from '../Message.svelte';
@@ -8,14 +8,6 @@
 	import Console from './console/Console.svelte';
 	import getLocationFromStack from './get-location-from-stack';
 	import srcdoc from './srcdoc/index.html?raw';
-
-	/** @type {import('./console/console').Log[]} */
-	let logs = [];
-
-	/** @type {import('./console/console').Log[][]} */
-	let log_group_stack = [];
-
-	let current_log_group = logs;
 
 	/** @type {import('$lib/types').MessageDetails | null} */
 	export let error;
@@ -27,6 +19,16 @@
 
 	/** @type {'light' | 'dark'} */
 	export let theme;
+
+	const { bundle } = get_repl_context();
+
+	/** @type {import('./console/console').Log[]} */
+	let logs = [];
+
+	/** @type {import('./console/console').Log[][]} */
+	let log_group_stack = [];
+
+	let current_log_group = logs;
 
 	/** @type {HTMLIFrameElement} */
 	let iframe;

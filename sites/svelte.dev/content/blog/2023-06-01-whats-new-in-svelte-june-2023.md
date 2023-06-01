@@ -1,6 +1,6 @@
 ---
 title: "What's new in Svelte: June 2023"
-description: "SvelteHack winners, lots of new bindings, and a bunch of new features in SvelteKit"
+description: "SvelteHack winners, lots of new bindings, Svelte 4.0.0-next.0, and a bunch of new features in SvelteKit"
 author: Dani Sandoval
 authorURL: https://dreamindani.com
 ---
@@ -12,6 +12,9 @@ The entire playlist of the summit, including all the talks broken up in to separ
 Lots to cover in this month's newsletter, including a lot of improvements to both Svelte and Kit...
 
 ## What's new in Svelte
+[Svelte 4.0.0-next.0](https://github.com/sveltejs/svelte/releases), the first pre-release version of Svelte 4.0 is out! An explanation of the changes, improvements and goals of this release can be found in [the Releases page on GitHub](https://github.com/sveltejs/svelte/releases/tag/svelte%404.0.0-next.0). Check it out to get an early sneak peek of the future of Svelte. It also includes a migration guide, for those interested in the minimal amount of breaking changes and deprecations.
+
+Svelte 3.59.0 is also out, with a ton of new features:
 - Restructuring arrays with the spread operator (`...`) is now handled correctly (**3.59.0**, [#8552](https://github.com/sveltejs/svelte/issues/8552), [#8554](https://github.com/sveltejs/svelte/issues/8554))
 - The new `a11y-autocomplete-valid` warning will now warn if the autocomplete attribute isn't used according to the HTML specification (**3.59.0**, [Examples](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/d32a27fb64f4127d31e4e76bd08e319cfaf0ba53/docs/rules/autocomplete-valid.md), [#8520](https://github.com/sveltejs/svelte/pull/8520))
 - `fullscreenElement` and `visibilityState` bindings are now available for the `<svelte:document>` element (**3.59.0**, [#8507](https://github.com/sveltejs/svelte/pull/8507))

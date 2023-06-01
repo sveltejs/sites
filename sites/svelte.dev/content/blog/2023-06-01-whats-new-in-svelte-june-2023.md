@@ -23,8 +23,8 @@ For all the changes to the Svelte compiler, including unreleased changes, check 
 ## What's new in SvelteKit
 - Route-level entry generators allows exporting an entries function from `+page`, `+page.server`, and `+server` files via `export const entries` (**1.16.0**, [Docs](https://kit.svelte.dev/docs/page-options#entries), [#9571](https://github.com/sveltejs/kit/pull/9571))
 - URLs in `<meta>` tags are now crawled to make programmatic social-images much easier (**1.17.0**, [Docs](https://kit.svelte.dev/docs/seo#manual-setup-title-and-meta), [#9900](https://github.com/sveltejs/kit/pull/9900))
-- `data` and `form` have been unshadowed in the `enchance` function - a future deprecation warning has been added for them in `dev` mode (**1.17.0**, [Docs](https://kit.svelte.dev/docs/form-actions#progressive-enhancement-use-enhance), [#9902](https://github.com/sveltejs/kit/pull/9902))
-- Link options can now be set to "true" and "false" (**1.19.0**, [Docs](https://kit.svelte.dev/docs/link-options#disabling-options), [#10039](https://github.com/sveltejs/kit/pull/10039))
+- `data` and `form` have been unshadowed in the `enhance` function - a future deprecation warning has been added for them in `dev` mode (**1.17.0**, [Docs](https://kit.svelte.dev/docs/form-actions#progressive-enhancement-use-enhance), [#9902](https://github.com/sveltejs/kit/pull/9902))
+- Link options can now be set to `true` and `false` (**1.19.0**, [Docs](https://kit.svelte.dev/docs/link-options#disabling-options), [#10039](https://github.com/sveltejs/kit/pull/10039))
 - The new `resolvePath` export can be used to build relative paths from route IDs and parameters (**1.19.0**, [Docs](https://kit.svelte.dev/docs/modules#sveltejs-kit-resolvepath), [#9949](https://github.com/sveltejs/kit/pull/9949))
 
 ---

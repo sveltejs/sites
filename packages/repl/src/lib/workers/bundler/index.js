@@ -36,11 +36,17 @@ self.addEventListener(
 				packages_url = event.data.packages_url;
 				svelte_url = event.data.svelte_url;
 
-				try {
-					importScripts(`${svelte_url}/compiler.js`);
-				} catch {
-					self.svelte = await import(/* @vite-ignore */ `${svelte_url}/compiler.mjs`);
-				}
+				const { version }  = await fetch(`${svelte_url}/package.json`).then(r => r.json());
+				console.log(`Svelte compiler version ${version}`);
+				
+				if (version.startsWith('4')) {
+					const compiler = await fetch(`${svelte_url}/compiler.cjs`).then(r => r.text());
+					eval(compiler);
+				} else try {
+						importScripts(`${svelte_url}/compiler.js`);
+					} catch {
+						self.svelte = await import(/* @vite-ignore */ `${svelte_url}/compiler.mjs`);
+					}
 
 				fulfil_ready();
 				break;
@@ -130,6 +136,10 @@ function compare_to_version(major, minor, patch) {
 
 	// @ts-ignore
 	return +v[1] - major || +v[2] - minor || +v[3] - patch;
+}
+
+function is_v4() {
+	return compare_to_version(4, 0, 0) >= 0;
 }
 
 function is_legacy_package_structure() {
@@ -228,20 +238,18 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 		name: 'svelte-repl',
 		async resolveId(importee, importer) {
 			if (uid !== current_id) throw ABORT;
-
+			const v4 = is_v4();
 			// importing from Svelte
-			if (importee === `svelte`) return `${svelte_url}/index.mjs`;
+			if (importee === `svelte`) return v4 ? `${svelte_url}/src/runtime/index.js` : `${svelte_url}/index.mjs`;
+			
 			if (importee.startsWith(`svelte/`)) {
+				if (v4) {
+					return `${svelte_url}/src/runtime/${importee.slice(7)}/index.js`
+				}
+
 				return is_legacy_package_structure()
 					? `${svelte_url}/${importee.slice(7)}.mjs`
 					: `${svelte_url}/${importee.slice(7)}/index.mjs`;
-			}
-
-			// importing one Svelte runtime module from another
-			if (importer && importer.startsWith(svelte_url)) {
-				const resolved = new URL(importee, importer).href;
-				if (resolved.endsWith('.mjs')) return resolved;
-				return is_legacy_package_structure() ? `${resolved}.mjs` : `${resolved}/index.mjs`;
 			}
 
 			// importing from another file in REPL

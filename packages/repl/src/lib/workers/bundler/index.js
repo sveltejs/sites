@@ -32,26 +32,29 @@ self.addEventListener(
 	'message',
 	/** @param {MessageEvent<import('../workers.js').BundleMessageData>} event */ async (event) => {
 		switch (event.data.type) {
-			case 'init':
-				packages_url = event.data.packages_url;
-				svelte_url = event.data.svelte_url;
+			case 'init': {
+				({ packages_url, svelte_url } = event.data);
 
-				const { version }  = await fetch(`${svelte_url}/package.json`).then(r => r.json());
-				console.log(`Svelte compiler version ${version}`);
-				
+				const { version } = await fetch(`${svelte_url}/package.json`).then((r) => r.json());
+				console.log(`Using Svelte compiler version ${version}`);
+
 				if (version.startsWith('4')) {
-					const compiler = await fetch(`${svelte_url}/compiler.cjs`).then(r => r.text());
+					// unpkg doesn't set the correct MIME type for .cjs files
+					const compiler = await fetch(`${svelte_url}/compiler.cjs`).then((r) => r.text());
 					eval(compiler);
-				} else try {
+				} else {
+					try {
 						importScripts(`${svelte_url}/compiler.js`);
 					} catch {
 						self.svelte = await import(/* @vite-ignore */ `${svelte_url}/compiler.mjs`);
 					}
+				}
 
 				fulfil_ready();
 				break;
+			}
 
-			case 'bundle':
+			case 'bundle': {
 				await ready;
 				const { uid, files } = event.data;
 
@@ -69,6 +72,7 @@ self.addEventListener(
 				});
 
 				break;
+			}
 		}
 	}
 );
@@ -240,16 +244,18 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 			if (uid !== current_id) throw ABORT;
 			const v4 = is_v4();
 			// importing from Svelte
-			if (importee === `svelte`) return v4 ? `${svelte_url}/src/runtime/index.js` : `${svelte_url}/index.mjs`;
-			
+			if (importee === `svelte`)
+				return v4 ? `${svelte_url}/src/runtime/index.js` : `${svelte_url}/index.mjs`;
+
 			if (importee.startsWith(`svelte/`)) {
+				const sub_path = importee.slice(7);
 				if (v4) {
-					return `${svelte_url}/src/runtime/${importee.slice(7)}/index.js`
+					return `${svelte_url}/src/runtime/${sub_path}/index.js`;
 				}
 
 				return is_legacy_package_structure()
-					? `${svelte_url}/${importee.slice(7)}.mjs`
-					: `${svelte_url}/${importee.slice(7)}/index.mjs`;
+					? `${svelte_url}/${sub_path}.mjs`
+					: `${svelte_url}/${sub_path}/index.mjs`;
 			}
 
 			// importing from another file in REPL

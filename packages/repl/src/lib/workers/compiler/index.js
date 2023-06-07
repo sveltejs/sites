@@ -17,17 +17,20 @@ self.addEventListener(
 	async (event) => {
 		switch (event.data.type) {
 			case 'init':
-				const {svelte_url} = event.data;
-				const {version} = await fetch(`${svelte_url}/package.json`).then(r => r.json());
+				const { svelte_url } = event.data;
+				const { version } = await fetch(`${svelte_url}/package.json`).then((r) => r.json());
+
 				if (version.startsWith('4')) {
 					// unpkg doesn't set the correct MIME type for .cjs files
-					const compiler = await fetch(`${svelte_url}/compiler.cjs`).then(r => r.text());
+					const compiler = await fetch(`${svelte_url}/compiler.cjs`).then((r) => r.text());
 					eval(compiler);
-				} else try {
+				} else {
+					try {
 						importScripts(`${svelte_url}/compiler.js`);
 					} catch {
 						self.svelte = await import(/* @vite-ignore */ `${svelte_url}/compiler.mjs`);
 					}
+				}
 
 				fulfil_ready();
 				break;

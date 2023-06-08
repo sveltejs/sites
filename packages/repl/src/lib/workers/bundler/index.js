@@ -357,7 +357,6 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 					? cached_id.result
 					: self.svelte.compile(code, {
 							generate: mode,
-							format: 'esm',
 							dev: true,
 							filename: name + '.svelte',
 							...(has_loopGuardTimeout_feature() && {

@@ -1,4 +1,6 @@
 /// <reference lib="webworker" />
+
+import '../patch_window.js';
 import { sleep } from '$lib/utils.js';
 import { rollup } from '@rollup/browser';
 import { DEV } from 'esm-env';
@@ -7,8 +9,6 @@ import commonjs from './plugins/commonjs.js';
 import glsl from './plugins/glsl.js';
 import json from './plugins/json.js';
 import replace from './plugins/replace.js';
-
-self.window = self; // egregious hack to get magic-string to work in a worker
 
 /** @type {string} */
 var pkg_name;
@@ -447,7 +447,7 @@ async function bundle({ uid, files }) {
 				format: 'iife',
 				name: 'SvelteComponent',
 				exports: 'named',
-				sourcemap: true
+				sourcemap: 'inline'
 			})
 		)?.output[0];
 
@@ -468,7 +468,7 @@ async function bundle({ uid, files }) {
 						format: 'iife',
 						name: 'SvelteComponent',
 						exports: 'named',
-						sourcemap: true
+						sourcemap: 'inline'
 					})
 			  )?.output?.[0]
 			: null;

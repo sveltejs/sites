@@ -1,4 +1,6 @@
 /// <reference lib="webworker" />
+
+import '../patch_window.js';
 import { sleep } from '$lib/utils.js';
 import { rollup } from '@rollup/browser';
 import { DEV } from 'esm-env';
@@ -7,8 +9,6 @@ import commonjs from './plugins/commonjs.js';
 import glsl from './plugins/glsl.js';
 import json from './plugins/json.js';
 import replace from './plugins/replace.js';
-
-self.window = self; // egregious hack to get magic-string to work in a worker
 
 /** @type {string} */
 var pkg_name;
@@ -32,20 +32,30 @@ self.addEventListener(
 	'message',
 	/** @param {MessageEvent<import('../workers.js').BundleMessageData>} event */ async (event) => {
 		switch (event.data.type) {
-			case 'init':
-				packages_url = event.data.packages_url;
-				svelte_url = event.data.svelte_url;
+			case 'init': {
+				({ packages_url, svelte_url } = event.data);
 
-				try {
-					importScripts(`${svelte_url}/compiler.js`);
-				} catch {
-					self.svelte = await import(/* @vite-ignore */ `${svelte_url}/compiler.mjs`);
+				const { version } = await fetch(`${svelte_url}/package.json`).then((r) => r.json());
+				console.log(`Using Svelte compiler version ${version}`);
+
+				if (version.startsWith('4')) {
+					// unpkg doesn't set the correct MIME type for .cjs files
+					// https://github.com/mjackson/unpkg/issues/355
+					const compiler = await fetch(`${svelte_url}/compiler.cjs`).then((r) => r.text());
+					eval(compiler);
+				} else {
+					try {
+						importScripts(`${svelte_url}/compiler.js`);
+					} catch {
+						self.svelte = await import(/* @vite-ignore */ `${svelte_url}/compiler.mjs`);
+					}
 				}
 
 				fulfil_ready();
 				break;
+			}
 
-			case 'bundle':
+			case 'bundle': {
 				await ready;
 				const { uid, files } = event.data;
 
@@ -63,6 +73,7 @@ self.addEventListener(
 				});
 
 				break;
+			}
 		}
 	}
 );
@@ -130,6 +141,10 @@ function compare_to_version(major, minor, patch) {
 
 	// @ts-ignore
 	return +v[1] - major || +v[2] - minor || +v[3] - patch;
+}
+
+function is_v4() {
+	return compare_to_version(4, 0, 0) >= 0;
 }
 
 function is_legacy_package_structure() {
@@ -228,20 +243,20 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 		name: 'svelte-repl',
 		async resolveId(importee, importer) {
 			if (uid !== current_id) throw ABORT;
-
+			const v4 = is_v4();
 			// importing from Svelte
-			if (importee === `svelte`) return `${svelte_url}/index.mjs`;
-			if (importee.startsWith(`svelte/`)) {
-				return is_legacy_package_structure()
-					? `${svelte_url}/${importee.slice(7)}.mjs`
-					: `${svelte_url}/${importee.slice(7)}/index.mjs`;
-			}
+			if (importee === `svelte`)
+				return v4 ? `${svelte_url}/src/runtime/index.js` : `${svelte_url}/index.mjs`;
 
-			// importing one Svelte runtime module from another
-			if (importer && importer.startsWith(svelte_url)) {
-				const resolved = new URL(importee, importer).href;
-				if (resolved.endsWith('.mjs')) return resolved;
-				return is_legacy_package_structure() ? `${resolved}.mjs` : `${resolved}/index.mjs`;
+			if (importee.startsWith(`svelte/`)) {
+				const sub_path = importee.slice(7);
+				if (v4) {
+					return `${svelte_url}/src/runtime/${sub_path}/index.js`;
+				}
+
+				return is_legacy_package_structure()
+					? `${svelte_url}/${sub_path}.mjs`
+					: `${svelte_url}/${sub_path}/index.mjs`;
 			}
 
 			// importing from another file in REPL
@@ -343,7 +358,6 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 					? cached_id.result
 					: self.svelte.compile(code, {
 							generate: mode,
-							format: 'esm',
 							dev: true,
 							filename: name + '.svelte',
 							...(has_loopGuardTimeout_feature() && {
@@ -434,7 +448,7 @@ async function bundle({ uid, files }) {
 				format: 'iife',
 				name: 'SvelteComponent',
 				exports: 'named',
-				sourcemap: true
+				sourcemap: 'inline'
 			})
 		)?.output[0];
 
@@ -455,7 +469,7 @@ async function bundle({ uid, files }) {
 						format: 'iife',
 						name: 'SvelteComponent',
 						exports: 'named',
-						sourcemap: true
+						sourcemap: 'inline'
 					})
 			  )?.output?.[0]
 			: null;

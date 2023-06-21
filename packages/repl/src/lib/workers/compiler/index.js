@@ -17,10 +17,20 @@ self.addEventListener(
 	async (event) => {
 		switch (event.data.type) {
 			case 'init':
-				try {
-					importScripts(`${event.data.svelte_url}/compiler.js`);
-				} catch (e) {
-					self.svelte = await import(/* @vite-ignore */ `${event.data.svelte_url}/compiler.mjs`);
+				const { svelte_url } = event.data;
+				const { version } = await fetch(`${svelte_url}/package.json`).then((r) => r.json());
+
+				if (version.startsWith('4')) {
+					// unpkg doesn't set the correct MIME type for .cjs files
+					// https://github.com/mjackson/unpkg/issues/355
+					const compiler = await fetch(`${svelte_url}/compiler.cjs`).then((r) => r.text());
+					eval(compiler);
+				} else {
+					try {
+						importScripts(`${svelte_url}/compiler.js`);
+					} catch {
+						self.svelte = await import(/* @vite-ignore */ `${svelte_url}/compiler.mjs`);
+					}
 				}
 
 				fulfil_ready();

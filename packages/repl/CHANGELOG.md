@@ -1,5 +1,11 @@
 # @sveltejs/repl
 
+## 0.5.0-next.5
+
+### Patch Changes
+
+- 006e636: Prepare for v4
+
 ## 0.5.0-next.4
 
 ### Patch Changes

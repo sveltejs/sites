@@ -1,16 +1,18 @@
 <script>
 	import { get_repl_context } from '$lib/context.js';
 	import { get_full_filename } from '$lib/utils.js';
-	import { createEventDispatcher, tick } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 
-	/** @type {boolean}  */
-	export let show_modified;
+	export let show_modified = false;
 
 	/** @type {ReturnType<typeof createEventDispatcher<{
-	 * remove: { files: import('$lib/types').File[] },
-	 * add: { files: import('$lib/types').File[] },
+	 * remove: { files: import('$lib/types').File[]; diff: import('$lib/types').File },
+	 * add: { files: import('$lib/types').File[]; diff: import('$lib/types').File },
 	 * }>>} */
 	const dispatch = createEventDispatcher();
+
+	/** @type {string | null} */
+	let editing_name = null;
 
 	const {
 		files,
@@ -18,92 +20,9 @@
 		module_editor,
 		rebundle,
 		selected,
-		selected_index,
+		selected_name,
 		EDITOR_STATE_MAP
 	} = get_repl_context();
-
-	/** @type {number} */
-	let editing_index = -1;
-
-	/** @param {number} index */
-	function select_file(index) {
-		if ($selected_index !== index) {
-			editing_index = -1;
-			handle_select(index);
-		}
-	}
-
-	/** @param {number} index */
-	function edit_tab(index) {
-		if ($selected_index === index) {
-			editing_index = $selected_index;
-		}
-	}
-
-	async function close_edit() {
-		const match = /(.+)\.(svelte|js|json|md|css)$/.exec($selected?.name ?? '');
-
-		const edited_file = $files[editing_index];
-		edited_file.name = match ? match[1] : edited_file.name;
-
-		if (!$selected) return;
-
-		if (is_file_name_used($selected)) {
-			let i = 1;
-			let name = $selected.name;
-
-			do {
-				$files[$selected_index].name = `${name}_${i++}`;
-			} while (is_file_name_used($selected));
-
-			$files[$selected_index] = edited_file;
-		}
-
-		if (match?.[2]) $files[$selected_index].type = match[2];
-
-		editing_index = -1;
-
-		EDITOR_STATE_MAP.delete(get_full_filename($selected));
-
-		// re-select, in case the type changed
-		handle_select($selected_index);
-
-		// focus the editor, but wait a beat (so key events aren't misdirected)
-		await tick();
-
-		$module_editor?.focus();
-
-		rebundle();
-	}
-
-	/**
-	 * @param {number} index
-	 */
-	function remove(index) {
-		let result = confirm(
-			`Are you sure you want to delete ${$files[index].name}.${$files[index].type}?`
-		);
-
-		if (!result) return;
-
-		if (index !== -1) {
-			$files = $files.filter((_, idx) => idx !== index);
-
-			dispatch('remove', { files: $files });
-		} else {
-			console.error(`Could not find component! That's... odd`);
-		}
-
-		EDITOR_STATE_MAP.delete(get_full_filename($files[index]));
-		handle_select(($selected_index = index - 1));
-	}
-
-	/** @param {FocusEvent & { currentTarget: HTMLInputElement }} event */
-	async function select_input(event) {
-		await tick();
-
-		event.currentTarget.select();
-	}
 
 	let uid = 1;
 
@@ -117,123 +36,33 @@
 
 		$files = $files.concat(file);
 
-		editing_index = $files.length - 1;
+		editing_name = get_full_filename(file);
 
-		handle_select(editing_index);
+		handle_select(editing_name);
 
-		dispatch('add', { files: $files });
-	}
-
-	/** @param {import('$lib/types').File} editing */
-	function is_file_name_used(editing) {
-		return $files.find(
-			(file) => JSON.stringify(file) !== JSON.stringify($selected) && file.name === editing.name
-		);
-	}
-
-	// drag and drop
-	/** @type {string | null} */
-	let from = null;
-
-	/** @type {string | null} */
-	let over = null;
-
-	/** @param {DragEvent & { currentTarget: HTMLDivElement }} event */
-	function dragStart(event) {
-		from = event.currentTarget.id;
-	}
-
-	function dragLeave() {
-		over = null;
-	}
-
-	/** @param {DragEvent & { currentTarget: HTMLDivElement }} event */
-	function dragOver(event) {
-		over = event.currentTarget.id;
-	}
-
-	function dragEnd() {
-		if (from && over) {
-			const from_index = $files.findIndex((file) => file.name === from);
-			const to_index = $files.findIndex((file) => file.name === over);
-
-			const from_component = $files[from_index];
-
-			$files.splice(from_index, 1);
-
-			$files = $files.slice(0, to_index).concat(from_component).concat($files.slice(to_index));
-		}
-
-		from = over = null;
+		dispatch('add', { files: $files, diff: file });
 	}
 </script>
 
 <div class="component-selector">
 	{#if $files.length}
 		<div class="file-tabs" on:dblclick={add_new}>
-			{#each $files as file, index (file)}
-				<div
-					id={file.name}
+			{#each $files as file, index (file.name)}
+				{@const filename = get_full_filename(file)}
+
+				<button
 					class="button"
-					role="button"
-					tabindex="0"
-					class:active={index === $selected_index}
-					class:draggable={index !== editing_index && index !== 0}
-					class:drag-over={over === file.name}
-					on:click={() => select_file(index)}
-					on:keyup={(e) => e.key === ' ' && select_file(index)}
-					on:dblclick|stopPropagation={() => {}}
-					draggable={index !== editing_index}
-					on:dragstart={dragStart}
-					on:dragover|preventDefault={dragOver}
-					on:dragleave={dragLeave}
-					on:drop|preventDefault={dragEnd}
+					id={filename}
+					class:active={filename === $selected_name}
+					class:draggable={filename !== editing_name && index !== 0}
 				>
 					<i class="drag-handle" />
-					{#if file.name === 'App' && index !== editing_index}
+					{#if file.name === 'App' && filename !== editing_name}
 						<div class="uneditable">
 							App.svelte{#if show_modified && file.modified}*{/if}
 						</div>
-					{:else if index === editing_index}
-						{@const file = $files[editing_index]}
-
-						<span class="input-sizer">
-							{file.name + (/\./.test(file.name) ? '' : `.${file.type}`)}
-						</span>
-
-						<!-- svelte-ignore a11y-autofocus -->
-						<input
-							autofocus
-							spellcheck={false}
-							bind:value={$files[editing_index].name}
-							on:focus={select_input}
-							on:blur={close_edit}
-							on:keydown={(e) =>
-								e.key === 'Enter' && !is_file_name_used(file) && e.currentTarget.blur()}
-							class:duplicate={is_file_name_used(file)}
-						/>
-					{:else}
-						<div
-							class="editable"
-							title="edit component name"
-							on:click={() => edit_tab(index)}
-							on:keyup={(e) => e.key === ' ' && edit_tab(index)}
-						>
-							{file.name}.{file.type}{#if show_modified && file.modified}*{/if}
-						</div>
-
-						<span
-							class="remove"
-							on:click={() => remove(index)}
-							on:keyup={(e) => e.key === ' ' && remove(index)}
-						>
-							<svg width="12" height="12" viewBox="0 0 24 24">
-								<line stroke="#999" x1="18" y1="6" x2="6" y2="18" />
-								<line stroke="#999" x1="6" y1="6" x2="18" y2="18" />
-							</svg>
-						</span>
-					{/if}
-				</div>
+					{:else if filename === editing_name}{/if}
+				</button>
 			{/each}
 
 			<button class="add-new" on:click={add_new} title="add new component">

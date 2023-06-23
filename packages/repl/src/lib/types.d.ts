@@ -51,7 +51,7 @@ export type File = {
 
 export type ReplState = {
 	files: File[];
-	selected_index: number;
+	selected_name: string;
 	selected: File | null;
 	bundle: Bundle | null;
 	bundler: import('./Bundler').default | null;
@@ -64,7 +64,7 @@ export type ReplState = {
 
 export type ReplContext = {
 	files: Writable<ReplState['files']>;
-	selected_index: Writable<ReplState['selected_index']>;
+	selected_name: Writable<ReplState['selected_name']>;
 	selected: Readable<ReplState['selected']>;
 	bundle: Writable<ReplState['bundle']>;
 	bundler: Writable<ReplState['bundler']>;
@@ -78,7 +78,7 @@ export type ReplContext = {
 
 	// Methods
 	rebundle(): Promise<void>;
-	handle_select(index: number): Promise<void>;
+	handle_select(filename: string): Promise<void>;
 	handle_change(
 		event: CustomEvent<{
 			value: string;

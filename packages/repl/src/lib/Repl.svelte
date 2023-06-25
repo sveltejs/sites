@@ -26,6 +26,7 @@
 	export let showModified = false;
 	export let showAst = false;
 	export let autocomplete = true;
+	export let vim = false;
 
 	export function toJSON() {
 		return {
@@ -323,7 +324,7 @@
 		>
 			<section slot="a">
 				<ComponentSelector show_modified={showModified} on:add on:remove />
-				<ModuleEditor errorLoc={sourceErrorLoc} {autocomplete} />
+				<ModuleEditor errorLoc={sourceErrorLoc} {autocomplete} {vim} />
 			</section>
 
 			<section slot="b" style="height: 100%;">

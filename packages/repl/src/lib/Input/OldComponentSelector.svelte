@@ -35,21 +35,22 @@
 		}
 	}
 
-	/** @param {string} filename */
-	function edit_tab(filename) {
-		if ($selected_name === filename) {
-			editing_name = filename;
+	/** @param {import('$lib/types').File} file */
+	function edit_tab(file) {
+		if ($selected_name === get_full_filename(file)) {
+			editing_name = get_full_filename(file);
+			input_value = file.name;
 		}
 	}
 
 	async function close_edit() {
-		const match = /(.+)\.(svelte|js|json|md|css)$/.exec($selected?.name ?? '');
+		const match = /(.+)\.(svelte|js|json|md|css)$/.exec(input_value ?? '');
 
 		const edited_file = $files.find((val) => get_full_filename(val) === editing_name);
 
 		if (!edited_file) return;
 
-		edited_file.name = match ? match[1] : edited_file.name;
+		edited_file.name = match ? match[1] : input_value;
 
 		if (!$selected) return;
 
@@ -58,19 +59,24 @@
 			let name = $selected.name;
 
 			do {
-				const file = $files.find((val) => get_full_filename(val) === $selected_name);
+				const file = $files.find(
+					(val) => get_full_filename(val) === get_full_filename(edited_file)
+				);
 
 				if (!file) break;
 
 				file.name = `${name}_${i++}`;
 			} while (is_file_name_used($selected));
 
-			const idx = $files.findIndex((val) => get_full_filename(val) === $selected_name);
+			const idx = $files.findIndex(
+				(val) => get_full_filename(val) === get_full_filename(edited_file)
+			);
 			$files[idx] = edited_file;
 		}
 
-		const idx = $files.findIndex((val) => get_full_filename(val) === $selected_name);
-
+		const idx = $files.findIndex(
+			(val) => get_full_filename(val) === get_full_filename(edited_file)
+		);
 		if (match?.[2]) $files[idx].type = match[2];
 
 		editing_name = null;
@@ -78,7 +84,7 @@
 		EDITOR_STATE_MAP.delete(get_full_filename($selected));
 
 		// re-select, in case the type changed
-		handle_select($selected_name);
+		handle_select(get_full_filename(edited_file));
 
 		$files = $files;
 
@@ -131,6 +137,8 @@
 		$files = $files.concat(file);
 
 		editing_name = get_full_filename(file);
+
+		input_value = file.name;
 
 		handle_select(editing_name);
 
@@ -215,7 +223,7 @@
 
 						{#if editing_file}
 							<span class="input-sizer">
-								{editing_file.name + (/\./.test(editing_file.name) ? '' : `.${editing_file.type}`)}
+								{input_value + (/\./.test(input_value) ? '' : `.${editing_file.type}`)}
 							</span>
 
 							<!-- svelte-ignore a11y-autofocus -->
@@ -234,8 +242,8 @@
 						<div
 							class="editable"
 							title="edit component name"
-							on:click={() => edit_tab(filename)}
-							on:keyup={(e) => e.key === ' ' && edit_tab(filename)}
+							on:click={() => edit_tab(file)}
+							on:keyup={(e) => e.key === ' ' && edit_tab(file)}
 						>
 							{file.name}.{file.type}{#if show_modified && file.modified}*{/if}
 						</div>

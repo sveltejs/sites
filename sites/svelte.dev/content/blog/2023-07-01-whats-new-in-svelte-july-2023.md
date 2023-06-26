@@ -1,6 +1,6 @@
 ---
 title: "What's new in Svelte: July 2023"
-description: "Svelte 4.0, New CHANGELOGs and a tour around the community"
+description: "Svelte 4.0, new website and a tour around the community"
 author: Dani Sandoval
 authorURL: https://dreamindani.com
 ---
@@ -12,7 +12,7 @@ The big news this month was the release of Svelte 4.0! You can read all about it
 
 If you're already on Node.js 16, it's possible you won't see any breaking changes in your project. But be sure to read the [migration guide](https://svelte.dev/docs/v4-migration-guide) for all the details.
 
-For a full list of all the changes to the Svelte compiler, including unreleased changes, check out the [CHANGELOG](https://github.com/sveltejs/svelte/blob/master/packages/svelte/CHANGELOG.md) (note the new location in the `packages` directory)
+For a full list of all the changes to the Svelte compiler, including unreleased changes, check out the [CHANGELOG](https://github.com/sveltejs/svelte/blob/master/packages/svelte/CHANGELOG.md).
 
 ## What's new in SvelteKit
 No breaking changes or any big new features in SvelteKit this month. But there's lots of awesome bug fixes in the [CHANGELOG](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md)!
@@ -81,6 +81,7 @@ _To Read_
 - [sveltekit-multibuild](https://github.com/MrNNP/sveltekit-multibuild) is a starter repo to create Android apps, web sites, desktop apps, and Chrome extensions automatically
 - [SvelteKit AI Chatbot](https://github.com/jianyuan/sveltekit-ai-chatbot) is an open-source AI chatbot app template built with SvelteKit, the Vercel AI SDK, OpenAI, and Vercel KV.
 - [KitAI](https://kit-ai.vercel.app/) provides batteries-included AI templates for SvelteKit and Next.js
+- [Svelte Form Builder](https://github.com/pragmatic-engineering/svelte-form-builder-community) is a no-code drag&drop form builder for Svelte
 
 Thanks for reading! As always, feel free to let us know if we missed anything on [Reddit](https://www.reddit.com/r/sveltejs/) or [Discord](https://discord.gg/svelte).
 

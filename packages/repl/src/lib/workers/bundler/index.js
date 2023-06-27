@@ -275,7 +275,8 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 				if (importer && local_files_lookup.has(importer)) {
 					// relative import in a REPL file
 					// should've matched above otherwise importee doesn't exist
-					throw new Error(`Cannot find file "${importee}" imported by "${importer}" in the REPL`);
+					console.error(`Cannot find file "${importee}" imported by "${importer}" in the REPL`);
+					return;
 				} else {
 					// relative import in an external file
 					const url = new URL(importee, importer).href;
@@ -289,7 +290,7 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 
 				const match = /^((?:@[^/]+\/)?[^/]+)(\/.+)?$/.exec(importee);
 				if (!match) {
-					throw new Error(`Invalid import "${importee}"`);
+					return console.error(`Invalid import "${importee}"`);
 				}
 
 				const pkg_name = match[1];

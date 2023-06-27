@@ -66,8 +66,6 @@
 						val.source === $selected.source
 				);
 
-				console.log(file, $files);
-
 				if (!file) break;
 
 				file.name = `${name}_${i++}`;

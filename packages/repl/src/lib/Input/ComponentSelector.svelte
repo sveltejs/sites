@@ -60,8 +60,13 @@
 
 			do {
 				const file = $files.find(
-					(val) => get_full_filename(val) === get_full_filename(edited_file)
+					(val) =>
+						get_full_filename(val) === get_full_filename(edited_file) &&
+						// @ts-ignore
+						val.source === $selected.source
 				);
+
+				console.log(file, $files);
 
 				if (!file) break;
 

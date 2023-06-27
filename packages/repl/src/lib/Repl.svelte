@@ -4,7 +4,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import { derived, writable } from 'svelte/store';
 	import Bundler from './Bundler.js';
-	import ComponentSelector from './Input/OldComponentSelector.svelte';
+	import ComponentSelector from './Input/ComponentSelector.svelte';
 	import ModuleEditor from './Input/ModuleEditor.svelte';
 	import InputOutputToggle from './InputOutputToggle.svelte';
 	import Output from './Output/Output.svelte';

@@ -142,6 +142,8 @@
 
 		handle_select(editing_name);
 
+		rebundle();
+
 		dispatch('add', { files: $files, diff: file });
 
 		$files = $files;

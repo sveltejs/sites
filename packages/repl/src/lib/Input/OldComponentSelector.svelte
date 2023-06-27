@@ -79,9 +79,15 @@
 		);
 		if (match?.[2]) $files[idx].type = match[2];
 
-		editing_name = null;
+		if (editing_name) {
+			const old_state = EDITOR_STATE_MAP.get(editing_name);
+			if (old_state) {
+				EDITOR_STATE_MAP.set(get_full_filename(edited_file), old_state);
+				EDITOR_STATE_MAP.delete(editing_name);
+			}
+		}
 
-		EDITOR_STATE_MAP.delete(get_full_filename($selected));
+		editing_name = null;
 
 		// re-select, in case the type changed
 		handle_select(get_full_filename(edited_file));

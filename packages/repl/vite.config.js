@@ -4,7 +4,7 @@ import { sveltekit } from '@sveltejs/kit/vite';
 const config = {
 	plugins: [sveltekit()],
 	resolve: {
-		dedupe: ['@codemirror/state']
+		dedupe: ['@codemirror/state', '@codemirror/language', '@codemirror/view']
 	},
 	server: {
 		fs: {

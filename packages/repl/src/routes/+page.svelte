@@ -15,11 +15,17 @@
 					source:
 						`<scr` +
 						`ipt>
+    import B from './B.svelte';
 	let name = 'world';
 </scr` +
 						`ipt>
 
 <h1>Hello {name}!</h1>`
+				},
+				{
+					name: 'B',
+					type: 'svelte',
+					source: `B`
 				}
 			]
 		});

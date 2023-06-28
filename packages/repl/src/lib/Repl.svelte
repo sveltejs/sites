@@ -1,7 +1,7 @@
 <script>
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
 	import { BROWSER } from 'esm-env';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, tick } from 'svelte';
 	import { derived, writable } from 'svelte/store';
 	import Bundler from './Bundler.js';
 	import ComponentSelector from './Input/ComponentSelector.svelte';
@@ -10,6 +10,7 @@
 	import Output from './Output/Output.svelte';
 	import { set_repl_context } from './context.js';
 	import { get_full_filename, sleep } from './utils.js';
+	import { EditorState } from '@codemirror/state';
 
 	export let packagesUrl = 'https://unpkg.com';
 	export let svelteUrl = `${packagesUrl}/svelte`;
@@ -50,9 +51,18 @@
 
 		injectedCSS = data.css || '';
 
-		await sleep(50);
-
-		EDITOR_STATE_MAP.set(get_full_filename(data.files[0]), $module_editor?.getEditorState());
+		// when we set new files we also populate the EDITOR_STATE_MAP
+		// with a new state for each file containing the source as docs
+		// this allows the editor to behave correctly when renaming a tab
+		// after having loaded the files externally
+		data.files.forEach((file) => {
+			EDITOR_STATE_MAP.set(
+				get_full_filename(file),
+				EditorState.create({
+					doc: file.source
+				}).toJSON()
+			);
+		});
 	}
 
 	export function markSaved() {
@@ -195,8 +205,6 @@
 		} else {
 			$module_editor?.clearEditorState();
 		}
-
-		EDITOR_STATE_MAP.set(filename, $module_editor?.getEditorState());
 
 		$output?.set($selected, $compile_options);
 

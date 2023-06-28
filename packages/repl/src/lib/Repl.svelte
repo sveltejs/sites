@@ -1,4 +1,5 @@
 <script>
+	import { EditorState } from '@codemirror/state';
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
 	import { BROWSER } from 'esm-env';
 	import { createEventDispatcher } from 'svelte';
@@ -9,7 +10,7 @@
 	import InputOutputToggle from './InputOutputToggle.svelte';
 	import Output from './Output/Output.svelte';
 	import { set_repl_context } from './context.js';
-	import { get_full_filename, sleep } from './utils.js';
+	import { get_full_filename } from './utils.js';
 
 	export let packagesUrl = 'https://unpkg.com';
 	export let svelteUrl = `${packagesUrl}/svelte`;
@@ -50,17 +51,17 @@
 
 		injectedCSS = data.css || '';
 
-		await sleep(50);
+		// when we set new files we also populate the EDITOR_STATE_MAP
+		// with a new state for each file containing the source as docs
+		// this allows the editor to behave correctly when renaming a tab
+		// after having loaded the files externally
+		populate_editor_state();
 
-		EDITOR_STATE_MAP.set(get_full_filename(data.files[0]), $module_editor?.getEditorState());
+		dispatch('change', { files: $files });
 	}
 
 	export function markSaved() {
 		$files = $files.map((val) => ({ ...val, modified: false }));
-
-		// if (!$selected) return;
-
-		// const current = $files.find(val => get_full_filename(val) === $selected_name).modified = false;
 	}
 
 	/** @param {{ files: import('./types').File[], css?: string }} data */
@@ -84,6 +85,8 @@
 			$module_editor?.clearEditorState();
 		}
 
+		populate_editor_state();
+
 		dispatch('change', { files: $files });
 	}
 
@@ -94,7 +97,7 @@
 	 * @typedef {import('./types').ReplContext} ReplContext
 	 */
 
-	/** @type {import('svelte/types/compiler').CompileOptions} */
+	/** @type {import('svelte/compiler').CompileOptions} */
 	const DEFAULT_COMPILE_OPTIONS = {
 		generate: 'dom',
 		dev: false,
@@ -196,8 +199,6 @@
 			$module_editor?.clearEditorState();
 		}
 
-		EDITOR_STATE_MAP.set(filename, $module_editor?.getEditorState());
-
 		$output?.set($selected, $compile_options);
 
 		is_select_changing = false;
@@ -249,6 +250,17 @@
 		$module_editor?.clearEditorState();
 
 		EDITOR_STATE_MAP.clear();
+	}
+
+	function populate_editor_state() {
+		for (const file of $files) {
+			EDITOR_STATE_MAP.set(
+				get_full_filename(file),
+				EditorState.create({
+					doc: file.source
+				}).toJSON()
+			);
+		}
 	}
 
 	$: if ($output && $selected) {

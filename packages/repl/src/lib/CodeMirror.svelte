@@ -233,11 +233,11 @@
 		autocomplete,
 		extensions: [codeFolding(), watcher],
 		diagnostics,
-		instanceStore: cmInstance,
-		onTextChange: (value) => {
-			code = value;
-			dispatch('change', { value: code });
-		}
+		instanceStore: cmInstance
+	}}
+	on:codemirror:textChange={({ detail: value }) => {
+		code = value;
+		dispatch('change', { value: code });
 	}}
 >
 	{#if !$cmInstance.view}

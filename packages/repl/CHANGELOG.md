@@ -1,5 +1,11 @@
 # @sveltejs/repl
 
+## 0.5.0-next.7
+
+### Patch Changes
+
+- 4918664: (fix) loading files in editor state map upon loading
+
 ## 0.5.0-next.6
 
 ### Patch Changes

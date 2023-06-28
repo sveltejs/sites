@@ -1,5 +1,13 @@
 # @sveltejs/repl
 
+## 0.5.0-next.6
+
+### Patch Changes
+
+- 617ffc4: Fix ComponentSelector
+- d9368b3: Update deps
+- 516e655: Bump neocodemirror: Fixes atrribute deletion freezing editor problem
+
 ## 0.5.0-next.5
 
 ### Patch Changes

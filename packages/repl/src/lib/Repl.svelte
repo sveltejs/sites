@@ -1,7 +1,8 @@
 <script>
+	import { EditorState } from '@codemirror/state';
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
 	import { BROWSER } from 'esm-env';
-	import { createEventDispatcher, tick } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 	import { derived, writable } from 'svelte/store';
 	import Bundler from './Bundler.js';
 	import ComponentSelector from './Input/ComponentSelector.svelte';
@@ -9,8 +10,7 @@
 	import InputOutputToggle from './InputOutputToggle.svelte';
 	import Output from './Output/Output.svelte';
 	import { set_repl_context } from './context.js';
-	import { get_full_filename, sleep } from './utils.js';
-	import { EditorState } from '@codemirror/state';
+	import { get_full_filename } from './utils.js';
 
 	export let packagesUrl = 'https://unpkg.com';
 	export let svelteUrl = `${packagesUrl}/svelte`;

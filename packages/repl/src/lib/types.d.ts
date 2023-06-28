@@ -1,7 +1,7 @@
 import type { EditorState } from '@codemirror/state';
 import { OutputChunk } from '@rollup/browser';
 import type { Readable, Writable } from 'svelte/store';
-import { CompileOptions } from 'svelte/types/compiler';
+import { CompileOptions } from 'svelte/compiler';
 
 export type Lang = 'js' | 'svelte' | 'json' | 'md' | 'css' | (string & Record<never, never>);
 

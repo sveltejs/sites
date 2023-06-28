@@ -55,22 +55,13 @@
 		// with a new state for each file containing the source as docs
 		// this allows the editor to behave correctly when renaming a tab
 		// after having loaded the files externally
-		data.files.forEach((file) => {
-			EDITOR_STATE_MAP.set(
-				get_full_filename(file),
-				EditorState.create({
-					doc: file.source
-				}).toJSON()
-			);
-		});
+		populate_editor_state();
+
+		dispatch('change', { files: $files });
 	}
 
 	export function markSaved() {
 		$files = $files.map((val) => ({ ...val, modified: false }));
-
-		// if (!$selected) return;
-
-		// const current = $files.find(val => get_full_filename(val) === $selected_name).modified = false;
 	}
 
 	/** @param {{ files: import('./types').File[], css?: string }} data */
@@ -94,6 +85,8 @@
 			$module_editor?.clearEditorState();
 		}
 
+		populate_editor_state();
+
 		dispatch('change', { files: $files });
 	}
 
@@ -104,7 +97,7 @@
 	 * @typedef {import('./types').ReplContext} ReplContext
 	 */
 
-	/** @type {import('svelte/types/compiler').CompileOptions} */
+	/** @type {import('svelte/compiler').CompileOptions} */
 	const DEFAULT_COMPILE_OPTIONS = {
 		generate: 'dom',
 		dev: false,
@@ -257,6 +250,17 @@
 		$module_editor?.clearEditorState();
 
 		EDITOR_STATE_MAP.clear();
+	}
+
+	function populate_editor_state() {
+		for (const file of $files) {
+			EDITOR_STATE_MAP.set(
+				get_full_filename(file),
+				EditorState.create({
+					doc: file.source
+				}).toJSON()
+			);
+		}
 	}
 
 	$: if ($output && $selected) {

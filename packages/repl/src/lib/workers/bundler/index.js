@@ -42,7 +42,7 @@ self.addEventListener(
 					// unpkg doesn't set the correct MIME type for .cjs files
 					// https://github.com/mjackson/unpkg/issues/355
 					const compiler = await fetch(`${svelte_url}/compiler.cjs`).then((r) => r.text());
-					eval(compiler);
+					(0, eval)(compiler);
 				} else {
 					try {
 						importScripts(`${svelte_url}/compiler.js`);

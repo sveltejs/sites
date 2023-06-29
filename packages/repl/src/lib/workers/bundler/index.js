@@ -193,12 +193,11 @@ async function resolve_from_pkg(pkg, subpath, uid, pkg_url_base) {
 			const subpath = resolved_id['.'];
 			if (subpath === false) return 'data:text/javascript,export {}';
 
-			return (
+			resolved_id =
 				subpath ??
 				resolve.legacy(pkg, {
 					fields: ['module', 'main']
-				})
-			);
+				});
 		}
 
 		if (!resolved_id) {

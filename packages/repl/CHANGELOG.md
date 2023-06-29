@@ -1,5 +1,11 @@
 # @sveltejs/repl
 
+## 0.5.0-next.8
+
+### Patch Changes
+
+- 8770812: (fix) avoid automatic newline when renaming/creating a file
+
 ## 0.5.0-next.7
 
 ### Patch Changes

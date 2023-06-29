@@ -185,9 +185,21 @@ async function resolve_from_pkg(pkg, subpath, uid, pkg_url_base) {
 
 	// legacy
 	if (subpath === '.') {
-		const resolved_id = resolve.legacy(pkg, {
+		let resolved_id = resolve.legacy(pkg, {
 			fields: ['browser', 'module', 'main']
 		});
+
+		if (typeof resolved_id === 'object' && !Array.isArray(resolved_id)) {
+			const subpath = resolved_id['.'];
+			if (subpath === false) return 'data:text/javascript,export {}';
+
+			return (
+				subpath ??
+				resolve.legacy(pkg, {
+					fields: ['module', 'main']
+				})
+			);
+		}
 
 		if (!resolved_id) {
 			// last ditch — try to match index.js/index.mjs

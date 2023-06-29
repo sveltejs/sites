@@ -244,8 +244,14 @@
 								bind:value={input_value}
 								on:focus={select_input}
 								on:blur={close_edit}
-								on:keydown={(e) =>
-									e.key === 'Enter' && !is_file_name_used(editing_file) && e.currentTarget.blur()}
+								on:keydown={(e) => {
+									if (e.key === 'Enter') {
+										e.preventDefault();
+										if (!is_file_name_used(editing_file)) {
+											e.currentTarget.blur();
+										}
+									}
+								}}
 								class:duplicate={is_file_name_used(editing_file)}
 							/>
 						{/if}

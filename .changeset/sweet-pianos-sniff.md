@@ -2,4 +2,4 @@
 '@sveltejs/repl': patch
 ---
 
-manage diagnostics asyncronously
+manage diagnostics asyncronously with linter

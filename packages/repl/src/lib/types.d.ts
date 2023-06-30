@@ -54,6 +54,7 @@ export type ReplState = {
 	selected_name: string;
 	selected: File | null;
 	bundle: Bundle | null;
+	bundling: Promise<void>;
 	bundler: import('./Bundler').default | null;
 	compile_options: CompileOptions;
 	cursor_pos: number;
@@ -67,6 +68,7 @@ export type ReplContext = {
 	selected_name: Writable<ReplState['selected_name']>;
 	selected: Readable<ReplState['selected']>;
 	bundle: Writable<ReplState['bundle']>;
+	bundling: Writable<ReplState['bundling']>;
 	bundler: Writable<ReplState['bundler']>;
 	compile_options: Writable<ReplState['compile_options']>;
 	cursor_pos: Writable<ReplState['cursor_pos']>;

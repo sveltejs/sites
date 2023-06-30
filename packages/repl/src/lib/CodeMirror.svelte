@@ -12,12 +12,13 @@
 	import { writable } from 'svelte/store';
 	import Message from './Message.svelte';
 	import { svelteTheme } from './theme.js';
+	import { linter } from '@codemirror/lint';
 
 	/** @type {import('./types').StartOrEnd | null} */
 	export let errorLoc = null;
 
-	/** @type {import('@codemirror/lint').Diagnostic[]} */
-	export let diagnostics = [];
+	/** @type {()=>Promise<import('@codemirror/lint').Diagnostic[]>} */
+	export let diagnostics = async () => [];
 
 	export let readonly = false;
 	export let tab = true;
@@ -231,8 +232,7 @@
 			svelte: () => import('@replit/codemirror-lang-svelte').then((m) => m.svelte())
 		},
 		autocomplete,
-		extensions: [codeFolding(), watcher],
-		diagnostics,
+		extensions: [codeFolding(), watcher, linter(diagnostics)],
 		instanceStore: cmInstance
 	}}
 	on:codemirror:textChange={({ detail: value }) => {

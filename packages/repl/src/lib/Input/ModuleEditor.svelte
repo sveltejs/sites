@@ -1,6 +1,6 @@
 <script>
 	import { get_repl_context } from '$lib/context.js';
-	import { get_full_filename } from '$lib/utils.js';
+	import { clamp, get_full_filename } from '$lib/utils.js';
 	import CodeMirror from '../CodeMirror.svelte';
 	import Message from '../Message.svelte';
 
@@ -29,11 +29,13 @@
 	$: if ($bundle) {
 		error = $bundle?.error;
 		warnings = $bundle?.warnings ?? [];
-
+		console.log({ error, warnings });
 		if (error || warnings.length > 1) {
 			error_file = error?.filename ?? warnings[0]?.filename;
 		}
 	}
+
+	$: max_length = $selected?.source.length ?? 0;
 
 	$: diagnostics =
 		$selected && error_file === get_full_filename($selected)
@@ -41,21 +43,22 @@
 					...(error
 						? [
 								{
-									from: error.start.character,
-									to: error.end.character,
+									from: clamp(0, max_length, error.start.character),
+									to: clamp(0, max_length, error.end.character),
 									severity: 'error',
 									message: error.message
 								}
 						  ]
 						: []),
 					...warnings.map((warning) => ({
-						from: warning.start.character,
-						to: warning.end.character,
+						from: clamp(0, max_length, warning.start.character),
+						to: clamp(0, max_length, warning.end.character),
 						severity: 'warning',
 						message: warning.message
 					}))
 			  ])
 			: [];
+	$: console.log(diagnostics);
 </script>
 
 <div class="editor-wrapper">

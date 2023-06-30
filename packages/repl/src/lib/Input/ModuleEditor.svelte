@@ -34,8 +34,6 @@
 		}
 	}
 
-	$: max_length = $selected?.source.length ?? 0;
-
 	async function diagnostics() {
 		await $bundling;
 		return $selected && error_file === get_full_filename($selected)

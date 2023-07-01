@@ -1,5 +1,13 @@
 # @sveltejs/repl
 
+## 0.5.0-next.9
+
+### Patch Changes
+
+- 371ac4b: (fix) Workers minification
+- fc4e377: (fix) Make mapbox work by properly resolving fields
+- 7033ea5: (fix) Go to Warning Position breaks non errors without a file
+
 ## 0.5.0-next.8
 
 ### Patch Changes

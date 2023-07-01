@@ -239,6 +239,9 @@
 	async function go_to_warning_pos(item) {
 		if (!item) return;
 
+		// If its a bundler error, can't do anything about it
+		if (!item.filename) return;
+
 		await handle_select(item.filename);
 
 		$module_editor?.focus();

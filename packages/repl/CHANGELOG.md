@@ -1,5 +1,11 @@
 # @sveltejs/repl
 
+## 0.5.0-next.10
+
+### Patch Changes
+
+- 8466d8e: manage diagnostics asyncronously with linter
+
 ## 0.5.0-next.9
 
 ### Patch Changes

@@ -150,12 +150,16 @@
 	/** @type {ReplContext['bundler']} */
 	const bundler = writable(null);
 
+	/** @type {ReplContext['bundling']} */
+	const bundling = writable(new Promise(() => {}));
+
 	set_repl_context({
 		files,
 		selected_name,
 		selected,
 		bundle,
 		bundler,
+		bundling,
 		compile_options,
 		cursor_pos,
 		module_editor,
@@ -175,8 +179,13 @@
 	let current_token;
 	async function rebundle() {
 		const token = (current_token = Symbol());
+		let resolver = () => {};
+		$bundling = new Promise((resolve) => {
+			resolver = resolve;
+		});
 		const result = await $bundler?.bundle($files);
 		if (result && token === current_token) $bundle = result;
+		resolver();
 	}
 
 	let is_select_changing = false;

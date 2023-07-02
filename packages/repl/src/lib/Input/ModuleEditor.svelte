@@ -14,7 +14,7 @@
 		$module_editor?.focus();
 	}
 
-	const { bundle, handle_change, module_editor, selected } = get_repl_context();
+	const { bundle, handle_change, module_editor, selected, bundling } = get_repl_context();
 
 	/** @type {import('$lib/types').Error | null | undefined} */
 	let error = null;
@@ -29,14 +29,14 @@
 	$: if ($bundle) {
 		error = $bundle?.error;
 		warnings = $bundle?.warnings ?? [];
-
 		if (error || warnings.length > 1) {
 			error_file = error?.filename ?? warnings[0]?.filename;
 		}
 	}
 
-	$: diagnostics =
-		$selected && error_file === get_full_filename($selected)
+	async function diagnostics() {
+		await $bundling;
+		return $selected && error_file === get_full_filename($selected)
 			? /** @type {import('@codemirror/lint').Diagnostic[]} */ ([
 					...(error
 						? [
@@ -56,6 +56,7 @@
 					}))
 			  ])
 			: [];
+	}
 </script>
 
 <div class="editor-wrapper">

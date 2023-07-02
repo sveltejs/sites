@@ -15,17 +15,20 @@
 					source:
 						`<scr` +
 						`ipt>
-    import B from './B.svelte';
 	let name = 'world';
 </scr` +
 						`ipt>
 
-<h1>Hello {name}!</h1>`
+<h1>Hello {name}!</h1>
+
+<input type="button" on:click on:keypress value="press me"/>
+`
 				},
 				{
 					name: 'B',
 					type: 'svelte',
-					source: `B`
+					source: `<input type="button" on:click on:keypress value="press me"/>
+`
 				}
 			]
 		});

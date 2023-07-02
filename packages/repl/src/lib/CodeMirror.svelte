@@ -4,7 +4,6 @@
 
 <script>
 	import { historyField } from '@codemirror/commands';
-	import { codeFolding } from '@codemirror/language';
 	import { EditorState, Range, StateEffect, StateEffectType, StateField } from '@codemirror/state';
 	import { Decoration, EditorView } from '@codemirror/view';
 	import { codemirror, withCodemirrorInstance } from '@neocodemirror/svelte';
@@ -12,13 +11,12 @@
 	import { writable } from 'svelte/store';
 	import Message from './Message.svelte';
 	import { svelteTheme } from './theme.js';
-	import { linter } from '@codemirror/lint';
 
 	/** @type {import('./types').StartOrEnd | null} */
 	export let errorLoc = null;
 
-	/** @type {()=>Promise<import('@codemirror/lint').Diagnostic[]>} */
-	export let diagnostics = async () => [];
+	/** @type {import('@codemirror/lint').LintSource>} */
+	export let diagnostics;
 
 	export let readonly = false;
 	export let tab = true;
@@ -231,8 +229,9 @@
 			css: () => import('@codemirror/lang-css').then((m) => m.css()),
 			svelte: () => import('@replit/codemirror-lang-svelte').then((m) => m.svelte())
 		},
+		lint: diagnostics,
 		autocomplete,
-		extensions: [codeFolding(), watcher, linter(diagnostics)],
+		extensions: [watcher],
 		instanceStore: cmInstance
 	}}
 	on:codemirror:textChange={({ detail: value }) => {

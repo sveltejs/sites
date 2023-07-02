@@ -73,7 +73,7 @@
 		"@codemirror/view": "^6.14.0",
 		"@jridgewell/sourcemap-codec": "^1.4.15",
 		"@lezer/highlight": "^1.1.6",
-		"@neocodemirror/svelte": "0.0.14",
+		"@neocodemirror/svelte": "0.0.15",
 		"@replit/codemirror-lang-svelte": "^6.0.0",
 		"@rich_harris/svelte-split-pane": "^1.1.1",
 		"@rollup/browser": "^3.25.3",

@@ -84,8 +84,8 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       svelte-json-tree:
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^2.0.0
+        version: 2.0.0(svelte@4.0.0)
     devDependencies:
       '@fontsource/fira-mono':
         specifier: ^5.0.3
@@ -2921,8 +2921,12 @@ packages:
     dependencies:
       svelte: 4.0.0
 
-  /svelte-json-tree@1.0.0:
-    resolution: {integrity: sha512-scs1OdkC8uFpTN4MX0yKkOzZ1/EG3eP1ARC+xcFthXp2IfcwBaXgab0FqA4Am0vQwffNNB+1Gd1LFkJBlynWTA==}
+  /svelte-json-tree@2.0.0(svelte@4.0.0):
+    resolution: {integrity: sha512-42ZlzXaHXD12zhC2CjnJRFJqIFYGScRpvvAaDqsuAyxLVTSh/ah6IXvAu6HtR6oQcvp+XDm+VnchTCgSCx7Dlg==}
+    peerDependencies:
+      svelte: ^4.0.0
+    dependencies:
+      svelte: 4.0.0
     dev: false
 
   /svelte-local-storage-store@0.4.0(svelte@4.0.0):

@@ -255,7 +255,7 @@
 		</div>
 
 		<section slot="panel-body">
-			<Console {logs} on:clear={clear_logs} />
+			<Console {logs} {theme} on:clear={clear_logs} />
 		</section>
 	</PaneWithPanel>
 

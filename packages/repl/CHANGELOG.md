@@ -1,5 +1,11 @@
 # @sveltejs/repl
 
+## 0.5.0-next.11
+
+### Patch Changes
+
+- 260e4d7: (feat) allow dark mode for svelte-json-tree
+
 ## 0.5.0-next.10
 
 ### Patch Changes

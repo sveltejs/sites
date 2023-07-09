@@ -36,28 +36,28 @@
 
 	async function diagnostics() {
 		await $bundling;
-		return $selected && error_file === get_full_filename($selected)
-			? /** @type {import('@codemirror/lint').Diagnostic[]} */ ([
-					...(error
-						? [
-								{
-									from: error.start.character,
-									to: error.end.character,
-									severity: 'error',
-									message: error.message
-								}
-						  ]
-						: []),
-					...warnings
-						.filter((warning) => $selected && warning.filename === get_full_filename($selected))
-						.map((warning) => ({
-							from: warning.start.character,
-							to: warning.end.character,
-							severity: 'warning',
-							message: warning.message
-						}))
-			  ])
-			: [];
+		/** @type {import('@codemirror/lint').Diagnostic[]} */
+		const returned = [
+			...($selected && error?.filename === get_full_filename($selected)
+				? [
+						{
+							from: error.start.character,
+							to: error.end.character,
+							severity: 'error',
+							message: error.message
+						}
+				  ]
+				: []),
+			...warnings
+				.filter((warning) => $selected && warning.filename === get_full_filename($selected))
+				.map((warning) => ({
+					from: warning.start.character,
+					to: warning.end.character,
+					severity: 'warning',
+					message: warning.message
+				}))
+		];
+		return returned;
 	}
 </script>
 

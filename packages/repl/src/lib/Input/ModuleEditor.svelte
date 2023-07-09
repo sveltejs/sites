@@ -24,38 +24,34 @@
 
 	$: filename = $selected?.name + '.' + $selected?.type;
 
-	let error_file = '';
-
 	$: if ($bundle) {
 		error = $bundle?.error;
 		warnings = $bundle?.warnings ?? [];
-		if (error || warnings.length > 1) {
-			error_file = error?.filename ?? warnings[0]?.filename;
-		}
 	}
 
 	async function diagnostics() {
 		await $bundling;
-		return $selected && error_file === get_full_filename($selected)
-			? /** @type {import('@codemirror/lint').Diagnostic[]} */ ([
-					...(error
-						? [
-								{
-									from: error.start.character,
-									to: error.end.character,
-									severity: 'error',
-									message: error.message
-								}
-						  ]
-						: []),
-					...warnings.map((warning) => ({
-						from: warning.start.character,
-						to: warning.end.character,
-						severity: 'warning',
-						message: warning.message
-					}))
-			  ])
-			: [];
+
+		return /** @type {import('@codemirror/lint').Diagnostic[]} */ ([
+			...($selected && error?.filename === get_full_filename($selected)
+				? [
+						{
+							from: error.start.character,
+							to: error.end.character,
+							severity: 'error',
+							message: error.message
+						}
+				  ]
+				: []),
+			...warnings
+				.filter((warning) => $selected && warning.filename === get_full_filename($selected))
+				.map((warning) => ({
+					from: warning.start.character,
+					to: warning.end.character,
+					severity: 'warning',
+					message: warning.message
+				}))
+		]);
 	}
 </script>
 

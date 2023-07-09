@@ -230,6 +230,7 @@
 			svelte: () => import('@replit/codemirror-lang-svelte').then((m) => m.svelte())
 		},
 		lint: diagnostics,
+		lintOptions: { delay: 200 },
 		autocomplete,
 		extensions: [watcher],
 		instanceStore: cmInstance

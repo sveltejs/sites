@@ -36,7 +36,6 @@
 
 	async function diagnostics() {
 		await $bundling;
-		console.log('her');
 		return $selected && error_file === get_full_filename($selected)
 			? /** @type {import('@codemirror/lint').Diagnostic[]} */ ([
 					...(error

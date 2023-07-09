@@ -24,20 +24,15 @@
 
 	$: filename = $selected?.name + '.' + $selected?.type;
 
-	let error_file = '';
-
 	$: if ($bundle) {
 		error = $bundle?.error;
 		warnings = $bundle?.warnings ?? [];
-		if (error || warnings.length > 1) {
-			error_file = error?.filename ?? warnings[0]?.filename;
-		}
 	}
 
 	async function diagnostics() {
 		await $bundling;
-		/** @type {import('@codemirror/lint').Diagnostic[]} */
-		const returned = [
+
+		return /** @type {import('@codemirror/lint').Diagnostic[]} */ ([
 			...($selected && error?.filename === get_full_filename($selected)
 				? [
 						{
@@ -56,8 +51,7 @@
 					severity: 'warning',
 					message: warning.message
 				}))
-		];
-		return returned;
+		]);
 	}
 </script>
 

@@ -15,25 +15,19 @@
 	<ConsoleTable data={log.args[0]} columns={log.args[1]} />
 {/if}
 
-<div
+<button
 	class="log console-{log.level}"
 	style="padding-left: {level * 15}px"
 	on:click={log.level === 'group' ? toggle_group_collapse : undefined}
-	on:keyup={(e) => (e.key === ' ' && log.level === 'group' ? toggle_group_collapse() : undefined)}
 >
 	{#if log.count && log.count > 1}
 		<span class="count">{log.count}x</span>
 	{/if}
 
 	{#if log.level === 'trace' || log.level === 'assert'}
-		<div
-			class="arrow"
-			class:expand={!log.collapsed}
-			on:click={toggle_group_collapse}
-			on:keyup={(e) => e.key === ' ' && toggle_group_collapse()}
-		>
+		<button class="arrow" class:expand={!log.collapsed} on:click={toggle_group_collapse}>
 			▶
-		</div>
+		</button>
 	{/if}
 
 	{#if log.level === 'assert'}
@@ -61,7 +55,7 @@
 	{#each new Array(level - 1) as _, idx}
 		<div class="outline" style="left: {idx * 15 + 15}px" />
 	{/each}
-</div>
+</button>
 
 {#if log.level === 'group' && !log.collapsed}
 	{#each log.logs ?? [] as childLog}

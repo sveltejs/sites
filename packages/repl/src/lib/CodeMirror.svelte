@@ -15,8 +15,8 @@
 	/** @type {import('./types').StartOrEnd | null} */
 	export let errorLoc = null;
 
-	/** @type {import('@codemirror/lint').LintSource} */
-	export let diagnostics;
+	/** @type {import('@codemirror/lint').LintSource | undefined} */
+	export let diagnostics = undefined;
 
 	export let readonly = false;
 	export let tab = true;

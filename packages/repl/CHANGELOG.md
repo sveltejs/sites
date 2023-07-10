@@ -1,5 +1,13 @@
 # @sveltejs/repl
 
+## 0.5.0-next.12
+
+### Patch Changes
+
+- 4782b85: fix: inconsistent editor state for empty values
+- 41e7955: feat: make eval-ed compiler debuggable
+- 3d3ebe4: show warnings only for the selected file
+
 ## 0.5.0-next.11
 
 ### Patch Changes

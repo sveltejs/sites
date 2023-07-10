@@ -37,7 +37,7 @@
 
 	/**
 	 * @param {import('$lib/types').File} file
-	 * @param {import('svelte/types/compiler').CompileOptions} options
+	 * @param {import('svelte/compiler').CompileOptions} options
 	 */
 	export async function set(file, options) {
 		selected_type = file.type;
@@ -65,7 +65,7 @@
 
 	/**
 	 * @param {import('$lib/types').File} selected
-	 * @param {import('svelte/types/compiler').CompileOptions} options
+	 * @param {import('svelte/compiler').CompileOptions} options
 	 */
 	export async function update(selected, options) {
 		if (/(js|json)/.test(selected.type)) return;

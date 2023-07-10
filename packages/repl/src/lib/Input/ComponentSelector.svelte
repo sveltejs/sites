@@ -204,6 +204,7 @@
 
 <div class="component-selector">
 	{#if $files.length}
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<div class="file-tabs" on:dblclick={add_new}>
 			{#each $files as file, index (file.name)}
 				{@const filename = get_full_filename(file)}
@@ -256,6 +257,7 @@
 							/>
 						{/if}
 					{:else}
+						<!-- svelte-ignore a11y-no-static-element-interactions -->
 						<div
 							class="editable"
 							title="edit component name"
@@ -265,6 +267,7 @@
 							{file.name}.{file.type}{#if show_modified && file.modified}*{/if}
 						</div>
 
+						<!-- svelte-ignore a11y-no-static-element-interactions -->
 						<span
 							class="remove"
 							on:click={() => remove(filename)}

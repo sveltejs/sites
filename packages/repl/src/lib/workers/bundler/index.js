@@ -286,7 +286,7 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 				if (importer && local_files_lookup.has(importer)) {
 					// relative import in a REPL file
 					// should've matched above otherwise importee doesn't exist
-					console.error(`Cannot find file "${importee}" imported by "${importer}" in the REPL`);
+					throw new Error(`Cannot find file "${importee}" imported by "${importer}" in the REPL`);
 					return;
 				} else {
 					// relative import in an external file

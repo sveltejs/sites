@@ -6,6 +6,9 @@ const config = {
 		adapter: adapter({ runtime: 'edge' }),
 
 		inlineStyleThreshold: 5000
+	},
+	compilerOptions: {
+		cssHash: ({ hash, css }) => `s-${hash(css)}`
 	}
 };
 

@@ -1,4 +1,3 @@
-/** @type {import('./$types').PageLoad} */
 export async function load({ params, fetch }) {
 	const list = params.list === 'top' ? 'news' : params.list === 'new' ? 'newest' : params.list;
 

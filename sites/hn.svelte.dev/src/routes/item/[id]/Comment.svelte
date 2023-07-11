@@ -6,7 +6,13 @@
 
 {#if !comment.deleted}
 	<article class="comment" class:hidden>
-		<div class="meta-bar" on:click={() => (hidden = !hidden)}>
+		<div
+			class="meta-bar"
+			role="button"
+			tabindex="0"
+			on:click={() => (hidden = !hidden)}
+			on:keyup={(e) => e.key === ' ' && (hidden = !hidden)}
+		>
 			<span class="meta">
 				<a href="/user/{comment.user}">{comment.user}</a>
 				{comment.time_ago}

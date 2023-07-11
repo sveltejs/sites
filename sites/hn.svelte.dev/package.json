@@ -10,8 +10,8 @@
 	"devDependencies": {
 		"@sveltejs/adapter-vercel": "^3.0.2",
 		"@sveltejs/kit": "^1.22.2",
-		"prettier": "^3.0.0",
-		"prettier-plugin-svelte": "^2.10.1",
+		"browserslist": "^4.21.9",
+		"lightningcss": "^1.21.5",
 		"svelte": "^4.0.5",
 		"vite": "^4.4.3"
 	},

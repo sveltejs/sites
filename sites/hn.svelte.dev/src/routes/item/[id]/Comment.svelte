@@ -1,4 +1,13 @@
 <script>
+	/**
+	 * @type {{
+	 * deleted?: boolean;
+	 * user: string;
+	 * time_ago: number;
+	 * content: string;
+	 * comments: any[];
+	 * }}
+	 */
 	export let comment;
 
 	let hidden = false;

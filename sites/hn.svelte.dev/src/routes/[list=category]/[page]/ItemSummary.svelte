@@ -1,5 +1,18 @@
 <script>
+	/** @type {{
+	 * domain?: string;
+	 * id: string;
+	 * url: string;
+	 * title: string;
+	 * type: string;
+	 * time_ago: string;
+	 * points: number;
+	 * user: string;
+	 * comments_count: number;
+	 * }} */
 	export let item;
+
+	/** @type {number} */
 	export let index;
 </script>
 

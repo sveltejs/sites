@@ -16,13 +16,6 @@
 
 <pre>{message}</pre>
 
-{#if dev && $page.error.frame}
-	<pre>{$page.error.frame}</pre>
-{/if}
-{#if dev && $page.error.stack}
-	<pre>{$page.error.stack}</pre>
-{/if}
-
 <style>
 	h1 {
 		margin: 0 auto;

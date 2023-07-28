@@ -1,4 +1,5 @@
 <script>
+	import { EditorState } from '@codemirror/state';
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
 	import { BROWSER } from 'esm-env';
 	import { createEventDispatcher } from 'svelte';
@@ -9,7 +10,7 @@
 	import InputOutputToggle from './InputOutputToggle.svelte';
 	import Output from './Output/Output.svelte';
 	import { set_repl_context } from './context.js';
-	import { get_full_filename, sleep } from './utils.js';
+	import { get_full_filename } from './utils.js';
 
 	export let packagesUrl = 'https://unpkg.com';
 	export let svelteUrl = `${packagesUrl}/svelte`;
@@ -40,7 +41,7 @@
 	 */
 	export async function set(data) {
 		$files = data.files;
-		$selected_index = 0;
+		$selected_name = 'App.svelte';
 
 		rebundle();
 
@@ -51,45 +52,43 @@
 
 		injectedCSS = data.css || '';
 
-		await sleep(50);
+		// when we set new files we also populate the EDITOR_STATE_MAP
+		// with a new state for each file containing the source as docs
+		// this allows the editor to behave correctly when renaming a tab
+		// after having loaded the files externally
+		populate_editor_state();
 
-		EDITOR_STATE_MAP.set(get_full_filename(data.files[0]), $module_editor?.getEditorState());
+		dispatch('change', { files: $files });
 	}
 
 	export function markSaved() {
 		$files = $files.map((val) => ({ ...val, modified: false }));
-
-		if (!$selected) return;
-
-		$files[$selected_index].modified = false;
 	}
 
 	/** @param {{ files: import('./types').File[], css?: string }} data */
 	export function update(data) {
-		if (!$selected) return;
-
-		const { name, type } = $selected;
-
 		$files = data.files;
 
-		const matched_component_index = data.files.findIndex(
-			(file) => file.name === name && file.type === type
-		);
+		const matched_file = data.files.find((file) => get_full_filename(file) === $selected_name);
 
-		$selected_index = matched_component_index === -1 ? 0 : matched_component_index;
+		$selected_name = matched_file ? get_full_filename(matched_file) : 'App.svelte';
 
 		injectedCSS = data.css ?? '';
 
-		if (matched_component_index) {
+		if (matched_file) {
 			$module_editor?.update({
-				code: $files[matched_component_index].source,
-				lang: $files[matched_component_index].type
+				code: matched_file.source,
+				lang: matched_file.type
 			});
 
-			$output?.update?.($files[matched_component_index], $compile_options);
+			$output?.update?.(matched_file, $compile_options);
 
 			$module_editor?.clearEditorState();
 		}
+
+		populate_editor_state();
+
+		dispatch('change', { files: $files });
 	}
 
 	/** @type {ReturnType<typeof createEventDispatcher<{ change: { files: import('./types').File[] } }>>} */
@@ -99,7 +98,7 @@
 	 * @typedef {import('./types').ReplContext} ReplContext
 	 */
 
-	/** @type {import('svelte/types/compiler').CompileOptions} */
+	/** @type {import('svelte/compiler').CompileOptions} */
 	const DEFAULT_COMPILE_OPTIONS = {
 		generate: 'dom',
 		dev: false,
@@ -116,12 +115,19 @@
 	/** @type {ReplContext['files']} */
 	const files = writable([]);
 
-	/** @type {ReplContext['selected_index']} */
-	const selected_index = writable(-1);
+	/** @type {ReplContext['selected_name']} */
+	const selected_name = writable('App.svelte');
 
 	/** @type {ReplContext['selected']} */
-	const selected = derived([files, selected_index], ([$files, $selected_index]) => {
-		return $selected_index !== -1 ? $files?.[$selected_index] ?? null : null;
+	const selected = derived([files, selected_name], ([$files, $selected_name]) => {
+		return (
+			$files.find((val) => get_full_filename(val) === $selected_name) ?? {
+				name: '',
+				type: '',
+				source: '',
+				modified: false
+			}
+		);
 	});
 
 	/** @type {ReplContext['bundle']} */
@@ -145,12 +151,16 @@
 	/** @type {ReplContext['bundler']} */
 	const bundler = writable(null);
 
+	/** @type {ReplContext['bundling']} */
+	const bundling = writable(new Promise(() => {}));
+
 	set_repl_context({
 		files,
-		selected_index,
+		selected_name,
 		selected,
 		bundle,
 		bundler,
+		bundling,
 		compile_options,
 		cursor_pos,
 		module_editor,
@@ -170,31 +180,34 @@
 	let current_token;
 	async function rebundle() {
 		const token = (current_token = Symbol());
+		let resolver = () => {};
+		$bundling = new Promise((resolve) => {
+			resolver = resolve;
+		});
 		const result = await $bundler?.bundle($files);
 		if (result && token === current_token) $bundle = result;
+		resolver();
 	}
 
 	let is_select_changing = false;
 
 	/**
-	 * @param {number} index
+	 * @param {string} filename
 	 */
-	async function handle_select(index) {
+	async function handle_select(filename) {
 		is_select_changing = true;
 
-		$selected_index = index;
+		$selected_name = filename;
 
 		if (!$selected) return;
 
 		await $module_editor?.set({ code: $selected.source, lang: $selected.type });
 
-		if (EDITOR_STATE_MAP.has(get_full_filename($selected))) {
-			$module_editor?.setEditorState(EDITOR_STATE_MAP.get(get_full_filename($selected)));
+		if (EDITOR_STATE_MAP.has(filename)) {
+			$module_editor?.setEditorState(EDITOR_STATE_MAP.get(filename));
 		} else {
 			$module_editor?.clearEditorState();
 		}
-
-		EDITOR_STATE_MAP.set(get_full_filename($selected), $module_editor?.getEditorState());
 
 		$output?.set($selected, $compile_options);
 
@@ -213,8 +226,10 @@
 			file.source = event.detail.value;
 			file.modified = true;
 
+			const idx = $files.findIndex((val) => get_full_filename(val) === $selected_name);
+
 			// @ts-ignore
-			$files[$selected_index] = file;
+			$files[idx] = file;
 
 			return $files;
 		});
@@ -234,15 +249,10 @@
 	async function go_to_warning_pos(item) {
 		if (!item) return;
 
-		const match = /^(.+)\.(\w+)$/.exec(item.filename);
-		if (!match) return; // ???
+		// If its a bundler error, can't do anything about it
+		if (!item.filename) return;
 
-		const [, name, type] = match;
-		const file_index = $files.findIndex((file) => file.name === name && file.type === type);
-
-		if (file_index === -1) return;
-
-		await handle_select(file_index);
+		await handle_select(item.filename);
 
 		$module_editor?.focus();
 		$module_editor?.setCursor(item.start.character);
@@ -253,6 +263,17 @@
 		$module_editor?.clearEditorState();
 
 		EDITOR_STATE_MAP.clear();
+	}
+
+	function populate_editor_state() {
+		for (const file of $files) {
+			EDITOR_STATE_MAP.set(
+				get_full_filename(file),
+				EditorState.create({
+					doc: file.source
+				}).toJSON()
+			);
+		}
 	}
 
 	$: if ($output && $selected) {

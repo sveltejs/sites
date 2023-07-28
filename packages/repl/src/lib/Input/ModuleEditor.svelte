@@ -16,7 +16,7 @@
 		$module_editor?.focus();
 	}
 
-	const { bundle, handle_change, module_editor, selected } = get_repl_context();
+	const { bundle, handle_change, module_editor, selected, bundling } = get_repl_context();
 
 	/** @type {import('$lib/types').Error | null | undefined} */
 	let error = null;
@@ -26,38 +26,35 @@
 
 	$: filename = $selected?.name + '.' + $selected?.type;
 
-	let error_file = '';
-
 	$: if ($bundle) {
 		error = $bundle?.error;
 		warnings = $bundle?.warnings ?? [];
-
-		if (error || warnings.length > 1) {
-			error_file = error?.filename ?? warnings[0]?.filename;
-		}
 	}
 
-	$: diagnostics =
-		$selected && error_file === get_full_filename($selected)
-			? /** @type {import('@codemirror/lint').Diagnostic[]} */ ([
-					...(error
-						? [
-								{
-									from: error.start.character,
-									to: error.end.character,
-									severity: 'error',
-									message: error.message
-								}
-						  ]
-						: []),
-					...warnings.map((warning) => ({
-						from: warning.start.character,
-						to: warning.end.character,
-						severity: 'warning',
-						message: warning.message
-					}))
-			  ])
-			: [];
+	async function diagnostics() {
+		await $bundling;
+
+		return /** @type {import('@codemirror/lint').Diagnostic[]} */ ([
+			...($selected && error?.filename === get_full_filename($selected)
+				? [
+						{
+							from: error.start.character,
+							to: error.end.character,
+							severity: 'error',
+							message: error.message
+						}
+				  ]
+				: []),
+			...warnings
+				.filter((warning) => $selected && warning.filename === get_full_filename($selected))
+				.map((warning) => ({
+					from: warning.start.character,
+					to: warning.end.character,
+					severity: 'warning',
+					message: warning.message
+				}))
+		]);
+	}
 </script>
 
 <div class="editor-wrapper">

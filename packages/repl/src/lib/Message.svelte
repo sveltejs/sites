@@ -29,15 +29,15 @@
 	}
 </script>
 
-<div transition:slide|local={{ duration: 100 }} class="message {kind}" class:truncate>
+<div transition:slide={{ duration: 100 }} class="message {kind}" class:truncate>
 	{#if details}
-		<p
+		<button
 			class:navigable={details.filename}
 			on:click={() => go_to_warning_pos(details)}
 			on:keyup={(e) => e.key === ' ' && go_to_warning_pos(details)}
 		>
 			{message(details)}
-		</p>
+		</button>
 	{:else}
 		<slot />
 	{/if}
@@ -81,8 +81,9 @@
 		text-overflow: ellipsis;
 	}
 
-	p {
+	button {
 		margin: 0;
+		text-align: start;
 	}
 
 	.error {

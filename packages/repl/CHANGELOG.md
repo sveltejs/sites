@@ -1,5 +1,80 @@
 # @sveltejs/repl
 
+## 0.5.0
+
+### Minor Changes
+
+- d0398b2: Overhaul
+
+### Patch Changes
+
+- 617ffc4: Fix ComponentSelector
+- 260e4d7: (feat) allow dark mode for svelte-json-tree
+- b58af12: Fix exports
+- 4782b85: fix: inconsistent editor state for empty values
+- 2c3c2d0: Minor fixes
+- 8770812: (fix) avoid automatic newline when renaming/creating a file
+- 4755c1a: Themeable previews
+- d9368b3: Update deps
+- 371ac4b: (fix) Workers minification
+- 41e7955: feat: make eval-ed compiler debuggable
+- 006e636: Prepare for v4
+- 516e655: Bump neocodemirror: Fixes atrribute deletion freezing editor problem
+- 4918664: (fix) loading files in editor state map upon loading
+- 3d3ebe4: show warnings only for the selected file
+- fc4e377: (fix) Make mapbox work by properly resolving fields
+- 7033ea5: (fix) Go to Warning Position breaks non errors without a file
+- 8466d8e: manage diagnostics asyncronously with linter
+- 949ff2f: Localise all state to each component instance, use neocodemirror 0.0.10, expose `theme`
+
+## 0.5.0-next.12
+
+### Patch Changes
+
+- 4782b85: fix: inconsistent editor state for empty values
+- 41e7955: feat: make eval-ed compiler debuggable
+- 3d3ebe4: show warnings only for the selected file
+
+## 0.5.0-next.11
+
+### Patch Changes
+
+- 260e4d7: (feat) allow dark mode for svelte-json-tree
+
+## 0.5.0-next.10
+
+### Patch Changes
+
+- 8466d8e: manage diagnostics asyncronously with linter
+
+## 0.5.0-next.9
+
+### Patch Changes
+
+- 371ac4b: (fix) Workers minification
+- fc4e377: (fix) Make mapbox work by properly resolving fields
+- 7033ea5: (fix) Go to Warning Position breaks non errors without a file
+
+## 0.5.0-next.8
+
+### Patch Changes
+
+- 8770812: (fix) avoid automatic newline when renaming/creating a file
+
+## 0.5.0-next.7
+
+### Patch Changes
+
+- 4918664: (fix) loading files in editor state map upon loading
+
+## 0.5.0-next.6
+
+### Patch Changes
+
+- 617ffc4: Fix ComponentSelector
+- d9368b3: Update deps
+- 516e655: Bump neocodemirror: Fixes atrribute deletion freezing editor problem
+
 ## 0.5.0-next.5
 
 ### Patch Changes

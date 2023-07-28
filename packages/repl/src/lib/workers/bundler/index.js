@@ -42,7 +42,7 @@ self.addEventListener(
 					// unpkg doesn't set the correct MIME type for .cjs files
 					// https://github.com/mjackson/unpkg/issues/355
 					const compiler = await fetch(`${svelte_url}/compiler.cjs`).then((r) => r.text());
-					eval(compiler);
+					(0, eval)(compiler + '\n//# sourceURL=compiler.cjs@' + version);
 				} else {
 					try {
 						importScripts(`${svelte_url}/compiler.js`);
@@ -185,9 +185,20 @@ async function resolve_from_pkg(pkg, subpath, uid, pkg_url_base) {
 
 	// legacy
 	if (subpath === '.') {
-		const resolved_id = resolve.legacy(pkg, {
+		let resolved_id = resolve.legacy(pkg, {
 			fields: ['browser', 'module', 'main']
 		});
+
+		if (typeof resolved_id === 'object' && !Array.isArray(resolved_id)) {
+			const subpath = resolved_id['.'];
+			if (subpath === false) return 'data:text/javascript,export {}';
+
+			resolved_id =
+				subpath ??
+				resolve.legacy(pkg, {
+					fields: ['module', 'main']
+				});
+		}
 
 		if (!resolved_id) {
 			// last ditch — try to match index.js/index.mjs
@@ -275,7 +286,8 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 				if (importer && local_files_lookup.has(importer)) {
 					// relative import in a REPL file
 					// should've matched above otherwise importee doesn't exist
-					throw new Error(`Cannot find file "${importee}" imported by "${importer}" in the REPL`);
+					console.error(`Cannot find file "${importee}" imported by "${importer}" in the REPL`);
+					return;
 				} else {
 					// relative import in an external file
 					const url = new URL(importee, importer).href;
@@ -289,7 +301,7 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 
 				const match = /^((?:@[^/]+\/)?[^/]+)(\/.+)?$/.exec(importee);
 				if (!match) {
-					throw new Error(`Invalid import "${importee}"`);
+					return console.error(`Invalid import "${importee}"`);
 				}
 
 				const pkg_name = match[1];

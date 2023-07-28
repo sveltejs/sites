@@ -45,10 +45,10 @@
 	</section>
 
 	<section slot="b">
-		<div class="panel-header" on:click={toggle} on:keyup={(e) => e.key === ' ' && toggle()}>
+		<button class="panel-header" on:click={toggle}>
 			<span class="panel-heading">{panel}</span>
 			<slot name="panel-header" />
-		</div>
+		</button>
 
 		<div class="panel-body">
 			<slot name="panel-body" />

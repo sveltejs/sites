@@ -4,7 +4,6 @@
 
 <script>
 	import { historyField } from '@codemirror/commands';
-	import { codeFolding } from '@codemirror/language';
 	import { EditorState, Range, StateEffect, StateEffectType, StateField } from '@codemirror/state';
 	import { Decoration, EditorView } from '@codemirror/view';
 	import { codemirror, withCodemirrorInstance } from '@neocodemirror/svelte';
@@ -16,8 +15,8 @@
 	/** @type {import('./types').StartOrEnd | null} */
 	export let errorLoc = null;
 
-	/** @type {import('@codemirror/lint').Diagnostic[]} */
-	export let diagnostics = [];
+	/** @type {import('@codemirror/lint').LintSource | undefined} */
+	export let diagnostics = undefined;
 
 	export let readonly = false;
 	export let tab = true;
@@ -56,7 +55,7 @@
 			lang = options.lang;
 		}
 
-		if (options.code) {
+		if (options.code !== undefined) {
 			updating_externally = true;
 
 			const { scrollLeft: left, scrollTop: top } = $cmInstance.view.scrollDOM;
@@ -257,14 +256,15 @@
 			css: () => import('@codemirror/lang-css').then((m) => m.css()),
 			svelte: () => import('@replit/codemirror-lang-svelte').then((m) => m.svelte())
 		},
+		lint: diagnostics,
+		lintOptions: { delay: 200 },
 		autocomplete,
 		extensions,
-		diagnostics,
-		instanceStore: cmInstance,
-		onTextChange: (value) => {
-			code = value;
-			dispatch('change', { value: code });
-		}
+		instanceStore: cmInstance
+	}}
+	on:codemirror:textChange={({ detail: value }) => {
+		code = value;
+		dispatch('change', { value: code });
 	}}
 >
 	{#if !$cmInstance.view}

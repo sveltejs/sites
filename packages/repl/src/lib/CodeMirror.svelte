@@ -191,7 +191,7 @@
 	 * @param {boolean} vimEnabled if vim it's included in the set of extensions
 	 */
 	async function getExtensions(vimEnabled) {
-		let extensions = [codeFolding(), watcher];
+		let extensions = [watcher];
 		if (vimEnabled) {
 			const { vim } = await import('@replit/codemirror-vim').then((vimModule) => ({
 				vim: vimModule.vim

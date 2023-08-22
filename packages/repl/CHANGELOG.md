@@ -1,5 +1,11 @@
 # @sveltejs/repl
 
+## 0.6.0
+
+### Minor Changes
+
+- f86a6fe: add vim keybindings
+
 ## 0.5.0
 
 ### Minor Changes

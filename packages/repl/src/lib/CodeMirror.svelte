@@ -24,6 +24,9 @@
 	/** @type {boolean} */
 	export let autocomplete = true;
 
+	/** @type {boolean} */
+	export let vim = false;
+
 	/** @type {ReturnType<typeof createEventDispatcher<{ change: { value: string } }>>} */
 	const dispatch = createEventDispatcher();
 
@@ -179,6 +182,30 @@
 	/** @type {import('@codemirror/state').Extension[]} */
 	let extensions = [];
 
+	$: getExtensions(vim).then((resolvedExtensions) => {
+		extensions = resolvedExtensions;
+	});
+
+	/**
+	 * update the extension if and when vim changes
+	 * @param {boolean} vimEnabled if vim it's included in the set of extensions
+	 */
+	async function getExtensions(vimEnabled) {
+		let extensions = [watcher];
+		if (vimEnabled) {
+			const { vim } = await import('@replit/codemirror-vim').then((vimModule) => ({
+				vim: vimModule.vim
+			}));
+
+			extensions.unshift(
+				vim({
+					status: true
+				})
+			);
+		}
+		return extensions;
+	}
+
 	let cursor_pos = 0;
 
 	$: {
@@ -232,7 +259,7 @@
 		lint: diagnostics,
 		lintOptions: { delay: 200 },
 		autocomplete,
-		extensions: [watcher],
+		extensions,
 		instanceStore: cmInstance
 	}}
 	on:codemirror:textChange={({ detail: value }) => {

@@ -9,6 +9,8 @@
 
 	/** @type {boolean} */
 	export let autocomplete;
+	/** @type {boolean} */
+	export let vim;
 
 	export function focus() {
 		$module_editor?.focus();
@@ -61,6 +63,7 @@
 			bind:this={$module_editor}
 			{errorLoc}
 			{autocomplete}
+			{vim}
 			{diagnostics}
 			on:change={handle_change}
 		/>

@@ -54,7 +54,7 @@
 		background-size: 1em 1em;
 	}
 
-	.comment details[open] .meta-bar {
+	.comment details[open] > summary > .meta-bar {
 		background-image: url(./fold.svg);
 	}
 

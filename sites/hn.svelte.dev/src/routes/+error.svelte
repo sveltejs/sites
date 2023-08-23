@@ -1,5 +1,4 @@
 <script>
-	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
 
 	const offline = typeof navigator !== 'undefined' && navigator.onLine === false;

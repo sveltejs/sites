@@ -40,7 +40,7 @@ export default class Compiler {
 
 	/**
 	 * @param {import('$lib/types').File} file
-	 * @param {import('svelte/types/compiler').CompileOptions} options
+	 * @param {import('svelte/compiler').CompileOptions} options
 	 * @param {boolean} return_ast
 	 * @returns
 	 */
@@ -57,12 +57,12 @@ export default class Compiler {
 				options: Object.assign(
 					{
 						name: file.name,
-						filename: `${file.name}.svelte`,
+						filename: `${file.name}.svelte`
 					},
 					options
 				),
 				entry: file.name === 'App',
-				return_ast,
+				return_ast
 			});
 		});
 	}

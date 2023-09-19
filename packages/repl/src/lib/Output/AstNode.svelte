@@ -3,7 +3,7 @@
 	import { tick } from 'svelte';
 
 	export let key = '';
-	/** @type {import('svelte/types/compiler/interfaces').Ast} */
+	/** @type {import('svelte/types/compiler/interfaces').Ast & { type?: string }} */
 	export let value;
 	export let collapsed = true;
 	/** @type {import('svelte/types/compiler/interfaces').Ast[]} */
@@ -93,9 +93,15 @@
 	{#if is_collapsable}
 		{#if collapsed && !is_root}
 			<button class="preview" on:click={() => (collapsed = !collapsed)}>
+				{#if value.type}
+					<span class="token string">{value.type} </span>
+				{/if}
 				{preview_text}
 			</button>
 		{:else}
+			{#if value.type}
+				<span class="token string">{value.type} </span>
+			{/if}
 			<span>{is_ast_array ? '[' : '{'}</span>
 			<ul>
 				{#each Object.entries(value) as [k, v]}

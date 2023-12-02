@@ -49,7 +49,7 @@
 		}
 
 		if (file.type === 'md') {
-			markdown = marked(file.source);
+			markdown = await marked(file.source);
 			return;
 		}
 
@@ -71,7 +71,7 @@
 		if (/(js|json)/.test(selected.type)) return;
 
 		if (selected.type === 'md') {
-			markdown = marked(selected.source);
+			markdown = await marked(selected.source);
 			return;
 		}
 

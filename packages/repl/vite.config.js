@@ -6,6 +6,9 @@ const config = {
 	resolve: {
 		dedupe: ['@codemirror/state', '@codemirror/language', '@codemirror/view']
 	},
+	optimizeDeps: {
+		exclude: ['@rollup/browser']
+	},
 	server: {
 		fs: {
 			strict: false

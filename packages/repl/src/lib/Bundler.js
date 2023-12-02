@@ -59,7 +59,7 @@ export default class Bundler {
 			this.worker.postMessage({
 				uid,
 				type: 'bundle',
-				files,
+				files
 			});
 
 			uid += 1;

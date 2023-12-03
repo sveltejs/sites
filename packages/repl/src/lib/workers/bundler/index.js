@@ -1,6 +1,7 @@
 /// <reference lib="webworker" />
 
 import '../patch_window.js';
+
 import { sleep } from '$lib/utils.js';
 import { rollup } from '@rollup/browser';
 import { DEV } from 'esm-env';
@@ -22,7 +23,7 @@ let svelte_url;
 /** @type {number} */
 let current_id;
 
-/** @type {(...arg: never) => void} */
+/** @type {(...arg: any[]) => void} */
 let fulfil_ready;
 const ready = new Promise((f) => {
 	fulfil_ready = f;
@@ -273,6 +274,7 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 			// importing from another file in REPL
 			if (local_files_lookup.has(importee) && (!importer || local_files_lookup.has(importer)))
 				return importee;
+
 			if (local_files_lookup.has(importee + '.js')) return importee + '.js';
 			if (local_files_lookup.has(importee + '.json')) return importee + '.json';
 
@@ -405,7 +407,9 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 					'process.env.NODE_ENV': JSON.stringify('production')
 				})
 			],
-			inlineDynamicImports: true,
+			output: {
+				inlineDynamicImports: true
+			},
 			onwarn(warning) {
 				all_warnings.push({
 					message: warning.message

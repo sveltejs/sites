@@ -260,10 +260,11 @@
 		lintOptions: { delay: 200 },
 		autocomplete,
 		extensions,
-		instanceStore: cmInstance
+		instanceStore: cmInstance,
+		documentId: 'id'
 	}}
 	on:codemirror:textChange={({ detail: value }) => {
-		code = value;
+		code = value ?? '';
 		dispatch('change', { value: code });
 	}}
 >

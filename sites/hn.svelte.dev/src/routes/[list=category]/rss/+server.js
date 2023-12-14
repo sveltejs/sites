@@ -33,8 +33,7 @@ const render = (list, items) => `<?xml version="1.0" encoding="UTF-8" ?>
 
 export async function GET({ params }) {
 	const list = params.list === 'top' ? 'news' : params.list === 'new' ? 'newest' : params.list;
-	const res = await fetch(`https://api.hnpwa.com/v0/${list}/1.json`);
-	const items = await res.json();
+	const items = await fetch(`https://api.hnpwa.com/v0/${list}/1.json`).then((r) => r.json());
 	const feed = render(list, items);
 
 	return new Response(feed, {

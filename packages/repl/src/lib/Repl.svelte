@@ -12,7 +12,7 @@
 	import { set_repl_context } from './context.js';
 	import { get_full_filename } from './utils.js';
 
-	export let packagesUrl = 'https://unpkg.com';
+	export let packagesUrl = 'https://esm.run';
 	export let svelteUrl = `${packagesUrl}/svelte`;
 	export let embedded = false;
 	/** @type {'columns' | 'rows'} */

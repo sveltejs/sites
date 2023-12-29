@@ -22,11 +22,70 @@ let svelte_url;
 /** @type {number} */
 let current_id;
 
-/** @type {(...arg: never) => void} */
+/** @type {(...arg: any) => void} */
 let fulfil_ready;
 const ready = new Promise((f) => {
 	fulfil_ready = f;
 });
+
+/**
+ * Replaces export {} with svelte.EXPORT = EXPORT
+ * @param {string} input
+ */
+function remove_exports(input) {
+	const pattern = /export\{(.*?)\};/g;
+
+	return input.replace(
+		pattern,
+		/**
+			@param {string} _
+			@param {string} exports
+	 */ (_, exports) => {
+			return exports
+				.split(',')
+				.map((e) => {
+					const [original, alias] = e.split(' as ').map((s) => s.trim());
+					return `svelte.${alias} = ${original};`;
+				})
+				.join('');
+		}
+	);
+}
+
+/**
+ * @param {string} url
+ */
+function get_svelte_package_json(url) {
+	if (url.includes('https://esm.run')) {
+		// This will be an import, rather manually get the package.json
+		url = url.replace('https://esm.run', 'https://cdn.jsdelivr.net/npm');
+	}
+
+	return fetch(`${url}/package.json`).then((r) => r.json());
+}
+
+/**
+ * Loads the compiler from the specified version
+ * @param {string} version
+ */
+async function load_compiler(version) {
+	if (version.startsWith('4')) {
+		let compiler = await fetch(`${svelte_url}/compiler.cjs`).then((r) => r.text());
+
+		if (svelte_url.includes('esm.run')) {
+			// Remove all the exports
+			compiler = remove_exports(compiler);
+		}
+
+		(0, eval)('var svelte = {};' + compiler + '\n//# sourceURL=compiler.js@' + version);
+	} else {
+		try {
+			importScripts(`${svelte_url}/compiler.js`);
+		} catch {
+			self.svelte = await import(/* @vite-ignore */ `${svelte_url}/compiler.mjs`);
+		}
+	}
+}
 
 self.addEventListener(
 	'message',
@@ -35,21 +94,10 @@ self.addEventListener(
 			case 'init': {
 				({ packages_url, svelte_url } = event.data);
 
-				const { version } = await fetch(`${svelte_url}/package.json`).then((r) => r.json());
+				const { version } = await get_svelte_package_json(svelte_url);
 				console.log(`Using Svelte compiler version ${version}`);
 
-				if (version.startsWith('4')) {
-					// unpkg doesn't set the correct MIME type for .cjs files
-					// https://github.com/mjackson/unpkg/issues/355
-					const compiler = await fetch(`${svelte_url}/compiler.cjs`).then((r) => r.text());
-					(0, eval)(compiler + '\n//# sourceURL=compiler.cjs@' + version);
-				} else {
-					try {
-						importScripts(`${svelte_url}/compiler.js`);
-					} catch {
-						self.svelte = await import(/* @vite-ignore */ `${svelte_url}/compiler.mjs`);
-					}
-				}
+				await load_compiler(version);
 
 				fulfil_ready();
 				break;
@@ -314,7 +362,12 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 
 				const fetch_package_info = async () => {
 					try {
-						const pkg_url = await follow_redirects(`${packages_url}/${pkg_name}/package.json`, uid);
+						const pkg_url = await follow_redirects(
+							`${
+								packages_url.includes('esm.run') ? 'https://cdn.jsdelivr.net/npm' : packages_url
+							}/${pkg_name}/package.json`,
+							uid
+						);
 
 						if (!pkg_url) throw new Error();
 
@@ -328,7 +381,7 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 							pkg_url_base
 						};
 					} catch (_e) {
-						throw new Error(`Error fetching "${pkg_name}" from unpkg. Does the package exist?`);
+						throw new Error(`Error fetching "${pkg_name}". Does the package exist?`);
 					}
 				};
 

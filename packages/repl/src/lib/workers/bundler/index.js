@@ -451,6 +451,9 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 
 			new_cache.set(id, { code, result });
 
+			console.log(code);
+			console.log(result.js.code);
+
 			// @ts-expect-error
 			(result.warnings || result.stats.warnings)?.forEach((warning) => {
 				// This is required, otherwise postMessage won't work

@@ -147,12 +147,13 @@ async function fetch_if_uncached(url, uid) {
 	}
 
 	// TODO: investigate whether this is necessary
-	await sleep(50);
+	// await sleep(50);
 	if (uid !== current_id) throw ABORT;
 
 	const promise = fetch(url)
 		.then(async (r) => {
 			if (!r.ok) throw new Error(await r.text());
+			if (r.headers.get('content-type')?.includes('text/html')) throw new Error('HTML!');
 
 			return {
 				url: r.url,
@@ -173,7 +174,24 @@ async function fetch_if_uncached(url, uid) {
  * @param {number} uid
  */
 async function follow_redirects(url, uid) {
-	const res = await fetch_if_uncached(url, uid);
+	/** @type {{
+	 * 	url: string;
+	 * 	body: string;
+	 * } | undefined} */
+	let res;
+	console.log(url);
+
+	const paths = ['', '.js', '/index.js', '.mjs', '/index.mjs', '.cjs', '/index.cjs'];
+
+	for (const path of paths) {
+		try {
+			res = await fetch_if_uncached(url.replace(/\/$/, '') + path, uid);
+			break;
+		} catch {
+			// maybe the next option will be successful
+		}
+	}
+
 	return res?.url;
 }
 
@@ -418,6 +436,7 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 			const name = id.split('/').pop()?.split('.')[0];
 
 			const cached_id = cache.get(id);
+
 			const result =
 				cached_id && cached_id.code === code
 					? cached_id.result
@@ -455,7 +474,10 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 				json,
 				glsl,
 				replace({
-					'process.env.NODE_ENV': JSON.stringify('production')
+					'process.env.NODE_ENV': JSON.stringify('production'),
+					'import.meta.env.PROD': JSON.stringify(true),
+					'import.meta.env.DEV': JSON.stringify(false),
+					'import.meta.env.SSR': JSON.stringify(mode === 'ssr')
 				})
 			],
 			inlineDynamicImports: true,
@@ -548,7 +570,7 @@ async function bundle({ uid, files }) {
 			error: null
 		};
 	} catch (err) {
-		console.error(err);
+		console.trace(err);
 
 		/** @type {Error} */
 		// @ts-ignore

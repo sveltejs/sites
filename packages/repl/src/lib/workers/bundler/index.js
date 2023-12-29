@@ -1,10 +1,11 @@
 /// <reference lib="webworker" />
 
 import '../patch_window.js';
-import { sleep } from '$lib/utils.js';
+
 import { rollup } from '@rollup/browser';
 import { DEV } from 'esm-env';
 import * as resolve from 'resolve.exports';
+import { get_svelte_package_json, load_compiler } from '../worker-helpers.js';
 import commonjs from './plugins/commonjs.js';
 import glsl from './plugins/glsl.js';
 import json from './plugins/json.js';
@@ -28,65 +29,6 @@ const ready = new Promise((f) => {
 	fulfil_ready = f;
 });
 
-/**
- * Replaces export {} with svelte.EXPORT = EXPORT
- * @param {string} input
- */
-function remove_exports(input) {
-	const pattern = /export\{(.*?)\};/g;
-
-	return input.replace(
-		pattern,
-		/**
-			@param {string} _
-			@param {string} exports
-	 */ (_, exports) => {
-			return exports
-				.split(',')
-				.map((e) => {
-					const [original, alias] = e.split(' as ').map((s) => s.trim());
-					return `svelte.${alias} = ${original};`;
-				})
-				.join('');
-		}
-	);
-}
-
-/**
- * @param {string} url
- */
-function get_svelte_package_json(url) {
-	if (url.includes('https://esm.run')) {
-		// This will be an import, rather manually get the package.json
-		url = url.replace('https://esm.run', 'https://cdn.jsdelivr.net/npm');
-	}
-
-	return fetch(`${url}/package.json`).then((r) => r.json());
-}
-
-/**
- * Loads the compiler from the specified version
- * @param {string} version
- */
-async function load_compiler(version) {
-	if (version.startsWith('4')) {
-		let compiler = await fetch(`${svelte_url}/compiler.cjs`).then((r) => r.text());
-
-		if (svelte_url.includes('esm.run')) {
-			// Remove all the exports
-			compiler = remove_exports(compiler);
-		}
-
-		(0, eval)('var svelte = {};' + compiler + '\n//# sourceURL=compiler.js@' + version);
-	} else {
-		try {
-			importScripts(`${svelte_url}/compiler.js`);
-		} catch {
-			self.svelte = await import(/* @vite-ignore */ `${svelte_url}/compiler.mjs`);
-		}
-	}
-}
-
 self.addEventListener(
 	'message',
 	/** @param {MessageEvent<import('../workers.js').BundleMessageData>} event */ async (event) => {
@@ -97,7 +39,7 @@ self.addEventListener(
 				const { version } = await get_svelte_package_json(svelte_url);
 				console.log(`Using Svelte compiler version ${version}`);
 
-				await load_compiler(version);
+				await load_compiler(svelte_url, version);
 
 				fulfil_ready();
 				break;
@@ -439,30 +381,29 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 
 			const result =
 				cached_id && cached_id.code === code
-					? cached_id.result
-					: self.svelte.compile(code, {
+					? (console.log('Cache it is'), cached_id.result)
+					: (console.log('from scratch', name),
+					  self.svelte.compile((console.log(code), code), {
 							generate: mode,
 							dev: true,
 							filename: name + '.svelte',
 							...(has_loopGuardTimeout_feature() && {
 								loopGuardTimeout: 100
 							})
-					  });
+					  }));
 
 			new_cache.set(id, { code, result });
-
-			console.log(code);
-			console.log(result.js.code);
+			console.log(result);
 
 			// @ts-expect-error
-			(result.warnings || result.stats.warnings)?.forEach((warning) => {
+			for (const warning of (result.warnings || result.stats.warnings) ?? []) {
 				// This is required, otherwise postMessage won't work
 				// @ts-ignore
 				delete warning.toString;
 				// TODO remove stats post-launch
 				// @ts-ignore
 				warnings.push(warning);
-			});
+			}
 
 			return result.js;
 		}

@@ -1,10 +1,11 @@
 /// <reference lib="webworker" />
 
 import '../patch_window.js';
-import { sleep } from '$lib/utils.js';
+
 import { rollup } from '@rollup/browser';
 import { DEV } from 'esm-env';
 import * as resolve from 'resolve.exports';
+import { get_svelte_package_json, load_compiler } from '../worker-helpers.js';
 import commonjs from './plugins/commonjs.js';
 import glsl from './plugins/glsl.js';
 import json from './plugins/json.js';
@@ -22,7 +23,7 @@ let svelte_url;
 /** @type {number} */
 let current_id;
 
-/** @type {(...arg: never) => void} */
+/** @type {(...arg: any) => void} */
 let fulfil_ready;
 const ready = new Promise((f) => {
 	fulfil_ready = f;
@@ -35,21 +36,10 @@ self.addEventListener(
 			case 'init': {
 				({ packages_url, svelte_url } = event.data);
 
-				const { version } = await fetch(`${svelte_url}/package.json`).then((r) => r.json());
+				const { version } = await get_svelte_package_json(svelte_url);
 				console.log(`Using Svelte compiler version ${version}`);
 
-				if (version.startsWith('4')) {
-					// unpkg doesn't set the correct MIME type for .cjs files
-					// https://github.com/mjackson/unpkg/issues/355
-					const compiler = await fetch(`${svelte_url}/compiler.cjs`).then((r) => r.text());
-					(0, eval)(compiler + '\n//# sourceURL=compiler.cjs@' + version);
-				} else {
-					try {
-						importScripts(`${svelte_url}/compiler.js`);
-					} catch {
-						self.svelte = await import(/* @vite-ignore */ `${svelte_url}/compiler.mjs`);
-					}
-				}
+				await load_compiler(svelte_url, version);
 
 				fulfil_ready();
 				break;
@@ -63,7 +53,7 @@ self.addEventListener(
 
 				current_id = uid;
 
-				setTimeout(async () => {
+				Promise.resolve().then(async () => {
 					if (current_id !== uid) return;
 
 					const result = await bundle({ uid, files });
@@ -99,12 +89,13 @@ async function fetch_if_uncached(url, uid) {
 	}
 
 	// TODO: investigate whether this is necessary
-	await sleep(50);
+	// await sleep(50);
 	if (uid !== current_id) throw ABORT;
 
 	const promise = fetch(url)
 		.then(async (r) => {
 			if (!r.ok) throw new Error(await r.text());
+			if (r.headers.get('content-type')?.includes('text/html')) throw new Error('HTML!');
 
 			return {
 				url: r.url,
@@ -125,7 +116,24 @@ async function fetch_if_uncached(url, uid) {
  * @param {number} uid
  */
 async function follow_redirects(url, uid) {
-	const res = await fetch_if_uncached(url, uid);
+	/** @type {{
+	 * 	url: string;
+	 * 	body: string;
+	 * } | undefined} */
+	let res;
+	console.log(url);
+
+	const paths = ['', '.js', '/index.js', '.mjs', '/index.mjs', '.cjs', '/index.cjs'];
+
+	for (const path of paths) {
+		try {
+			res = await fetch_if_uncached(url.replace(/\/$/, '') + path, uid);
+			break;
+		} catch {
+			// maybe the next option will be successful
+		}
+	}
+
 	return res?.url;
 }
 
@@ -314,7 +322,12 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 
 				const fetch_package_info = async () => {
 					try {
-						const pkg_url = await follow_redirects(`${packages_url}/${pkg_name}/package.json`, uid);
+						const pkg_url = await follow_redirects(
+							`${
+								packages_url.includes('esm.run') ? 'https://cdn.jsdelivr.net/npm' : packages_url
+							}/${pkg_name}/package.json`,
+							uid
+						);
 
 						if (!pkg_url) throw new Error();
 
@@ -328,7 +341,7 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 							pkg_url_base
 						};
 					} catch (_e) {
-						throw new Error(`Error fetching "${pkg_name}" from unpkg. Does the package exist?`);
+						throw new Error(`Error fetching "${pkg_name}". Does the package exist?`);
 					}
 				};
 
@@ -365,6 +378,7 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 			const name = id.split('/').pop()?.split('.')[0];
 
 			const cached_id = cache.get(id);
+
 			const result =
 				cached_id && cached_id.code === code
 					? cached_id.result
@@ -377,17 +391,19 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 							})
 					  });
 
+			console.log(code);
+
 			new_cache.set(id, { code, result });
 
 			// @ts-expect-error
-			(result.warnings || result.stats.warnings)?.forEach((warning) => {
+			for (const warning of (result.warnings || result.stats.warnings) ?? []) {
 				// This is required, otherwise postMessage won't work
 				// @ts-ignore
 				delete warning.toString;
 				// TODO remove stats post-launch
 				// @ts-ignore
 				warnings.push(warning);
-			});
+			}
 
 			return result.js;
 		}
@@ -402,7 +418,10 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 				json,
 				glsl,
 				replace({
-					'process.env.NODE_ENV': JSON.stringify('production')
+					'process.env.NODE_ENV': JSON.stringify('production'),
+					'import.meta.env.PROD': JSON.stringify(true),
+					'import.meta.env.DEV': JSON.stringify(false),
+					'import.meta.env.SSR': JSON.stringify(mode === 'ssr')
 				})
 			],
 			inlineDynamicImports: true,
@@ -464,6 +483,8 @@ async function bundle({ uid, files }) {
 			})
 		)?.output[0];
 
+		console.log(dom_result?.code);
+
 		const ssr = false // TODO how can we do SSR?
 			? await get_bundle(uid, 'ssr', cached.ssr, lookup)
 			: null;
@@ -495,7 +516,7 @@ async function bundle({ uid, files }) {
 			error: null
 		};
 	} catch (err) {
-		console.error(err);
+		console.trace(err);
 
 		/** @type {Error} */
 		// @ts-ignore

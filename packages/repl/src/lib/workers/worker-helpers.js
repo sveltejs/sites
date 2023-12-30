@@ -40,7 +40,7 @@ export async function get_svelte_package_json(url) {
  * @param {string} svelte_url
  */
 export async function load_compiler(svelte_url, version) {
-	if (version.startsWith('4')) {
+	if (version.startsWith('4') || version.startsWith('5')) {
 		let compiler = await fetch(`${svelte_url}/compiler.cjs`).then((r) => r.text());
 
 		if (svelte_url.includes('esm.run')) {

@@ -71,7 +71,7 @@
 		showAst
 		autocomplete={true}
 		previewTheme="dark"
-		svelteUrl="https://esm.run/svelte@3"
+		svelteUrl="https://esm.run/svelte@5.0.0-next.27"
 	/>
 </main>
 

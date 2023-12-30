@@ -126,11 +126,10 @@
 				window.location.hash = '';
 				window._svelteTransitionManager = null;
 
-				${$bundle.dom?.code}
+				const { mount, App } = ${$bundle.client?.code};
+				const [, destroy] = mount(App, { target: document.body });
 
-				window.component = new SvelteComponent.default({
-					target: document.body
-				});
+				window.unmount = destroy;
 			`);
 
 			error = null;

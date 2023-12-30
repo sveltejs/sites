@@ -10,6 +10,7 @@ import commonjs from './plugins/commonjs.js';
 import glsl from './plugins/glsl.js';
 import json from './plugins/json.js';
 import replace from './plugins/replace.js';
+import loop_protect from './plugins/loop-protect.js';
 
 /** @type {string} */
 var pkg_name;
@@ -19,6 +20,9 @@ let packages_url;
 
 /** @type {string} */
 let svelte_url;
+
+/** @type {string} */
+let svelte_version;
 
 /** @type {number} */
 let current_id;
@@ -36,10 +40,10 @@ self.addEventListener(
 			case 'init': {
 				({ packages_url, svelte_url } = event.data);
 
-				const { version } = await get_svelte_package_json(svelte_url);
-				console.log(`Using Svelte compiler version ${version}`);
+				({ version: svelte_version } = await get_svelte_package_json(svelte_url));
+				console.log(`Using Svelte compiler version ${svelte_version}`);
 
-				await load_compiler(svelte_url, version);
+				await load_compiler(svelte_url, svelte_version);
 
 				fulfil_ready();
 				break;
@@ -68,10 +72,10 @@ self.addEventListener(
 	}
 );
 
-/** @type {Record<'dom' | 'ssr', Map<string, { code: string, result: ReturnType<typeof import('svelte/compiler').compile> }>>} */
+/** @type {Record<'client' | 'server', Map<string, { code: string, result: ReturnType<typeof import('svelte/compiler').compile> }>>} */
 let cached = {
-	dom: new Map(),
-	ssr: new Map()
+	client: new Map(),
+	server: new Map()
 };
 
 const ABORT = { aborted: true };
@@ -121,7 +125,7 @@ async function follow_redirects(url, uid) {
 	 * 	body: string;
 	 * } | undefined} */
 	let res;
-	console.log(url);
+	// console.log(url);
 
 	const paths = ['', '.js', '/index.js', '.mjs', '/index.mjs', '.cjs', '/index.cjs'];
 
@@ -153,6 +157,10 @@ function compare_to_version(major, minor, patch) {
 
 function is_v4() {
 	return compare_to_version(4, 0, 0) >= 0;
+}
+
+function is_v5() {
+	return compare_to_version(5, 0, 0) >= 0;
 }
 
 function is_legacy_package_structure() {
@@ -237,8 +245,8 @@ async function resolve_from_pkg(pkg, subpath, uid, pkg_url_base) {
 
 /**
  * @param {number} uid
- * @param {'dom' | 'ssr'} mode
- * @param {typeof cached['dom']} cache
+ * @param {'client' | 'server'} mode
+ * @param {typeof cached['client']} cache
  * @param {Map<string, import('$lib/types.js').File>} local_files_lookup
  */
 async function get_bundle(uid, mode, cache, local_files_lookup) {
@@ -262,20 +270,24 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 		name: 'svelte-repl',
 		async resolveId(importee, importer) {
 			if (uid !== current_id) throw ABORT;
-			const v4 = is_v4();
-			// importing from Svelte
-			if (importee === `svelte`)
-				return v4 ? `${svelte_url}/src/runtime/index.js` : `${svelte_url}/index.mjs`;
+			const v5 = is_v5();
+			const v4 = !v5 && is_v4();
 
-			if (importee.startsWith(`svelte/`)) {
-				const sub_path = importee.slice(7);
-				if (v4) {
-					return `${svelte_url}/src/runtime/${sub_path}/index.js`;
+			if (!v5) {
+				// importing from Svelte
+				if (importee === `svelte`)
+					return v4 ? `${svelte_url}/src/runtime/index.js` : `${svelte_url}/index.mjs`;
+
+				if (importee.startsWith(`svelte/`)) {
+					const sub_path = importee.slice(7);
+					if (v4) {
+						return `${svelte_url}/src/runtime/${sub_path}/index.js`;
+					}
+
+					return is_legacy_package_structure()
+						? `${svelte_url}/${sub_path}.mjs`
+						: `${svelte_url}/${sub_path}/index.mjs`;
 				}
-
-				return is_legacy_package_structure()
-					? `${svelte_url}/${sub_path}.mjs`
-					: `${svelte_url}/${sub_path}/index.mjs`;
 			}
 
 			// importing from another file in REPL
@@ -311,7 +323,7 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 				if (!match) {
 					return console.error(`Invalid import "${importee}"`);
 				}
-
+				console.log(match);
 				const pkg_name = match[1];
 				const subpath = `.${match[2] ?? ''}`;
 
@@ -324,8 +336,12 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 					try {
 						const pkg_url = await follow_redirects(
 							`${
-								packages_url.includes('esm.run') ? 'https://cdn.jsdelivr.net/npm' : packages_url
-							}/${pkg_name}/package.json`,
+								pkg_name === 'svelte'
+									? `https://cdn.jsdelivr.net/npm/svelte@${svelte_version}`
+									: packages_url.includes('esm.run')
+									? 'https://cdn.jsdelivr.net/npm'
+									: packages_url
+							}/${pkg_name === 'svelte' ? '' : pkg_name}/package.json`,
 							uid
 						);
 
@@ -373,55 +389,77 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 
 			self.postMessage({ type: 'status', uid, message: `bundling ${id}` });
 
-			if (!/\.svelte$/.test(id)) return null;
+			if (!/\.(svelte|js)$/.test(id)) return null;
 
 			const name = id.split('/').pop()?.split('.')[0];
 
 			const cached_id = cache.get(id);
+			let result;
 
-			const result =
-				cached_id && cached_id.code === code
-					? cached_id.result
-					: self.svelte.compile(code, {
-							generate: mode,
-							dev: true,
-							filename: name + '.svelte',
-							...(has_loopGuardTimeout_feature() && {
-								loopGuardTimeout: 100
-							})
-					  });
+			if (cached_id && cached_id.code === code) {
+				result = cached_id.result;
+			} else if (id.endsWith('.svelte')) {
+				result = svelte.compile(code, {
+					filename: name + '.svelte',
+					generate: 'client',
+					dev: true
+				});
 
-			console.log(code);
+				if (result.css) {
+					result.js.code +=
+						'\n\n' +
+						`
+						const $$__style = document.createElement('style');
+						$$__style.textContent = ${JSON.stringify(result.css.code)};
+						document.head.append($$__style);
+					`.replace(/\t/g, '');
+				}
+			} else if (id.endsWith('.svelte.js')) {
+				result = svelte.compileModule(code, {
+					filename: name + '.js',
+					generate: 'client',
+					dev: true
+				});
+				if (!result) {
+					return null;
+				}
+			} else {
+				return null;
+			}
 
 			new_cache.set(id, { code, result });
 
 			// @ts-expect-error
-			for (const warning of (result.warnings || result.stats.warnings) ?? []) {
+			(result.warnings || result.stats?.warnings)?.forEach((warning) => {
 				// This is required, otherwise postMessage won't work
 				// @ts-ignore
 				delete warning.toString;
 				// TODO remove stats post-launch
 				// @ts-ignore
 				warnings.push(warning);
-			}
+			});
 
-			return result.js;
+			/** @type {import('@rollup/browser').TransformResult} */
+			const transform_result = {
+				code: result.js.code,
+				map: result.js.map
+			};
+
+			return transform_result;
 		}
 	};
 
 	try {
 		bundle = await rollup({
-			input: './App.svelte',
+			input: './__entry.js',
 			plugins: [
 				repl_plugin,
 				commonjs,
 				json,
 				glsl,
+				loop_protect,
 				replace({
-					'process.env.NODE_ENV': JSON.stringify('production'),
-					'import.meta.env.PROD': JSON.stringify(true),
-					'import.meta.env.DEV': JSON.stringify(false),
-					'import.meta.env.SSR': JSON.stringify(mode === 'ssr')
+					'process.env.NODE_ENV': JSON.stringify('production')
 				})
 			],
 			inlineDynamicImports: true,
@@ -444,7 +482,6 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 		return { error, imports: null, bundle: null, cache: new_cache, warnings, all_warnings };
 	}
 }
-
 /**
  * @param {{ uid: number; files: import('$lib/types.js').File[] }} param0
  * @returns
@@ -452,11 +489,21 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 async function bundle({ uid, files }) {
 	if (!DEV) {
 		console.clear();
-		console.log(`running Svelte compiler version %c${self.svelte.VERSION}`, 'font-weight: bold');
+		console.log(`running Svelte compiler version %c${svelte.VERSION}`, 'font-weight: bold');
 	}
 
 	/** @type {Map<string, import('$lib/types').File>} */
 	const lookup = new Map();
+
+	lookup.set('./__entry.js', {
+		name: '__entry',
+		source: `
+			export { mount } from 'svelte';
+			export {default as App} from './App.svelte';
+		`,
+		type: 'js',
+		modified: false
+	});
 
 	files.forEach((file) => {
 		const path = `./${file.name}.${file.type}`;
@@ -464,59 +511,56 @@ async function bundle({ uid, files }) {
 	});
 
 	/** @type {Awaited<ReturnType<typeof get_bundle>>} */
-	let dom = await get_bundle(uid, 'dom', cached.dom, lookup);
+	let client = await get_bundle(uid, 'client', cached.client, lookup);
 	let error;
 
 	try {
-		if (dom.error) {
-			throw dom.error;
+		if (client.error) {
+			throw client.error;
 		}
 
-		cached.dom = dom.cache;
+		cached.client = client.cache;
 
-		const dom_result = (
-			await dom.bundle?.generate({
+		const client_result = (
+			await client.bundle?.generate({
 				format: 'iife',
-				name: 'SvelteComponent',
-				exports: 'named',
-				sourcemap: 'inline'
+				exports: 'named'
+				// sourcemap: 'inline'
 			})
 		)?.output[0];
 
-		console.log(dom_result?.code);
-
-		const ssr = false // TODO how can we do SSR?
-			? await get_bundle(uid, 'ssr', cached.ssr, lookup)
+		const server = false // TODO how can we do SSR?
+			? await get_bundle(uid, 'server', cached.server, lookup)
 			: null;
 
-		if (ssr) {
-			cached.ssr = ssr.cache;
-			if (ssr.error) {
-				throw ssr.error;
+		if (server) {
+			cached.server = server.cache;
+			if (server.error) {
+				throw server.error;
 			}
 		}
 
-		const ssr_result = ssr
+		const server_result = server
 			? (
-					await ssr.bundle?.generate({
+					await server.bundle?.generate({
 						format: 'iife',
 						name: 'SvelteComponent',
-						exports: 'named',
-						sourcemap: 'inline'
+						exports: 'named'
+						// sourcemap: 'inline'
 					})
 			  )?.output?.[0]
 			: null;
 
 		return {
 			uid,
-			dom: dom_result,
-			ssr: ssr_result,
-			imports: dom.imports,
-			warnings: dom.warnings,
+			client: client_result,
+			server: server_result,
+			imports: client.imports,
+			warnings: client.warnings,
 			error: null
 		};
 	} catch (err) {
-		console.trace(err);
+		console.error(err);
 
 		/** @type {Error} */
 		// @ts-ignore
@@ -527,10 +571,10 @@ async function bundle({ uid, files }) {
 
 		return {
 			uid,
-			dom: null,
-			ssr: null,
+			client: null,
+			server: null,
 			imports: null,
-			warnings: dom.warnings,
+			warnings: client.warnings,
 			error: Object.assign({}, e, {
 				message: e.message,
 				stack: e.stack

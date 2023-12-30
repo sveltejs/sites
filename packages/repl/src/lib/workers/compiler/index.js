@@ -36,35 +36,79 @@ const common_options = {
 	dev: false,
 	css: false
 };
-
 /** @param {import("../workers").CompileMessageData} param0 */
 function compile({ id, source, options, return_ast }) {
 	try {
-		const { js, css, ast } = self.svelte.compile(
-			source,
-			Object.assign({}, common_options, options)
-		);
+		const css = `/* Select a component to see compiled CSS */`;
+
+		if (options.filename.endsWith('.svelte')) {
+			const compiled = svelte.compile(source, {
+				filename: options.filename,
+				generate: options.generate,
+				dev: options.dev
+			});
+
+			const { js, css, warnings, metadata } = compiled;
+
+			const ast = return_ast ? svelte.parse(source, { modern: true }) : undefined;
+
+			return {
+				id,
+				result: {
+					js: js.code,
+					css: css?.code || `/* Add a <sty` + `le> tag to see compiled CSS */`,
+					error: null,
+					warnings,
+					metadata,
+					ast
+				}
+			};
+		} else if (options.filename.endsWith('.svelte.js')) {
+			const compiled = svelte.compileModule(source, {
+				filename: options.filename,
+				generate: options.generate,
+				dev: options.dev
+			});
+
+			if (compiled) {
+				return {
+					id,
+					result: {
+						js: compiled.js.code,
+						css,
+						error: null,
+						warnings: compiled.warnings,
+						metadata: compiled.metadata
+					}
+				};
+			}
+		}
 
 		return {
 			id,
 			result: {
-				js: js.code,
-				css: css.code || `/* Add a <sty` + `le> tag to see compiled CSS */`,
-				ast: return_ast ? ast : null
+				js: `// Select a component, or a '.svelte.js' module that uses runes, to see compiled output`,
+				css,
+				error: null,
+				warnings: [],
+				metadata: null
 			}
 		};
 	} catch (err) {
 		// @ts-ignore
-		let message = `/* Error compiling component\n\n${err.message}`;
-		// @ts-ignore
-		if (err.frame) message += `\n${err.frame}`;
-		message += `\n\n*/`;
+		let message = `/*\nError compiling ${err.filename ?? 'component'}:\n${err.message}\n*/`;
 
 		return {
 			id,
 			result: {
 				js: message,
-				css: message
+				css: message,
+				error: {
+					message: err.message,
+					position: err.position
+				},
+				warnings: [],
+				metadata: null
 			}
 		};
 	}

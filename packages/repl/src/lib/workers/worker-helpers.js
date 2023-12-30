@@ -50,10 +50,10 @@ export async function load_compiler(svelte_url, version) {
 
 		(0, eval)('var svelte = {};' + compiler + '\n//# sourceURL=compiler.js@' + version);
 	} else {
-		// try {
-		importScripts(`${svelte_url}/compiler.js`);
-		// } catch {
-		// 	self.svelte = await import(/* @vite-ignore */ `${svelte_url}/compiler.mjs`);
-		// }
+		try {
+			importScripts(`${svelte_url}/compiler.js`);
+		} catch {
+			self.svelte = await import(/* @vite-ignore */ `${svelte_url}/compiler.mjs`);
+		}
 	}
 }

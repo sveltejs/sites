@@ -53,7 +53,7 @@ self.addEventListener(
 
 				current_id = uid;
 
-				setTimeout(async () => {
+				Promise.resolve().then(async () => {
 					if (current_id !== uid) return;
 
 					const result = await bundle({ uid, files });
@@ -381,19 +381,19 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 
 			const result =
 				cached_id && cached_id.code === code
-					? (console.log('Cache it is'), cached_id.result)
-					: (console.log('from scratch', name),
-					  self.svelte.compile((console.log(code), code), {
+					? cached_id.result
+					: self.svelte.compile(code, {
 							generate: mode,
 							dev: true,
 							filename: name + '.svelte',
 							...(has_loopGuardTimeout_feature() && {
 								loopGuardTimeout: 100
 							})
-					  }));
+					  });
+
+			console.log(code);
 
 			new_cache.set(id, { code, result });
-			console.log(result);
 
 			// @ts-expect-error
 			for (const warning of (result.warnings || result.stats.warnings) ?? []) {
@@ -482,6 +482,8 @@ async function bundle({ uid, files }) {
 				sourcemap: 'inline'
 			})
 		)?.output[0];
+
+		console.log(dom_result?.code);
 
 		const ssr = false // TODO how can we do SSR?
 			? await get_bundle(uid, 'ssr', cached.ssr, lookup)

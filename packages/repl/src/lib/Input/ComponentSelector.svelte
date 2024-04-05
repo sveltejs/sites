@@ -50,6 +50,11 @@
 
 		if (!edited_file) return;
 
+		if (edited_file.name === input_value) {
+			editing_name = null;
+			return;
+		}
+		
 		edited_file.name = match ? match[1] : input_value;
 
 		if (!$selected) return;

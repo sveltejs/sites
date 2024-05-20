@@ -1,1 +1,1 @@
-export { default } from './Repl.svelte';
+export { default as REPL } from './Repl.svelte';

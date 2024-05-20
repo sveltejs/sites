@@ -2,9 +2,8 @@
 	import JSONNode from 'svelte-json-tree';
 	import ConsoleTable from './ConsoleTable.svelte';
 
-	/** @type {import('./console').Log} */
-	export let log;
-	export let level = 1;
+	/** @type {{ log: import('./console').Log; level?: number }} */
+	const { log, level = 1 } = $props();
 
 	function toggle_group_collapse() {
 		log.collapsed = !log.collapsed;
@@ -15,17 +14,20 @@
 	<ConsoleTable data={log.args[0]} columns={log.args[1]} />
 {/if}
 
-<button
+<div
 	class="log console-{log.level}"
 	style="padding-left: {level * 15}px"
-	on:click={log.level === 'group' ? toggle_group_collapse : undefined}
+	onclick={log.level === 'group' ? toggle_group_collapse : undefined}
+	onkeydown={log.level === 'group' ? toggle_group_collapse : undefined}
+	role="button"
+	tabindex="0"
 >
 	{#if log.count && log.count > 1}
 		<span class="count">{log.count}x</span>
 	{/if}
 
 	{#if log.level === 'trace' || log.level === 'assert'}
-		<button class="arrow" class:expand={!log.collapsed} on:click={toggle_group_collapse}>
+		<button class="arrow" class:expand={!log.collapsed} onclick={toggle_group_collapse}>
 			▶
 		</button>
 	{/if}
@@ -53,9 +55,9 @@
 		{/each}
 	{/if}
 	{#each new Array(level - 1) as _, idx}
-		<div class="outline" style="left: {idx * 15 + 15}px" />
+		<div class="outline" style="left: {idx * 15 + 15}px"></div>
 	{/each}
-</button>
+</div>
 
 {#if log.level === 'group' && !log.collapsed}
 	{#each log.logs ?? [] as childLog}

@@ -14,3 +14,18 @@ export const sleep = (ms) => new Promise((f) => setTimeout(f, ms));
 export function get_full_filename(file) {
 	return `${file.name}.${file.type}`;
 }
+
+export function create_deferred_promise() {
+	/** @type {(...value: any) => void} */
+	let resolve = () => {};
+
+	/** @type {(...reason: any) => void} */
+	let reject = () => {};
+
+	const promise = new Promise((_resolve, _reject) => {
+		resolve = _resolve;
+		reject = _reject;
+	});
+
+	return { promise, resolve, reject };
+}

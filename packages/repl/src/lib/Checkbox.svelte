@@ -1,8 +1,9 @@
 <script>
-	export let checked = false;
+	/** @type {{ checked?: boolean }} */
+	let { checked = $bindable(false) } = $props();
 </script>
 
-<input type="checkbox" bind:checked />
+<input bind:checked type="checkbox" />
 
 <style>
 	input[type='checkbox'] {
@@ -49,8 +50,12 @@
 		left: 2px;
 		border-radius: 1em;
 		background: white;
-		box-shadow: 0 0px 1px rgba(0, 0, 0, 0.4), 0 4px 2px rgba(0, 0, 0, 0.1);
-		transition: background 0.2s ease-out, left 0.2s ease-out;
+		box-shadow:
+			0 0px 1px rgba(0, 0, 0, 0.4),
+			0 4px 2px rgba(0, 0, 0, 0.1);
+		transition:
+			background 0.2s ease-out,
+			left 0.2s ease-out;
 	}
 
 	input[type='checkbox']:checked::after {

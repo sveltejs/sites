@@ -1,4 +1,4 @@
-import Worker from '../workers/compiler/index.js?worker';
+import compiler_worker from '../workers/compiler/index.js?worker&url';
 
 const workers = new Map();
 
@@ -14,7 +14,7 @@ export default class Compiler {
 	/** @param {string} svelte_url */
 	constructor(svelte_url) {
 		if (!workers.has(svelte_url)) {
-			const worker = new Worker();
+			const worker = new Worker(compiler_worker, { type: 'module' });
 			worker.postMessage({ type: 'init', svelte_url });
 			workers.set(svelte_url, worker);
 		}

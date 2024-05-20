@@ -1,4 +1,4 @@
-import Worker from './workers/bundler/index.js?worker';
+import bundler_worker from './workers/bundler/index.js?worker&url';
 
 const workers = new Map();
 
@@ -13,7 +13,7 @@ export default class Bundler {
 		const hash = `${packages_url}:${svelte_url}`;
 
 		if (!workers.has(hash)) {
-			const worker = new Worker();
+			const worker = new Worker(bundler_worker, { type: 'module' });
 			worker.postMessage({ type: 'init', packages_url, svelte_url });
 			workers.set(hash, worker);
 		}
@@ -59,7 +59,7 @@ export default class Bundler {
 			this.worker.postMessage({
 				uid,
 				type: 'bundle',
-				files,
+				files
 			});
 
 			uid += 1;

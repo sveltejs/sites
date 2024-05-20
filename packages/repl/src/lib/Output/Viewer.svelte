@@ -1,49 +1,57 @@
 <script>
-	import { get_repl_context } from '$lib/context.js';
+	import { get_repl_context } from '$lib/state.svelte.js';
 	import { BROWSER } from 'esm-env';
 	import { onMount } from 'svelte';
 	import Message from '../Message.svelte';
 	import PaneWithPanel from './PaneWithPanel.svelte';
 	import ReplProxy from './ReplProxy.js';
 	import Console from './console/Console.svelte';
-	import getLocationFromStack from './get-location-from-stack';
+	import getLocationFromStack from './get-location-from-stack.js';
 	import srcdoc from './srcdoc/index.html?raw';
 
-	/** @type {import('$lib/types').MessageDetails | null} */
-	export let error;
-	/** @type {string | null} */
-	export let status;
-	export let relaxed = false;
-	export let injectedJS = '';
-	export let injectedCSS = '';
+	/**
+	 * @type {{
+	 * 	error: import('$lib/types').MessageDetails | null;
+	 * 	status: string | null;
+	 * 	relaxed: boolean;
+	 * 	injected_js: string;
+	 * 	injected_css: string;
+	 *  theme: 'light' | 'dark';
+	 * }}
+	 */
+	let {
+		error = $bindable(),
+		status,
+		relaxed = false,
+		injected_js = '',
+		injected_css = '',
+		theme
+	} = $props();
 
-	/** @type {'light' | 'dark'} */
-	export let theme;
-
-	const { bundle } = get_repl_context();
+	const repl_state = get_repl_context();
 
 	/** @type {import('./console/console').Log[]} */
-	let logs = [];
+	let logs = $state([]);
 
 	/** @type {import('./console/console').Log[][]} */
-	let log_group_stack = [];
+	let log_group_stack = $state([]);
 
-	let current_log_group = logs;
+	/** @type {import('./console/console').Log[]} */
+	let current_log_group = $state([]);
 
-	/** @type {HTMLIFrameElement} */
-	let iframe;
-	let pending_imports = 0;
-	let pending = false;
+	let iframe = /** @type {HTMLIFrameElement} */ ($state());
+	let pending_imports = $state(0);
+	let pending = $state(false);
 
 	/** @type {ReplProxy | null} */
-	let proxy = null;
+	let proxy = $state(null);
 
-	let ready = false;
-	let inited = false;
+	let ready = $state(false);
+	let inited = $state(false);
 
-	let log_height = 90;
-	/** @type {number} */
-	let prev_height;
+	let log_height = $state(90);
+
+	let prev_height = /** @type {number} */ ($state());
 
 	/** @type {import('./console/console').Log} */
 	let last_console_event;
@@ -93,7 +101,9 @@
 		};
 	});
 
-	$: if (ready) proxy?.iframe_command('set_theme', { theme });
+	$effect(() => {
+		if (ready) proxy?.iframe_command('set_theme', { theme });
+	});
 
 	/**
 	 * @param {import('$lib/types').Bundle | null} $bundle
@@ -105,7 +115,7 @@
 			clear_logs();
 
 			await proxy?.eval(`
-				${injectedJS}
+				${injected_js}
 
 				${styles}
 
@@ -142,21 +152,24 @@
 		inited = true;
 	}
 
-	$: if (ready) apply_bundle($bundle);
+	$effect(() => {
+		if (ready) apply_bundle(repl_state.bundle);
+	});
 
-	$: styles =
-		injectedCSS &&
-		`{
+	const styles = $derived(
+		injected_css &&
+			`{
 		const style = document.createElement('style');
-		style.textContent = ${JSON.stringify(injectedCSS)};
+		style.textContent = ${JSON.stringify(injected_css)};
 		document.head.appendChild(style);
-	}`;
+	}`
+	);
 
 	/**
 	 * @param {import('$lib/types').Error & { loc: { line: number; column: number } }} e
 	 */
 	function show_error(e) {
-		const map = $bundle?.dom?.map;
+		const map = repl_state.bundle?.dom?.map;
 		if (!map) return;
 
 		// @ts-ignore INVESTIGATE
@@ -223,46 +236,59 @@
 	}
 </script>
 
+<!-- svelte-ignore state_referenced_locally -->
+<!-- svelte-ignore state_referenced_locally -->
 <div class="iframe-container">
 	<PaneWithPanel pos="90%" panel="Console">
-		<div slot="main">
-			<iframe
-				title="Result"
-				class:inited
-				bind:this={iframe}
-				sandbox={[
-					'allow-popups-to-escape-sandbox',
-					'allow-scripts',
-					'allow-popups',
-					'allow-forms',
-					'allow-pointer-lock',
-					'allow-top-navigation',
-					'allow-modals',
-					relaxed ? 'allow-same-origin' : ''
-				].join(' ')}
-				class={error || pending || pending_imports ? 'greyed-out' : ''}
-				srcdoc={BROWSER ? srcdoc : ''}
-			/>
-		</div>
+		{#snippet main()}
+			<div>
+				<iframe
+					title="Result"
+					class:inited
+					bind:this={iframe}
+					sandbox={[
+						'allow-popups-to-escape-sandbox',
+						'allow-scripts',
+						'allow-popups',
+						'allow-forms',
+						'allow-pointer-lock',
+						'allow-top-navigation',
+						'allow-modals',
+						relaxed ? 'allow-same-origin' : ''
+					].join(' ')}
+					class={error || pending || pending_imports ? 'greyed-out' : ''}
+					srcdoc={BROWSER ? srcdoc : ''}
+				></iframe>
+			</div>
+		{/snippet}
 
-		<div slot="panel-header">
-			<button on:click|stopPropagation={clear_logs}>
-				{#if logs.length > 0}
-					({logs.length})
-				{/if}
-				Clear
-			</button>
-		</div>
+		{#snippet panel_header()}
+			<div>
+				<button
+					onclick={(e) => {
+						e.stopPropagation();
+						clear_logs();
+					}}
+				>
+					{#if logs.length > 0}
+						({logs.length})
+					{/if}
+					Clear
+				</button>
+			</div>
+		{/snippet}
 
-		<section slot="panel-body">
-			<Console {logs} {theme} on:clear={clear_logs} />
-		</section>
+		{#snippet panel_body()}
+			<section>
+				<Console {logs} {theme} onclear={clear_logs} />
+			</section>
+		{/snippet}
 	</PaneWithPanel>
 
 	<div class="overlay">
 		{#if error}
 			<Message kind="error" details={error} />
-		{:else if status || !$bundle}
+		{:else if status || !repl_state.bundle}
 			<Message kind="info" truncate>{status || 'loading Svelte compiler...'}</Message>
 		{/if}
 	</div>

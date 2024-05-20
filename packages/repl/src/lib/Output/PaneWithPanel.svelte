@@ -1,18 +1,26 @@
 <script>
 	import { spring } from 'svelte/motion';
 	import { SplitPane } from '@rich_harris/svelte-split-pane';
+	import { untrack } from 'svelte';
 
 	const UNIT_REGEX = /(\d+)(?:(px|rem|%|em))/i;
 
-	/** @type {string} */
-	export let panel;
+	/** @type {{
+	 * 	panel: string;
+	 * 	pos: Exclude<import('svelte').ComponentProps<SplitPane>['pos'], undefined>;
+	 * 	main?: import('svelte').Snippet;
+	 * 	panel_header?: import('svelte').Snippet;
+	 * 	panel_body?: import('svelte').Snippet;
+	 * }} */
+	let { panel, pos = '90%', main, panel_header, panel_body } = $props();
 
-	/** @type {Exclude<import('@rich_harris/svelte-split-pane/dist/SplitPane.svelte').SplitPaneProps['max'], undefined>} */
-	export let pos = '90%';
+	let previous_pos = $state();
+	$effect(() => {
+		pos;
+		untrack(() => (previous_pos = Math.min(+pos.replace(UNIT_REGEX, '$1'), 70)));
+	});
 
-	$: previous_pos = Math.min(+pos.replace(UNIT_REGEX, '$1'), 70);
-
-	/** @type {Exclude<import('@rich_harris/svelte-split-pane/dist/SplitPane.svelte').SplitPaneProps['max'], undefined>} */
+	/** @type {Exclude<import('svelte').ComponentProps<SplitPane>['max'], undefined>} */
 	let max = '90%';
 
 	// we can't bind to the spring itself, but we
@@ -22,8 +30,10 @@
 		damping: 0.5
 	});
 
-	// @ts-ignore
-	$: pos = $driver + '%';
+	$effect(() => {
+		$driver;
+		untrack(() => (pos = $driver + '%'));
+	});
 
 	const toggle = () => {
 		const numeric_pos = +pos.replace(UNIT_REGEX, '$1');
@@ -41,17 +51,17 @@
 
 <SplitPane {max} min="10%" type="vertical" bind:pos priority="max">
 	<section slot="a">
-		<slot name="main" />
+		{@render main?.()}
 	</section>
 
 	<section slot="b">
-		<button class="panel-header" on:click={toggle}>
+		<button class="panel-header" onclick={toggle}>
 			<span class="panel-heading">{panel}</span>
-			<slot name="panel-header" />
+			{@render panel_header?.()}
 		</button>
 
 		<div class="panel-body">
-			<slot name="panel-body" />
+			{@render panel_body?.()}
 		</div>
 	</section>
 </SplitPane>

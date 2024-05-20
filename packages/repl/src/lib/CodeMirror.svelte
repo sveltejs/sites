@@ -7,33 +7,43 @@
 	import { EditorState, Range, StateEffect, StateEffectType, StateField } from '@codemirror/state';
 	import { Decoration, EditorView } from '@codemirror/view';
 	import { codemirror, withCodemirrorInstance } from '@neocodemirror/svelte';
-	import { createEventDispatcher, tick } from 'svelte';
 	import { writable } from 'svelte/store';
 	import Message from './Message.svelte';
 	import { svelteTheme } from './theme.js';
+	import { tick, untrack } from 'svelte';
+	import { create_deferred_promise } from './utils';
+	import { theme } from '@sveltejs/site-kit/stores';
 
-	/** @type {import('./types').StartOrEnd | null} */
-	export let errorLoc = null;
+	/**
+	 * @type {{
+	 * errorLoc?: import('./types').StartOrEnd | null;
+	 * diagnostics?: import('@codemirror/lint').LintSource | undefined;
+	 * readonly?: boolean;
+	 * tab?: boolean;
+	 * autocomplete?: boolean;
+	 * vim?: boolean;
+	 * filename?: string;
+	 * onchange?: ({value}: {value: string}) => void;
+	 * }}
+	 */
+	const {
+		autocomplete = true,
+		errorLoc = null,
+		diagnostics = undefined,
+		readonly = false,
+		tab = true,
+		vim = false,
+		filename,
 
-	/** @type {import('@codemirror/lint').LintSource | undefined} */
-	export let diagnostics = undefined;
+		onchange
+	} = $props();
 
-	export let readonly = false;
-	export let tab = true;
+	// $inspect(filename);
 
-	/** @type {boolean} */
-	export let autocomplete = true;
-
-	/** @type {boolean} */
-	export let vim = false;
-
-	/** @type {ReturnType<typeof createEventDispatcher<{ change: { value: string } }>>} */
-	const dispatch = createEventDispatcher();
-
-	let code = '';
+	let code = $state('');
 
 	/** @type {import('./types').Lang} */
-	let lang = 'svelte';
+	let lang = $state('svelte');
 
 	/**
 	 * @param {{ code: string; lang: import('./types').Lang }} options
@@ -76,9 +86,8 @@
 		cursor_pos = pos;
 	}
 
-	/** @type {(...val: any) => void} */
-	let fulfil_module_editor_ready;
-	export const isReady = new Promise((f) => (fulfil_module_editor_ready = f));
+	const is_ready_promise = create_deferred_promise();
+	export const isReady = is_ready_promise.promise;
 
 	export function resize() {
 		$cmInstance.view?.requestMeasure();
@@ -131,8 +140,8 @@
 			// Move the decorations to account for document changes
 			value = value.map(tr.changes);
 			// If this transaction adds or removes decorations, apply those changes
-			for (let effect of tr.effects) {
-				if (effect.is(addMarksDecoration)) value = value.update({ add: effect.value, sort: true });
+			for (let eff of tr.effects) {
+				if (eff.is(addMarksDecoration)) value = value.update({ add: eff.value, sort: true });
 			}
 			return value;
 		},
@@ -180,10 +189,12 @@
 	let updating_externally = false;
 
 	/** @type {import('@codemirror/state').Extension[]} */
-	let extensions = [];
+	let extensions = $state([]);
 
-	$: getExtensions(vim).then((resolvedExtensions) => {
-		extensions = resolvedExtensions;
+	$effect(() => {
+		getExtensions(vim).then((resolvedExtensions) => {
+			untrack(() => (extensions = resolvedExtensions));
+		});
 	});
 
 	/**
@@ -206,30 +217,34 @@
 		return extensions;
 	}
 
-	let cursor_pos = 0;
+	let cursor_pos = $state(0);
 
-	$: {
+	$effect(() => {
 		if ($cmInstance.view) {
-			fulfil_module_editor_ready();
+			is_ready_promise.resolve();
 		}
-	}
+	});
 
-	$: if ($cmInstance.view && w && h) resize();
+	$effect(() => {
+		if ($cmInstance.view && w && h) resize();
+	});
 
-	$: {
+	$effect(() => {
 		if (marked) {
 			unmarkText();
-			marked = false;
+			untrack(() => (marked = false));
 		}
 
 		if (errorLoc) {
 			markText({ from: errorLoc.character, to: errorLoc.character + 1, className: 'error-loc' });
 
-			error_line = errorLoc.line;
+			untrack(() => (error_line = errorLoc.line));
 		} else {
-			error_line = null;
+			untrack(() => (error_line = null));
 		}
-	}
+	});
+
+	// $inspect($cmInstance);
 
 	const watcher = EditorView.updateListener.of((viewUpdate) => {
 		if (viewUpdate.selectionSet) {
@@ -238,8 +253,10 @@
 	});
 </script>
 
+<!-- svelte-ignore attribute_illegal_colon -->
 <div
 	class="codemirror-container"
+	class:dark={$theme.current === 'dark'}
 	use:codemirror={{
 		value: code,
 		setup: 'basic',
@@ -247,6 +264,7 @@
 		tabSize: 2,
 		theme: svelteTheme,
 		readonly,
+		documentId: filename,
 		cursorPos: cursor_pos,
 		lang,
 		langMap: {
@@ -262,9 +280,10 @@
 		extensions,
 		instanceStore: cmInstance
 	}}
-	on:codemirror:textChange={({ detail: value }) => {
-		code = value;
-		dispatch('change', { value: code });
+	oncodemirror:textChange={(e) => {
+		// @ts-ignore
+		code = e.detail;
+		onchange?.({ value: code });
 	}}
 >
 	{#if !$cmInstance.view}
@@ -286,9 +305,17 @@
 		overflow: hidden;
 	}
 
+	.codemirror-container :global(*) {
+		transition: none !important;
+	}
+
 	.codemirror-container :global(.mark-text) {
-		background-color: var(--sk-selection-color);
+		background-color: #304f66;
 		backdrop-filter: opacity(40%);
+	}
+
+	.codemirror-container.dark :global(.mark-text) {
+		background-color: #94c4e8;
 	}
 
 	.codemirror-container :global(.cm-editor) {

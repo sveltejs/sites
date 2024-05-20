@@ -1,11 +1,14 @@
 <script>
 	import ConsoleLine from './ConsoleLine.svelte';
 
-	/** @type {import('./console').Log[]} */
-	export let logs;
-
-	/** @type {'light' | 'dark'} */
-	export let theme;
+	/**
+	 * @type {{
+	 * logs: import('./console').Log[];
+	 * theme: 'light' | 'dark';
+	 * onclear?: () => void;
+	 * }}
+	 */
+	const { logs, theme } = $props();
 </script>
 
 <div class="container" class:dark={theme === 'dark'}>

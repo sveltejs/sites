@@ -1,5 +1,5 @@
 <script>
-	import { get_repl_context } from '$lib/context.js';
+	import { get_repl_context } from '$lib/state.svelte.js';
 	import { BROWSER } from 'esm-env';
 	import { marked } from 'marked';
 	import CodeMirror from '../CodeMirror.svelte';
@@ -9,31 +9,32 @@
 	import PaneWithPanel from './PaneWithPanel.svelte';
 	import Viewer from './Viewer.svelte';
 
-	export let svelteUrl;
-
-	/** @type {string | null} */
-	export let status;
-
-	/** @type {import('$lib/types').StartOrEnd | null} */
-	export let sourceErrorLoc = null;
-
-	/** @type {import('$lib/types').MessageDetails | null} */
-	export let runtimeError = null;
-
-	export let embedded = false;
-	export let relaxed = false;
-
-	/** @type {string} */
-	export let injectedJS;
-
-	/** @type {string} */
-	export let injectedCSS;
-
-	// export let theme;
-	export let showAst = false;
-
-	/** @type {'light' | 'dark'} */
-	export let previewTheme;
+	/**
+	 * @type {{
+	 * 	svelte_url: string;
+	 * 	status: string | null;
+	 * 	source_error_loc?: import('$lib/types').StartOrEnd | null;
+	 * 	runtime_error?: import('$lib/types').MessageDetails | null;
+	 * 	embedded: boolean;
+	 * 	relaxed: boolean;
+	 * 	injected_js: string;
+	 * 	injected_css: string;
+	 * 	preview_theme: 'light' | 'dark';
+	 * 	show_ast: boolean;
+	 * }}
+	 */
+	let {
+		svelte_url,
+		status,
+		source_error_loc = null,
+		runtime_error = $bindable(null),
+		embedded = false,
+		relaxed = false,
+		injected_js,
+		injected_css,
+		preview_theme,
+		show_ast = false
+	} = $props();
 
 	/**
 	 * @param {import('$lib/types').File} file
@@ -49,13 +50,13 @@
 		}
 
 		if (file.type === 'md') {
-			markdown = marked(file.source);
+			markdown = await marked(file.source);
 			return;
 		}
 
 		if (!compiler) return console.error('Compiler not initialized.');
 
-		const compiled = await compiler.compile(file, options, showAst);
+		const compiled = await compiler.compile(file, options, show_ast);
 		if (!js_editor) return; // unmounted
 
 		js_editor.set({ code: compiled.js, lang: 'js' });
@@ -71,47 +72,45 @@
 		if (/(js|json)/.test(selected.type)) return;
 
 		if (selected.type === 'md') {
-			markdown = marked(selected.source);
+			markdown = await marked(selected.source);
 			return;
 		}
 
 		if (!compiler) return console.error('Compiler not initialized.');
 
-		const compiled = await compiler.compile(selected, options, showAst);
+		const compiled = await compiler.compile(selected, options, show_ast);
 
 		js_editor.update({ code: compiled.js, lang: 'js' });
 		css_editor.update({ code: compiled.css, lang: 'css' });
 		ast = compiled.ast;
 	}
 
-	const { module_editor } = get_repl_context();
+	const repl_state = get_repl_context();
 
-	const compiler = BROWSER ? new Compiler(svelteUrl) : null;
+	const compiler = BROWSER ? new Compiler(svelte_url) : null;
 
-	/** @type {CodeMirror} */
-	let js_editor;
+	let js_editor = /** @type {CodeMirror} */ ($state());
 
 	/** @type {CodeMirror} */
 	let css_editor;
 
 	/** @type {'result' | 'js' | 'css' | 'ast'} */
-	let view = 'result';
-	let selected_type = '';
-	let markdown = '';
+	let view = $state('result');
+	let selected_type = $state('');
+	let markdown = $state('');
 
-	/** @type {import('svelte/types/compiler/interfaces').Ast} */
-	let ast;
+	let ast = /** @type {import('estree-walker').Node} */ ($state());
 </script>
 
 <div class="view-toggle">
 	{#if selected_type === 'md'}
 		<button class="active">Markdown</button>
 	{:else}
-		<button class:active={view === 'result'} on:click={() => (view = 'result')}>Result</button>
-		<button class:active={view === 'js'} on:click={() => (view = 'js')}>JS output</button>
-		<button class:active={view === 'css'} on:click={() => (view = 'css')}>CSS output</button>
-		{#if showAst}
-			<button class:active={view === 'ast'} on:click={() => (view = 'ast')}>AST output</button>
+		<button class:active={view === 'result'} onclick={() => (view = 'result')}>Result</button>
+		<button class:active={view === 'js'} onclick={() => (view = 'js')}>JS output</button>
+		<button class:active={view === 'css'} onclick={() => (view = 'css')}>CSS output</button>
+		{#if show_ast}
+			<button class:active={view === 'ast'} onclick={() => (view = 'ast')}>AST output</button>
 		{/if}
 	{/if}
 </div>
@@ -119,42 +118,51 @@
 <!-- component viewer -->
 <div class="tab-content" class:visible={selected_type !== 'md' && view === 'result'}>
 	<Viewer
-		bind:error={runtimeError}
+		bind:error={runtime_error}
 		{status}
 		{relaxed}
-		{injectedJS}
-		{injectedCSS}
-		theme={previewTheme}
+		{injected_js}
+		{injected_css}
+		theme={preview_theme}
 	/>
 </div>
 
 <!-- js output -->
 <div class="tab-content" class:visible={selected_type !== 'md' && view === 'js'}>
 	{#if embedded}
-		<CodeMirror bind:this={js_editor} errorLoc={sourceErrorLoc} readonly />
+		<CodeMirror bind:this={js_editor} errorLoc={source_error_loc} readonly filename="js-viewer" />
 	{:else}
 		<PaneWithPanel pos="50%" panel="Compiler options">
-			<div slot="main">
-				<CodeMirror bind:this={js_editor} errorLoc={sourceErrorLoc} readonly />
-			</div>
+			{#snippet main()}
+				<div style="height: 100%">
+					<CodeMirror
+						bind:this={js_editor}
+						errorLoc={source_error_loc}
+						readonly
+						filename="js-viewer"
+					/>
+				</div>
+			{/snippet}
 
-			<div slot="panel-body">
-				<CompilerOptions />
-			</div>
+			{#snippet panel_body()}
+				<div style="height: 100%">
+					<CompilerOptions />
+				</div>
+			{/snippet}
 		</PaneWithPanel>
 	{/if}
 </div>
 
 <!-- css output -->
 <div class="tab-content" class:visible={selected_type !== 'md' && view === 'css'}>
-	<CodeMirror bind:this={css_editor} errorLoc={sourceErrorLoc} readonly />
+	<CodeMirror bind:this={css_editor} errorLoc={source_error_loc} readonly filename="css-viewer" />
 </div>
 
 <!-- ast output -->
-{#if showAst}
+{#if show_ast}
 	<div class="tab-content" class:visible={selected_type !== 'md' && view === 'ast'}>
 		<!-- ast view interacts with the module editor, wait for it first -->
-		{#if $module_editor}
+		{#if repl_state.module_editor}
 			<AstView {ast} autoscroll={selected_type !== 'md' && view === 'ast'} />
 		{/if}
 	</div>
@@ -162,7 +170,7 @@
 
 <!-- markdown output -->
 <div class="tab-content" class:visible={selected_type === 'md'}>
-	<iframe title="Markdown" srcdoc={markdown} />
+	<iframe title="Markdown" srcdoc={markdown}></iframe>
 </div>
 
 <style>
@@ -190,10 +198,6 @@
 	button.active {
 		border-bottom: 3px solid var(--sk-theme-1, --prime);
 		color: var(--sk-text-1, #333);
-	}
-
-	div[slot] {
-		height: 100%;
 	}
 
 	.tab-content {

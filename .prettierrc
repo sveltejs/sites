@@ -2,5 +2,14 @@
 	"useTabs": true,
 	"singleQuote": true,
 	"trailingComma": "none",
-	"printWidth": 100
+	"printWidth": 100,
+	"overrides": [
+    {
+      "files": "*.svelte",
+      "options": {
+        "plugins": ["prettier-plugin-svelte"],
+        "parser": "svelte"
+      }
+    }
+  ]
 }

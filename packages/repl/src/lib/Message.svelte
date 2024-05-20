@@ -2,16 +2,16 @@
 	import { slide } from 'svelte/transition';
 	import { get_repl_context } from './state.svelte.js';
 
-	/** @type {'info' | 'warning' | 'error'} */
-	export let kind = 'info';
-
-	/** @type {import('./types').MessageDetails | undefined} */
-	export let details = undefined;
-
-	/** @type {string | undefined} */
-	export let filename = undefined;
-
-	export let truncate = false;
+	/**
+	 * @type {{
+	 * 	kind?: 'info' | 'warning' | 'error';
+	 * 	details?: import('./types').MessageDetails;
+	 * 	filename?: string;
+	 * 	truncate?: boolean;
+	 * 	children?: import('svelte').Snippet
+	 * }}
+	 */
+	const { kind = 'info', details, filename, truncate = false, children } = $props();
 
 	const repl_state = get_repl_context();
 
@@ -33,13 +33,13 @@
 	{#if details}
 		<button
 			class:navigable={details.filename}
-			on:click={() => repl_state.go_to_warning_pos(details)}
-			on:keyup={(e) => e.key === ' ' && repl_state.go_to_warning_pos(details)}
+			onclick={() => repl_state.go_to_warning_pos(details)}
+			onkeyup={(e) => e.key === ' ' && repl_state.go_to_warning_pos(details)}
 		>
 			{message(details)}
 		</button>
 	{:else}
-		<slot />
+		{@render children?.()}
 	{/if}
 </div>
 

@@ -182,7 +182,7 @@
 	}
 </script>
 
-<svelte:window on:beforeunload={before_unload} />
+<svelte:window onbeforeunload={before_unload} />
 
 <div class="container" class:toggleable={repl_state.toggleable} bind:clientWidth={width}>
 	<div class="viewport" class:output={show_output}>

@@ -1,10 +1,12 @@
 /// <reference lib="webworker" />
 
 import '../patch_window.js';
-import { sleep } from '$lib/utils.js';
+
+import { create_deferred_promise } from '$lib/utils.js';
 import { rollup } from '@rollup/browser';
 import { DEV } from 'esm-env';
 import * as resolve from 'resolve.exports';
+import { load_svelte_compiler } from '../worker-helpers.js';
 import commonjs from './plugins/commonjs.js';
 import glsl from './plugins/glsl.js';
 import json from './plugins/json.js';
@@ -12,6 +14,9 @@ import replace from './plugins/replace.js';
 
 /** @type {string} */
 var pkg_name;
+
+/** @type {import('svelte/compiler')} */
+var svelte;
 
 /** @type {string} */
 let packages_url;
@@ -22,11 +27,7 @@ let svelte_url;
 /** @type {number} */
 let current_id;
 
-/** @type {(...arg: never) => void} */
-let fulfil_ready;
-const ready = new Promise((f) => {
-	fulfil_ready = f;
-});
+const ready = create_deferred_promise();
 
 self.addEventListener(
 	'message',
@@ -35,28 +36,14 @@ self.addEventListener(
 			case 'init': {
 				({ packages_url, svelte_url } = event.data);
 
-				const { version } = await fetch(`${svelte_url}/package.json`).then((r) => r.json());
-				console.log(`Using Svelte compiler version ${version}`);
+				svelte = await load_svelte_compiler(svelte_url);
 
-				if (version.startsWith('4')) {
-					// unpkg doesn't set the correct MIME type for .cjs files
-					// https://github.com/mjackson/unpkg/issues/355
-					const compiler = await fetch(`${svelte_url}/compiler.cjs`).then((r) => r.text());
-					(0, eval)(compiler + '\n//# sourceURL=compiler.cjs@' + version);
-				} else {
-					try {
-						importScripts(`${svelte_url}/compiler.js`);
-					} catch {
-						self.svelte = await import(/* @vite-ignore */ `${svelte_url}/compiler.mjs`);
-					}
-				}
-
-				fulfil_ready();
+				ready.resolve();
 				break;
 			}
 
 			case 'bundle': {
-				await ready;
+				await ready.promise;
 				const { uid, files } = event.data;
 
 				if (files.length === 0) return;
@@ -99,7 +86,7 @@ async function fetch_if_uncached(url, uid) {
 	}
 
 	// TODO: investigate whether this is necessary
-	await sleep(50);
+	// await sleep(50);
 	if (uid !== current_id) throw ABORT;
 
 	const promise = fetch(url)
@@ -129,18 +116,30 @@ async function follow_redirects(url, uid) {
 	return res?.url;
 }
 
+// Can recognize anywhere from 4.0.0 to 5.0.0-next.136
+const VERSION_REGEX = /^(\d+)\.(\d+)\.(\d+)(?:-([a-zA-Z0-9]+)\.(\d+))?$/;
+
 /**
  *
  * @param {number} major
  * @param {number} minor
  * @param {number} patch
+ * @param {string} [tag]
+ * @param {number} [tag_patch]
  * @returns {number}
  */
-function compare_to_version(major, minor, patch) {
-	const v = self.svelte.VERSION.match(/^(\d+)\.(\d+)\.(\d+)/);
+function compare_to_version(major, minor, patch, tag, tag_patch) {
+	const v = svelte.VERSION.match(VERSION_REGEX);
+
+	if (!v) return 1;
+	if (v[4] !== undefined && v[4] != tag) return 1;
 
 	// @ts-ignore
-	return +v[1] - major || +v[2] - minor || +v[3] - patch;
+	return +v[1] - major || +v[2] - minor || +v[3] - patch || +v[5] - tag_patch;
+}
+
+function is_v5() {
+	return compare_to_version(5, 0, 0) >= 0;
 }
 
 function is_v4() {
@@ -253,6 +252,7 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 	const repl_plugin = {
 		name: 'svelte-repl',
 		async resolveId(importee, importer) {
+			await ready.promise;
 			if (uid !== current_id) throw ABORT;
 			const v4 = is_v4();
 			// importing from Svelte
@@ -368,14 +368,14 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 			const result =
 				cached_id && cached_id.code === code
 					? cached_id.result
-					: self.svelte.compile(code, {
+					: svelte.compile(code, {
 							generate: mode,
 							dev: true,
 							filename: name + '.svelte',
 							...(has_loopGuardTimeout_feature() && {
 								loopGuardTimeout: 100
 							})
-					  });
+						});
 
 			new_cache.set(id, { code, result });
 
@@ -433,7 +433,7 @@ async function get_bundle(uid, mode, cache, local_files_lookup) {
 async function bundle({ uid, files }) {
 	if (!DEV) {
 		console.clear();
-		console.log(`running Svelte compiler version %c${self.svelte.VERSION}`, 'font-weight: bold');
+		console.log(`running Svelte compiler version %c${svelte.VERSION}`, 'font-weight: bold');
 	}
 
 	/** @type {Map<string, import('$lib/types').File>} */
@@ -483,7 +483,7 @@ async function bundle({ uid, files }) {
 						exports: 'named',
 						sourcemap: 'inline'
 					})
-			  )?.output?.[0]
+				)?.output?.[0]
 			: null;
 
 		return {

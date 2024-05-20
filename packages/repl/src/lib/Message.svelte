@@ -1,6 +1,6 @@
 <script>
 	import { slide } from 'svelte/transition';
-	import { get_repl_context } from './context.js';
+	import { get_repl_context } from './state.svelte.js';
 
 	/** @type {'info' | 'warning' | 'error'} */
 	export let kind = 'info';
@@ -13,7 +13,7 @@
 
 	export let truncate = false;
 
-	const { go_to_warning_pos } = get_repl_context();
+	const repl_state = get_repl_context();
 
 	/** @param {import('./types').MessageDetails} details */
 	function message(details) {
@@ -33,8 +33,8 @@
 	{#if details}
 		<button
 			class:navigable={details.filename}
-			on:click={() => go_to_warning_pos(details)}
-			on:keyup={(e) => e.key === ' ' && go_to_warning_pos(details)}
+			on:click={() => repl_state.go_to_warning_pos(details)}
+			on:keyup={(e) => e.key === ' ' && repl_state.go_to_warning_pos(details)}
 		>
 			{message(details)}
 		</button>

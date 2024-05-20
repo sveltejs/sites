@@ -1,116 +1,111 @@
 <script>
-	import { get_repl_context } from '$lib/context.js';
+	import { get_repl_context } from '$lib/state.svelte.js';
 	import { get_full_filename } from '$lib/utils.js';
-	import { createEventDispatcher, tick } from 'svelte';
+	import { tick } from 'svelte';
 
-	/** @type {boolean}  */
-	export let show_modified;
+	/**
+	 * @type {{
+	 * show_modified: boolean
+	 * onadd?: (data: { files: import('$lib/types').File[], diff: import('$lib/types').File }) => void;
+	 * onremove?: (data: { files: import('$lib/types').File[], diff: import('$lib/types').File }) => void;
+	 * }}
+	 */
+	const { show_modified, onadd, onremove } = $props();
 
-	/** @type {ReturnType<typeof createEventDispatcher<{
-	 * remove: { files: import('$lib/types').File[]; diff: import('$lib/types').File },
-	 * add: { files: import('$lib/types').File[]; diff: import('$lib/types').File },
-	 * }>>} */
-	const dispatch = createEventDispatcher();
-
-	const {
-		files,
-		handle_select,
-		module_editor,
-		rebundle,
-		selected,
-		selected_name,
-		EDITOR_STATE_MAP
-	} = get_repl_context();
+	const repl_state = get_repl_context();
 
 	/** @type {string | null} */
-	let editing_name = null;
+	let editing_name = $state(null);
 
-	let input_value = '';
+	let input_value = $state('');
 
 	/** @param {string} filename */
 	function select_file(filename) {
-		if ($selected_name !== filename) {
+		if (repl_state.selected_name !== filename) {
 			editing_name = null;
-			handle_select(filename);
+			repl_state.handle_select(filename);
 		}
 	}
 
 	/** @param {import('$lib/types').File} file */
 	function edit_tab(file) {
-		if ($selected_name === get_full_filename(file)) {
+		if (repl_state.selected_name === get_full_filename(file)) {
 			editing_name = get_full_filename(file);
 			input_value = file.name;
 		}
 	}
 
+	$inspect(repl_state.files).with(console.trace);
+
 	async function close_edit() {
 		const match = /(.+)\.(svelte|js|json|md|css)$/.exec(input_value ?? '');
 
-		const edited_file = $files.find((val) => get_full_filename(val) === editing_name);
+		const edited_file = $state
+			.snapshot(repl_state.files)
+			.find((val) => get_full_filename(val) === editing_name);
 
 		if (!edited_file) return;
 
 		edited_file.name = match ? match[1] : input_value;
 
-		if (!$selected) return;
+		if (!repl_state.selected) return;
 
-		if (is_file_name_used($selected)) {
+		if (is_file_name_used(repl_state.selected)) {
 			let i = 1;
-			let name = $selected.name;
+			let name = repl_state.selected.name;
 
 			do {
-				const file = $files.find(
+				const file = repl_state.files.find(
 					(val) =>
 						get_full_filename(val) === get_full_filename(edited_file) &&
 						// @ts-ignore
-						val.source === $selected.source
+						val.source === repl_state.selected.source
 				);
 
 				if (!file) break;
 
 				file.name = `${name}_${i++}`;
-			} while (is_file_name_used($selected));
+			} while (is_file_name_used(repl_state.selected));
 
-			const idx = $files.findIndex(
+			const idx = repl_state.files.findIndex(
 				(val) => get_full_filename(val) === get_full_filename(edited_file)
 			);
-			$files[idx] = edited_file;
+
+			repl_state.files[idx] = edited_file;
 		}
 
-		const idx = $files.findIndex(
-			(val) => get_full_filename(val) === get_full_filename(edited_file)
-		);
-		if (match?.[2]) $files[idx].type = match[2];
+		const idx = repl_state.files.findIndex((val) => get_full_filename(val) === editing_name);
+
+		if (match?.[2]) edited_file.type = match[2];
+		repl_state.files[idx] = edited_file;
 
 		if (editing_name) {
-			const old_state = EDITOR_STATE_MAP.get(editing_name);
+			const old_state = repl_state.editor_state_map.get(editing_name);
 			if (old_state) {
-				EDITOR_STATE_MAP.set(get_full_filename(edited_file), old_state);
-				EDITOR_STATE_MAP.delete(editing_name);
+				repl_state.editor_state_map.set(get_full_filename(edited_file), old_state);
+				repl_state.editor_state_map.delete(editing_name);
 			}
 		}
 
 		editing_name = null;
 
 		// re-select, in case the type changed
-		handle_select(get_full_filename(edited_file));
-
-		$files = $files;
+		await repl_state.handle_select(get_full_filename(edited_file));
 
 		// focus the editor, but wait a beat (so key events aren't misdirected)
 		await tick();
 
-		$module_editor?.focus();
+		repl_state.module_editor?.focus();
 
-		rebundle();
+		repl_state.rebundle();
 	}
 
 	/**
 	 * @param {string} filename
 	 */
 	function remove(filename) {
-		const file = $files.find((val) => get_full_filename(val) === filename);
-		const idx = $files.findIndex((val) => get_full_filename(val) === filename);
+		const file = repl_state.files.find((val) => get_full_filename(val) === filename);
+		const idx = repl_state.files.findIndex((val) => get_full_filename(val) === filename);
 
 		if (!file) return;
 
@@ -118,12 +113,14 @@
 
 		if (!result) return;
 
-		$files = $files.filter((file) => get_full_filename(file) !== filename);
+		repl_state.files = repl_state.files.filter((file) => get_full_filename(file) !== filename);
 
-		dispatch('remove', { files: $files, diff: file });
+		onremove?.({ files: repl_state.files, diff: file });
 
-		EDITOR_STATE_MAP.delete(get_full_filename(file));
-		handle_select(($selected_name = idx === 1 ? 'App.svelte' : get_full_filename(file)));
+		repl_state.editor_state_map.delete(get_full_filename(file));
+		repl_state.handle_select(
+			(repl_state.selected_name = idx === 1 ? 'App.svelte' : get_full_filename(file))
+		);
 	}
 
 	/** @param {FocusEvent & { currentTarget: HTMLInputElement }} event */
@@ -143,25 +140,24 @@
 			modified: true
 		};
 
-		$files = $files.concat(file);
+		repl_state.files.push(file);
 
 		editing_name = get_full_filename(file);
 
 		input_value = file.name;
 
-		handle_select(editing_name);
+		repl_state.handle_select(editing_name);
 
-		rebundle();
+		repl_state.rebundle();
 
-		dispatch('add', { files: $files, diff: file });
-
-		$files = $files;
+		onadd?.({ files: repl_state.files, diff: file });
 	}
 
 	/** @param {import('$lib/types').File} editing */
 	function is_file_name_used(editing) {
-		return $files.find(
-			(file) => JSON.stringify(file) !== JSON.stringify($selected) && file.name === editing.name
+		return repl_state.files.find(
+			(file) =>
+				JSON.stringify(file) !== JSON.stringify(repl_state.selected) && file.name === editing.name
 		);
 	}
 
@@ -170,14 +166,14 @@
 	let from = null;
 
 	/** @type {string | null} */
-	let over = null;
+	let over = $state(null);
 
 	/** @param {DragEvent & { currentTarget: HTMLDivElement }} event */
-	function dragStart(event) {
+	function drag_start(event) {
 		from = event.currentTarget.id;
 	}
 
-	function dragLeave() {
+	function drag_leave() {
 		over = null;
 	}
 
@@ -186,16 +182,19 @@
 		over = event.currentTarget.id;
 	}
 
-	function dragEnd() {
+	function drag_end() {
 		if (from && over) {
-			const from_index = $files.findIndex((file) => file.name === from);
-			const to_index = $files.findIndex((file) => file.name === over);
+			const from_index = repl_state.files.findIndex((file) => file.name === from);
+			const to_index = repl_state.files.findIndex((file) => file.name === over);
 
-			const from_component = $files[from_index];
+			const from_component = repl_state.files[from_index];
 
-			$files.splice(from_index, 1);
+			repl_state.files.splice(from_index, 1);
 
-			$files = $files.slice(0, to_index).concat(from_component).concat($files.slice(to_index));
+			repl_state.files = repl_state.files
+				.slice(0, to_index)
+				.concat(from_component)
+				.concat(repl_state.files.slice(to_index));
 		}
 
 		from = over = null;
@@ -203,49 +202,57 @@
 </script>
 
 <div class="component-selector">
-	{#if $files.length}
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		<div class="file-tabs" on:dblclick={add_new}>
-			{#each $files as file, index (file.name)}
+	{#if repl_state.files.length}
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
+		<div class="file-tabs" ondblclick={add_new}>
+			{#each repl_state.files as file, index (file.name)}
 				{@const filename = get_full_filename(file)}
 				<div
 					id={file.name}
 					class="button"
 					role="button"
 					tabindex="0"
-					class:active={filename === $selected_name}
+					class:active={filename === repl_state.selected_name}
 					class:draggable={filename !== editing_name && index !== 0}
 					class:drag-over={over === file.name}
-					on:click={() => select_file(filename)}
-					on:keyup={(e) => e.key === ' ' && select_file(filename)}
-					on:dblclick|stopPropagation={() => {}}
+					onclick={() => select_file(filename)}
+					onkeyup={(e) => e.key === ' ' && select_file(filename)}
+					ondblclick={(e) => e.stopPropagation()}
 					draggable={filename !== editing_name}
-					on:dragstart={dragStart}
-					on:dragover|preventDefault={dragOver}
-					on:dragleave={dragLeave}
-					on:drop|preventDefault={dragEnd}
+					ondragstart={drag_start}
+					ondragover={(e) => {
+						e.preventDefault();
+						dragOver(e);
+					}}
+					ondragleave={drag_leave}
+					ondrop={(e) => {
+						e.preventDefault();
+						drag_end();
+					}}
 				>
-					<i class="drag-handle" />
+					<i class="drag-handle"></i>
 					{#if file.name === 'App' && filename !== editing_name}
 						<div class="uneditable">
 							App.svelte{#if show_modified && file.modified}*{/if}
 						</div>
 					{:else if filename === editing_name}
-						{@const editing_file = $files.find((file) => get_full_filename(file) === editing_name)}
+						{@const editing_file = repl_state.files.find(
+							(file) => get_full_filename(file) === editing_name
+						)}
 
 						{#if editing_file}
 							<span class="input-sizer">
 								{input_value + (/\./.test(input_value) ? '' : `.${editing_file.type}`)}
 							</span>
 
-							<!-- svelte-ignore a11y-autofocus -->
+							<!-- svelte-ignore a11y_autofocus -->
 							<input
 								autofocus
 								spellcheck={false}
 								bind:value={input_value}
-								on:focus={select_input}
-								on:blur={close_edit}
-								on:keydown={(e) => {
+								onfocus={select_input}
+								onblur={close_edit}
+								onkeydown={(e) => {
 									if (e.key === 'Enter') {
 										e.preventDefault();
 										if (!is_file_name_used(editing_file)) {
@@ -257,21 +264,21 @@
 							/>
 						{/if}
 					{:else}
-						<!-- svelte-ignore a11y-no-static-element-interactions -->
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
 						<div
 							class="editable"
 							title="edit component name"
-							on:click={() => edit_tab(file)}
-							on:keyup={(e) => e.key === ' ' && edit_tab(file)}
+							onclick={() => edit_tab(file)}
+							onkeyup={(e) => e.key === ' ' && edit_tab(file)}
 						>
 							{file.name}.{file.type}{#if show_modified && file.modified}*{/if}
 						</div>
 
-						<!-- svelte-ignore a11y-no-static-element-interactions -->
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
 						<span
 							class="remove"
-							on:click={() => remove(filename)}
-							on:keyup={(e) => e.key === ' ' && remove(filename)}
+							onclick={() => remove(filename)}
+							onkeyup={(e) => e.key === ' ' && remove(filename)}
 						>
 							<svg width="12" height="12" viewBox="0 0 24 24">
 								<line stroke="#999" x1="18" y1="6" x2="6" y2="18" />
@@ -282,7 +289,7 @@
 				</div>
 			{/each}
 
-			<button class="add-new" on:click={add_new} title="add new component">
+			<button class="add-new" onclick={add_new} title="add new component">
 				<svg width="12" height="12" viewBox="0 0 24 24">
 					<line stroke="#999" x1="12" y1="5" x2="12" y2="19" />
 					<line stroke="#999" x1="5" y1="12" x2="19" y2="12" />

@@ -36,7 +36,7 @@
 </script>
 
 <main>
-	<Repl vim bind:this={repl} showAst autocomplete={true} previewTheme="dark" />
+	<Repl vim={false} bind:this={repl} showAst autocomplete={true} previewTheme="dark" />
 </main>
 
 <style>

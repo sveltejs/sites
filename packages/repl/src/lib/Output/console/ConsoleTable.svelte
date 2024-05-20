@@ -1,17 +1,19 @@
 <script>
 	import JSONNode from 'svelte-json-tree';
 
-	/** @type {any} */
-	export let data;
-
-	/** @type {any} */
-	export let columns;
+	/**
+	 * @type {{
+	 *  data: any;
+	 *  columns: any;
+	 * }}
+	 */
+	const { columns, data } = $props();
 
 	const INDEX_KEY = '(index)';
 	const VALUE_KEY = 'Value';
 
-	$: keys = Object.keys(data);
-	$: columns_to_render = columns || get_columns_to_render(data, keys);
+	const keys = $derived(Object.keys(data));
+	const columns_to_render = $derived(columns || get_columns_to_render(data, keys));
 
 	/**
 	 * @param {any} data
@@ -52,7 +54,7 @@
 						{:else if column in data[key]}
 							<td><JSONNode value={data[key][column]} /></td>
 						{:else}
-							<td />
+							<td></td>
 						{/if}
 					{/each}
 				</tr>

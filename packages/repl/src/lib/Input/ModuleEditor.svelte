@@ -1,41 +1,47 @@
 <script>
-	import { get_repl_context } from '$lib/context.js';
+	import { get_repl_context } from '$lib/state.svelte.js';
 	import { get_full_filename } from '$lib/utils.js';
+	import { untrack } from 'svelte';
 	import CodeMirror from '../CodeMirror.svelte';
 	import Message from '../Message.svelte';
 
-	/** @type {import('$lib/types').StartOrEnd | null} */
-	export let errorLoc = null;
+	/**
+	 * @type {{
+	 *  errorLoc?: import('$lib/types').StartOrEnd | null;
+	 * 	autocomplete: boolean;
+	 * 	vim: boolean;
+	 * }}
+	 */
+	const { errorLoc = null, autocomplete, vim } = $props();
 
-	/** @type {boolean} */
-	export let autocomplete;
-	/** @type {boolean} */
-	export let vim;
+	const repl_state = get_repl_context();
 
 	export function focus() {
-		$module_editor?.focus();
+		repl_state.module_editor?.focus();
 	}
-
-	const { bundle, handle_change, module_editor, selected, bundling } = get_repl_context();
 
 	/** @type {import('$lib/types').Error | null | undefined} */
-	let error = null;
+	let error = $state(null);
 
 	/** @type {import('$lib/types').Warning[]} */
-	let warnings = [];
+	let warnings = $state([]);
 
-	$: filename = $selected?.name + '.' + $selected?.type;
+	const filename = $derived(repl_state.selected?.name + '.' + repl_state.selected?.type);
 
-	$: if ($bundle) {
-		error = $bundle?.error;
-		warnings = $bundle?.warnings ?? [];
-	}
+	$effect(() => {
+		if (repl_state.bundle) {
+			untrack(() => {
+				error = repl_state.bundle?.error;
+				warnings = repl_state.bundle?.warnings ?? [];
+			});
+		}
+	});
 
 	async function diagnostics() {
-		await $bundling;
+		await repl_state.bundling;
 
 		return /** @type {import('@codemirror/lint').Diagnostic[]} */ ([
-			...($selected && error?.filename === get_full_filename($selected)
+			...(repl_state.selected && error?.filename === get_full_filename(repl_state.selected)
 				? [
 						{
 							from: error.start.character,
@@ -43,10 +49,13 @@
 							severity: 'error',
 							message: error.message
 						}
-				  ]
+					]
 				: []),
 			...warnings
-				.filter((warning) => $selected && warning.filename === get_full_filename($selected))
+				.filter(
+					(warning) =>
+						repl_state.selected && warning.filename === get_full_filename(repl_state.selected)
+				)
 				.map((warning) => ({
 					from: warning.start.character,
 					to: warning.end.character,
@@ -60,12 +69,13 @@
 <div class="editor-wrapper">
 	<div class="editor notranslate" translate="no">
 		<CodeMirror
-			bind:this={$module_editor}
+			bind:this={repl_state.module_editor}
 			{errorLoc}
 			{autocomplete}
 			{vim}
 			{diagnostics}
-			on:change={handle_change}
+			filename={get_full_filename(repl_state.selected)}
+			onchange={repl_state.handle_change}
 		/>
 	</div>
 

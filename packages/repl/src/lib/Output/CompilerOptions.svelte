@@ -1,9 +1,9 @@
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <script>
-	import { get_repl_context } from '$lib/context.js';
+	import { get_repl_context } from '$lib/state.svelte.js';
 	import Checkbox from '../Checkbox.svelte';
 
-	const { compile_options } = get_repl_context();
+	const repl_state = get_repl_context();
 </script>
 
 <div class="options">
@@ -11,55 +11,75 @@
 	<div class="option">
 		<span class="key">generate:</span>
 
-		<input id="dom-input" type="radio" bind:group={$compile_options.generate} value="dom" />
+		<input
+			id="dom-input"
+			type="radio"
+			bind:group={repl_state.compile_options.generate}
+			value="dom"
+		/>
 		<label for="dom-input"><span class="string">"dom"</span></label>
 
-		<input id="ssr-input" type="radio" bind:group={$compile_options.generate} value="ssr" />
+		<input
+			id="ssr-input"
+			type="radio"
+			bind:group={repl_state.compile_options.generate}
+			value="ssr"
+		/>
 		<label for="ssr-input"><span class="string">"ssr"</span>,</label>
 	</div>
 
 	<label class="option">
 		<span class="key">dev:</span>
-		<Checkbox bind:checked={$compile_options.dev} />
-		<span class="boolean">{$compile_options.dev}</span>,
+		<Checkbox bind:checked={repl_state.compile_options.dev} />
+		<span class="boolean">{repl_state.compile_options.dev}</span>,
 	</label>
 
 	<div class="option">
 		<span class="key">css:</span>
 
-		<input id="injected-input" type="radio" bind:group={$compile_options.css} value="injected" />
+		<input
+			id="injected-input"
+			type="radio"
+			bind:group={repl_state.compile_options.css}
+			value="injected"
+		/>
 		<label for="injected-input"><span class="string">"injected"</span></label>
 
-		<input id="external-input" type="radio" bind:group={$compile_options.css} value="external" />
+		<input
+			id="external-input"
+			type="radio"
+			bind:group={repl_state.compile_options.css}
+			value="external"
+		/>
 		<label for="external-input"><span class="string">"external"</span></label>
 
-		<input id="none-input" type="radio" bind:group={$compile_options.css} value="none" />
+		<input id="none-input" type="radio" bind:group={repl_state.compile_options.css} value="none" />
 		<label for="none-input"><span class="string">"none"</span>,</label>
 	</div>
 
-	<label class="option">
+	<!-- <label class="option">
 		<span class="key">hydratable:</span>
 		<Checkbox bind:checked={$compile_options.hydratable} />
 		<span class="boolean">{$compile_options.hydratable}</span>,
-	</label>
+	</label> -->
 
 	<label class="option">
 		<span class="key">customElement:</span>
-		<Checkbox bind:checked={$compile_options.customElement} />
-		<span class="boolean">{$compile_options.customElement}</span>,
+		<Checkbox bind:checked={repl_state.compile_options.customElement} />
+		<span class="boolean">{repl_state.compile_options.customElement}</span>,
 	</label>
 
-	<label class="option">
+	<!-- <label class="option">
 		<span class="key">immutable:</span>
-		<Checkbox bind:checked={$compile_options.immutable} />
-		<span class="boolean">{$compile_options.immutable}</span>,
-	</label>
-
+		<Checkbox bind:checked={repl_state.compile_options.immutable} />
+		<span class="boolean">{repl_state.compile_options.immutable}</span>,
+	</label> -->
+	<!-- 
 	<label class="option">
 		<span class="key">legacy:</span>
 		<Checkbox bind:checked={$compile_options.legacy} />
 		<span class="boolean">{$compile_options.legacy}</span>
-	</label>
+	</label> -->
 	});
 </div>
 

@@ -137,17 +137,6 @@ export function create_repl_state({ onchange, cm_instance }) {
 		get(cm_instance).documents.clear();
 	}
 
-	function populate_editor_state() {
-		// for (const file of files) {
-		// 	editor_state_map.set(
-		// 		get_full_filename(file),
-		// 		EditorState.create({
-		// 			doc: file.source
-		// 		}).toJSON()
-		// 	);
-		// }
-	}
-
 	return {
 		get files() {
 			return files;
@@ -223,8 +212,7 @@ export function create_repl_state({ onchange, cm_instance }) {
 		handle_select,
 		handle_change,
 		go_to_warning_pos,
-		clear_state,
-		populate_editor_state
+		clear_state
 	};
 }
 

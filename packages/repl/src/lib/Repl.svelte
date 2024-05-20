@@ -80,12 +80,6 @@
 
 		injectedCSS = data.css || '';
 
-		// when we set new files we also populate the EDITOR_STATE_MAP
-		// with a new state for each file containing the source as docs
-		// this allows the editor to behave correctly when renaming a tab
-		// after having loaded the files externally
-		repl_state.populate_editor_state();
-
 		onchange?.({ files: repl_state.files });
 	}
 
@@ -115,8 +109,6 @@
 
 			repl_state.module_editor?.clearEditorState();
 		}
-
-		repl_state.populate_editor_state();
 
 		onchange?.({ files: repl_state.files });
 	}

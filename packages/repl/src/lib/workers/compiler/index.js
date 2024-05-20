@@ -1,11 +1,10 @@
 /// <reference lib="webworker" />
+
+import { get_svelte_package_json, load_compiler } from '../worker-helpers';
+
 self.window = self; //TODO: still need?: egregious hack to get magic-string to work in a worker
 
-// This is just for type-safety
-/** @type {import('svelte/compiler')} */
-var svelte;
-
-/** @type {(...val: never) => void} */
+/** @type {(...val: never[]) => void} */
 let fulfil_ready;
 const ready = new Promise((f) => {
 	fulfil_ready = f;
@@ -17,21 +16,10 @@ self.addEventListener(
 	async (event) => {
 		switch (event.data.type) {
 			case 'init':
-				const { svelte_url } = event.data;
-				const { version } = await fetch(`${svelte_url}/package.json`).then((r) => r.json());
+				const { svelte_url = '' } = event.data;
+				const { version } = await get_svelte_package_json(svelte_url);
 
-				if (version.startsWith('4')) {
-					// unpkg doesn't set the correct MIME type for .cjs files
-					// https://github.com/mjackson/unpkg/issues/355
-					const compiler = await fetch(`${svelte_url}/compiler.cjs`).then((r) => r.text());
-					(0, eval)(compiler + '\n//# sourceURL=compiler.cjs@' + version);
-				} else {
-					try {
-						importScripts(`${svelte_url}/compiler.js`);
-					} catch {
-						self.svelte = await import(/* @vite-ignore */ `${svelte_url}/compiler.mjs`);
-					}
-				}
+				await load_compiler(svelte_url, version);
 
 				fulfil_ready();
 				break;

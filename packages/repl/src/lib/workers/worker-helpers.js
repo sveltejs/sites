@@ -41,7 +41,13 @@ export async function get_svelte_package_json(url) {
  */
 export async function load_compiler(svelte_url, version) {
 	if (version.startsWith('4')) {
-		let compiler = await fetch(`${svelte_url}/compiler.cjs`).then((r) => r.text());
+		let compiler = await fetch(
+			`${
+				svelte_url.includes('esm.run')
+					? `https://cdn.jsdelivr.net/npm/svelte@${version}`
+					: svelte_url
+			}/compiler.cjs`
+		).then((r) => r.text());
 
 		if (svelte_url.includes('esm.run')) {
 			// Remove all the exports

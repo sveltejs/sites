@@ -66,13 +66,7 @@
 </script>
 
 <main>
-	<Repl
-		bind:this={repl}
-		showAst
-		autocomplete={true}
-		previewTheme="dark"
-		svelteUrl="https://esm.run/svelte@3"
-	/>
+	<Repl bind:this={repl} showAst autocomplete={true} previewTheme="dark" />
 </main>
 
 <style>

@@ -1,7 +1,7 @@
 <script>
 	// preserve the focus ring for keyboard users because a11y,
 	// but hide for mouse users because fugly
-	let nice = false;
+	let nice = $state(false);
 
 	let theme = 'light';
 
@@ -33,9 +33,9 @@
 	aria-label="Toggle theme"
 	title="Toggle theme"
 	class:nice
-	on:mousedown={() => (nice = true)}
-	on:blur={() => (nice = false)}
-	on:click={toggle}
+	onmousedown={() => (nice = true)}
+	onblur={() => (nice = false)}
+	onclick={toggle}
 >
 	toggle theme
 

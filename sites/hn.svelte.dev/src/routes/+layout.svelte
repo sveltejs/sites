@@ -5,7 +5,9 @@
 	import ThemeToggler from '$lib/ThemeToggler.svelte';
 	import '../app.css';
 
-	$: section = $page.url.pathname.split('/')[1];
+	const { children } = $props();
+
+	const section = $derived($page.url.pathname.split('/')[1]);
 </script>
 
 <Nav {section} />
@@ -15,7 +17,7 @@
 {/if}
 
 <main>
-	<slot />
+	{@render children()}
 </main>
 
 <ThemeToggler />

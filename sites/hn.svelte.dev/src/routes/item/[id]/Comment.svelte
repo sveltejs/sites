@@ -1,14 +1,17 @@
 <script>
+	import Comment from "./Comment.svelte";
+
 	/**
-	 * @type {{
-	 * deleted?: boolean;
-	 * user: string;
-	 * time_ago: number;
-	 * content: string;
-	 * comments: any[];
-	 * }}
+	 * @typedef {object} CommentData
+	 * @property {boolean} [deleted]
+	 * @property {string} user
+	 * @property {number} time_ago
+	 * @property {string} content
+	 * @property {CommentData[]} comments
 	 */
-	export let comment;
+
+	/** @type {{ comment: CommentData }} */
+	const { comment } = $props();
 </script>
 
 {#if !comment.deleted}
@@ -30,7 +33,7 @@
 			{#if comment.comments.length > 0}
 				<ul class="children">
 					{#each comment.comments as child}
-						<li><svelte:self comment={child} /></li>
+						<li><Comment comment={child} /></li>
 					{/each}
 				</ul>
 			{/if}

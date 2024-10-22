@@ -1,5 +1,3 @@
-/// <reference types="@sveltejs/kit" />
-
 declare global {
 	namespace App {
 		interface Error {
@@ -7,3 +5,5 @@ declare global {
 		}
 	}
 }
+
+export {};

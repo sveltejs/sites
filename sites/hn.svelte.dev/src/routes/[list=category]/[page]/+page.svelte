@@ -1,13 +1,12 @@
 <script>
 	import ItemSummary from './ItemSummary.svelte';
 
-	/** @type {import('./$types').PageData} */
-	export let data;
+	const { data } = $props();
 
 	const PAGE_SIZE = 30;
 
-	$: start = 1 + (data.page - 1) * PAGE_SIZE;
-	$: next = `/${data.list}/${data.page + 1}`;
+	const start = $derived(1 + (data.page - 1) * PAGE_SIZE);
+	const next = $derived(`/${data.list}/${data.page + 1}`);
 </script>
 
 <svelte:head>

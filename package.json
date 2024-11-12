@@ -1,15 +1,6 @@
 {
 	"name": "sites",
-	"version": "1.0.0",
-	"devDependencies": {
-		"@changesets/cli": "^2.26.1"
-	},
-	"scripts": {
-		"package": "pnpm -r package",
-		"changeset": "changeset",
-		"ci:release": "changeset publish",
-		"ci:version": "changeset version"
-	},
+	"private": true,
 	"packageManager": "pnpm@9.6.0",
 	"engines": {
 		"pnpm": "^9.0.0"

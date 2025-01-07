@@ -11,8 +11,8 @@
 		"check": "svelte-check --tsconfig ./jsconfig.json"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-vercel": "^5.4.5",
-		"@sveltejs/kit": "^2.7.2",
+		"@sveltejs/adapter-vercel": "^5.5.2",
+		"@sveltejs/kit": "^2.15.2",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.7",

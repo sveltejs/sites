@@ -1,5 +1,5 @@
 <script>
-	import { page, navigating } from '$app/stores';
+	import { page, navigating } from '$app/state';
 	import favicon from '$lib/assets/favicon.svg';
 	import Nav from '$lib/Nav.svelte';
 	import PreloadingIndicator from '$lib/PreloadingIndicator.svelte';
@@ -8,7 +8,7 @@
 
 	const { children } = $props();
 
-	const section = $derived($page.url.pathname.split('/')[1]);
+	const section = $derived(page.url.pathname.split('/')[1]);
 </script>
 
 <svelte:head>
@@ -17,7 +17,7 @@
 
 <Nav {section} />
 
-{#if $navigating}
+{#if navigating}
 	<PreloadingIndicator />
 {/if}
 

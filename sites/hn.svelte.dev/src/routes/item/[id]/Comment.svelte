@@ -1,5 +1,5 @@
 <script>
-	import Comment from "./Comment.svelte";
+	import Comment from './Comment.svelte';
 
 	/**
 	 * @typedef {object} CommentData

@@ -4,9 +4,9 @@ A [Hacker News](https://news.ycombinator.com/) clone built with [SvelteKit](http
 
 ## Running locally
 
-```bash
+```sh
 git clone https://github.com/sveltejs/sites.git
-cd sites/sites/hn.svelte.dev
+cd sites/hn.svelte.dev
 pnpm install
 pnpm run dev
 ```

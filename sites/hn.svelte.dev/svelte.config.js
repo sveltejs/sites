@@ -6,8 +6,8 @@ const config = {
 	compilerOptions: {
 		runes: true
 	},
+	preprocess: vitePreprocess(),
 	kit: {
-		preprocess: vitePreprocess(),
 		// new projects use adapter-auto by default
 		// we use adapter-vercel here to use more efficient edge serving
 		adapter: adapter({ runtime: 'edge' }),

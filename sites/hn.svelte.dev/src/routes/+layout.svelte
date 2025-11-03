@@ -1,5 +1,5 @@
 <script>
-	import { page, navigating } from '$app/stores';
+	import { page, navigating } from '$app/state';
 	import Nav from '$lib/Nav.svelte';
 	import PreloadingIndicator from '$lib/PreloadingIndicator.svelte';
 	import ThemeToggler from '$lib/ThemeToggler.svelte';
@@ -7,12 +7,12 @@
 
 	const { children } = $props();
 
-	const section = $derived($page.url.pathname.split('/')[1]);
+	const section = $derived(page.url.pathname.split('/')[1]);
 </script>
 
 <Nav {section} />
 
-{#if $navigating}
+{#if navigating}
 	<PreloadingIndicator />
 {/if}
 

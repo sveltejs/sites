@@ -1,10 +1,10 @@
 <script>
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	const offline = typeof navigator !== 'undefined' && navigator.onLine === false;
 
-	const title = offline ? 'Offline' : $page.status;
-	const message = offline ? 'Find the internet and try again' : $page.error.message;
+	const title = offline ? 'Offline' : page.status;
+	const message = offline ? 'Find the internet and try again' : page.error?.message;
 </script>
 
 <svelte:head>

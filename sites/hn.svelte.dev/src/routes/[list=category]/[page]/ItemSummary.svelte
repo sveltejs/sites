@@ -1,45 +1,44 @@
 <script>
+	import { resolve } from '$app/paths';
+	import { timeAgo } from '$lib/utils';
 	/**
 	 * @type {{
-	 *   item: {
-	 *     domain?: string;
-	 *     id: string;
-	 *     url: string;
-	 *     title: string;
-	 *     type: string;
-	 *     time_ago: string;
-	 *     points: number;
-	 *     user: string;
-	 *     comments_count: number;
-	 *   };
+	 *   item: HNStory | HNJob | HNPoll;
 	 *   index: number;
 	 * }}
 	 */
 	const { item, index } = $props();
+	const relativeTimeAgo = $derived(item.time ? timeAgo(item.time) : 'some time ago');
 </script>
 
 <article>
 	<h2>
-		<a href={item.domain ? item.url : `/item/${item.id}`}>
-			{item.title}
-			{#if item.domain}<small>({item.domain})</small>{/if}
-		</a>
+		{#if item.type !== 'poll' && item.url}
+			<a rel="external" href={item.url}>
+				{item.title}
+				<small>{new URL(item.url).hostname}</small>
+			</a>
+		{:else}
+			<a
+				href={resolve('/item/[id]', {
+					id: item.id.toString()
+				})}>{item.title}</a
+			>
+		{/if}
 	</h2>
 
-	{#if item.type === 'job'}
-		<p>{item.time_ago}</p>
-	{:else}
-		<p>
-			{item.points} points by
-			<a href="/user/{item.user}">{item.user}</a>
-			{item.time_ago}
+	<p>
+		{item.score} points by
+		<a href={resolve('/user/[name]', { name: item.by })}>{item.by}</a>
+		{relativeTimeAgo}
+		{#if item.type !== 'job'}
 			|
-			<a href="/item/{item.id}">
-				{item.comments_count}
-				{item.comments_count === 1 ? 'comment' : 'comments'}
+			<a href={resolve('/item/[id]', { id: item.id.toString() })}>
+				{item.descendants}
+				{item.descendants === 1 ? 'comment' : 'comments'}
 			</a>
-		</p>
-	{/if}
+		{/if}
+	</p>
 
 	<span class="index">{index}</span>
 </article>

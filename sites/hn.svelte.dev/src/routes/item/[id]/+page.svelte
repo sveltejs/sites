@@ -1,6 +1,10 @@
 <script>
-	import Comment from './Comment.svelte';
+	import { resolve } from '$app/paths';
+	import SubsetHTML from '$lib/SubsetHTML.svelte';
+	import { timeAgo } from '$lib/utils';
+	import CommentElement from './Comment.svelte';
 
+	/** @type {import('./$types').PageProps} */
 	const { data } = $props();
 </script>
 
@@ -10,26 +14,39 @@
 
 <div>
 	<article class="item">
-		<a class="main-link" href={data.url}>
+		<a class="main-link" rel="external" href={data.url}>
 			<h1>{data.title}</h1>
-			{#if data.domain}<small>{data.domain}</small>{/if}
+			{#if data.url}<small>{new URL(data.url).hostname}</small>{/if}
 		</a>
 
 		<p class="meta">
-			{data.points} points by <a href="/user/{data.user}">{data.user}</a>
-			{data.time_ago}
+			{data.score} points by <a href={resolve('/user/[name]', { name: data.by })}>{data.by}</a>
+			{data.time ? timeAgo(data.time) : 'Some time ago'}
 		</p>
 
-		{#if data.content}
-			{@html data.content}
+		{#if data.text}
+			<SubsetHTML content={data.text} />
+		{/if}
+		{#if data.parts}
+			<!-- Poll parts -->
+			{#each data.parts as partId (partId)}
+				{#await fetch(`https://hacker-news.firebaseio.com/v0/item/${partId}.json`).then((res) => /** @type {Promise<HNPollOption>} */ (res.json())) then pollOption}
+					<SubsetHTML content={pollOption.text} />
+					<small>{pollOption.score} points</small>
+				{/await}
+			{/each}
 		{/if}
 	</article>
 
-	<div class="comments">
-		{#each data.comments as comment}
-			<Comment {comment} />
-		{/each}
-	</div>
+	{#if data.kids && data.kids.length > 0}
+		<div class="comments">
+			{#each data.kids as commentId (commentId)}
+				{#await fetch(`https://hacker-news.firebaseio.com/v0/item/${commentId}.json`).then((res) => /** @type {Promise<HNComment>} */ (res.json())) then comment}
+					<CommentElement {comment} />
+				{/await}
+			{/each}
+		</div>
+	{/if}
 </div>
 
 <style>

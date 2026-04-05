@@ -1,20 +1,30 @@
 <script>
+	import { resolve } from '$app/paths';
+
 	/** @type {{ section: string }} section */
 	const { section } = $props();
+
+	/** @type {('top' | 'new' | 'best' | 'show' | 'ask' | 'jobs')[]} */
+	const lists = ['top', 'new', 'best', 'show', 'ask', 'jobs'];
 </script>
 
 <nav>
-	<img alt="Svelte Hacker News logo" class="icon" src="/favicon.png" />
+	<a href={resolve('/')}>
+		<img alt="Svelte Hacker News logo" class="icon" src="/favicon.png" />
+	</a>
 
 	<ul>
-		<li><a href="/top/1" class:selected={section === 'top'}>top</a></li>
-		<li><a href="/new/1" class:selected={section === 'new'}>new</a></li>
-		<li><a href="/show/1" class:selected={section === 'show'}>show</a></li>
-		<li><a href="/ask/1" class:selected={section === 'ask'}>ask</a></li>
-		<li><a href="/jobs/1" class:selected={section === 'jobs'}>jobs</a></li>
+		{#each lists as list (list)}
+			<li>
+				<a
+					href={resolve('/[list=category]/[page]', { list, page: '1' })}
+					class:selected={section === list}>{list}</a
+				>
+			</li>
+		{/each}
 
 		<li class="about">
-			<a href="/about" class:selected={section === 'about'}>about</a>
+			<a href={resolve('/about')} class:selected={section === 'about'}>about</a>
 		</li>
 	</ul>
 </nav>
@@ -76,7 +86,7 @@
 		bottom: 0;
 	}
 
-	a {
+	li a {
 		color: inherit;
 		text-decoration: none;
 		padding: 1em 0.5em;

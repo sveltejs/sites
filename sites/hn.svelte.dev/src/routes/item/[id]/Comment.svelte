@@ -1,16 +1,10 @@
 <script>
-	import Comment from './Comment.svelte';
+	import SubsetHTML from '$lib/SubsetHTML.svelte';
+	import CommentElement from './Comment.svelte';
+	import { resolve } from '$app/paths';
+	import { timeAgo } from '$lib/utils';
 
-	/**
-	 * @typedef {object} CommentData
-	 * @property {boolean} [deleted]
-	 * @property {string} user
-	 * @property {number} time_ago
-	 * @property {string} content
-	 * @property {CommentData[]} comments
-	 */
-
-	/** @type {{ comment: CommentData }} */
+	/** @type {{ comment: HNComment }} */
 	const { comment } = $props();
 </script>
 
@@ -20,20 +14,24 @@
 			<summary>
 				<div class="meta-bar" role="button" tabindex="0">
 					<span class="meta">
-						<a href="/user/{comment.user}">{comment.user}</a>
-						{comment.time_ago}
+						<a href={resolve('/user/[name]', { name: comment.by })}>{comment.by}</a>
+						{timeAgo(comment.time)}
 					</span>
 				</div>
 			</summary>
 
 			<div class="body">
-				{@html comment.content}
+				<SubsetHTML content={comment.text} />
 			</div>
 
-			{#if comment.comments.length > 0}
+			{#if comment.kids && comment.kids.length > 0}
 				<ul class="children">
-					{#each comment.comments as child}
-						<li><Comment comment={child} /></li>
+					{#each comment.kids as childId (childId)}
+						<li>
+							{#await fetch(`https://hacker-news.firebaseio.com/v0/item/${childId}.json`).then((res) => /** @type {Promise<HNComment>} */ (res.json())) then comment}
+								<CommentElement {comment} />
+							{/await}
+						</li>
 					{/each}
 				</ul>
 			{/if}

@@ -1,4 +1,8 @@
 <script>
+	import SubsetHTML from '$lib/SubsetHTML.svelte';
+	import { timeAgo } from '$lib/utils';
+
+	/** @type {import('./$types').PageProps} */
 	const { data } = $props();
 </script>
 
@@ -10,18 +14,18 @@
 
 <div>
 	<p>
-		...joined <strong>{data.created}</strong>, and has <strong>{data.karma}</strong> karma
+		...joined <strong>{timeAgo(data.created)}</strong>, and has <strong>{data.karma}</strong> karma
 	</p>
 
 	<p>
-		<a href="https://news.ycombinator.com/submitted?id={data.id}">submissions</a> /
-		<a href="https://news.ycombinator.com/threads?id={data.id}">comments</a> /
-		<a href="https://news.ycombinator.com/favorites?id={data.id}">favourites</a>
+		<a rel="external" href="https://news.ycombinator.com/submitted?id={data.id}">submissions</a> /
+		<a rel="external" href="https://news.ycombinator.com/threads?id={data.id}">comments</a> /
+		<a rel="external" href="https://news.ycombinator.com/favorites?id={data.id}">favourites</a>
 	</p>
 
 	{#if data.about}
 		<div class="about">
-			{@html '<p>' + data.about}
+			<SubsetHTML content={data.about} />
 		</div>
 	{/if}
 </div>

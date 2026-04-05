@@ -1,3 +1,11 @@
+const BASE = 'https://hacker-news.firebaseio.com/v0/';
+
+/**
+ * @satisfies {import('./$types').PageLoad}
+ */
 export async function load({ params, fetch }) {
-	return await fetch(`https://api.hnpwa.com/v0/item/${params.id}.json`).then((r) => r.json());
+	/** @type {Item} */
+	const item = await fetch(`${BASE}item/${params.id}.json`).then((r) => r.json());
+
+	return item;
 }

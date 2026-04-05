@@ -1,12 +1,14 @@
 <script>
+	import { resolve } from '$app/paths';
 	import ItemSummary from './ItemSummary.svelte';
+	import NullItem from './NullItem.svelte';
 
+	/** @type {import('./$types').PageProps} */
 	const { data } = $props();
 
 	const PAGE_SIZE = 30;
 
 	const start = $derived(1 + (data.page - 1) * PAGE_SIZE);
-	const next = $derived(`/${data.list}/${data.page + 1}`);
 </script>
 
 <svelte:head>
@@ -14,13 +16,19 @@
 	<meta name="description" content="Latest Hacker News stories in the {data.list} category" />
 </svelte:head>
 
-{#each data.items as item, i}
-	{#if item}
-		<!-- sometimes we get bad data? TODO investigate -->
+{#each data.items as item, i (item.id)}
+	{#if item.type !== 'null'}
 		<ItemSummary {item} index={start + i} />
+	{:else}
+		<!-- null item from API -->
+		<NullItem id={item.id} index={start + i} />
 	{/if}
 {/each}
 
-{#if next}
-	<a class="more" href={next}>More...</a>
-{/if}
+<a
+	class="more"
+	href={resolve('/[list=category]/[page]', {
+		list: /** @type {"top" | "new" | "show" | "ask" | "jobs"} */ (data.list),
+		page: (data.page + 1).toString()
+	})}>More...</a
+>

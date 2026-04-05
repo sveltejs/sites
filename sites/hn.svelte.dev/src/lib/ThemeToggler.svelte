@@ -12,7 +12,7 @@
 	}
 
 	const toggle = () => {
-		const { classList } = document.querySelector('html');
+		const { classList } = document.documentElement;
 		if (classList.length === 0) {
 			theme = 'dark';
 		} else {

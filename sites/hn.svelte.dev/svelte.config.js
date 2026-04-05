@@ -8,7 +8,7 @@ const config = {
 	kit: {
 		// new projects use adapter-auto by default
 		// we use adapter-vercel here to use more efficient edge serving
-		adapter: adapter({ runtime: 'edge' }),
+		adapter: adapter(),
 
 		inlineStyleThreshold: 5000
 	}

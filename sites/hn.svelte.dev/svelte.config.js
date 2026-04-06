@@ -8,7 +8,12 @@ const config = {
 	kit: {
 		// new projects use adapter-auto by default
 		// we use adapter-vercel here to use more efficient edge serving
-		adapter: adapter(),
+		adapter: adapter({
+			isr: {
+				allowQuery: [], // we don't use any query params
+				expiration: 60
+			}
+		}),
 
 		inlineStyleThreshold: 5000
 	}

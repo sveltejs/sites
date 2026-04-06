@@ -10,7 +10,12 @@
 	{#if child.type === 'text'}
 		{child.text}
 	{:else if child.type === 'link'}
-		<a rel="external" href={child.href}>{child.text}</a>
+		{#if ['http', 'https'].includes(new URL(child.href).protocol)}
+			<a rel="external" href={child.href}>{child.text}</a>
+		{:else}
+			<!-- link might be other protocol like `javascript:` so bail out and do best effort render -->
+			<del>{child.text}</del>
+		{/if}
 	{:else if child.type === 'italic'}
 		{#each child.children as subchild}
 			{@render inline(subchild)}

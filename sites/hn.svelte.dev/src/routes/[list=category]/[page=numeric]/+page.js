@@ -1,3 +1,5 @@
+import { error } from '@sveltejs/kit';
+
 const BASE = 'https://hacker-news.firebaseio.com/v0/';
 const ITEMS_PER_PAGE = 30;
 
@@ -11,8 +13,12 @@ export async function load({ params, fetch }) {
 	 * @type {number[]}
 	 **/
 	const itemIds = await fetch(`${BASE}${list}stories.json`).then((res) => res.json());
-	// TODO: what happens if it returns empty or errors?
 	const relevantItemIds = itemIds.slice(offset, offset + ITEMS_PER_PAGE);
+
+	if (relevantItemIds.length === 0) {
+		error(404, 'Page not found');
+	}
+
 	/** @type {(HNStory | HNJob | HNPoll | { type: 'null', id: number })[]} */
 	const items = await Promise.all(
 		relevantItemIds.map((id) =>

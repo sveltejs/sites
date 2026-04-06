@@ -1,6 +1,12 @@
-type HNItem = {
+type HNBaseItem = {
 	id: number;
 	deleted?: true;
+};
+type AlgoliaBaseItem = {
+	id: number;
+	author: string;
+	created_at: string;
+	created_at_i: number;
 };
 
 declare global {
@@ -9,7 +15,7 @@ declare global {
 			frame?: string;
 		}
 	}
-	type HNStory = HNItem & {
+	type HNStory = HNBaseItem & {
 		by: string;
 		descendants: number;
 		kids?: number[];
@@ -19,7 +25,7 @@ declare global {
 		type: 'story';
 		url: string;
 	};
-	type HNComment = HNItem & {
+	type HNComment = HNBaseItem & {
 		by: string;
 		id: number;
 		kids?: number[];
@@ -28,7 +34,7 @@ declare global {
 		time: number;
 		type: 'comment';
 	};
-	type HNJob = HNItem & {
+	type HNJob = HNBaseItem & {
 		by: string;
 		id: number;
 		score: number;
@@ -38,7 +44,7 @@ declare global {
 		type: 'job';
 		url: string;
 	};
-	type HNPoll = HNItem & {
+	type HNPoll = HNBaseItem & {
 		by: string;
 		descendants: number;
 		id: number;
@@ -50,7 +56,7 @@ declare global {
 		title: string;
 		type: 'poll';
 	};
-	type HNPollOption = HNItem & {
+	type HNPollOption = HNBaseItem & {
 		by: string;
 		id: number;
 		poll: number;
@@ -60,13 +66,74 @@ declare global {
 		type: 'pollopt';
 	};
 	type HNUser = {
-		about: string;
+		about?: string;
 		created: number;
 		id: string;
 		karma: number;
-		submitted: number[];
+		submitted?: number[];
 	};
-	type Item = HNStory | HNComment | HNJob | HNPoll | HNPollOption;
+	type HNItem = HNStory | HNComment | HNJob | HNPoll | HNPollOption;
+
+	type AlgoliaComment = AlgoliaBaseItem & {
+		type: 'comment';
+		url: null;
+		options: never[];
+		parent_id: number;
+		points: null | number;
+		story_id: number;
+		text: string;
+		title: null;
+		url: null;
+		children: AlgoliaComment[];
+	};
+	type AlgoliaStory = AlgoliaBaseItem & {
+		type: 'story';
+		options: never[];
+		parent_id: null;
+		points: null | number;
+		story_id: number;
+		text: null | string;
+		title: string;
+		url: null | string;
+		children: AlgoliaComment[];
+	};
+	type AlgoliaJob = AlgoliaBaseItem & {
+		type: 'job';
+		children: never[];
+		options: never[];
+		parent_id: null;
+		points: null;
+		story_id: null;
+		text: null | string;
+		title: string;
+		url: string;
+	};
+	/**
+	 * Algolia does not parse poll options properly, so all the contents are empty
+	 */
+	type AlgoliaPollOption = AlgoliaBaseItem & {
+		type: 'pollopt';
+		children: never[];
+		options: never[];
+		text: null;
+		parent_id: null;
+		story_id: null;
+		points: number;
+		title: null;
+		url: null;
+	};
+	type AlgoliaPoll = AlgoliaBaseItem & {
+		type: 'poll';
+		options: number[];
+		parent_id: null;
+		points: null | number;
+		story_id: null;
+		text: null | string;
+		title: string;
+		url: null;
+		children: AlgoliaComment[];
+	};
+	type AlgoliaItem = AlgoliaComment | AlgoliaStory | AlgoliaJob | AlgoliaPoll | AlgoliaPollOption;
 }
 
 export {};

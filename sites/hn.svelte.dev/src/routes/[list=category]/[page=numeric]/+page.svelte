@@ -25,10 +25,14 @@
 	{/if}
 {/each}
 
-<a
-	class="more"
-	href={resolve('/[list=category]/[page]', {
-		list: /** @type {"top" | "new" | "show" | "ask" | "jobs"} */ (data.list),
-		page: (data.page + 1).toString()
-	})}>More...</a
->
+{#if data.items.length >= PAGE_SIZE}
+	<a
+		class="more"
+		href={resolve('/[list=category]/[page=numeric]', {
+			list: /** @type {"top" | "new" | "best" | "show" | "ask" | "jobs"} */ (data.list),
+			page: `${data.page + 1}`
+		})}>More...</a
+	>
+{:else}
+	<p>That's all we can find...</p>
+{/if}

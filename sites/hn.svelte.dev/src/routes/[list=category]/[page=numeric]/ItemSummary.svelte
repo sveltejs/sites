@@ -20,20 +20,25 @@
 			</a>
 		{:else}
 			<a
-				href={resolve('/item/[id]', {
-					id: item.id.toString()
+				href={resolve('/item/[id=numeric]', {
+					id: `${item.id}`
 				})}>{item.title}</a
 			>
 		{/if}
 	</h2>
 
 	<p>
-		{item.score} points by
+		{item.score}
+		{item.score === 1 ? 'point' : 'points'} by
 		<a href={resolve('/user/[name]', { name: item.by })}>{item.by}</a>
 		{relativeTimeAgo}
 		{#if item.type !== 'job'}
 			|
-			<a href={resolve('/item/[id]', { id: item.id.toString() })}>
+			<a
+				href={resolve('/item/[id=numeric]', {
+					id: `${item.id}`
+				})}
+			>
 				{item.descendants}
 				{item.descendants === 1 ? 'comment' : 'comments'}
 			</a>

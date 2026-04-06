@@ -17,7 +17,7 @@
 		{#each lists as list (list)}
 			<li>
 				<a
-					href={resolve('/[list=category]/[page]', { list, page: '1' })}
+					href={resolve('/[list=category]/[page=numeric]', { list, page: '1' })}
 					class:selected={section === list}>{list}</a
 				>
 			</li>

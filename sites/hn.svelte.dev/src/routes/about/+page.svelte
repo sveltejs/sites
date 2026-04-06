@@ -13,14 +13,13 @@
 <p>
 	Svelte is a new kind of framework, one that compiles your component templates into fast, compact
 	JavaScript — either client-side or server-side. You can read more about the design and philosophy
-	in the <a rel="external" href="https://svelte.dev/blog/svelte-3-rethinking-reactivity"
-		>introductory blog post</a
-	>.
+	in the <a rel="external" href="https://svelte.dev/tutorial">introductory tutorial</a>.
 </p>
 
 <p>
-	We're using <a rel="external" href="https://github.com/hackernews/api"
-		>semi-official Hacker News API</a
+	We're using a combination of the <a rel="external" href="https://github.com/hackernews/api"
+		>Firebase HN API</a
 	>
+	and the <a rel="external" href="https://hn.algolia.com/api">Algolia HN API</a>
 	as a backend. The app is hosted on <a rel="external" href="https://vercel.com">Vercel</a>.
 </p>

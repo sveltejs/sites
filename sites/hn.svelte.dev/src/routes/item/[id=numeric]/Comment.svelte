@@ -4,18 +4,18 @@
 	import { resolve } from '$app/paths';
 	import { timeAgo } from '$lib/utils';
 
-	/** @type {{ comment: HNComment }} */
+	/** @type {{ comment: AlgoliaComment }} */
 	const { comment } = $props();
 </script>
 
-{#if !comment.deleted}
+{#if typeof comment !== null}
 	<article class="comment">
 		<details open>
 			<summary>
 				<div class="meta-bar" role="button" tabindex="0">
 					<span class="meta">
-						<a href={resolve('/user/[name]', { name: comment.by })}>{comment.by}</a>
-						{timeAgo(comment.time)}
+						<a href={resolve('/user/[name]', { name: comment.author })}>{comment.author}</a>
+						{timeAgo(comment.created_at_i)}
 					</span>
 				</div>
 			</summary>
@@ -24,13 +24,11 @@
 				<SubsetHTML content={comment.text} />
 			</div>
 
-			{#if comment.kids && comment.kids.length > 0}
+			{#if comment.children && comment.children.length > 0}
 				<ul class="children">
-					{#each comment.kids as childId (childId)}
+					{#each comment.children as child (child.id)}
 						<li>
-							{#await fetch(`https://hacker-news.firebaseio.com/v0/item/${childId}.json`).then((res) => /** @type {Promise<HNComment>} */ (res.json())) then comment}
-								<CommentElement {comment} />
-							{/await}
+							<CommentElement comment={child} />
 						</li>
 					{/each}
 				</ul>

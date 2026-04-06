@@ -10,7 +10,7 @@
 	{#if child.type === 'text'}
 		{child.text}
 	{:else if child.type === 'link'}
-		{#if ['http', 'https'].includes(new URL(child.href).protocol)}
+		{#if ['http:', 'https:'].includes(new URL(child.href).protocol)}
 			<a rel="external" href={child.href}>{child.text}</a>
 		{:else}
 			<!-- link might be other protocol like `javascript:` so bail out and do best effort render -->

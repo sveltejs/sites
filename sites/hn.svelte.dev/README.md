@@ -1,6 +1,6 @@
 # hn.svelte.dev
 
-A [Hacker News](https://news.ycombinator.com/) clone built with [SvelteKit](https://kit.svelte.dev/), powered by [HNPWA](https://github.com/davideast/hnpwa-api).
+A [Hacker News](https://news.ycombinator.com/) clone built with [SvelteKit](https://kit.svelte.dev/), powered by [Firebase HN API](https://github.com/HackerNews/API) and [Algolia's HN API](https://hn.algolia.com/api)
 
 ## Running locally
 

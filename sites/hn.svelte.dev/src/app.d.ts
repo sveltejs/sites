@@ -21,6 +21,7 @@ declare global {
 		kids?: number[];
 		score: number;
 		time: number;
+		text?: string;
 		title: string;
 		type: 'story';
 		url: string;

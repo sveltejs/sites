@@ -1,4 +1,6 @@
+import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import type { ResponseType } from '../[page=numeric]/api/+server';
 
 const render = (
 	list: string,
@@ -33,19 +35,11 @@ const render = (
 </channel>
 </rss>`;
 
-const BASE = 'https://hacker-news.firebaseio.com/v0/';
-const ITEMS_PER_PAGE = 30;
-
 export const GET = (async ({ params, fetch }) => {
-	const list = params.list === 'jobs' ? 'job' : params.list;
-
-	const itemIds: number[] = await fetch(`${BASE}${list}stories.json`).then((r) => r.json());
-	const relevantItemIds = itemIds.slice(0, ITEMS_PER_PAGE);
-	const items: (HNStory | HNJob | HNPoll | { type: 'null'; id: number })[] = await Promise.all(
-		relevantItemIds.map((id) =>
-			fetch(`${BASE}item/${id}.json`).then((res) => res.json() ?? { type: 'null', id })
-		)
-	);
+	const res = await fetch(`/${params.list}/1/api`);
+	if (!res.ok) error(res.status, res.statusText);
+	const items: ResponseType = await res.json();
+	const { list } = params;
 
 	const feed = render(list, items);
 

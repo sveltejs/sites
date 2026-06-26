@@ -1,8 +1,8 @@
 {
 	"name": "sites",
 	"private": true,
-	"packageManager": "pnpm@9.6.0",
+	"packageManager": "pnpm@11.9.0",
 	"engines": {
-		"pnpm": "^9.0.0"
+		"pnpm": "^11.9.0"
 	}
 }

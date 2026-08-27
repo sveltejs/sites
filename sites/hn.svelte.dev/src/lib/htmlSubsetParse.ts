@@ -35,6 +35,14 @@ function scan(text: string, markers: string[]): ScanHit | null {
 	return best;
 }
 
+const OPEN_ITALIC = '<i>';
+const CLOSE_ITALIC = '</i>';
+const OPEN_CODE = '<pre><code>';
+const CLOSE_CODE = '</code></pre>';
+const OPEN_ANCHOR = '<a ';
+const CLOSE_ANCHOR = '</a>';
+const PARAGRAPH_BREAK = '<p>';
+
 /// Inline elements
 /// plain text, <a>, <i>
 /// <i> elements can contain plain text and <a>
@@ -44,7 +52,7 @@ function parseInlines(html: string): Inline[] {
 	let rest = html;
 
 	while (rest) {
-		const hit = scan(rest, ['<a ', '<i>']);
+		const hit = scan(rest, [OPEN_ANCHOR, OPEN_ITALIC]);
 
 		if (!hit) {
 			addText(nodes, rest);
@@ -53,7 +61,7 @@ function parseInlines(html: string): Inline[] {
 
 		if (hit.index > 0) addText(nodes, rest.slice(0, hit.index));
 
-		if (hit.marker === '<a ') {
+		if (hit.marker === OPEN_ANCHOR) {
 			const result = consumeLink(rest, hit.index);
 			nodes.push(result.node);
 			rest = result.rest;
@@ -68,7 +76,7 @@ function parseInlines(html: string): Inline[] {
 }
 
 function consumeLink(text: string, openIdx: number): InlineResult {
-	const closeIdx = text.indexOf('</a>', openIdx);
+	const closeIdx = text.indexOf(CLOSE_ANCHOR, openIdx);
 	if (closeIdx === -1) {
 		return { node: { type: 'text', text: decodeEntities(text.slice(openIdx)) }, rest: '' };
 	}
@@ -83,19 +91,25 @@ function consumeLink(text: string, openIdx: number): InlineResult {
 			href: decodeEntities(text.slice(hrefStart, hrefEnd)),
 			text: decodeEntities(text.slice(bodyStart, closeIdx))
 		},
-		rest: text.slice(closeIdx + 4)
+		rest: text.slice(closeIdx + CLOSE_ANCHOR.length)
 	};
 }
 
 function consumeItalic(text: string, openIdx: number): InlineResult {
-	const closeIdx = text.indexOf('</i>', openIdx);
+	const closeIdx = text.indexOf(CLOSE_ITALIC, openIdx);
 	if (closeIdx === -1) {
-		return { node: { type: 'text', text: decodeEntities(text.slice(openIdx + 3)) }, rest: '' };
+		return {
+			node: { type: 'text', text: decodeEntities(text.slice(openIdx + OPEN_ITALIC.length)) },
+			rest: ''
+		};
 	}
 
 	return {
-		node: { type: 'italic', children: parseInlines(text.slice(openIdx + 3, closeIdx)) },
-		rest: text.slice(closeIdx + 4)
+		node: {
+			type: 'italic',
+			children: parseInlines(text.slice(openIdx + OPEN_ITALIC.length, closeIdx))
+		},
+		rest: text.slice(closeIdx + CLOSE_ITALIC.length)
 	};
 }
 
@@ -115,7 +129,7 @@ export function parse(html: string): Block[] {
 	let rest = html;
 
 	while (rest) {
-		const hit = scan(rest, ['<p>', '<pre><code>']);
+		const hit = scan(rest, [PARAGRAPH_BREAK, OPEN_CODE]);
 
 		if (!hit) {
 			pushParagraph(blocks, rest);
@@ -124,12 +138,12 @@ export function parse(html: string): Block[] {
 
 		if (hit.index > 0) pushParagraph(blocks, rest.slice(0, hit.index));
 
-		if (hit.marker === '<pre><code>') {
+		if (hit.marker === OPEN_CODE) {
 			const result = consumeCode(rest, hit.index);
 			blocks.push(result.node);
 			rest = result.rest;
 		} else {
-			rest = rest.slice(hit.index + 3);
+			rest = rest.slice(hit.index + PARAGRAPH_BREAK.length);
 		}
 	}
 
@@ -137,14 +151,20 @@ export function parse(html: string): Block[] {
 }
 
 function consumeCode(text: string, openIdx: number): BlockResult {
-	const closeIdx = text.indexOf('</code></pre>', openIdx);
+	const closeIdx = text.indexOf(CLOSE_CODE, openIdx);
 	if (closeIdx === -1) {
-		return { node: { type: 'code', text: decodeEntities(text.slice(openIdx + 11)) }, rest: '' };
+		return {
+			node: { type: 'code', text: decodeEntities(text.slice(openIdx + OPEN_CODE.length)) },
+			rest: ''
+		};
 	}
 
 	return {
-		node: { type: 'code', text: decodeEntities(text.slice(openIdx + 11, closeIdx)) },
-		rest: text.slice(closeIdx + 13)
+		node: {
+			type: 'code',
+			text: decodeEntities(text.slice(openIdx + OPEN_CODE.length, closeIdx))
+		},
+		rest: text.slice(closeIdx + CLOSE_CODE.length)
 	};
 }
 

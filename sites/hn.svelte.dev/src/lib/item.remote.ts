@@ -3,6 +3,36 @@ import { error } from '@sveltejs/kit';
 import * as v from 'valibot';
 
 const FIREBASE_BASE = 'https://hacker-news.firebaseio.com/v0/' as const;
+const FIREBASE_ITEM_TIMEOUT_MS = 2_000;
+
+async function fetchFirebaseItem(
+	fetch: typeof globalThis.fetch,
+	id: string
+): Promise<HNItem | null> {
+	const controller = new AbortController();
+
+	/*
+	 * Firebase supplies optional comment and poll-option ordering.
+	 * Give this lookup a two-second time budget so it cannot
+	 * indefinitely delay an otherwise available Algolia result.
+	 * Keep the deadline active through response-body parsing.
+	 */
+	const timeout = setTimeout(() => {
+		controller.abort();
+	}, FIREBASE_ITEM_TIMEOUT_MS);
+
+	try {
+		const res = await fetch(`${FIREBASE_BASE}item/${id}.json`, {
+			signal: controller.signal
+		});
+
+		if (!res.ok) return null;
+
+		return await res.json();
+	} finally {
+		clearTimeout(timeout);
+	}
+}
 
 type ItemResult = {
 	algoliaItem: AlgoliaItem;
@@ -14,8 +44,8 @@ const itemId = v.pipe(v.string(), v.regex(/^\d+$/));
 export const getItem = query(itemId, async (id): Promise<ItemResult> => {
 	const { fetch } = getRequestEvent();
 
-	const [hnRes, algoliaRes] = await Promise.allSettled([
-		fetch(`${FIREBASE_BASE}item/${id}.json`),
+	const [hnResult, algoliaRes] = await Promise.allSettled([
+		fetchFirebaseItem(fetch, id),
 		fetch(`https://hn.algolia.com/api/v1/items/${id}`)
 	]);
 
@@ -24,8 +54,16 @@ export const getItem = query(itemId, async (id): Promise<ItemResult> => {
 		error(algoliaRes.value.status, `Upstream Responded with ${algoliaRes.value.statusText}`);
 
 	const algoliaItem: AlgoliaItem = await algoliaRes.value.json();
-	const hnItem: HNItem | null =
-		hnRes.status === 'fulfilled' && hnRes.value.ok ? await hnRes.value.json() : null;
+
+	/*
+	 * Optional Firebase data may be unavailable because of
+	 * - network failure,
+	 * - timeout, or
+	 * - invalid JSON.
+	 *
+	 * In those cases, retain Algolia's ordering.
+	 */
+	const hnItem = hnResult.status === 'fulfilled' ? hnResult.value : null;
 
 	if (hnItem) {
 		if ('kids' in hnItem && typeof hnItem.kids !== 'undefined') {

@@ -22,7 +22,9 @@
 </script>
 
 <svelte:head>
-	<title>{algoliaItem.title} | Svelte Hacker News</title>
+	<title
+		>{algoliaItem.title ? `${algoliaItem.title} | Svelte Hacker News` : 'Svelte Hacker News'}</title
+	>
 </svelte:head>
 
 <div>
@@ -33,8 +35,11 @@
 		</a>
 
 		<p class="meta">
-			{algoliaItem.points}
-			{algoliaItem.points === 1 ? 'point' : 'points'} by
+			{#if algoliaItem.points != null}
+				{algoliaItem.points}
+				{algoliaItem.points === 1 ? 'point' : 'points'}
+			{/if}
+			by
 			<a href={resolve('/user/[name]', { name: algoliaItem.author })}>{algoliaItem.author}</a>
 			{timeAgo(now - algoliaItem.created_at_i)}
 		</p>

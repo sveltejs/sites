@@ -3,5 +3,4 @@ packages:
 allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
-  - '@sveltejs/adapter-vercel@7.0.0'
-  - '@sveltejs/kit@3.0.0'
+  - '@sveltejs/*'

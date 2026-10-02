@@ -1,4 +1,4 @@
-import { json, error } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 const FIRESTORE_BASE = 'https://hacker-news.firebaseio.com/v0/' as const;
@@ -30,7 +30,7 @@ export const GET = (async ({ params, fetch }) => {
 		)
 	);
 
-	return json(items, {
+	return Response.json(items, {
 		headers: {
 			'Cache-Control': 'public, max-age=60, s-maxage=60'
 		}

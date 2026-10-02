@@ -1,4 +1,4 @@
-import { json, error } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 const FIRESTORE_BASE = 'https://hacker-news.firebaseio.com/v0/' as const;
@@ -43,7 +43,7 @@ export const GET = (async ({ params, fetch }) => {
 		pollOptions = await Promise.all(pollsResponses.map((poll) => poll.json()));
 	}
 
-	return json(
+	return Response.json(
 		{
 			algoliaItem,
 			pollOptions

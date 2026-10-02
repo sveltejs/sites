@@ -30,10 +30,21 @@ export const getItem = query(itemId, async (id): Promise<ItemResult> => {
 	if (hnItem) {
 		if ('kids' in hnItem && typeof hnItem.kids !== 'undefined') {
 			const { kids } = hnItem;
+			const rankById = new Map(kids.map((id, index) => [id, index]));
+			const unmatchedRank = kids.length;
+
+			/*
+			 * Providers can return different sets of comments.
+			 * Keep Algolia’s available children and use Firebase only to rank matching IDs.
+			 * Place unmatched children after ranked children;
+			 * stable sorting preserves their original Algolia order.
+			 * Leave nested replies unchanged.
+			 */
 			algoliaItem.children.sort((a, b) => {
-				const indexA = kids.indexOf(a.id);
-				const indexB = kids.indexOf(b.id);
-				return indexA - indexB;
+				const rankA = rankById.get(a.id) ?? unmatchedRank;
+				const rankB = rankById.get(b.id) ?? unmatchedRank;
+
+				return rankA - rankB;
 			});
 		}
 

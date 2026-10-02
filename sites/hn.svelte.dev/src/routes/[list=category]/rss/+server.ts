@@ -1,6 +1,5 @@
-import { error } from '@sveltejs/kit';
+import { fetchList } from '#lib/server/list.js';
 import type { RequestHandler } from './$types';
-import type { ResponseType } from '../[page=numeric]/api/+server';
 
 function externalUrl(value: string | undefined): URL | undefined {
 	if (!value) return undefined;
@@ -59,10 +58,8 @@ const render = (
 </rss>`;
 
 export const GET = (async ({ params, fetch }) => {
-	const res = await fetch(`/${params.list}/1/api`);
-	if (!res.ok) error(res.status, res.statusText);
-	const items: ResponseType = await res.json();
 	const { list } = params;
+	const items = await fetchList(fetch, list, '1');
 
 	const feed = render(list, items);
 

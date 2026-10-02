@@ -1,12 +1,10 @@
-import { error } from '@sveltejs/kit';
+import { getUser } from '#lib/user.remote.js';
 import type { PageLoad } from './$types.js';
-import type { ResponseType } from './api/+server.js';
 
 export const csr = false;
-export const load = (async ({ params, fetch }) => {
-	const res = await fetch(`/user/${params.name}/api`);
-	if (!res.ok) error(res.status, res.statusText);
-	const user: ResponseType = await res.json();
+
+export const load = (async ({ params }) => {
+	const user = await getUser(params.name);
 	const now = Date.now() / 1000;
 	return { user, now };
 }) satisfies PageLoad;

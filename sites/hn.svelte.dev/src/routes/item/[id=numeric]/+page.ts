@@ -1,11 +1,8 @@
-import { error } from '@sveltejs/kit';
+import { getItem } from '#lib/item.remote.js';
 import type { PageLoad } from './$types';
-import type { ResponseType } from './api/+server';
 
-export const load = (async ({ params, fetch }) => {
-	const res = await fetch(`/item/${params.id}/api`);
-	if (!res.ok) error(res.status, res.statusText);
-	const { algoliaItem, pollOptions }: ResponseType = await res.json();
+export const load = (async ({ params }) => {
+	const { algoliaItem, pollOptions } = await getItem(params.id);
 
 	const now = Date.now() / 1000;
 	return { algoliaItem, pollOptions, now };

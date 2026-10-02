@@ -28,7 +28,7 @@
 	<a
 		class="more"
 		href={resolve('/[list=category]/[page=numeric]', {
-			list: list as 'top' | 'new' | 'best' | 'show' | 'ask' | 'jobs',
+			list,
 			page: `${page + 1}`
 		})}>More...</a
 	>

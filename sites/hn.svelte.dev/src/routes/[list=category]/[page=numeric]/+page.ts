@@ -2,7 +2,7 @@ import { getList } from '#lib/list.remote.js';
 import type { PageLoad } from './$types';
 
 export const load = (async ({ params }) => {
-	const list = params.list === 'jobs' ? 'job' : params.list;
+	const list = params.list;
 	const page = +params.page;
 
 	const items = await getList({

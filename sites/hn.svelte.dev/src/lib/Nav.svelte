@@ -22,7 +22,7 @@
 		{/each}
 
 		<li class="about">
-			<a href={resolve('/about')} class:selected={section === 'about'}>about</a>
+			<a href={resolve('about')} class:selected={section === 'about'}>about</a>
 		</li>
 	</ul>
 </nav>

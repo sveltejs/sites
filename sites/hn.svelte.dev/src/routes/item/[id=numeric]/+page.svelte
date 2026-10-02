@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 	import { resolve } from '$app/paths';
-	import SubsetHTML from '$lib/SubsetHTML.svelte';
-	import { timeAgo } from '$lib/utils';
+	import SubsetHTML from '#lib/SubsetHTML.svelte';
+	import { timeAgo } from '#lib/utils.js';
 	import CommentElement from './Comment.svelte';
 
 	const { data }: PageProps = $props();

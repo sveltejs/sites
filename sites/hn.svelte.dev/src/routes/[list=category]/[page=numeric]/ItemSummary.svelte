@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { timeAgo } from '$lib/utils';
+	import { timeAgo } from '#lib/utils.js';
 
 	type Props = { item: HNStory | HNJob | HNPoll; index: number; now: number };
 	const { item, index, now }: Props = $props();

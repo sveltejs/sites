@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
-	import SubsetHTML from '$lib/SubsetHTML.svelte';
-	import { timeAgo } from '$lib/utils';
+	import SubsetHTML from '#lib/SubsetHTML.svelte';
+	import { timeAgo } from '#lib/utils.js';
 
 	const { data }: PageProps = $props();
 	const { user, now } = $derived(data);

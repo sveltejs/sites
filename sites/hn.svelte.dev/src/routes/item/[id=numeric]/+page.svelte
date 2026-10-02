@@ -1,12 +1,24 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 	import { resolve } from '$app/paths';
+	import { getItem } from '#lib/item.remote.js';
 	import SubsetHTML from '#lib/SubsetHTML.svelte';
 	import { timeAgo } from '#lib/utils.js';
 	import CommentElement from './Comment.svelte';
 
-	const { data }: PageProps = $props();
-	const { algoliaItem, pollOptions, now } = $derived(data);
+	const { params }: PageProps = $props();
+
+	async function getViewData(id: PageProps['params']['id']) {
+		const { algoliaItem, pollOptions } = await getItem(id);
+
+		return {
+			algoliaItem,
+			pollOptions,
+			now: Date.now() / 1000
+		};
+	}
+
+	const { algoliaItem, pollOptions, now } = $derived(await getViewData(params.id));
 </script>
 
 <svelte:head>

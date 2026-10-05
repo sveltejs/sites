@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import type { RequestEvent } from '@sveltejs/kit';
+import { FIREBASE_BASE, getFirebaseItem } from '#lib/server/firebase.js';
 
-const FIREBASE_BASE = 'https://hacker-news.firebaseio.com/v0/' as const;
 const ITEMS_PER_PAGE = 30 as const;
 
 type ListCategory = 'top' | 'new' | 'best' | 'show' | 'ask' | 'jobs';
@@ -29,11 +29,15 @@ export async function fetchList(
 	}
 
 	const items: ResponseType = await Promise.all(
-		relevantItemIds.map((id) =>
-			fetch(`${FIREBASE_BASE}item/${id}.json`).then((res) =>
-				res.ok ? res.json() : { type: 'null', id }
-			)
-		)
+		relevantItemIds.map(async (id): Promise<ResponseType[number]> => {
+			const result = await getFirebaseItem(id);
+
+			if (!result.ok || result.data === null) {
+				return { type: 'null', id };
+			}
+
+			return result.data as HNStory | HNJob | HNPoll;
+		})
 	);
 
 	return items;

@@ -1,40 +1,30 @@
 import { getRequestEvent, query } from '$app/server';
 import { error, isHttpError } from '@sveltejs/kit';
 import * as v from 'valibot';
+import { FirebaseItemTimeoutError, getFirebaseItem } from '#lib/server/firebase.js';
 
-const FIREBASE_BASE = 'https://hacker-news.firebaseio.com/v0/' as const;
-const FIREBASE_ITEM_TIMEOUT_MS = 2_000;
+const FIREBASE_ORDERING_TIMEOUT_MS = 2_000;
 
-async function fetchFirebaseItem(
-	fetch: typeof globalThis.fetch,
-	id: string
-): Promise<HNItem | null> {
-	const controller = new AbortController();
-
-	/*
-	 * Firebase supplies optional comment and poll-option ordering.
-	 * Give this lookup a two-second time budget so it cannot
-	 * indefinitely delay an otherwise available Algolia result.
-	 * Keep the deadline active through response-body parsing.
-	 */
-	const timeout = setTimeout(() => {
-		controller.abort();
-	}, FIREBASE_ITEM_TIMEOUT_MS);
+async function fetchFirebaseItem(id: string): Promise<HNItem | null> {
+	let timeout: ReturnType<typeof setTimeout> | undefined;
 
 	try {
-		const res = await fetch(`${FIREBASE_BASE}item/${id}.json`, {
-			signal: controller.signal
-		});
-
-		if (!res.ok) return null;
-
-		return await res.json();
+		/*
+		 * Firebase supplies optional comment and poll-option ordering.
+		 * Stop waiting after two seconds so this lookup cannot indefinitely
+		 * delay an otherwise available Algolia result.
+		 * Do not abort the shared fetch: other callers may still need it.
+		 */
+		return await Promise.race([
+			getFirebaseItem(id).then((result) => (result.ok ? (result.data as HNItem | null) : null)),
+			new Promise<null>((resolve) => {
+				timeout = setTimeout(() => resolve(null), FIREBASE_ORDERING_TIMEOUT_MS);
+			})
+		]);
 	} finally {
 		clearTimeout(timeout);
 	}
 }
-
-const POLL_OPTION_TIMEOUT_MS = 5_000;
 
 const pollOptionSchema = v.object({
 	id: v.pipe(v.number(), v.integer(), v.minValue(1)),
@@ -47,33 +37,19 @@ const pollOptionSchema = v.object({
 	deleted: v.optional(v.literal(true))
 });
 
-async function fetchPollOption(
-	fetch: typeof globalThis.fetch,
-	id: number,
-	pollId: number
-): Promise<HNPollOption> {
-	const controller = new AbortController();
-
+async function fetchPollOption(id: number, pollId: number): Promise<HNPollOption> {
 	/*
 	 * Poll options are required, unlike Firebase's optional ordering.
-	 * Give each request a separate five-second budget, including time to read the body.
 	 * Reject unavailable or invalid options rather than presenting a partial poll.
 	 */
-	const timeout = setTimeout(() => {
-		controller.abort();
-	}, POLL_OPTION_TIMEOUT_MS);
-
 	try {
-		const res = await fetch(`${FIREBASE_BASE}item/${id}.json`, {
-			signal: controller.signal
-		});
+		const response = await getFirebaseItem(id);
 
-		if (!res.ok) {
+		if (!response.ok) {
 			error(502, 'Unable to load poll options');
 		}
 
-		const data: unknown = await res.json();
-		const result = v.safeParse(pollOptionSchema, data);
+		const result = v.safeParse(pollOptionSchema, response.data);
 
 		if (!result.success) {
 			error(502, 'Invalid poll option response');
@@ -87,15 +63,13 @@ async function fetchPollOption(
 
 		return option;
 	} catch (cause) {
-		if (controller.signal.aborted) {
+		if (cause instanceof FirebaseItemTimeoutError) {
 			error(504, 'Timed out loading poll options');
 		}
 
 		if (isHttpError(cause)) throw cause;
 
 		error(502, 'Unable to load poll options');
-	} finally {
-		clearTimeout(timeout);
 	}
 }
 
@@ -110,7 +84,7 @@ export const getItem = query(itemId, async (id): Promise<ItemResult> => {
 	const { fetch } = getRequestEvent();
 
 	const [hnResult, algoliaRes] = await Promise.allSettled([
-		fetchFirebaseItem(fetch, id),
+		fetchFirebaseItem(id),
 		fetch(`https://hn.algolia.com/api/v1/items/${id}`)
 	]);
 
@@ -121,12 +95,8 @@ export const getItem = query(itemId, async (id): Promise<ItemResult> => {
 	const algoliaItem: AlgoliaItem = await algoliaRes.value.json();
 
 	/*
-	 * Optional Firebase data may be unavailable because of
-	 * - network failure,
-	 * - timeout, or
-	 * - invalid JSON.
-	 *
-	 * In those cases, retain Algolia's ordering.
+	 * If the optional Firebase lookup fails or returns no item,
+	 * retain Algolia's comment and poll-option ordering.
 	 */
 	const hnItem = hnResult.status === 'fulfilled' ? hnResult.value : null;
 
@@ -159,7 +129,7 @@ export const getItem = query(itemId, async (id): Promise<ItemResult> => {
 	let pollOptions: HNPollOption[] = [];
 	if (algoliaItem.type === 'poll') {
 		pollOptions = await Promise.all(
-			algoliaItem.options.map((id) => fetchPollOption(fetch, id, algoliaItem.id))
+			algoliaItem.options.map((id) => fetchPollOption(id, algoliaItem.id))
 		);
 	}
 

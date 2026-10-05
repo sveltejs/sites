@@ -2,6 +2,13 @@ import { getRequestEvent, query } from '$app/server';
 import { error, isHttpError } from '@sveltejs/kit';
 import * as v from 'valibot';
 import { FirebaseItemTimeoutError, getFirebaseItem } from '#lib/server/firebase.js';
+import {
+	ALGOLIA,
+	FIREBASE,
+	readUpstreamJson,
+	upstreamHttpMessage,
+	upstreamMessage
+} from '#lib/server/upstream.js';
 
 const FIREBASE_ORDERING_TIMEOUT_MS = 2_000;
 
@@ -46,7 +53,10 @@ async function fetchPollOption(id: number, pollId: number): Promise<HNPollOption
 		const response = await getFirebaseItem(id);
 
 		if (!response.ok) {
-			error(502, 'Unable to load poll options');
+			error(
+				502,
+				`Unable to load poll options: ${upstreamHttpMessage(FIREBASE.name, response.status)}`
+			);
 		}
 
 		const result = v.safeParse(pollOptionSchema, response.data);
@@ -63,13 +73,15 @@ async function fetchPollOption(id: number, pollId: number): Promise<HNPollOption
 
 		return option;
 	} catch (cause) {
-		if (cause instanceof FirebaseItemTimeoutError) {
-			error(504, 'Timed out loading poll options');
-		}
-
 		if (isHttpError(cause)) throw cause;
 
-		error(502, 'Unable to load poll options');
+		console.error(cause);
+
+		if (cause instanceof FirebaseItemTimeoutError) {
+			error(504, cause.message);
+		}
+
+		error(502, upstreamMessage(cause) ?? 'Unable to load poll options');
 	}
 }
 
@@ -85,14 +97,19 @@ export const getItem = query(itemId, async (id): Promise<ItemResult> => {
 
 	const [hnResult, algoliaRes] = await Promise.allSettled([
 		fetchFirebaseItem(id),
-		fetch(`https://hn.algolia.com/api/v1/items/${id}`)
+		fetch(`${ALGOLIA.base}items/${id}`)
 	]);
 
-	if (algoliaRes.status === 'rejected') error(500, 'Network failure');
-	if (!algoliaRes.value.ok)
-		error(algoliaRes.value.status, `Upstream Responded with ${algoliaRes.value.statusText}`);
+	if (algoliaRes.status === 'rejected') {
+		console.error(algoliaRes.reason);
+		error(500, upstreamMessage(algoliaRes.reason) ?? 'Network failure');
+	}
 
-	const algoliaItem: AlgoliaItem = await algoliaRes.value.json();
+	if (!algoliaRes.value.ok) {
+		error(algoliaRes.value.status, upstreamHttpMessage(ALGOLIA.name, algoliaRes.value.status));
+	}
+
+	const algoliaItem = (await readUpstreamJson(algoliaRes.value, ALGOLIA.name)) as AlgoliaItem;
 
 	/*
 	 * If the optional Firebase lookup fails or returns no item,
@@ -127,6 +144,7 @@ export const getItem = query(itemId, async (id): Promise<ItemResult> => {
 	}
 
 	let pollOptions: HNPollOption[] = [];
+
 	if (algoliaItem.type === 'poll') {
 		pollOptions = await Promise.all(
 			algoliaItem.options.map((id) => fetchPollOption(id, algoliaItem.id))

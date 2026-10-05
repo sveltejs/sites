@@ -1,13 +1,17 @@
 import { getRequestEvent, query } from '$app/server';
 import * as v from 'valibot';
-
-export const FIREBASE_BASE = 'https://hacker-news.firebaseio.com/v0/' as const;
+import { FIREBASE, readUpstreamJson, UpstreamError } from '#lib/server/upstream.js';
 
 const FIREBASE_ITEM_TIMEOUT_MS = 5_000;
 
-export class FirebaseItemTimeoutError extends Error {}
+export class FirebaseItemTimeoutError extends UpstreamError {
+	constructor(options?: ErrorOptions) {
+		super(FIREBASE.name, { stage: 'timeout', timeoutMs: FIREBASE_ITEM_TIMEOUT_MS }, options);
+		this.name = 'FirebaseItemTimeoutError';
+	}
+}
 
-type FirebaseItemResult = { ok: true; data: unknown } | { ok: false };
+type FirebaseItemResult = { ok: true; data: unknown } | { ok: false; status: number };
 
 const firebaseItem = query(
 	v.pipe(v.string(), v.regex(/^\d+$/)),
@@ -24,17 +28,17 @@ const firebaseItem = query(
 		}, FIREBASE_ITEM_TIMEOUT_MS);
 
 		try {
-			const res = await fetch(`${FIREBASE_BASE}item/${id}.json`, {
+			const res = await fetch(`${FIREBASE.base}item/${id}.json`, {
 				signal: controller.signal
 			});
 
-			if (!res.ok) return { ok: false };
+			if (!res.ok) return { ok: false, status: res.status };
 
-			const data: unknown = await res.json();
+			const data = await readUpstreamJson(res, FIREBASE.name);
 			return { ok: true, data };
 		} catch (cause) {
 			if (controller.signal.aborted) {
-				throw controller.signal.reason;
+				throw new FirebaseItemTimeoutError({ cause });
 			}
 
 			throw cause;

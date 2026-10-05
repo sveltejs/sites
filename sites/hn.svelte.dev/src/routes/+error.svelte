@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { online } from 'svelte/reactivity/window';
 
-	const offline = typeof navigator !== 'undefined' && navigator.onLine === false;
-
-	const title = offline ? 'Offline' : page.status;
-	const message = offline ? 'Find the internet and try again' : page.error?.message;
+	const offline = $derived(online.current === false);
+	const title = $derived(offline ? 'Offline' : page.status);
+	const message = $derived(offline ? 'Find the internet and try again' : page.error?.message);
 </script>
 
 <svelte:head>

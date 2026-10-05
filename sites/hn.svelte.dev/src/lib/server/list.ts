@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 import type { RequestEvent } from '@sveltejs/kit';
-import { FIREBASE_BASE, getFirebaseItem } from '#lib/server/firebase.js';
+import { getFirebaseItem } from '#lib/server/firebase.js';
+import { FIREBASE, readUpstreamJson, upstreamHttpMessage } from '#lib/server/upstream.js';
 
 const ITEMS_PER_PAGE = 30 as const;
 
@@ -17,11 +18,13 @@ export async function fetchList(
 	const page = +pageParam;
 
 	const offset = (page - 1) * ITEMS_PER_PAGE;
-	const storyResponse = await fetch(`${FIREBASE_BASE}${list}stories.json`);
-	if (!storyResponse.ok)
-		error(storyResponse.status, `Upstream Responded with ${storyResponse.statusText}`);
+	const storyResponse = await fetch(`${FIREBASE.base}${list}stories.json`);
 
-	const itemIds: number[] = await storyResponse.json();
+	if (!storyResponse.ok) {
+		error(storyResponse.status, upstreamHttpMessage(FIREBASE.name, storyResponse.status));
+	}
+
+	const itemIds = (await readUpstreamJson(storyResponse, FIREBASE.name)) as number[];
 	const relevantItemIds = itemIds.slice(offset, offset + ITEMS_PER_PAGE);
 
 	if (relevantItemIds.length === 0) {

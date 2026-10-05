@@ -12,8 +12,14 @@ export default defineConfig({
 				}
 			}),
 			inlineStyleThreshold: 5000,
+			experimental: {
+				remoteFunctions: true
+			},
 			compilerOptions: {
-				runes: true
+				runes: true,
+				experimental: {
+					async: true
+				}
 			}
 		})
 	]

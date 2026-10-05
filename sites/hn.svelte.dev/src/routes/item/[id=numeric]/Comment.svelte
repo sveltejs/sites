@@ -1,8 +1,8 @@
 <script lang="ts">
-	import SubsetHTML from '$lib/SubsetHTML.svelte';
+	import SubsetHTML from '#lib/SubsetHTML.svelte';
 	import CommentElement from './Comment.svelte';
 	import { resolve } from '$app/paths';
-	import { timeAgo } from '$lib/utils';
+	import { timeAgo } from '#lib/utils.js';
 
 	type Props = { comment: AlgoliaComment; now: number };
 	const { comment, now }: Props = $props();

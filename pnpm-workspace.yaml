@@ -2,3 +2,5 @@ packages:
   - 'sites/*'
 allowBuilds:
   esbuild: true
+minimumReleaseAgeExclude:
+  - '@sveltejs/*'

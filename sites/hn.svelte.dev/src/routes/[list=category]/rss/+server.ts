@@ -1,6 +1,25 @@
-import { error } from '@sveltejs/kit';
+import { fetchList } from '#lib/server/list.js';
 import type { RequestHandler } from './$types';
-import type { ResponseType } from '../[page=numeric]/api/+server';
+
+function externalUrl(value: string | undefined): URL | undefined {
+	if (!value) return undefined;
+
+	try {
+		const url = new URL(value);
+		return url.protocol === 'http:' || url.protocol === 'https:' ? url : undefined;
+	} catch {
+		return undefined;
+	}
+}
+
+function escapeXml(value: string): string {
+	return value
+		.replaceAll('&', '&amp;')
+		.replaceAll('<', '&lt;')
+		.replaceAll('>', '&gt;')
+		.replaceAll('"', '&quot;')
+		.replaceAll("'", '&apos;');
+}
 
 const render = (
 	list: string,
@@ -18,28 +37,29 @@ const render = (
 	</image>
 	${items
 		.filter((item) => item.type !== 'null')
-		.map(
-			(item) => `
+		.map((item) => {
+			const url = externalUrl(item.type === 'poll' ? undefined : item.url);
+			const title = `${item.title}${url ? ` (${url.hostname})` : ''}`;
+
+			return `
 				<item>
-					<title>${item.title}${item.type !== 'poll' ? ` (${new URL(item.url).hostname})` : ''}</title>
+					<title>${escapeXml(title)}</title>
 					<link>https://hn.svelte.dev/item/${item.id}</link>
 					<description><![CDATA[${
-						item.type !== 'poll' ? `<a href="${item.url}">link</a> / ` : ''
+						url ? `<a href="${escapeXml(url.href)}">link</a> / ` : ''
 					}<a href="https://hn.svelte.dev/item/${item.id}">comments</a>
 					]]></description>
 					<pubDate>${new Date(item.time * 1000).toUTCString()}</pubDate>
 				</item>
-			`
-		)
+			`;
+		})
 		.join('\n')}
 </channel>
 </rss>`;
 
 export const GET = (async ({ params, fetch }) => {
-	const res = await fetch(`/${params.list}/1/api`);
-	if (!res.ok) error(res.status, res.statusText);
-	const items: ResponseType = await res.json();
 	const { list } = params;
+	const items = await fetchList(fetch, list, '1');
 
 	const feed = render(list, items);
 

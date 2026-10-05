@@ -1,10 +1,21 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
-	import SubsetHTML from '$lib/SubsetHTML.svelte';
-	import { timeAgo } from '$lib/utils';
+	import { getUser } from '#lib/user.remote.js';
+	import SubsetHTML from '#lib/SubsetHTML.svelte';
+	import { timeAgo } from '#lib/utils.js';
 
-	const { data }: PageProps = $props();
-	const { user, now } = $derived(data);
+	const { params }: PageProps = $props();
+
+	async function getViewData(name: string) {
+		const user = await getUser(name);
+
+		return {
+			user,
+			now: Date.now() / 1000
+		};
+	}
+
+	const { user, now } = $derived(await getViewData(params.name));
 </script>
 
 <svelte:head>

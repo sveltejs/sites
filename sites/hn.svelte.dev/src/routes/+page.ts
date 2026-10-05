@@ -1,4 +1,4 @@
-import { dev } from '$app/environment';
+import { dev } from '$app/env';
 import { redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 

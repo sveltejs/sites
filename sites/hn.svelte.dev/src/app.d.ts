@@ -24,7 +24,7 @@ declare global {
 		text?: string;
 		title: string;
 		type: 'story';
-		url: string;
+		url?: string;
 	};
 	type HNComment = HNBaseItem & {
 		by: string;
@@ -43,7 +43,7 @@ declare global {
 		time: number;
 		title: string;
 		type: 'job';
-		url: string;
+		url?: string;
 	};
 	type HNPoll = HNBaseItem & {
 		by: string;

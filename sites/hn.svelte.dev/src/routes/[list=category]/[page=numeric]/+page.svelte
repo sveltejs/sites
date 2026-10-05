@@ -1,12 +1,25 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 	import { resolve } from '$app/paths';
+	import { getList } from '#lib/list.remote.js';
 	import ItemSummary from './ItemSummary.svelte';
 	import NullItem from './NullItem.svelte';
 
-	const { data }: PageProps = $props();
+	const { params }: PageProps = $props();
 	const PAGE_SIZE = 30 as const;
-	const { list, items, page, now } = $derived(data);
+
+	async function getViewData(list: PageProps['params']['list'], page: PageProps['params']['page']) {
+		const items = await getList({ list, page });
+
+		return {
+			list,
+			page: +page,
+			items,
+			now: Date.now() / 1000
+		};
+	}
+
+	const { list, page, items, now } = $derived(await getViewData(params.list, params.page));
 	const start = $derived(1 + (page - 1) * PAGE_SIZE);
 </script>
 
@@ -28,7 +41,7 @@
 	<a
 		class="more"
 		href={resolve('/[list=category]/[page=numeric]', {
-			list: list as 'top' | 'new' | 'best' | 'show' | 'ask' | 'jobs',
+			list,
 			page: `${page + 1}`
 		})}>More...</a
 	>

@@ -1,16 +1,30 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 	import { resolve } from '$app/paths';
-	import SubsetHTML from '$lib/SubsetHTML.svelte';
-	import { timeAgo } from '$lib/utils';
+	import { getItem } from '#lib/item.remote.js';
+	import SubsetHTML from '#lib/SubsetHTML.svelte';
+	import { timeAgo } from '#lib/utils.js';
 	import CommentElement from './Comment.svelte';
 
-	const { data }: PageProps = $props();
-	const { algoliaItem, pollOptions, now } = $derived(data);
+	const { params }: PageProps = $props();
+
+	async function getViewData(id: PageProps['params']['id']) {
+		const { algoliaItem, pollOptions } = await getItem(id);
+
+		return {
+			algoliaItem,
+			pollOptions,
+			now: Date.now() / 1000
+		};
+	}
+
+	const { algoliaItem, pollOptions, now } = $derived(await getViewData(params.id));
 </script>
 
 <svelte:head>
-	<title>{algoliaItem.title} | Svelte Hacker News</title>
+	<title
+		>{algoliaItem.title ? `${algoliaItem.title} | Svelte Hacker News` : 'Svelte Hacker News'}</title
+	>
 </svelte:head>
 
 <div>
@@ -21,8 +35,11 @@
 		</a>
 
 		<p class="meta">
-			{algoliaItem.points}
-			{algoliaItem.points === 1 ? 'point' : 'points'} by
+			{#if algoliaItem.points != null}
+				{algoliaItem.points}
+				{algoliaItem.points === 1 ? 'point' : 'points'}
+			{/if}
+			by
 			<a href={resolve('/user/[name]', { name: algoliaItem.author })}>{algoliaItem.author}</a>
 			{timeAgo(now - algoliaItem.created_at_i)}
 		</p>
